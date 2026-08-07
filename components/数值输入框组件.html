@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 数值输入框组件 - 带计算器弹窗</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .app {
+            text-align: center;
+        }
+        .numeric-input {
+            position: relative;
+            display: inline-block;
+        }
+        .input-field {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            text-align: right;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .modal {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 10;
+            margin-top: 5px;
+        }
+        .calculator {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e9ecef;
+        }
+        .display {
+            font-size: 24px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: #007bff;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            text-align: right;
+            min-height: 35px;
+            font-weight: bold;
+            color: white;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        button {
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .operator {
+            background-color: #ff9500;
+            color: white;
+        }
+        .operator:hover {
+            background-color: #e68900;
+        }
+        .equals {
+            background-color: #28a745;
+            color: white;
+            grid-column: span 2;
+        }
+        .equals:hover {
+            background-color: #1e7e34;
+        }
+        .clear {
+            background-color: #dc3545;
+            color: white;
+        }
+        .clear:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="app">
+        <h1>数值输入框组件示例</h1>
+        <numeric-input v-model="value"></numeric-input>
+        <p>当前值: {{ value }}</p>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        const app = createApp({
+            data() {
+                return {
+                    value: 0
+                }
+            }
+        });
+
+        app.component('numeric-input', {
+            template: `
+                <div class="numeric-input">
+                    <input class="input-field" :value="modelValue" @click="showCalculator" readonly placeholder="点击输入数值">
+                    <div v-if="showCalc" class="modal" @click.self="closeCalculator">
+                        <div class="calculator">
+                            <div class="display">{{ display }}</div>
+                            <div class="buttons">
+                                <button @click="clear">C</button>
+                                <button @click="backspace">←</button>
+                                <button class="operator" @click="setOperator('/')">/</button>
+                                <button class="operator" @click="setOperator('*')">×</button>
+                                <button @click="append('7')">7</button>
+                                <button @click="append('8')">8</button>
+                                <button @click="append('9')">9</button>
+                                <button class="operator" @click="setOperator('-')">-</button>
+                                <button @click="append('4')">4</button>
+                                <button @click="append('5')">5</button>
+                                <button @click="append('6')">6</button>
+                                <button class="operator" @click="setOperator('+')">+</button>
+                                <button @click="append('1')">1</button>
+                                <button @click="append('2')">2</button>
+                                <button @click="append('3')">3</button>
+                                <button class="equals" @click="calculate">=</button>
+                                <button @click="append('0')" style="grid-column: span 2;">0</button>
+                                <button @click="append('.')">.</button>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button @click="confirm">确定</button>
+                                <button @click="closeCalculator">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            props: ['modelValue'],
+            emits: ['update:modelValue'],
+            data() {
+                return {
+                    showCalc: false,
+                    display: '',
+                    current: '',
+                    operator: null,
+                    previous: null
+                }
+            },
+            methods: {
+                showCalculator() {
+                    this.showCalc = true;
+                    this.display = this.modelValue ? this.modelValue.toString() : '';
+                },
+                append(char) {
+                    if (this.operator !== null) {
+                        this.display = char;
+                    } else if (this.display === '0' && char !== '.') {
+                        this.display = char;
+                    } else {
+                        this.display += char;
+                    }
+                },
+                setOperator(op) {
+                    if (this.display === '') return;
+                    if (this.previous !== null) {
+                        this.calculate();
+                    }
+                    this.previous = parseFloat(this.display);
+                    this.operator = op;
+                },
+                calculate() {
+                    if (this.previous === null) {
+                        // 如果没有运算符，直接确认当前显示的值（包括空值）
+                        this.confirm();
+                        return;
+                    }
+                    if (this.display === '' || this.operator === null) return;
+                    const current = parseFloat(this.display);
+                    if (current === this.previous) {
+                        // 如果当前值等于previous，避免重复计算，直接设为previous
+                        this.display = this.previous.toString();
+                        this.previous = null;
+                        this.operator = null;
+                        this.confirm();
+                        return;
+                    }
+                    let result;
+                    switch (this.operator) {
+                        case '+':
+                            result = this.previous + current;
+                            break;
+                        case '-':
+                            result = this.previous - current;
+                            break;
+                        case '*':
+                            result = this.previous * current;
+                            break;
+                        case '/':
+                            result = this.previous / current;
+                            break;
+                        default:
+                            return;
+                    }
+                    this.display = result.toString();
+                    this.previous = null;
+                    this.operator = null;
+                    // 自动确认并关闭
+                    this.confirm();
+                },
+                clear() {
+                    this.display = '';
+                    this.previous = null;
+                    this.operator = null;
+                },
+                backspace() {
+                    this.display = this.display.slice(0, -1);
+                },
+                confirm() {
+                    if (this.previous !== null && this.operator !== null && this.display !== '') {
+                        this.calculate();
+                    }
+                    let value;
+                    if (this.display === '') {
+                        value = '';
+                    } else {
+                        value = parseFloat(this.display);
+                        if (isNaN(value)) {
+                            value = '';
+                        }
+                    }
+                    this.$emit('update:modelValue', value);
+                    this.closeCalculator();
+                },
+                closeCalculator() {
+                    this.showCalc = false;
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
