@@ -38,18 +38,8 @@
   .search input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);
     padding:10px 12px;border-radius:9px;font-size:13px;outline:none}
   .search input:focus{border-color:var(--accent)}
-  .list{flex:1;overflow-y:auto;padding:8px}
-
-  .item{padding:11px 12px;border-radius:9px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;
-    border:1px solid transparent;transition:.14s}
-  .item:hover{background:var(--card)}
-  .item.active{background:var(--card);border-color:var(--accent-deep);box-shadow:inset 3px 0 0 var(--accent)}
-  .item .fi{flex:0 0 auto;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,rgba(95,130,112,.16),rgba(74,101,87,.08));font-size:15px}
-  .item .meta{min-width:0}
-  .item .t{font-size:14px;line-height:1.35;color:var(--text);word-break:break-word}
-  .item .f{font-size:11px;color:var(--muted);margin-top:3px;word-break:break-all}
-  .empty{color:var(--muted);text-align:center;padding:30px 12px;font-size:13px}
+  .hint{padding:8px 14px;color:var(--muted);font-size:11px;line-height:1.5;border-top:1px solid var(--line);margin-top:auto}
+  .hint code{background:var(--card);padding:1px 5px;border-radius:4px;color:var(--accent-deep)}
 
   /* 主区 */
   .main{display:flex;flex-direction:column;min-height:0;background:var(--bg)}
@@ -74,9 +64,24 @@
   .toolbar select:focus{border-color:var(--accent)}
 
   .stage{flex:1;display:flex;min-height:0}
-  .browse{display:flex;flex-direction:column;min-height:0;overflow:hidden}
-  .browse.view-list{flex:0 0 320px;border-right:1px solid var(--line)}
-  .browse.view-grid{flex:1 1 auto}
+  .browse{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .browse.view-list .list{display:block}
+  .browse.view-list .grid{display:none}
+  .browse.view-grid .list{display:none}
+  .browse.view-grid .grid{display:grid}
+  .list{flex:1;overflow-y:auto;padding:8px}
+
+  .item{padding:11px 12px;border-radius:9px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;
+    border:1px solid transparent;transition:.14s}
+  .item:hover{background:var(--card)}
+  .item.active{background:var(--card);border-color:var(--accent-deep);box-shadow:inset 3px 0 0 var(--accent)}
+  .item .fi{flex:0 0 auto;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,rgba(95,130,112,.16),rgba(74,101,87,.08));font-size:15px}
+  .item .meta{min-width:0}
+  .item .t{font-size:14px;line-height:1.35;color:var(--text);word-break:break-word}
+  .item .f{font-size:11px;color:var(--muted);margin-top:3px;word-break:break-all}
+  .empty{color:var(--muted);text-align:center;padding:30px 12px;font-size:13px}
+
   .grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;align-content:start}
   .thumb{cursor:pointer;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;transition:.14s;display:flex;flex-direction:column}
   .thumb:hover{border-color:var(--accent);box-shadow:var(--shadow)}
@@ -85,10 +90,22 @@
   .thumb .cap{padding:9px 11px;border-top:1px solid var(--line);font-size:13px;line-height:1.35}
   .thumb .cap .f{font-size:11px;color:var(--muted);margin-top:2px;word-break:break-all}
 
-  .viewer{flex:1;min-height:0;background:#fff;display:flex;flex-direction:column}
-  .viewer iframe{width:100%;height:100%;border:0;display:block}
+  /* 预览面板（默认隐藏） */
+  .viewer{flex:0 0 44%;max-width:720px;min-height:0;background:#fff;display:none;flex-direction:column;border-left:1px solid var(--line)}
+  .viewer iframe{width:100%;height:100%;border:0;display:block;flex:1}
   .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:10px}
   .placeholder .big{font-size:46px;opacity:.45}
+
+  /* 放大弹窗 */
+  .modal{position:fixed;inset:0;background:rgba(40,46,40,.55);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal.show{display:flex}
+  .modal-box{width:92vw;height:88vh;max-width:1100px;background:#fff;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .modal-head{flex:0 0 auto;padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;background:var(--bg2)}
+  .modal-head .mt{font-size:14px;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .modal-head .mt b{color:var(--accent-deep)}
+  .modal-head .sp{flex:1}
+  .modal-frame{flex:1;width:100%;border:0;display:block;background:#fff}
+
   footer{flex:0 0 auto;text-align:center;color:var(--muted);font-size:11px;padding:8px;border-top:1px solid var(--line);background:var(--bg2)}
   a.link{color:var(--accent-deep);text-decoration:none}
   ::-webkit-scrollbar{width:9px;height:9px}
@@ -99,8 +116,7 @@
     .layout{grid-template-columns:1fr}
     .sidebar{max-height:38vh;border-right:none;border-bottom:1px solid var(--line)}
     .stage{flex-direction:column}
-    .browse.view-list{flex:1 1 auto;border-right:none}
-    .viewer{min-height:50vh;border-top:1px solid var(--line)}
+    .viewer{border-left:none;border-top:1px solid var(--line);min-height:55vh}
   }
 </style>
 </head>
@@ -109,7 +125,7 @@
   <div class="logo">📁</div>
   <div>
     <h1>CodeForFun · <b>单文件 HTML 目录</b></h1>
-    <div class="sub">仓库内所有单文件 HTML 原型 / 组件集中预览</div>
+    <div class="sub">按真实子目录归类 · 仓库内所有单文件 HTML 集中预览</div>
   </div>
   <div class="count" id="count">0 个文件</div>
 </header>
@@ -118,7 +134,7 @@
   <aside class="sidebar">
     <div class="cats" id="cats"></div>
     <div class="search"><input id="q" placeholder="搜索文件名 / 标题…" oninput="render()"></div>
-    <div class="list" id="list"></div>
+    <div class="hint">分类按文件所在的<b>真实子目录</b>自动生成。把 .html 放进 <code>calendar/</code>、<code>components/</code> 等文件夹即自动归类。</div>
   </aside>
 
   <section class="main">
@@ -139,16 +155,18 @@
         <option value="name">名称</option>
         <option value="time">最近更新</option>
       </select>
+      <div class="sp"></div>
+      <button class="btn" id="toggleBtn" onclick="toggleViewer()">预览</button>
     </div>
     <div class="stage">
       <div class="browse view-list" id="browse">
         <div class="list" id="listView"></div>
-        <div class="grid" id="grid" style="display:none"></div>
+        <div class="grid" id="grid"></div>
       </div>
       <div class="viewer" id="viewer">
         <div class="placeholder" id="ph">
           <div class="big">🗂️</div>
-          <div>从左侧 / 上方选择文件开始预览</div>
+          <div>点击左侧文件或「预览」按钮开始查看</div>
         </div>
         <iframe id="frame" src="about:blank" style="display:none"></iframe>
       </div>
@@ -156,18 +174,31 @@
   </section>
 </div>
 
+<!-- 缩略图放大弹窗 -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="mt" id="mTitle">预览</div>
+      <div class="sp"></div>
+      <a class="btn" id="mOpen" href="#" target="_blank" rel="noopener">新标签打开</a>
+      <button class="btn primary" onclick="closeModal()">关闭 ✕</button>
+    </div>
+    <iframe class="modal-frame" id="mFrame" src="about:blank"></iframe>
+  </div>
+</div>
+
 <footer>
-  数据来源：GitHub API（<a class="link" href="https://github.com/dengdasam/CodeForFun" target="_blank" rel="noopener">dengdasam/CodeForFun</a>）。新增 .html 会自动出现在左侧列表。
+  数据来源：GitHub API（<a class="link" href="https://github.com/dengdasam/CodeForFun" target="_blank" rel="noopener">dengdasam/CodeForFun</a>）。新增 .html 会自动出现在列表并归入对应子目录。
 </footer>
 
 <script>
 const REPO = "dengdasam/CodeForFun";
 const BRANCH = "main";
-const API = `https://api.github.com/repos/${REPO}/contents?ref=${BRANCH}`;
+const TREE_API = `https://api.github.com/repos/${REPO}/git/trees/${BRANCH}?recursive=1`;
 const FALLBACK = [
-  {name:"habanada-laibin-calendar.html", title:"哈巴纳达 · 来宾种植日历"},
-  {name:"habanada-ningbo-calendar.html", title:"哈巴纳达 · 宁波种植日历"},
-  {name:"数值输入框组件.html",            title:"数值输入框组件"}
+  {path:"calendar/habanada-laibin-calendar.html", title:"哈巴纳达 · 来宾种植日历"},
+  {path:"calendar/habanada-ningbo-calendar.html", title:"哈巴纳达 · 宁波种植日历"},
+  {path:"components/数值输入框组件.html",          title:"数值输入框组件"}
 ];
 const TITLE_MAP = {
   "habanada-laibin-calendar.html":"哈巴纳达 · 来宾种植日历",
@@ -179,25 +210,19 @@ let active = null;
 let view = "list";
 let sort = "name";
 let catFilter = "all";
+let viewerClosed = true;
 
+function baseName(p){ return p.split("/").pop(); }
 function humanize(name){
   if(TITLE_MAP[name]) return TITLE_MAP[name];
   return name.replace(/\.html?$/i,"").replace(/[-_]/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
-function enc(name){ return encodeURIComponent(name); }
+function enc(p){ return encodeURIComponent(p); }
+function catOf(path){ return path.includes("/") ? path.split("/").slice(0,-1).join("/") : "根目录"; }
 
-function categoryOf(name){
-  const n = name.toLowerCase();
-  if(/^habanada/i.test(n)) return "种植日历";
-  if(/数值|组件|widget|input|ui/i.test(n)) return "组件 · 工具";
-  const m = name.replace(/\.html?$/i,"").split(/[-_]/);
-  if(m.length>1 && m[0]) return m[0];
-  return "其他";
-}
-
-async function fetchTime(name){
+async function fetchTime(path){
   try{
-    const r = await fetch(`https://api.github.com/repos/${REPO}/commits?path=${enc(name)}&per_page=1`,
+    const r = await fetch(`https://api.github.com/repos/${REPO}/commits?path=${enc(path)}&per_page=1`,
       {headers:{"Accept":"application/vnd.github+json"}});
     if(!r.ok) return null;
     const j = await r.json();
@@ -207,17 +232,18 @@ async function fetchTime(name){
 
 async function load(){
   try{
-    const r = await fetch(API, {headers:{"Accept":"application/vnd.github+json"}});
+    const r = await fetch(TREE_API, {headers:{"Accept":"application/vnd.github+json"}});
     if(!r.ok) throw new Error("HTTP "+r.status);
-    const list = await r.json();
-    DATA = (Array.isArray(list)?list:[])
-      .filter(f => f.type==="file" && /\.html?$/i.test(f.name) && f.name.toLowerCase()!=="index.html")
-      .map(f => ({name:f.name, title:TITLE_MAP[f.name]||humanize(f.name), size:f.size, cat:categoryOf(f.name), updated:null}));
-    if(DATA.length===0) DATA = FALLBACK.map(f=>({...f,size:null,cat:categoryOf(f.name),updated:null}));
-  }catch(e){ DATA = FALLBACK.map(f=>({...f,size:null,cat:categoryOf(f.name),updated:null})); }
+    const j = await r.json();
+    const blobs = (j.tree||[]).filter(n => n.type==="blob" && /\.html?$/i.test(n.path) && baseName(n.path).toLowerCase()!=="index.html");
+    DATA = blobs.map(b=>{
+      const name = baseName(b.path);
+      return {path:b.path, name, title:TITLE_MAP[name]||humanize(name), size:b.size, cat:catOf(b.path), updated:null};
+    });
+    if(DATA.length===0) DATA = FALLBACK.map(f=>({...f, name:baseName(f.path), size:null, cat:catOf(f.path), updated:null}));
+  }catch(e){ DATA = FALLBACK.map(f=>({...f, name:baseName(f.path), size:null, cat:catOf(f.path), updated:null})); }
 
-  // 并行获取最近更新时间
-  await Promise.all(DATA.map(d => fetchTime(d.name).then(t => d.updated = t)));
+  await Promise.all(DATA.map(d => fetchTime(d.path).then(t => d.updated = t)));
 
   document.getElementById("count").textContent = DATA.length + " 个文件";
   renderCats();
@@ -226,7 +252,7 @@ async function load(){
 
 function renderCats(){
   const cats = ["all", ...Array.from(new Set(DATA.map(d=>d.cat)))];
-  const label = c => c==="all" ? "全部" : c;
+  const label = c => c==="all" ? "全部" : (c==="根目录" ? "根目录" : c);
   document.getElementById("cats").innerHTML = cats.map(c=>
     `<button class="chip ${catFilter===c?'on':''}" onclick="setCat('${c}')">${label(c)}</button>`).join("");
 }
@@ -256,59 +282,82 @@ function render(){
 
   if(items.length===0){
     const msg = `<div class="empty">没有匹配的文件</div>`;
-    listEl.innerHTML = msg; gridEl.innerHTML = ""; listGridEl.innerHTML = "";
+    listEl.innerHTML = msg; gridEl.innerHTML = "";
     document.getElementById("browse").className = "browse " + (view==="grid"?"view-grid":"view-list");
     return;
   }
 
-  // 列表视图内容
   const listHTML = items.map(d=>`
-    <div class="item ${active===d.name?'active':''}" onclick="openFile('${enc(d.name)}')">
+    <div class="item ${active===d.path?'active':''}" onclick="openFile('${enc(d.path)}')">
       <div class="fi">📄</div>
       <div class="meta">
         <div class="t">${d.title}</div>
-        <div class="f">${d.name}${d.size?` · ${(d.size/1024).toFixed(1)} KB`:""}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
+        <div class="f">${d.path}${d.size?` · ${(d.size/1024).toFixed(1)} KB`:""}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
       </div>
     </div>`).join("");
 
-  // 缩略图视图内容
   const gridHTML = items.map(d=>`
-    <div class="thumb ${active===d.name?'active':''}" onclick="openFile('${enc(d.name)}')">
-      <iframe src="${d.name}" loading="lazy" title="${d.title}"></iframe>
+    <div class="thumb ${active===d.path?'active':''}" onclick="openModal('${enc(d.path)}')">
+      <iframe src="${d.path}" loading="lazy" title="${d.title}"></iframe>
       <div class="cap">
         <div class="t">${d.title}</div>
-        <div class="f">${d.name}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
+        <div class="f">${d.path}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
       </div>
     </div>`).join("");
 
   listEl.innerHTML = listHTML;
   gridEl.innerHTML = gridHTML;
   document.getElementById("browse").className = "browse " + (view==="grid"?"view-grid":"view-list");
-  document.getElementById("listView").style.display = view==="list" ? "block" : "none";
-  document.getElementById("grid").style.display = view==="grid" ? "grid" : "none";
 }
 
 function openFile(href){
   active = decodeURIComponent(href);
-  document.getElementById("barName").innerHTML = `当前：<b>${TITLE_MAP[active]||active}</b>`;
-  document.getElementById("openBtn").href = href;
+  const d = DATA.find(x=>x.path===active);
+  document.getElementById("barName").innerHTML = `当前：<b>${d?d.title:active}</b>`;
+  document.getElementById("openBtn").href = active;
   document.getElementById("openBtn").style.display = "";
   document.getElementById("closeBtn").style.display = "";
+  if(viewerClosed) toggleViewer();
   document.getElementById("ph").style.display = "none";
   const f = document.getElementById("frame");
-  f.style.display = "block"; f.src = href;
+  f.style.display = "block"; f.src = active;
   render();
 }
 function closePreview(){
-  active = null;
-  document.getElementById("barName").textContent = "未选择文件";
-  document.getElementById("openBtn").style.display = "none";
-  document.getElementById("closeBtn").style.display = "none";
   document.getElementById("ph").style.display = "flex";
   const f = document.getElementById("frame");
   f.style.display = "none"; f.src = "about:blank";
+  toggleViewer(); // 收起预览面板
+  document.getElementById("barName").textContent = "未选择文件";
+  document.getElementById("openBtn").style.display = "none";
+  document.getElementById("closeBtn").style.display = "none";
+  active = null;
   render();
 }
+function toggleViewer(){
+  viewerClosed = !viewerClosed;
+  const v = document.getElementById("viewer");
+  v.style.display = viewerClosed ? "none" : "flex";
+  const btn = document.getElementById("toggleBtn");
+  btn.textContent = viewerClosed ? "预览" : "隐藏预览";
+  btn.classList.toggle("primary", !viewerClosed);
+}
+
+/* 缩略图放大弹窗 */
+function openModal(href){
+  const path = decodeURIComponent(href);
+  const d = DATA.find(x=>x.path===path);
+  document.getElementById("mTitle").innerHTML = `预览：<b>${d?d.title:path}</b>`;
+  document.getElementById("mOpen").href = path;
+  document.getElementById("mFrame").src = path;
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+  document.getElementById("mFrame").src = "about:blank";
+}
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
+
 load();
 </script>
 </body>
