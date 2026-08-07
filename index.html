@@ -25,14 +25,21 @@
   .count{margin-left:auto;color:var(--accent-deep);font-size:13px;border:1px solid var(--line);
     padding:5px 12px;border-radius:20px;background:var(--panel)}
 
-  .layout{flex:1 1 auto;display:grid;grid-template-columns:300px 1fr;min-height:0}
-  /* 侧栏：文件列表 */
+  .layout{flex:1 1 auto;display:grid;grid-template-columns:240px 1fr;min-height:0}
+
+  /* 侧栏：分类 + 搜索 */
   .sidebar{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--bg2)}
-  .search{padding:14px;border-bottom:1px solid var(--line)}
+  .cats{padding:12px 12px 6px;display:flex;flex-wrap:wrap;gap:7px}
+  .chip{padding:5px 11px;border:1px solid var(--line);background:var(--panel);color:var(--muted);
+    border-radius:16px;font-size:12px;cursor:pointer;transition:.14s}
+  .chip:hover{border-color:var(--accent)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .search{padding:10px 12px 12px;border-bottom:1px solid var(--line)}
   .search input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--text);
     padding:10px 12px;border-radius:9px;font-size:13px;outline:none}
   .search input:focus{border-color:var(--accent)}
   .list{flex:1;overflow-y:auto;padding:8px}
+
   .item{padding:11px 12px;border-radius:9px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;
     border:1px solid transparent;transition:.14s}
   .item:hover{background:var(--card)}
@@ -44,7 +51,7 @@
   .item .f{font-size:11px;color:var(--muted);margin-top:3px;word-break:break-all}
   .empty{color:var(--muted);text-align:center;padding:30px 12px;font-size:13px}
 
-  /* 主区：预览 */
+  /* 主区 */
   .main{display:flex;flex-direction:column;min-height:0;background:var(--bg)}
   .bar{flex:0 0 auto;padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;background:var(--panel)}
   .bar .name{font-size:14px;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -55,7 +62,30 @@
   .btn:hover{border-color:var(--accent)}
   .btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-deep));border-color:var(--accent-deep);color:#fff;font-weight:600}
   .btn.primary:hover{filter:brightness(1.05)}
-  .viewer{flex:1;min-height:0;background:#fff}
+
+  .toolbar{flex:0 0 auto;padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;background:var(--bg2)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{border:0;background:var(--panel);color:var(--muted);padding:7px 14px;font-size:13px;cursor:pointer;transition:.14s}
+  .seg button + button{border-left:1px solid var(--line)}
+  .seg button.on{background:var(--accent);color:#fff}
+  .toolbar .sp{flex:1}
+  .toolbar label{font-size:12px;color:var(--muted)}
+  .toolbar select{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:7px;padding:6px 8px;font-size:13px;outline:none}
+  .toolbar select:focus{border-color:var(--accent)}
+
+  .stage{flex:1;display:flex;min-height:0}
+  .browse{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+  .browse.view-list{flex:0 0 320px;border-right:1px solid var(--line)}
+  .browse.view-grid{flex:1 1 auto}
+  .grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;align-content:start}
+  .thumb{cursor:pointer;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;transition:.14s;display:flex;flex-direction:column}
+  .thumb:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+  .thumb.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(95,130,112,.3)}
+  .thumb iframe{width:100%;height:150px;border:0;pointer-events:none;background:#fff;display:block}
+  .thumb .cap{padding:9px 11px;border-top:1px solid var(--line);font-size:13px;line-height:1.35}
+  .thumb .cap .f{font-size:11px;color:var(--muted);margin-top:2px;word-break:break-all}
+
+  .viewer{flex:1;min-height:0;background:#fff;display:flex;flex-direction:column}
   .viewer iframe{width:100%;height:100%;border:0;display:block}
   .placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:10px}
   .placeholder .big{font-size:46px;opacity:.45}
@@ -65,11 +95,12 @@
   ::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
   ::-webkit-scrollbar-thumb:hover{background:var(--accent-deep)}
 
-  @media(max-width:760px){
-    body{overflow:auto}
+  @media(max-width:900px){
     .layout{grid-template-columns:1fr}
-    .sidebar{max-height:42vh;border-right:none;border-bottom:1px solid var(--line)}
-    .main{min-height:58vh}
+    .sidebar{max-height:38vh;border-right:none;border-bottom:1px solid var(--line)}
+    .stage{flex-direction:column}
+    .browse.view-list{flex:1 1 auto;border-right:none}
+    .viewer{min-height:50vh;border-top:1px solid var(--line)}
   }
 </style>
 </head>
@@ -85,6 +116,7 @@
 
 <div class="layout">
   <aside class="sidebar">
+    <div class="cats" id="cats"></div>
     <div class="search"><input id="q" placeholder="搜索文件名 / 标题…" oninput="render()"></div>
     <div class="list" id="list"></div>
   </aside>
@@ -96,12 +128,30 @@
       <a class="btn" id="openBtn" href="#" target="_blank" rel="noopener" style="display:none">新标签打开</a>
       <button class="btn primary" id="closeBtn" onclick="closePreview()" style="display:none">关闭预览</button>
     </div>
-    <div class="viewer" id="viewer">
-      <div class="placeholder" id="ph">
-        <div class="big">🗂️</div>
-        <div>从左侧选择文件开始预览</div>
+    <div class="toolbar">
+      <div class="seg">
+        <button data-v="list" class="on" onclick="setView('list')">⊞ 列表</button>
+        <button data-v="grid" onclick="setView('grid')">▦ 缩略图</button>
       </div>
-      <iframe id="frame" src="about:blank" style="display:none"></iframe>
+      <div class="sp"></div>
+      <label for="sort">排序</label>
+      <select id="sort" onchange="setSort(this.value)">
+        <option value="name">名称</option>
+        <option value="time">最近更新</option>
+      </select>
+    </div>
+    <div class="stage">
+      <div class="browse view-list" id="browse">
+        <div class="list" id="listView"></div>
+        <div class="grid" id="grid" style="display:none"></div>
+      </div>
+      <div class="viewer" id="viewer">
+        <div class="placeholder" id="ph">
+          <div class="big">🗂️</div>
+          <div>从左侧 / 上方选择文件开始预览</div>
+        </div>
+        <iframe id="frame" src="about:blank" style="display:none"></iframe>
+      </div>
     </div>
   </section>
 </div>
@@ -126,12 +176,34 @@ const TITLE_MAP = {
 };
 let DATA = [];
 let active = null;
+let view = "list";
+let sort = "name";
+let catFilter = "all";
 
 function humanize(name){
   if(TITLE_MAP[name]) return TITLE_MAP[name];
   return name.replace(/\.html?$/i,"").replace(/[-_]/g," ").replace(/\b\w/g,c=>c.toUpperCase());
 }
 function enc(name){ return encodeURIComponent(name); }
+
+function categoryOf(name){
+  const n = name.toLowerCase();
+  if(/^habanada/i.test(n)) return "种植日历";
+  if(/数值|组件|widget|input|ui/i.test(n)) return "组件 · 工具";
+  const m = name.replace(/\.html?$/i,"").split(/[-_]/);
+  if(m.length>1 && m[0]) return m[0];
+  return "其他";
+}
+
+async function fetchTime(name){
+  try{
+    const r = await fetch(`https://api.github.com/repos/${REPO}/commits?path=${enc(name)}&per_page=1`,
+      {headers:{"Accept":"application/vnd.github+json"}});
+    if(!r.ok) return null;
+    const j = await r.json();
+    return j[0]?.commit?.committer?.date || j[0]?.commit?.author?.date || null;
+  }catch(e){ return null; }
+}
 
 async function load(){
   try{
@@ -140,26 +212,80 @@ async function load(){
     const list = await r.json();
     DATA = (Array.isArray(list)?list:[])
       .filter(f => f.type==="file" && /\.html?$/i.test(f.name) && f.name.toLowerCase()!=="index.html")
-      .map(f => ({name:f.name, title:TITLE_MAP[f.name]||humanize(f.name), size:f.size}));
-    if(DATA.length===0) DATA = FALLBACK.map(f=>({...f,size:null}));
-  }catch(e){ DATA = FALLBACK.map(f=>({...f,size:null})); }
+      .map(f => ({name:f.name, title:TITLE_MAP[f.name]||humanize(f.name), size:f.size, cat:categoryOf(f.name), updated:null}));
+    if(DATA.length===0) DATA = FALLBACK.map(f=>({...f,size:null,cat:categoryOf(f.name),updated:null}));
+  }catch(e){ DATA = FALLBACK.map(f=>({...f,size:null,cat:categoryOf(f.name),updated:null})); }
+
+  // 并行获取最近更新时间
+  await Promise.all(DATA.map(d => fetchTime(d.name).then(t => d.updated = t)));
+
   document.getElementById("count").textContent = DATA.length + " 个文件";
+  renderCats();
   render();
 }
 
-function render(){
+function renderCats(){
+  const cats = ["all", ...Array.from(new Set(DATA.map(d=>d.cat)))];
+  const label = c => c==="all" ? "全部" : c;
+  document.getElementById("cats").innerHTML = cats.map(c=>
+    `<button class="chip ${catFilter===c?'on':''}" onclick="setCat('${c}')">${label(c)}</button>`).join("");
+}
+function setCat(c){ catFilter = c; renderCats(); render(); }
+function setView(v){ view = v; document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on', b.dataset.v===v)); render(); }
+function setSort(v){ sort = v; render(); }
+
+function visibleItems(){
   const q = (document.getElementById("q").value||"").toLowerCase();
-  const list = document.getElementById("list");
-  const items = DATA.filter(d => d.name.toLowerCase().includes(q) || d.title.toLowerCase().includes(q));
-  if(items.length===0){ list.innerHTML = `<div class="empty">没有匹配的文件</div>`; return; }
-  list.innerHTML = items.map((d,i)=>`
+  let items = DATA.filter(d =>
+    (catFilter==="all" || d.cat===catFilter) &&
+    (d.name.toLowerCase().includes(q) || d.title.toLowerCase().includes(q)));
+  items.sort((a,b)=>{
+    if(sort==="time"){
+      if(!a.updated) return 1; if(!b.updated) return -1;
+      return new Date(b.updated) - new Date(a.updated);
+    }
+    return a.title.localeCompare(b.title, "zh");
+  });
+  return items;
+}
+
+function render(){
+  const items = visibleItems();
+  const listEl = document.getElementById("listView");
+  const gridEl = document.getElementById("grid");
+
+  if(items.length===0){
+    const msg = `<div class="empty">没有匹配的文件</div>`;
+    listEl.innerHTML = msg; gridEl.innerHTML = ""; listGridEl.innerHTML = "";
+    document.getElementById("browse").className = "browse " + (view==="grid"?"view-grid":"view-list");
+    return;
+  }
+
+  // 列表视图内容
+  const listHTML = items.map(d=>`
     <div class="item ${active===d.name?'active':''}" onclick="openFile('${enc(d.name)}')">
       <div class="fi">📄</div>
       <div class="meta">
         <div class="t">${d.title}</div>
-        <div class="f">${d.name}${d.size?` · ${(d.size/1024).toFixed(1)} KB`:""}</div>
+        <div class="f">${d.name}${d.size?` · ${(d.size/1024).toFixed(1)} KB`:""}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
       </div>
     </div>`).join("");
+
+  // 缩略图视图内容
+  const gridHTML = items.map(d=>`
+    <div class="thumb ${active===d.name?'active':''}" onclick="openFile('${enc(d.name)}')">
+      <iframe src="${d.name}" loading="lazy" title="${d.title}"></iframe>
+      <div class="cap">
+        <div class="t">${d.title}</div>
+        <div class="f">${d.name}${d.updated?` · ${d.updated.slice(0,10)}`:""}</div>
+      </div>
+    </div>`).join("");
+
+  listEl.innerHTML = listHTML;
+  gridEl.innerHTML = gridHTML;
+  document.getElementById("browse").className = "browse " + (view==="grid"?"view-grid":"view-list");
+  document.getElementById("listView").style.display = view==="list" ? "block" : "none";
+  document.getElementById("grid").style.display = view==="grid" ? "grid" : "none";
 }
 
 function openFile(href){
