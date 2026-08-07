@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哈巴纳达 · 广西来宾全年种植日历</title>
+<style>
+  :root{
+    --bg:#f3f7f0; --card:#ffffff; --ink:#243024; --sub:#6b7a66;
+    --green:#3a9d4e; --green-d:#2c7d3c;
+    --c-seed:#2f80ed;   /* 育苗 */
+    --c-trans:#27ae60;  /* 移栽 */
+    --c-harv:#e8732a;   /* 春茬采收 */
+    --c-harv2:#c96a1e;  /* 秋茬采收 */
+    --c-peren:#7c5cd6;  /* 多年生 */
+    --c-cold:#7c5cd6;   /* 防寒 */
+    --c-heat:#f2c43d;   /* 高温遮阴 */
+    --line:#e3eadd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;padding:18px 14px 40px}
+  .wrap{max-width:880px;margin:0 auto}
+
+  /* 头部 */
+  header{background:linear-gradient(135deg,var(--green),var(--green-d));
+    color:#fff;border-radius:18px;padding:22px 22px 20px;box-shadow:0 6px 20px rgba(44,125,60,.25)}
+  header h1{font-size:22px;letter-spacing:.5px}
+  header .sub{opacity:.92;font-size:13px;margin-top:6px}
+  .tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+  .tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);
+    padding:4px 10px;border-radius:20px;font-size:12px}
+
+  /* 多年生卡 */
+  .peren{background:var(--card);border-radius:14px;padding:16px 18px;margin-top:16px;
+    border:1px solid var(--line)}
+  .peren h2{font-size:15px;color:var(--green-d);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .peren p{font-size:13px;color:var(--sub);margin-bottom:6px}
+  .peren b{color:var(--ink)}
+
+  /* 图例 */
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;margin:16px 2px 6px;font-size:12.5px;color:var(--sub)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+
+  /* 结果时间轴 */
+  .axis{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px 14px;margin:10px 0 4px}
+  .axis h2{font-size:15px;color:var(--green-d);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+  .axis-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .axis-row .lab{font-size:12px;width:72px;flex:0 0 auto;color:var(--ink);font-weight:600}
+  .bars{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
+  .bars .seg{height:17px;border-radius:3px;background:#eef1ea}
+  .seg.sp{background:var(--c-harv)}
+  .seg.au{background:var(--c-harv2)}
+  .seg.pe{background:var(--c-peren)}
+  .mscale{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin:2px 0 0 82px}
+  .mscale span{font-size:10px;color:var(--sub);text-align:center}
+  .axis .note{font-size:11.5px;color:var(--sub);margin-top:8px;line-height:1.6}
+
+  /* 日历网格 */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+  .mon{background:var(--card);border:1px solid var(--line);border-radius:13px;
+    padding:12px 12px 14px;min-height:150px;position:relative;overflow:hidden}
+  .mon .mhead{display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px dashed var(--line);padding-bottom:7px;margin-bottom:9px}
+  .mon .mname{font-size:15px;font-weight:700}
+  .mon .mtemp{font-size:11px;color:var(--sub)}
+  .mon ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+  .mon li{font-size:12px;display:flex;align-items:flex-start;gap:7px;line-height:1.35}
+  .mon li .d{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
+  .mon li .t{font-size:10px;font-weight:700;padding:0 4px;border-radius:4px;margin-right:2px}
+  .t-sp{background:#fde6d6;color:var(--c-harv)}
+  .t-au{background:#f6e0c8;color:var(--c-harv2)}
+  .t-pe{background:#ece4fb;color:var(--c-peren)}
+  .mon.season-warm{box-shadow:inset 0 3px 0 var(--c-heat)}
+  .mon.season-cool{box-shadow:inset 0 3px 0 var(--c-cold)}
+
+  footer{margin-top:22px;font-size:12px;color:var(--sub);text-align:center;line-height:1.7}
+  footer b{color:var(--green-d)}
+  @media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>🌶️ 哈巴纳达全年种植日历</h1>
+    <div class="sub">广西 · 来宾 | 无辣甜哈瓦那（Capsicum chinense）| 亚热带气候定制</div>
+    <div class="tags">
+      <span class="tag">喜温怕霜</span>
+      <span class="tag">长生长季 90–100天</span>
+      <span class="tag">可多年生</span>
+      <span class="tag">秋凉风味最佳</span>
+    </div>
+  </header>
+
+  <section class="peren">
+    <h2>🌿 多年生说明</h2>
+    <p>哈巴纳达为<b>多年生灌木</b>，在来宾基本无霜的气候下，盆栽入室越冬可多年收获。</p>
+    <p>最佳生产期 <b>2–3 年</b>，3 年后木质化、产量下降；建议 <b>2–3 年重新播种更新</b>一茬保活力。</p>
+    <p>越冬：冬季控水停肥，气温 &lt;10℃ 搬阳台/室内，开春即复苏。</p>
+  </section>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--c-seed)"></i>育苗</span>
+    <span><i class="dot" style="background:var(--c-trans)"></i>移栽</span>
+    <span><i class="dot" style="background:var(--c-harv)"></i>春茬采收</span>
+    <span><i class="dot" style="background:var(--c-harv2)"></i>秋茬采收</span>
+    <span><i class="dot" style="background:var(--c-peren)"></i>多年生结果</span>
+    <span><i class="dot" style="background:var(--c-cold)"></i>防寒</span>
+    <span><i class="dot" style="background:var(--c-heat)"></i>高温遮阴</span>
+  </div>
+
+  <!-- 结果时间轴 -->
+  <section class="axis">
+    <h2>📊 结果时间轴（两茬 + 多年生）</h2>
+
+    <div class="axis-row">
+      <div class="lab" style="color:var(--c-harv)">春茬</div>
+      <div class="bars">
+        <div class="seg"></div><div class="seg"></div><div class="seg"></div>
+        <div class="seg"></div><div class="seg"></div><div class="seg sp"></div>
+        <div class="seg sp"></div><div class="seg sp"></div><div class="seg sp"></div>
+        <div class="seg sp"></div><div class="seg sp"></div><div class="seg"></div>
+      </div>
+    </div>
+
+    <div class="axis-row">
+      <div class="lab" style="color:var(--c-harv2)">秋茬</div>
+      <div class="bars">
+        <div class="seg au"></div><div class="seg"></div><div class="seg"></div>
+        <div class="seg"></div><div class="seg"></div><div class="seg"></div>
+        <div class="seg"></div><div class="seg"></div><div class="seg"></div>
+        <div class="seg"></div><div class="seg au"></div><div class="seg au"></div>
+      </div>
+    </div>
+
+    <div class="axis-row">
+      <div class="lab" style="color:var(--c-peren)">多年生</div>
+      <div class="bars">
+        <div class="seg pe"></div><div class="seg pe"></div><div class="seg pe"></div>
+        <div class="seg pe"></div><div class="seg pe"></div><div class="seg pe"></div>
+        <div class="seg pe"></div><div class="seg pe"></div><div class="seg pe"></div>
+        <div class="seg pe"></div><div class="seg pe"></div><div class="seg pe"></div>
+      </div>
+    </div>
+
+    <div class="mscale">
+      <span>1月</span><span>2月</span><span>3月</span><span>4月</span><span>5月</span><span>6月</span>
+      <span>7月</span><span>8月</span><span>9月</span><span>10月</span><span>11月</span><span>12月</span>
+    </div>
+    <div class="note">
+      春茬：3月移栽 → <b>6–11月连续采收</b>（产量最高）｜ 秋茬：9–10月移栽 → <b>11月–翌年1月采收</b>（秋凉风味最浓）<br>
+      多年生单株：温度&gt;15℃即持续结果，来宾温和冬季仍可少量收，全年不断档。
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <!-- 1月 -->
+    <div class="mon season-cool">
+      <div class="mhead"><span class="mname">1 月</span><span class="mtemp">均温≈11℃</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-cold)"></i>寒潮风险，多年生控水越冬</li>
+        <li><i class="d" style="background:var(--c-seed)"></i>下旬可室内保温启动育苗</li>
+        <li><i class="d" style="background:var(--c-peren)"></i><span class="t t-pe">多年</span>少量续果</li>
+      </ul>
+    </div>
+
+    <!-- 2月 -->
+    <div class="mon season-cool">
+      <div class="mhead"><span class="mname">2 月</span><span class="mtemp">回暖初期</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-seed)"></i>保温育苗（浸种催芽）</li>
+        <li><i class="d" style="background:var(--c-cold)"></i>仍防短暂低温 &lt;10℃</li>
+        <li><i class="d" style="background:var(--c-peren)"></i><span class="t t-pe">多年</span>修剪待复苏</li>
+      </ul>
+    </div>
+
+    <!-- 3月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">3 月</span><span class="mtemp">地温稳↑</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-trans)"></i>春茬下旬移栽（地温&gt;15℃）</li>
+        <li><i class="d" style="background:var(--c-seed)"></i>春茬炼苗后下地</li>
+        <li><i class="d" style="background:var(--c-peren)"></i><span class="t t-pe">多年</span>回暖复苏旺长</li>
+      </ul>
+    </div>
+
+    <!-- 4月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">4 月</span><span class="mtemp">温暖湿润</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-trans)"></i>春茬定植后管理</li>
+        <li><i class="d" style="background:var(--c-seed)"></i>苗期旺长、整枝</li>
+      </ul>
+    </div>
+
+    <!-- 5月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">5 月</span><span class="mtemp">升温</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-trans)"></i>春茬开花坐果</li>
+        <li><i class="d" style="background:var(--c-seed)"></i>秋茬备种准备</li>
+      </ul>
+    </div>
+
+    <!-- 6月 -->
+    <div class="mon season-warm">
+      <div class="mhead"><span class="mname">6 月</span><span class="mtemp">渐入盛夏</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-heat)"></i>高温遮阴网防落花</li>
+        <li><i class="d" style="background:var(--c-harv)"></i><span class="t t-sp">春茬</span>始收（绿果）</li>
+      </ul>
+    </div>
+
+    <!-- 7月 -->
+    <div class="mon season-warm">
+      <div class="mhead"><span class="mname">7 月</span><span class="mtemp">高温暴雨</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-heat)"></i>遮阴+排水防涝根腐</li>
+        <li><i class="d" style="background:var(--c-harv)"></i><span class="t t-sp">春茬</span>持续采收</li>
+      </ul>
+    </div>
+
+    <!-- 8月 -->
+    <div class="mon season-warm">
+      <div class="mhead"><span class="mname">8 月</span><span class="mtemp">盛夏</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-seed)"></i>中下旬秋茬浸种催芽</li>
+        <li><i class="d" style="background:var(--c-heat)"></i>育苗遮阳防暴晒</li>
+        <li><i class="d" style="background:var(--c-harv)"></i><span class="t t-sp">春茬</span>持续采收</li>
+      </ul>
+    </div>
+
+    <!-- 9月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">9 月</span><span class="mtemp">秋凉来临</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-trans)"></i>秋茬下旬移栽（最佳）</li>
+        <li><i class="d" style="background:var(--c-harv)"></i><span class="t t-sp">春茬</span>采收尾期</li>
+      </ul>
+    </div>
+
+    <!-- 10月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">10 月</span><span class="mtemp">最适生长</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-harv2)"></i><span class="t t-au">秋茬</span>始收 + 春茬尾</li>
+        <li><i class="d" style="background:var(--c-trans)"></i>秋茬开花坐果</li>
+      </ul>
+    </div>
+
+    <!-- 11月 -->
+    <div class="mon">
+      <div class="mhead"><span class="mname">11 月</span><span class="mtemp">干爽少雨</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-harv2)"></i><span class="t t-au">秋茬</span>盛收·风味最佳</li>
+        <li><i class="d" style="background:var(--c-trans)"></i>秋茬旺果</li>
+      </ul>
+    </div>
+
+    <!-- 12月 -->
+    <div class="mon season-cool">
+      <div class="mhead"><span class="mname">12 月</span><span class="mtemp">温和入冬</span></div>
+      <ul>
+        <li><i class="d" style="background:var(--c-harv2)"></i><span class="t t-au">秋茬</span>续收</li>
+        <li><i class="d" style="background:var(--c-cold)"></i>多年生入室/防寒准备</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <footer>
+    📌 <b>来宾要点</b>：盛夏（6–8月）35℃+ 必遮阴防落花；暴雨起垄排水；1–2月寒潮 &lt;5℃ 育苗需保温。<br>
+    🌱 <b>推荐路线</b>：8月底秋茬育苗 → 10月移栽 → 秋冬采收 → 入室越冬转多年生，来年早春复苏。<br>
+    📅 <b>结果节奏</b>：一年可两茬（春6–11月 + 秋11–1月），多年生单株全年不断果。
+  </footer>
+
+</div>
+</body>
+</html>
