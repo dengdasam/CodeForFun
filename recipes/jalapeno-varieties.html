@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哈拉佩纽 Jalapeño · 品种图鉴与产量</title>
+<style>
+  :root{
+    --bg:#faf8f4; --card:#ffffff; --ink:#2c2a26; --sub:#7a756c;
+    --line:#ece7df; --accent:#c9472f; --accent2:#3f8e2e; --chip:#f2ede4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.7;
+    padding:18px 14px 40px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:480px;margin:0 auto}
+  header{text-align:center;padding:8px 0 16px;border-bottom:2px solid var(--line);margin-bottom:18px}
+  header h1{font-size:22px;letter-spacing:.5px}
+  header .en{color:var(--accent);font-weight:600;font-size:14px;margin-top:2px}
+  header p{color:var(--sub);font-size:13px;margin-top:8px}
+  h2{font-size:16px;margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+  h2::before{content:"";width:6px;height:18px;background:var(--accent);border-radius:3px;display:inline-block}
+  h3{font-size:14px;color:var(--sub);margin:14px 0 8px;font-weight:600}
+  .lead{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--ink)}
+  .lead b{color:var(--accent)}
+  /* pepper thumbnails */
+  .thumb{width:46px;height:72px;flex:0 0 auto}
+  .thumb.sm{width:30px;height:48px}
+  .cluster{display:flex;gap:2px;align-items:flex-end}
+  /* heat row */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+  .pcard .thumb{margin:0 auto 6px}
+  .pcard .nm{font-size:13px;font-weight:600}
+  .pcard .shu{font-size:11px;color:var(--accent);font-weight:600;margin-top:2px}
+  .pcard .note{font-size:11px;color:var(--sub);margin-top:2px}
+  /* color strips */
+  .colorrow{display:flex;gap:8px;flex-wrap:wrap}
+  .colitem{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--sub)}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{background:var(--chip);color:var(--sub);font-weight:600;font-size:11.5px}
+  tr:last-child td{border-bottom:none}
+  td .nm{font-weight:600;font-size:12.5px}
+  td .use{color:var(--sub);font-size:11.5px}
+  .pill{display:inline-block;background:var(--chip);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--ink);white-space:nowrap}
+  .pill.hot{background:#fbe6e0;color:#c9472f}
+  .pill.mild{background:#e8f3e2;color:#3f8e2e}
+  .pill.none{background:#eef2f7;color:#4a6b8a}
+  /* callout */
+  .box{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent2);border-radius:10px;padding:12px 14px;margin-top:12px;font-size:13px}
+  .box b{color:var(--accent2)}
+  .rule{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+  .rule:last-child{border-bottom:none}
+  .rule .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+  .rule .t{font-size:13px}
+  .guide{display:grid;gap:10px;margin-top:8px}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .gcard h4{font-size:13.5px;color:var(--accent);margin-bottom:4px}
+  .gcard ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--ink)}
+  .gcard li{margin:3px 0}
+  footer{margin-top:28px;font-size:11px;color:var(--sub);text-align:center;line-height:1.6}
+  .tag{display:inline-block;background:var(--accent);color:#fff;font-size:10px;padding:2px 8px;border-radius:10px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- hidden symbol defs for reusable pepper illustration -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="pep" viewBox="0 0 120 200">
+      <path d="M60 16 C57 8 62 2 71 3 C68 10 66 15 64 22 Z" fill="#4e9a32"/>
+      <path d="M50 18 L70 18 L74 32 L46 32 Z" fill="#5aa838"/>
+      <path d="M60 28 C43 36 35 60 35 94 C35 142 47 186 65 198 C75 206 85 197 80 185 C72 160 66 126 68 92 C70 58 72 40 60 28 Z" fill="var(--c,#3f8e2e)"/>
+      <path d="M48 60 C44 90 48 130 56 160 C50 128 48 90 52 62 Z" fill="rgba(255,255,255,.22)"/>
+    </symbol>
+  </svg>
+
+  <header>
+    <span class="tag">辣椒图鉴 · recipes</span>
+    <h1>哈拉佩纽 Jalapeño</h1>
+    <div class="en">品种图鉴 · 细分类别 · 产量数据</div>
+    <p>不只是「一种」，而是 15–20 个命名品种的大家族</p>
+  </header>
+
+  <div class="lead">
+    Jalapeño 家族从 <b>0 辣到 17,000 SHU</b>、果长 <b>2 寸到 6 寸</b>、颜色从绿到紫到彩虹色都有。按
+    <b>辣度 / 大小 / 颜色 / 株型 / 用途</b> 五个维度精准挑选，总有一款适合你的舌头和地块。
+  </div>
+
+  <!-- 1. 按辣度 -->
+  <h2>① 按辣度分（最核心）</h2>
+  <div class="grid">
+    <div class="pcard">
+      <svg class="thumb" style="--c:#5aa83f"><use href="#pep"/></svg>
+      <div class="nm">Fooled You</div>
+      <div class="shu">0 SHU</div>
+      <div class="note">完全无辣</div>
+    </div>
+    <div class="pcard">
+      <svg class="thumb" style="--c:#4a9a3a"><use href="#pep"/></svg>
+      <div class="nm">TAM / Primavera</div>
+      <div class="shu">1,000–3,500</div>
+      <div class="note">极微辣</div>
+    </div>
+    <div class="pcard">
+      <svg class="thumb" style="--c:#3f8e2e"><use href="#pep"/></svg>
+      <div class="nm">Classic / M</div>
+      <div class="shu">2,500–8,000</div>
+      <div class="note">标准微辣</div>
+    </div>
+    <div class="pcard">
+      <svg class="thumb" style="--c:#347a2b"><use href="#pep"/></svg>
+      <div class="nm">Mucho Nacho</div>
+      <div class="shu">4,000–8,000</div>
+      <div class="note">偏辣·厚肉</div>
+    </div>
+    <div class="pcard">
+      <svg class="thumb" style="--c:#b03a2e"><use href="#pep"/></svg>
+      <div class="nm">Jalafuego</div>
+      <div class="shu">8,000–12,000</div>
+      <div class="note">热 Jalapeño</div>
+    </div>
+    <div class="pcard">
+      <svg class="thumb" style="--c:#8e2b1e"><use href="#pep"/></svg>
+      <div class="nm">NuMex Jalmundo</div>
+      <div class="shu">10,000–17,000</div>
+      <div class="note">最辣巨无霸</div>
+    </div>
+  </div>
+  <div class="box">小知识：同一品种 <b>留红熟比青果更辣</b>；天热、干旱也会让辣椒素升高。想最温和就趁绿摘。</div>
+
+  <!-- 2. 按颜色 -->
+  <h2>② 按颜色分（不止绿）</h2>
+  <div class="colorrow">
+    <div class="colitem"><svg class="thumb" style="--c:#3f8e2e"><use href="#pep"/></svg>经典绿</div>
+    <div class="colitem">
+      <div class="cluster">
+        <svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg>
+        <svg class="thumb sm" style="--c:#6b3fa0"><use href="#pep"/></svg>
+        <svg class="thumb sm" style="--c:#c0392b"><use href="#pep"/></svg>
+      </div>紫/黑系
+    </div>
+    <div class="colitem">
+      <div class="cluster">
+        <svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg>
+        <svg class="thumb sm" style="--c:#f1c40f"><use href="#pep"/></svg>
+        <svg class="thumb sm" style="--c:#e67e22"><use href="#pep"/></svg>
+        <svg class="thumb sm" style="--c:#c0392b"><use href="#pep"/></svg>
+      </div>彩虹 Piñata
+    </div>
+    <div class="colitem"><svg class="thumb" style="--c:#f4d03f"><use href="#pep"/></svg>黄 Lemon</div>
+    <div class="colitem"><svg class="thumb" style="--c:#e67e22"><use href="#pep"/></svg>橙 Orange</div>
+  </div>
+  <div class="box">观赏价值高的 <b>Purple / Black / Piñata</b> 绿→转色过程本身就好看，盆栽点缀两宜。</div>
+
+  <!-- 3. 按大小 -->
+  <h2>③ 按大小分</h2>
+  <div class="colorrow">
+    <div class="colitem"><svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg>标准 2–3″</div>
+    <div class="colitem"><svg class="thumb" style="--c:#347a2b"><use href="#pep"/></svg>大果 4–5″</div>
+    <div class="colitem">
+      <svg class="thumb" style="--c:#2f6b22;transform:scale(1.15);transform-origin:bottom"><use href="#pep"/></svg>特大 5–6″
+    </div>
+  </div>
+  <div class="box">大果型（<b>Mucho Nacho / Craig's Grande / Jalmundo</b>）果数相近但单果重一倍，<b>按公斤算总产最高</b>。</div>
+
+  <!-- 4. 全品种速查表 -->
+  <h2>④ 全品种速查表（含产量）</h2>
+  <table>
+    <thead>
+      <tr><th>品种</th><th>辣度 SHU</th><th>大小</th><th>单株果数 / 产量</th><th>最佳用途</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg><div class="nm">Classic Green</div></td>
+        <td><span class="pill mild">2,500–8,000</span></td>
+        <td>2–3″</td>
+        <td>25–35 个<br>标准高产</td>
+        <td class="use">万能 salsa / 酿 / 腌</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg><div class="nm">Jalapeño M</div></td>
+        <td><span class="pill mild">4,000–8,000</span></td>
+        <td>3–4″</td>
+        <td>25–35 个<br>抗病广适</td>
+        <td class="use">露天稳产品种</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#4a9a3a"><use href="#pep"/></svg><div class="nm">Early</div></td>
+        <td><span class="pill mild">2,500–5,000</span></td>
+        <td>3″</td>
+        <td>25–35 个<br>早熟 60–65 天</td>
+        <td class="use">冷区 / 短季 / 盆栽</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#4a9a3a"><use href="#pep"/></svg><div class="nm">TAM</div></td>
+        <td><span class="pill mild">1,000–3,500</span></td>
+        <td>3–4″</td>
+        <td>20–25 个<br>高抗病</td>
+        <td class="use">微辣 / 新手 / 容器</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#5aa83f"><use href="#pep"/></svg><div class="nm">Fooled You</div></td>
+        <td><span class="pill none">0–1,000</span></td>
+        <td>稍大</td>
+        <td>≈25–35 个<br>无辣不减产</td>
+        <td class="use">小孩 / 不耐辣 / 酿椒</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#347a2b"><use href="#pep"/></svg><div class="nm">Mucho Nacho</div></td>
+        <td><span class="pill mild">4,000–8,000</span></td>
+        <td>4–5″</td>
+        <td>25–40 个<br>总重最丰产</td>
+        <td class="use">酿椒 / 烤 / Popper</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#2f6b22"><use href="#pep"/></svg><div class="nm">Craig's Grande</div></td>
+        <td><span class="pill mild">3,500–6,000</span></td>
+        <td>5–6″</td>
+        <td>果少但特大<br>按重量高</td>
+        <td class="use">烤 / 酿</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="cluster">
+            <svg class="thumb sm" style="--c:#6b3fa0"><use href="#pep"/></svg>
+          </div><div class="nm">Purple</div>
+        </td>
+        <td><span class="pill hot">2,500–10,000</span></td>
+        <td>2.5–3″</td>
+        <td>中等<br>14″ 盆高产</td>
+        <td class="use">观赏 + 食用</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#8e2b1e"><use href="#pep"/></svg><div class="nm">NuMex Jalmundo</div></td>
+        <td><span class="pill hot">10,000–17,000</span></td>
+        <td>4–5″</td>
+        <td>大果热椒<br>按重量高</td>
+        <td class="use">辣酱 / 热 salsa</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#3f8e2e"><use href="#pep"/></svg><div class="nm">Pot-a-Peno</div></td>
+        <td><span class="pill mild">2,500–5,000</span></td>
+        <td>3–4″</td>
+        <td>紧凑 12–15″<br>AAS 盆栽高产</td>
+        <td class="use">阳台 / 吊篮</td>
+      </tr>
+      <tr>
+        <td><svg class="thumb sm" style="--c:#f4d03f"><use href="#pep"/></svg><div class="nm">NuMex Lemon Spice</div></td>
+        <td><span class="pill hot">up to 30,000</span></td>
+        <td>—</td>
+        <td>黄熟极辣</td>
+        <td class="use">重辣风味</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:10px;font-size:11.5px;color:var(--sub)">
+    * 颜色系代表：Purple 绿→紫→红；Black 绿→黑亮→红；Piñata 绿→黄→橙→红渐变；Lemon/Orange Spice 为黄/橙熟。
+  </p>
+
+  <!-- 5. 产量基线 -->
+  <h2>⑤ 产量基线 & 规律</h2>
+  <div class="box">
+    <b>单株挂果</b>：通常 25–100 个/季（多数 25–40，管理好冲 100）。<br>
+    <b>单株重量</b>：常见 2–3 磅（≈0.9–1.4 kg），理想可达 7 磅（≈3.2 kg）。<br>
+    广西 / 浙江都够暖、长季节，水肥跟上即可跑满区间。
+  </div>
+  <div class="guide" style="margin-top:12px">
+    <div class="rule"><div class="n">1</div><div class="t"><b>按果数</b>：标准品种（Classic/M、Early、TAM、Fooled You）都在 25–40 个/株，差别不大；大果型单果重一倍，<b>按公斤总产最高</b>。</div></div>
+    <div class="rule"><div class="n">2</div><div class="t"><b>紧凑型靠密植补</b>：Early / TAM / Pot-a-Peno 单株果略少，但株小适合密植盆栽，<b>单位面积不输</b>大株。</div></div>
+    <div class="rule"><div class="n">3</div><div class="t"><b>无辣不减产</b>：Fooled You（0 辣）产量和标准 Jalapeño 基本一样——零辣又高产，和你的 Habanada 是两条不同路线（annuum 更省心）。</div></div>
+  </div>
+
+  <!-- 6. 选种建议 -->
+  <h2>⑥ 选种建议（广西 / 浙江 / 湖南）</h2>
+  <div class="guide">
+    <div class="gcard">
+      <h4>要最高总产（按重量）+ 酿烤</h4>
+      <ul><li><b>Mucho Nacho</b>：大厚肉，单株总重最猛</li></ul>
+    </div>
+    <div class="gcard">
+      <h4>标准微辣高产、露天稳</h4>
+      <ul><li><b>Jalapeño M / Classic Green</b>：25–35 果/株，抗病</li></ul>
+    </div>
+    <div class="gcard">
+      <h4>浙江阳台 / 盆栽想高产</h4>
+      <ul><li><b>Pot-a-Peno / TAM / Early</b>：紧凑、密植、早熟</li></ul>
+    </div>
+    <div class="gcard">
+      <h4>湖南舌头要更辣又高产</h4>
+      <ul><li><b>NuMex Jalmundo / Jalafuego</b>：大果热椒，按重量也高</li></ul>
+    </div>
+    <div class="gcard">
+      <h4>给家人零辣高产</h4>
+      <ul><li><b>Fooled You</b>：产量不打折，完全无辣</li></ul>
+    </div>
+  </div>
+
+  <footer>
+    数据综合自多种子商（Burpee / Baker Creek / Pepper Joe's / Johnny's）及农业站公开资料；SHU 与产量因产地、鲜干、管理差异会有浮动，本卡取常见区间供选种参考。<br>
+    本页为「辣椒图鉴 · recipes」系列之一 · 自包含单文件 HTML
+  </footer>
+
+</div>
+</body>
+</html>
