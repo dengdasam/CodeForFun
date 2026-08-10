@@ -251,7 +251,7 @@ async function load(){
   render();
 }
 
-const CAT_LABEL = { "calendar":"日历", "components":"组件", "根目录":"根目录" };
+const CAT_LABEL = { "calendar":"日历", "components":"组件", "根目录":"根目录", "recipes":"食谱" };
 function renderCats(){
   const cats = ["all", ...Array.from(new Set(DATA.map(d=>d.cat)))];
   const label = c => c==="all" ? "全部" : (CAT_LABEL[c] || c);
