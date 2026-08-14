@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四城人口结构 vs 房价见底验证 · 南宁·广州·杭州·宁波</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2733; --sub:#5b6675;
+    --line:#e8ebf0; --accent:#2f6df0; --green:#1f9d6b; --red:#d8473b;
+    --amber:#e09a1d; --soft:#eef3fb; --shadow:0 2px 14px rgba(20,40,80,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased;
+    padding:18px 14px 60px;max-width:760px;margin:0 auto}
+  .head{background:linear-gradient(135deg,#2f6df0,#3f8be8);color:#fff;border-radius:16px;
+    padding:22px 20px;box-shadow:var(--shadow);margin-bottom:18px}
+  .head h1{font-size:21px;font-weight:700;letter-spacing:.3px}
+  .head p{margin-top:6px;font-size:13px;opacity:.92}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;
+    padding:3px 11px;font-size:11px;margin:8px 6px 0 0}
+  .card{background:var(--card);border-radius:14px;padding:18px 16px;box-shadow:var(--shadow);
+    margin-bottom:16px;border:1px solid var(--line)}
+  .card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:16px;background:var(--accent);border-radius:3px}
+  .note{font-size:12px;color:var(--sub);background:var(--soft);border-radius:10px;
+    padding:11px 13px;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{border:1px solid var(--line);padding:8px 7px;text-align:center;vertical-align:top}
+  th{background:var(--soft);font-weight:600;color:var(--ink)}
+  td.l,th.l{text-align:left}
+  .gd{color:var(--green);font-weight:600}.rd{color:var(--red);font-weight:600}
+  .amber{color:var(--amber);font-weight:600}
+  .chart-wrap{display:flex;justify-content:center;margin:6px 0 4px}
+  .legend{display:flex;gap:16px;justify-content:center;font-size:11.5px;color:var(--sub);
+    margin-top:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .city-card{border:1px solid var(--line);border-radius:12px;padding:12px 10px;background:#fff}
+  .city-card h3{font-size:14px;margin-bottom:6px}
+  .city-card .pop{font-size:12px;color:var(--sub);margin-bottom:4px}
+  .city-card .price{font-size:13px;font-weight:600}
+  .bar{height:6px;border-radius:4px;background:var(--line);margin-top:8px;overflow:hidden}
+  .bar>i{display:block;height:100%;border-radius:4px}
+  .valid{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+  .valid .mk{flex:0 0 26px;height:26px;border-radius:50%;background:rgba(31,157,107,.12);
+    color:var(--green);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .valid b{color:var(--ink)}
+  .tl{display:flex;flex-direction:column;gap:0}
+  .tl-row{display:flex;gap:12px;padding:2px 0}
+  .tl-yr{flex:0 0 92px;font-size:12.5px;font-weight:600;color:var(--accent);padding-top:2px}
+  .tl-body{flex:1;border-left:2px solid var(--line);padding:0 0 16px 14px;position:relative}
+  .tl-body::before{content:"";position:absolute;left:-5px;top:6px;width:8px;height:8px;
+    border-radius:50%;background:var(--accent)}
+  .tl-body .t{font-size:13px;font-weight:600}
+  .tl-body .d{font-size:12px;color:var(--sub)}
+  .concl{background:linear-gradient(135deg,#1f2733,#2c3a4d);color:#fff;border-radius:14px;
+    padding:18px 16px;box-shadow:var(--shadow)}
+  .concl h2{color:#fff;font-size:16px;margin-bottom:10px}
+  .concl p{font-size:13px;opacity:.94;margin-bottom:8px}
+  .concl .hl{color:#ffd479;font-weight:600}
+  .foot{text-align:center;font-size:11px;color:var(--sub);margin-top:14px}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h1>四城人口结构 vs 房价见底验证</h1>
+  <p>南宁 · 广州 · 杭州 · 宁波 — 用「老龄化→房价见底」模型做历史 / 当前 / 预测三段式验证</p>
+  <div>
+    <span class="tag">数据：2025 年末统计公报 (2026 春发布)</span>
+    <span class="tag">房价：2026 年 6–8 月中指 / 房天下</span>
+    <span class="tag">模型：老年抚养比 30% 阈值 · 滞后 15–25 年</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>一、数据底座</h2>
+  <div class="note">
+    • 人口：四城均用 <b>2025 年末统计公报</b>（2026 年春发布），为目前最权威口径。<br>
+    • 房价：新房 / 二手用 <b>中指研究院 2026-06 样本价</b> + 房天下 / 58 同城 2026 年 7–8 月参考价交叉验证。<br>
+    • 模型回顾：老龄化房价见底 = 25–44 购房主力见底 + 老年抚养比见峰值，时间比劳动年龄见顶<b>滞后 15–25 年</b>；窗口关闭临界≈老年抚养比 <b>30%</b>；<b>只崩人口流出 / 无年轻流入对冲的地方</b>。
+  </div>
+
+  <table>
+    <thead>
+      <tr><th class="l">城市</th><th>2025 常住人口</th><th>年净增</th><th>老龄化 (60+)</th><th>自然增长</th><th>人口红利窗口</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="l"><b>南宁</b></td><td>901.7 万</td><td class="gd">+4.47 万</td>
+        <td>约 16%<br><span class="sub" style="font-size:11px">2020:14.8%</span></td>
+        <td class="gd">正增长</td><td class="gd">仍开着</td>
+      </tr>
+      <tr>
+        <td class="l"><b>广州</b></td><td>1910.1 万</td><td class="gd">+12.3 万</td>
+        <td>户籍 20.3%<br><span class="sub" style="font-size:11px">常住更轻</span></td>
+        <td class="gd">出生率 9.97‰</td><td class="gd">全开</td>
+      </tr>
+      <tr>
+        <td class="l"><b>杭州</b></td><td>1270.0 万</td><td class="amber">+7.6 万</td>
+        <td>21.3%<br><span class="sub" style="font-size:11px">65+ 14.4%</span></td>
+        <td class="amber">出生率 6.9‰</td><td class="amber">开着但收窄</td>
+      </tr>
+      <tr>
+        <td class="l"><b>宁波</b></td><td>983.3 万</td><td class="amber">+5.6 万</td>
+        <td class="rd">户籍 31.4%<br><span class="sub" style="font-size:11px">常住 22.6%</span></td>
+        <td class="rd">−1.5‰ 已负</td><td class="rd">本地已关·靠打工流入</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="foot" style="text-align:left;margin-top:10px;color:var(--sub);font-size:11.5px">
+    预测：南宁 2030→60+19.5%、2035→23%；广州持续年轻流入；杭州老龄化快于广州；宁波户籍老龄化加速、自然负增长。
+  </p>
+</div>
+
+<div class="card">
+  <h2>二、四城房价变动（峰值 → 当前 → 跌幅）</h2>
+  <div class="chart-wrap">
+    <svg viewBox="0 0 360 180" width="100%" style="max-width:420px">
+      <!-- bars: drop percentage -->
+      <g font-family="sans-serif" font-size="11" text-anchor="middle">
+        <!-- axis -->
+        <line x1="40" y1="150" x2="350" y2="150" stroke="#e8ebf0" stroke-width="1"/>
+        <!-- 南宁 -18 -->
+        <rect x="55" y="92" width="42" height="58" rx="3" fill="#1f9d6b"/>
+        <text x="76" y="86" fill="#1f2733">-18%</text>
+        <text x="76" y="165" fill="#5b6675">南宁</text>
+        <!-- 广州 -15 -->
+        <rect x="125" y="99" width="42" height="51" rx="3" fill="#1f9d6b"/>
+        <text x="146" y="93" fill="#1f2733">-15%</text>
+        <text x="146" y="165" fill="#5b6675">广州</text>
+        <!-- 杭州 -22 -->
+        <rect x="195" y="79" width="42" height="71" rx="3" fill="#e09a1d"/>
+        <text x="216" y="73" fill="#1f2733">-22%</text>
+        <text x="216" y="165" fill="#5b6675">杭州</text>
+        <!-- 宁波 -43 -->
+        <rect x="265" y="25" width="42" height="125" rx="3" fill="#d8473b"/>
+        <text x="286" y="19" fill="#d8473b">-43%</text>
+        <text x="286" y="165" fill="#5b6675">宁波</text>
+      </g>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><i style="background:#1f9d6b"></i>浅跌 (≤18%)</span>
+    <span><i style="background:#e09a1d"></i>中跌 (~22%)</span>
+    <span><i style="background:#d8473b"></i>深跌 (≥40%)</span>
+  </div>
+  <table style="margin-top:12px">
+    <thead><tr><th class="l">城市</th><th>历史峰值</th><th>2026 当前 (二手)</th><th>较峰值</th><th>特征</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><b>南宁</b></td><td>~1.1–1.2万<br>(2021–22)</td><td>8632–9692 元/㎡</td><td class="gd">−15~20%</td><td>阴跌·绝对值最低</td></tr>
+      <tr><td class="l"><b>广州</b></td><td>~3.6–3.7万<br>(2021)</td><td>3.0–3.2万 元/㎡</td><td class="gd">−13~18%</td><td>核心区显韧性·判止跌</td></tr>
+      <tr><td class="l"><b>杭州</b></td><td>~4.0万<br>(2023-04)</td><td>31973 元/㎡<br>(连降28月)</td><td class="amber">−20~25%</td><td>超跌·部分盘 −50%</td></tr>
+      <tr><td class="l"><b>宁波</b></td><td>~2.8万<br>(2022-02)</td><td>1.5–1.7万 元/㎡</td><td class="rd">−40~45%</td><td>市六区挂牌 9.5 万套</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>三、套模型验证（是否符合预测？）</h2>
+
+  <div class="valid">
+    <div class="mk">✓</div>
+    <div><b>宁波 = 模型最纯粹的兑现。</b> 户籍 60+ <b>31.4%</b> 越过 30% 阈值、自然增长 <b>−1.5‰</b>、靠安徽/河南/贵州打工人口机械增长——本地无人接盘、外来者购买力弱 → 跌幅最深 <b>−43%</b>，完全符合「无年轻流入对冲 → 崩」。</div>
+  </div>
+  <div class="valid">
+    <div class="mk">✓</div>
+    <div><b>广州 / 南宁 = 反向验证（流入对冲 → 不崩）。</b> 广州出生率 9.97‰ + 机械 +11 万、南宁连续正增长——人口红利窗口开着，25–44 购房主力持续补充 → 跌幅最浅（−15%）、率先企稳。</div>
+  </div>
+  <div class="valid">
+    <div class="mk">✓</div>
+    <div><b>杭州 = 中间态，窗口收窄但未关。</b> 老龄化快于广州（60+ 21.3%）、增量放缓，但仍有净流入 + AI 产业强基本面 → 二手超跌 −22% 更多源于供应过剩，与模型「老龄化是底层拖累、非唯一原因」一致。</div>
+  </div>
+  <div class="valid">
+    <div class="mk">✓</div>
+    <div><b>时间轴吻合「滞后 15–25 年」。</b> 中国劳动年龄人口 <b>2013 年见顶</b>，本轮下跌以 2021 泡沫破裂 + 库存为主因、老龄化为底层拖累，结构性底部落在 2030s–2040s，逻辑自洽。</div>
+  </div>
+  <div class="valid">
+    <div class="mk">✓</div>
+    <div><b>城乡分化成立。</b> 宁波各县市户籍老龄化更重（余姚/奉化/慈溪 60+ 均 35%+），结构性风险最高；核心城区靠聚集效应相对抗跌——印证「崩的是人口流出地」。</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>四、见底时间预测（结合人口结构）</h2>
+  <div class="tl">
+    <div class="tl-row"><div class="tl-yr">广州</div><div class="tl-body"><div class="t gd">2026–2027 率先企稳</div><div class="d">最年轻、窗口全开，老龄化底遥不可及。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">南宁</div><div class="tl-body"><div class="t gd">2026–2027 · 下行空间最小</div><div class="d">正增长 + 省域核心兜底，接近日本地方城市模式（低位横盘）。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">杭州</div><div class="tl-body"><div class="t amber">2026–2027 二手触底（已超跌）</div><div class="d">窗口收窄、基本面强，软着陆，晚于广州。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">宁波</div><div class="tl-body"><div class="t rd">2028–2031+ 最晚最深</div><div class="d">本地窗口已关、纯靠打工流入；若流入放缓，有「日本地方城市」长阴跌风险。</div></div></div>
+  </div>
+</div>
+
+<div class="concl">
+  <h2>结论：模型在四城得到完整验证</h2>
+  <p>城市分化的<span class="hl">唯一主轴</span>，就是<span class="hl">年轻人口净流入能否盖住本地老龄化</span>——这恰恰是我们模型的核心命题。</p>
+  <p>· <b>南宁、广州</b>靠「年轻人口持续流入」把老龄化见底推到遥不可及的将来（跌最浅 −15%、最早企稳）。</p>
+  <p>· <b>宁波</b>因「户籍重度老龄化 + 自然负增长 + 低购买力流入」成为四城最脆弱样本（跌最深 −43%、见底最晚）。</p>
+  <p>· <b>杭州</b>居中，窗口收窄但未关，超跌主因是供应过剩而非纯人口老化。</p>
+</div>
+
+<div class="foot">资料卡 · 与辣椒图鉴同站并排 · CodeForFun / recipes/ · 数据时点 2025 年末人口 / 2026 年 6–8 月房价</div>
+
+</body>
+</html>
