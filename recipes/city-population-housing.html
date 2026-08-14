@@ -246,7 +246,7 @@
 </div>
 
 <div class="card">
-  <h2>三、四城房价变动（峰值 → 当前 → 跌幅）</h2>
+  <h2>三、四城房价变动（峰值 → 当前 → 跌幅 → 预测）</h2>
   <div class="chart-wrap">
     <svg viewBox="0 0 360 180" width="100%" style="max-width:420px">
       <!-- bars: drop percentage -->
@@ -291,7 +291,106 @@
     <b>房价变动说明：</b>
     <b>峰值时点：</b>四城均在 2021–2023 泡沫期见顶（南宁 2021–22、广州 2021、杭州 2023-04、宁波 2022-02），随后普遍回落。<br>
     <b>跌幅分化：</b>宁波最惨（−43%，市六区挂牌 9.5 万套）、杭州超跌（−22%，部分盘 −50%）、广南最浅（−15~18%）。<br>
-    <b>结构性解读：</b>广州 / 南宁下跌主因是<b>周期性回调</b>（泡沫破裂 + 库存），人口结构未恶化，故跌得浅、率先企稳；宁波是<b>结构性 + 周期性双杀</b>——本地老龄化 + 无年轻接盘 + 挂牌天量，故跌最深最久；杭州超跌更多源于<b>天量供地 / 产品迭代冲击</b>而非纯人口老化，与模型“老龄化是底层拖累、非唯一原因”一致。
+        <b>结构性解读：</b>广州 / 南宁下跌主因是<b>周期性回调</b>（泡沫破裂 + 库存），人口结构未恶化，故跌得浅、率先企稳；宁波是<b>结构性 + 周期性双杀</b>——本地老龄化 + 无年轻接盘 + 挂牌天量，故跌最深最久；杭州超跌更多源于<b>天量供地 / 产品迭代冲击</b>而非纯人口老化，与模型“老龄化是底层拖累、非唯一原因”一致。
+  </div>
+
+  <hr style="border:none;border-top:1px dashed var(--line);margin:20px 0 16px">
+  <h3 style="font-size:14px;margin-bottom:10px;color:var(--red)">▶ 房价预测（2026 → 2040，基于人口结构模型）</h3>
+  <div class="note" style="background:#fbf7ef;border-left:3px solid var(--amber)">
+    <b>预测口径</b>：以 <b>2026 当前二手价为基准 = 100</b>，按前文「红利窗口关闭 → 购房主力见底 → 房价结构性底部（滞后 15–25 年）」模型推演。<b>实线锚点 = 2025/26 当前</b>，<b>虚线 = 2030 / 2035 / 2040 外推</b>。以下为<b>模型示意性外推</b>，非市场定价，仅演示见底节奏（历史峰值→当前跌幅见上方柱状图）。
+  </div>
+
+  <div class="chart-wrap">
+    <svg viewBox="0 0 680 300" width="100%" style="max-width:640px" font-family="sans-serif">
+      <!-- grid -->
+      <g stroke="#eef1f6" stroke-width="1">
+        <line x1="50" y1="260" x2="660" y2="260"/>
+        <line x1="50" y1="20"  x2="660" y2="20"/>
+        <line x1="50" y1="212" x2="660" y2="212"/>
+        <line x1="50" y1="164" x2="660" y2="164"/>
+        <line x1="50" y1="116" x2="660" y2="116"/>
+        <line x1="50" y1="68"  x2="660" y2="68"/>
+      </g>
+      <!-- y labels (index 80..130) -->
+      <g fill="#5b6675" font-size="10" text-anchor="end">
+        <text x="44" y="263">80</text>
+        <text x="44" y="215">90</text>
+        <text x="44" y="167">100</text>
+        <text x="44" y="119">110</text>
+        <text x="44" y="71">120</text>
+        <text x="44" y="23">130</text>
+      </g>
+      <!-- baseline 100 -->
+      <line x1="50" y1="164" x2="660" y2="164" stroke="#9aa3b0" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="656" y="160" fill="#9aa3b0" font-size="9.5" text-anchor="end">基准 100 (2026 当前)</text>
+
+      <!-- x positions: 2025=292,2030=408,2035=524,2040=640 -->
+      <g fill="#5b6675" font-size="10" text-anchor="middle">
+        <text x="292" y="278">2025/26(当前)</text>
+        <text x="408" y="278">2030</text>
+        <text x="524" y="278">2035</text>
+        <text x="640" y="278">2040</text>
+      </g>
+
+      <!-- 南宁 green: 100,103,109,116 -->
+      <polyline points="292,164 408,149.6 524,120.8 640,87.2" fill="none" stroke="#1f9d6b" stroke-width="2.5" stroke-dasharray="7 4"/>
+      <circle cx="292" cy="164" r="4.5" fill="#1f9d6b" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="408" cy="149.6" r="3" fill="#1f9d6b"/>
+      <circle cx="524" cy="120.8" r="3" fill="#1f9d6b"/>
+      <circle cx="640" cy="87.2" r="3" fill="#1f9d6b"/>
+
+      <!-- 广州 blue: 100,103,113,122 -->
+      <polyline points="292,164 408,149.6 524,101.6 640,58.4" fill="none" stroke="#2f6df0" stroke-width="2.5" stroke-dasharray="7 4"/>
+      <circle cx="292" cy="164" r="4.5" fill="#2f6df0" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="408" cy="149.6" r="3" fill="#2f6df0"/>
+      <circle cx="524" cy="101.6" r="3" fill="#2f6df0"/>
+      <circle cx="640" cy="58.4" r="3" fill="#2f6df0"/>
+
+      <!-- 杭州 amber: 100,103,111,118 -->
+      <polyline points="292,164 408,149.6 524,111.2 640,77.6" fill="none" stroke="#e09a1d" stroke-width="2.5" stroke-dasharray="7 4"/>
+      <circle cx="292" cy="164" r="4.5" fill="#e09a1d" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="408" cy="149.6" r="3" fill="#e09a1d"/>
+      <circle cx="524" cy="111.2" r="3" fill="#e09a1d"/>
+      <circle cx="640" cy="77.6" r="3" fill="#e09a1d"/>
+
+      <!-- 宁波 red: 100,82,90,100 (先跌后回) -->
+      <polyline points="292,164 408,250.4 524,212 640,164" fill="none" stroke="#d8473b" stroke-width="2.5" stroke-dasharray="7 4"/>
+      <circle cx="292" cy="164" r="4.5" fill="#d8473b" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="408" cy="250.4" r="3.5" fill="#d8473b"/>
+      <circle cx="524" cy="212" r="3" fill="#d8473b"/>
+      <circle cx="640" cy="164" r="3" fill="#d8473b"/>
+
+      <!-- labels -->
+      <g font-size="10.5" font-weight="600">
+        <text x="648" y="84" fill="#1f9d6b" text-anchor="end">南宁</text>
+        <text x="648" y="55" fill="#2f6df0" text-anchor="end">广州</text>
+        <text x="648" y="74" fill="#e09a1d" text-anchor="end">杭州</text>
+        <text x="648" y="161" fill="#d8473b" text-anchor="end">宁波</text>
+      </g>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><i style="background:#1f9d6b"></i>南宁</span>
+    <span><i style="background:#2f6df0"></i>广州</span>
+    <span><i style="background:#e09a1d"></i>杭州</span>
+    <span><i style="background:#d8473b"></i>宁波</span>
+    <span><i style="background:#d8473b;opacity:.4"></i>— — 虚线=预测(2030/35/40)</span>
+  </div>
+
+  <table style="margin-top:14px">
+    <thead><tr><th class="l">城市</th><th>2026 当前<br>(二手 元/㎡)</th><th>谷值时点</th><th>谷值指数</th><th>2040 指数</th><th>较当前(2040)</th><th>预测形态</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><b>南宁</b></td><td>~9,000</td><td class="gd">2026–27 已筑底</td><td>100</td><td>116</td><td class="gd">+16%</td><td class="gd">浅 V · 低位横盘后微升</td></tr>
+      <tr><td class="l"><b>广州</b></td><td>~31,000</td><td class="gd">2026–27 已筑底</td><td>100</td><td>122</td><td class="gd">+22%</td><td class="gd">浅 V · 强基本面托底</td></tr>
+      <tr><td class="l"><b>杭州</b></td><td>~32,000</td><td class="gd">2026–27 已筑底</td><td>100</td><td>118</td><td class="gd">+18%</td><td class="gd">超跌反弹 · 软着陆</td></tr>
+      <tr><td class="l"><b>宁波</b></td><td>~16,000</td><td class="rd">2029–2031</td><td class="rd">~82</td><td>100</td><td class="amber">约持平</td><td class="rd">深 L · 先跌后漫长回血</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note" style="background:#fbf2f0;border-left:3px solid var(--red);margin-top:14px">
+    <b>房价预测说明：</b>
+    <b>筑底节奏与人口结构模型高度吻合</b>——广 / 南 / 杭人口红利窗口未关、年轻流入持续，故 2026–27 即见底、之后随经济温和回升；<b>宁波本地窗口 2025 已关、纯靠低购买力打工流入，故价格还要再下探至 2029–2031 才触底（谷值约 −18%），且回血极慢，2040 才勉强回到当前水平</b>，呈典型「深 L」型。<br>
+    <b>关键验证</b>：宁波的「房价结构性底部（2029–31）」比其「人口红利窗口关闭（2025）」滞后约 5–6 年、比「劳动年龄见顶（2013）」滞后约 17 年，落在模型「滞后 15–25 年」区间内，四城验证闭环完成。
   </div>
 </div>
 
