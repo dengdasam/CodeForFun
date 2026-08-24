@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北海买两居 · 选房推荐卡</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#2b3242; --sub:#6b7585;
+    --line:#e6eaf0; --green:#1f9d6b; --blue:#2f6df0; --red:#d8473b; --amber:#e09a1d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:24px 14px}
+  .wrap{max-width:920px;margin:0 auto}
+  .head{background:linear-gradient(135deg,#fff,#f0f6f3);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:18px}
+  .head h1{font-size:21px;letter-spacing:.5px}
+  .head .sub{color:var(--sub);font-size:13px;margin-top:6px}
+  .tag{display:inline-block;background:#eaf4ef;color:var(--green);font-size:12px;padding:3px 10px;border-radius:20px;margin-top:10px}
+  .tag.b{background:#eaf1fe;color:var(--blue)}
+  .tag.a{background:#fdf3e3;color:var(--amber)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+  .card h2{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:16px;background:var(--blue);border-radius:2px}
+  .tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  .tbl th,.tbl td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;text-align:left}
+  .tbl th{background:#f7f9fc;font-weight:600;color:var(--sub)}
+  .tbl td.l{font-weight:600;background:#fafbfd}
+  .g{color:var(--green);font-weight:600}
+  .b{color:var(--blue);font-weight:600}
+  .r{color:var(--red);font-weight:600}
+  .a{color:var(--amber);font-weight:600}
+  .note{border-radius:12px;padding:13px 15px;font-size:13px;margin-top:12px}
+  .note.red{background:#fbf2f0;border-left:3px solid var(--red)}
+  .note.blue{background:#f0f4fe;border-left:3px solid var(--blue)}
+  .note.green{background:#eef7f1;border-left:3px solid var(--green)}
+  .note.amber{background:#fdf6ea;border-left:3px solid var(--amber)}
+  .note b{color:var(--ink)}
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .vcard{border:1px solid var(--line);border-radius:12px;padding:14px}
+  .vcard h3{font-size:14px;margin-bottom:6px}
+  .vcard.g h3{color:var(--green)} .vcard.b h3{color:var(--blue)} .vcard.a h3{color:var(--amber)}
+  .vcard ul{font-size:12.5px;color:var(--sub);padding-left:18px}
+  .vcard li{margin:3px 0}
+  .sml{font-size:12px;color:var(--sub);margin-top:10px}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .kpi div{flex:1;min-width:120px;background:#fafbfd;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .kpi .n{font-size:18px;font-weight:700}
+  .kpi .t{font-size:11px;color:var(--sub)}
+  .pick{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:10px}
+  .pick.top{border:2px solid var(--green);background:#f4fbf7}
+  .pick .ph{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+  .pick .pn{font-size:14.5px;font-weight:700}
+  .pick .pp{font-size:13px;color:var(--red);font-weight:700}
+  .pick .pm{font-size:12px;color:var(--sub);margin-top:3px}
+  .pick .pw{font-size:12.5px;margin-top:6px}
+  .pick .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:12px;margin-left:6px;vertical-align:1px}
+  .pick .badge.g{background:#eef7f1;color:var(--green)}
+  .pick .badge.a{background:#fdf6ea;color:var(--amber)}
+  @media(max-width:620px){.verdict{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>北海买两居 · 选房推荐卡</h1>
+    <div class="sub">面向远程办公（游戏开发 + 电商）· 多年生辣椒种植 · 长期自住 + 冬季避寒 &nbsp;|&nbsp; 数据时点：2025–2026 挂牌行情</div>
+    <span class="tag">🌿 暖·能种·便宜</span>
+    <span class="tag b">💻 光网 100% 覆盖</span>
+    <span class="tag a">🏖 冬天 15–19℃</span>
+  </div>
+
+  <!-- 一、先定片区 -->
+  <div class="card">
+    <h2>一、先定片区：四区价格与定位（2025 二手房均价）</h2>
+    <table class="tbl">
+      <thead><tr><th class="l">片区</th><th>均价(元/㎡)</th><th>定位与适合谁</th><th>对你的适配</th></tr></thead>
+      <tbody>
+        <tr><td class="l"><b>海城区</b></td><td>~4,509</td><td>老城核心、最便宜、菜场医院扎堆、生活最便利</td><td class="g">长住省钱党首选</td></tr>
+        <tr><td class="l"><b>银海区</b></td><td>~5,350</td><td>新区、近银滩、万达/吾悦商场、新小区、二医院三甲分院</td><td class="b">旅居+品质最均衡</td></tr>
+        <tr><td class="l"><b>侨港镇</b></td><td>~5,400</td><td>越南风情、吃货天堂、近海、烟火气足</td><td class="a">美食+海景偏好</td></tr>
+        <tr><td class="l">合浦/铁山港</td><td>2,800–4,000</td><td>县城/工业区，偏远</td><td class="r">不推荐</td></tr>
+      </tbody>
+    </table>
+    <div class="note green">
+      <b>结论：优先银海区（万达/吾悦/金海岸一带）。</b> 理由：① 小区楼龄新 → 阳台大、采光面好（种辣椒关键）；② 第二人民医院（三甲）银滩分院就在银海；③ 万达/吾悦/农贸市场步行可达；④ 离银滩、侨港十几分钟，冬天体感最舒服。海城区更便宜，但楼偏老、离海远；侨港好吃但房源少、溢价。
+    </div>
+  </div>
+
+  <!-- 二、结合你的需求 -->
+  <div class="card">
+    <h2>二、结合你的三大需求，筛选逻辑</h2>
+    <div class="verdict">
+      <div class="vcard g">
+        <h3>💻 远程办公</h3>
+        <ul>
+          <li>北海光网覆盖率 100%，100M 以上用户 &gt;85%</li>
+          <li>1000M 宽带约 600–1080 元/年，游戏延迟 ~40ms</li>
+          <li>选房确认 <b>光纤入户</b> 即可，城区无压力</li>
+        </ul>
+      </div>
+      <div class="vcard a">
+        <h3>🌶 种多年生辣椒</h3>
+        <ul>
+          <li>必须 <b>南向 / 南北通透</b>（采光+通风）</li>
+          <li>优先 <b>带露台 / 一楼带院 / 顶层</b></li>
+          <li>板楼 &gt; 塔楼（采光面大）</li>
+          <li>防风：大风 130+ 天/年，选避风或封闭阳台</li>
+        </ul>
+      </div>
+      <div class="vcard b">
+        <h3>🏠 长期自住</h3>
+        <ul>
+          <li>优先 <b>满五唯一</b>（免增值税，省几万）</li>
+          <li>近农贸市场 + 三甲医院分院</li>
+          <li>避开纯投资海景盘（空置率高、配套弱）</li>
+        </ul>
+      </div>
+      <div class="vcard">
+        <h3>💰 成本控制</h3>
+        <ul>
+          <li>两居主流总价 <b>20–45 万</b></li>
+          <li>银海 2700–6000 元/㎡ 都有选择</li>
+          <li>淡季（非春节）看房，避免旺季溢价</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、具体小区推荐 -->
+  <div class="card">
+    <h2>三、具体两居推荐（挂牌参考，价格会动）</h2>
+
+    <div class="pick top">
+      <div class="ph">
+        <span class="pn">① 天健绿园（银海·万达旁）<span class="badge g">性价比之王</span></span>
+        <span class="pp">≈ 21 万 / 89㎡</span>
+      </div>
+      <div class="pm">单价约 2,720 元/㎡ · 满五唯一 · 南北对流 · 高楼层采光好</div>
+      <div class="pw">出门即万达广场、吾悦广场、北海银滩、<b>第二人民医院（三甲）银滩分院</b>、兴海便民市场。几乎是为你需求量身：便宜 + 通透 + 医疗 + 商场 + 近海，全能选手。<b>首选看这套。</b></div>
+    </div>
+
+    <div class="pick">
+      <div class="ph">
+        <span class="pn">② 普利幸福海（海城·廉州湾）<span class="badge a">种椒最友好</span></span>
+        <span class="pp">≈ 28 万 / 76.7㎡</span>
+      </div>
+      <div class="pm">单价约 4,300 元/㎡ · 毛坯 · B3 两居 <b>带露台</b> · 约 5.3m 阔景阳台</div>
+      <div class="pw">露台是种辣椒的黄金配置（光照+操作空间远超普通阳台）。缺点是片区较新、配套成熟度不如银海核心，适合愿意等配套、且重种植的人。</div>
+    </div>
+
+    <div class="pick">
+      <div class="ph">
+        <span class="pn">③ 北海来康郡（银海·海神广场）</span>
+        <span class="pp">≈ 35 万 / 85㎡</span>
+      </div>
+      <div class="pm">单价约 4,118 元/㎡ · 两居两厅 · 海神广场商圈</div>
+      <div class="pw">银海核心、面积实惠、配套成熟，介于"极致便宜"和"品质"之间的稳妥选择。</div>
+    </div>
+
+    <div class="pick">
+      <div class="ph">
+        <span class="pn">④ 和居壹海江山（银海·金海岸）</span>
+        <span class="pp">≈ 28 万 / 67㎡</span>
+      </div>
+      <div class="pm">单价约 4,180 元/㎡ · 小两居 · 金海岸板块</div>
+      <div class="pw">预算紧、想要银海地段的小两居，这套面积小但总价低、位置好。</div>
+    </div>
+
+    <div class="pick">
+      <div class="ph">
+        <span class="pn">⑤ 嘉盛名都（银海·金海岸）<span class="badge g">品质型</span></span>
+        <span class="pp">≈ 50 万 / 79㎡</span>
+      </div>
+      <div class="pm">单价约 6,369 元/㎡ · 泳池园林 · 南向 · 近大润发/二医院</div>
+      <div class="pw">小区环境、物业最好的一档，适合预算宽松、想要住得舒服的人。同板块还有圣景龙湾（63㎡/38万）、金域熙城（58㎡/32.5万）等可选。</div>
+    </div>
+
+    <div class="pick">
+      <div class="ph">
+        <span class="pn">⑥ 北投观海上城（海城·高德）</span>
+        <span class="pp">≈ 26 万 / 70㎡</span>
+      </div>
+      <div class="pm">单价约 3,715 元/㎡ · 海城区低价两居</div>
+      <div class="pw">想压到最低总价、不介意楼龄和离海距离，海城区这档最便宜。</div>
+    </div>
+
+    <p class="sml">价格均为 2025–2026 各平台挂牌参考，实际成交可谈；同一小区不同楼层/朝向/装修差价可达 1000+ 元/㎡。建议先短租 1–2 周实地看再下定。</p>
+  </div>
+
+  <!-- 四、种椒选房要点 -->
+  <div class="card">
+    <h2>四、种辣椒 · 选房硬指标清单</h2>
+    <table class="tbl">
+      <thead><tr><th class="l">指标</th><th>要求</th><th>为什么</th></tr></thead>
+      <tbody>
+        <tr><td class="l">朝向</td><td class="g">南向 / 南北通透</td><td>日照足、通风好，辣椒不徒长、少病害</td></tr>
+        <tr><td class="l">外挂空间</td><td class="g">露台 &gt; 一楼带院 &gt; 大南阳台</td><td>露台可摆盆、搭架、防雨，产量与体验最佳</td></tr>
+        <tr><td class="l">楼型</td><td class="g">板楼优先</td><td>采光面大、不遮光；塔楼中间户易暗</td></tr>
+        <tr><td class="l">楼层</td><td class="a">中低层 / 顶层带露台</td><td>高层风太大、搬运土盆不便；顶层露台最香</td></tr>
+        <tr><td class="l">防风</td><td class="a">避北向风口 / 封闭阳台</td><td>北海大风 130+ 天/年，嫩叶易被吹伤倒伏</td></tr>
+        <tr><td class="l">淡水</td><td>确认自来水到户</td><td>岛缺大河，浇菜靠自来水/蓄水，别指望雨水</td></tr>
+      </tbody>
+    </table>
+    <div class="note amber">
+      <b>盆栽 vs 地栽：</b> 公寓基本只能阳台/露台盆栽。选 <b>≥40cm 深盆 + 椰糠泥炭基质</b>，哈巴纳达、Aji 类、杭椒都能多年生越冬（北海无霜）。有露台就直接上，没有露台选大南阳台也能种十几盆。
+    </div>
+  </div>
+
+  <!-- 五、避坑 -->
+  <div class="card">
+    <h2>五、避坑提醒</h2>
+    <div class="note red">
+      <b>① 别碰一线海景溢价盘。</b> 银滩一线海景（如天隆三千海别墅 4.7 万/㎡）自住不划算：贵、空置率高、海风潮湿伤电子设备、配套反而弱。两居自住选 <b>距海 1–3 km 的银海核心</b> 最舒服。
+    </div>
+    <div class="note blue">
+      <b>② 税费看"满五唯一"。</b> 不满二/不满五有增值税（约 5.3%）+ 个税，一套 30 万房可能多掏 2–3 万。天健绿园是满五唯一，税费最低。
+    </div>
+    <div class="note green">
+      <b>③ 防潮准备。</b> 海风湿度大，电脑/服务器/文件柜备除湿，选房看是否返潮。银海新小区防潮普遍好于老城。
+    </div>
+    <div class="note amber">
+      <b>④ 淡季看房。</b> 12–2 月（尤其春节）租金房价双高；建议 3–5 月或 9–11 月实地看，还能顺带体验非旺季的真实居住感。
+    </div>
+  </div>
+
+  <p class="sml">数据来源：58 同城 / 安居客 / 贝壳 / 房天下 2025–2026 北海挂牌行情，价格为参考均价与个案挂牌，非成交保证。购房请以实地看房、房本产权与最新政策为准。</p>
+
+</div>
+</body>
+</html>
