@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>城市经济号竞品对标卡 · 城经笔记 vs 城市财经/三土/国民经略</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#2b3242; --sub:#6b7585;
+    --line:#e6eaf0; --green:#1f9d6b; --blue:#2f6df0; --red:#d8473b; --amber:#e09a1d;
+    --purple:#7c5cff; --teal:#16a3a3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:24px 14px}
+  .wrap{max-width:960px;margin:0 auto}
+  .head{background:linear-gradient(135deg,#f3efff,#f0f6f3);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:18px}
+  .head h1{font-size:22px;letter-spacing:.5px}
+  .head .sub{color:var(--sub);font-size:13px;margin-top:6px}
+  .tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;margin-top:10px;margin-right:6px}
+  .tag.p{background:#efeaff;color:var(--purple)}
+  .tag.b{background:#eaf1fe;color:var(--blue)}
+  .tag.a{background:#fdf3e3;color:var(--amber)}
+  .tag.g{background:#eaf4ef;color:var(--green)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:16px}
+  .card h2{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .card h2::before{content:"";width:4px;height:16px;background:var(--purple);border-radius:2px}
+  .card h2 .idx{font-size:12px;color:#fff;background:var(--purple);border-radius:6px;padding:2px 8px}
+  .tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  .tbl th,.tbl td{border:1px solid var(--line);padding:8px 9px;vertical-align:top;text-align:left}
+  .tbl th{background:#f7f9fc;font-weight:600;color:var(--sub)}
+  .tbl td.l{font-weight:700;background:#fafbfd;white-space:nowrap}
+  .g{color:var(--green);font-weight:700}
+  .b{color:var(--blue);font-weight:700}
+  .r{color:var(--red);font-weight:700}
+  .a{color:var(--amber);font-weight:700}
+  .p{color:var(--purple);font-weight:700}
+  .t{color:var(--teal);font-weight:700}
+  .note{border-radius:12px;padding:13px 15px;font-size:13px;margin-top:12px}
+  .note.pur{background:#f3efff;border-left:3px solid var(--purple)}
+  .note.blue{background:#f0f4fe;border-left:3px solid var(--blue)}
+  .note.amber{background:#fdf6ea;border-left:3px solid var(--amber)}
+  .note.green{background:#eef8f2;border-left:3px solid var(--green)}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 4px;font-size:12.5px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .legend i{width:14px;height:14px;border-radius:3px;display:inline-block}
+  .axis-label{font-size:11px;fill:var(--sub)}
+  .grid{fill:none;stroke:#e6eaf0;stroke-width:1}
+  .score td{text-align:center}
+  .score td.l{text-align:left}
+  .kv{font-size:12.5px;color:var(--sub);margin-top:4px}
+  ul{margin:8px 0 0 18px;font-size:13px}
+  ul li{margin:4px 0}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:10px;margin-left:4px}
+  .pill.win{background:#eaf4ef;color:var(--green)}
+  .pill.weak{background:#fbf2f0;color:var(--red)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>城市经济号 · 竞品横向对标卡</h1>
+    <div class="sub">城经笔记（你的号）对标 城市财经 / 三土城市笔记 / 国民经略 —— 定位、数据质量、可视化、变现、社群五维切片</div>
+    <div>
+      <span class="tag p">城经笔记 · 你</span>
+      <span class="tag b">城市财经 · 头部</span>
+      <span class="tag a">三土城市笔记 · 长三角</span>
+      <span class="tag g">国民经略 · 数据派</span>
+    </div>
+  </div>
+
+  <!-- 雷达图 -->
+  <div class="card">
+    <h2><span class="idx">图</span>六维能力雷达（1–5 分，主观评分基于公开资料）</h2>
+    <div class="legend">
+      <span><i style="background:#7c5cff"></i>城经笔记</span>
+      <span><i style="background:#2f6df0"></i>城市财经</span>
+      <span><i style="background:#e09a1d"></i>三土城市笔记</span>
+      <span><i style="background:#1f9d6b"></i>国民经略</span>
+    </div>
+    <svg viewBox="0 0 680 420" width="100%" style="max-width:680px;margin:0 auto;display:block">
+      <!-- 网格六边形 -->
+      <polygon class="grid" points="340,70 461.24,140 461.24,280 340,350 218.76,280 218.76,140"/>
+      <polygon class="grid" points="340,105 414.62,140 414.62,280 340,315 265.38,280 265.38,140"/>
+      <polygon class="grid" points="340,140 367.99,175 367.99,245 340,280 312.01,245 312.01,175"/>
+      <!-- 轴线 -->
+      <g stroke="#e6eaf0" stroke-width="1">
+        <line x1="340" y1="210" x2="340" y2="70"/>
+        <line x1="340" y1="210" x2="461.24" y2="140"/>
+        <line x1="340" y1="210" x2="461.24" y2="280"/>
+        <line x1="340" y1="210" x2="340" y2="350"/>
+        <line x1="340" y1="210" x2="218.76" y2="280"/>
+        <line x1="340" y1="210" x2="218.76" y2="140"/>
+      </g>
+      <!-- 轴标签 -->
+      <g class="axis-label" text-anchor="middle">
+        <text x="340" y="58">覆盖广度</text>
+        <text x="478" y="135">数据严谨</text>
+        <text x="478" y="295">可视化</text>
+        <text x="340" y="368">变现成熟度</text>
+        <text x="202" y="295">社群黏性</text>
+        <text x="202" y="135">原创深度</text>
+      </g>
+      <!-- 城经笔记 紫 -->
+      <polygon points="340,154 461.24,140 461.24,280 340,238 218.76,252 218.76,84" fill="#7c5cff" fill-opacity="0.18" stroke="#7c5cff" stroke-width="2.2"/>
+      <!-- 城市财经 蓝 -->
+      <polygon points="340,70 461.24,112 461.24,322 340,350 218.76,294 218.76,126" fill="#2f6df0" fill-opacity="0.12" stroke="#2f6df0" stroke-width="1.8"/>
+      <!-- 三土 琥珀 -->
+      <polygon points="340,126 461.24,98 461.24,280 340,308 218.76,336 218.76,70" fill="#e09a1d" fill-opacity="0.12" stroke="#e09a1d" stroke-width="1.8"/>
+      <!-- 国民经略 绿 -->
+      <polygon points="340,98 461.24,84 461.24,294 340,294 218.76,266 218.76,98" fill="#1f9d6b" fill-opacity="0.12" stroke="#1f9d6b" stroke-width="1.8"/>
+      <!-- 顶点标注 -->
+      <g font-size="10" font-weight="600">
+        <text x="340" y="150" fill="#7c5cff" text-anchor="middle">2</text>
+        <text x="466" y="138" fill="#7c5cff">5</text>
+        <text x="466" y="284" fill="#7c5cff">5</text>
+        <text x="340" y="234" fill="#7c5cff" text-anchor="middle">1</text>
+        <text x="214" y="256" fill="#7c5cff" text-anchor="end">1.5</text>
+        <text x="214" y="82" fill="#7c5cff" text-anchor="end">4.5</text>
+      </g>
+    </svg>
+    <p class="kv">读图：你的号在<b class="p">数据严谨 + 可视化</b>两个顶点拉满，但在<b class="r">变现 + 社群</b>两个顶点几乎贴地 —— 这是最该补的短板，也是头部号已经跑通的地方。</p>
+  </div>
+
+  <!-- 多维对比表 -->
+  <div class="card">
+    <h2><span class="idx">表</span>四号核心指标对比</h2>
+    <table class="tbl">
+      <thead><tr><th class="l">维度</th><th>城经笔记（你）</th><th>城市财经</th><th>三土城市笔记</th><th>国民经略</th></tr></thead>
+      <tbody>
+        <tr><td class="l">定位赛道</td><td>用<b class="p">数据帮普通人做城市/居住决策</b>；宏观与诗远方之间的空白带</td><td>城市经济"平民实用传递者"，全国覆盖</td><td>长三角区域深度解读 + 房产投资导向</td><td>城市与楼市数据/政策解密，"读懂城市和楼市"</td></tr>
+        <tr><td class="l">覆盖广度</td><td>4 城 + 北海（样本少）<span class="pill weak">窄</span></td><td>全国 200+ 城<span class="pill win">最广</span></td><td>长三角（杭甬宁苏锡…）<span class="pill win">区域深</span></td><td>全国 + 强二线为主</td></tr>
+        <tr><td class="l">数据严谨度</td><td><b class="p">常住口径 + 公开纠错</b>（已修正宁波户籍/常住之误）</td><td>二手数据整合，偶有口径混用</td><td>硬核财经分析，数据扎实</td><td>数据 + 政策解读派，出书立说</td></tr>
+        <tr><td class="l">可视化能力</td><td><b class="p">SVG 联动图 / 雷达图</b>（自研）</td><td>图表 + 动画（团队制作）</td><td>以文字长文为主，图少</td><td>文字 + 数据图，偏静态</td></tr>
+        <tr><td class="l">立场倾向</td><td>数据求真、不唱多不唱空</td><td>偏民生实用、软文商业化重</td><td>敢泼冷水（"担心杭州"）、有鲜明观点</td><td>政策中性、数据说话</td></tr>
+        <tr><td class="l">粉丝体量</td><td>新建（待起量）</td><td><b>120 万+</b>（全网，2024）</td><td>长三角垂类头部（数万～十余万级）</td><td>抖音 20 万 + 出书 3 亿阅读</td></tr>
+        <tr><td class="l">变现模式</td><td>未启动<span class="pill weak">空白</span></td><td>软文发稿 <b>1.95 万/篇</b> + 直播 + 政府智库合作</td><td>知识星球 + 读者群 + 出书 + 线下活动</td><td>出书 IP + 知识付费 + 平台分成</td></tr>
+        <tr><td class="l">社群/私域</td><td>无<span class="pill weak">空白</span></td><td>留言 + 投稿 + 城市 walk</td><td><b>十几个读者群</b> + 见面会（黏性极高）</td><td>较弱，以内容触达为主</td></tr>
+        <tr><td class="l">最大短板</td><td>无发布日历、样本少、无后台数据</td><td>软文重、独立性受质疑</td><td>覆盖局限于长三角、产能靠个人</td><td>平台依赖（抖音）、社群弱</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 城经笔记差异化机会 -->
+  <div class="card">
+    <h2><span class="idx">★</span>城经笔记的差异化机会（别人抄不走的点）</h2>
+    <div class="note pur">
+      <b>你的不可替代三角：</b>
+      <ul>
+        <li><b>真做可视化</b>——SVG 联动图（人口结构×房价）是头部号都没做的硬核形态，天然适合"数据决策"定位。</li>
+        <li><b>数据求真人设</b>——你公开纠错宁波户籍/常住之误，这种"敢认错、口径严"的调性，正好是城市号里最稀缺的信任资产。</li>
+        <li><b>亲自实践</b>——北海实地看房、阳台种辣椒越冬，不是纸上谈兵；"旅居 + 自住 + 远程办公"是数字游民真实痛点，三土/城市财经都不碰这个交叉点。</li>
+      </ul>
+    </div>
+    <div class="note amber" style="margin-top:12px">
+      <b>错位竞争策略：</b>别和城市财经拼"全国覆盖 + 软文变现"（打不过 120 万粉的机器），也别和三土拼"长三角深度长文"。<b>做"数据可视化的城市居住决策号"</b>——用一张图说清一个城市值不值得去/买，配 CodeForFun 数据站做深度版后端，公众号做轻量引流。这个切口目前四家里没人占。
+    </div>
+  </div>
+
+  <!-- 可借鉴点 -->
+  <div class="card">
+    <h2><span class="idx">借</span>从三个竞品各借一点</h2>
+    <table class="tbl">
+      <thead><tr><th class="l">来源</th><th>可借鉴</th><th>对你的用法</th></tr></thead>
+      <tbody>
+        <tr><td class="l b">城市财经</td><td>"4+1 板块"栏目化 + 数据可视化"一分钟看懂"系列；政府智库合作</td><td>把你的内容做成<b>固定栏目</b>（城市体检 / 旅居决策 / 数据方法论），而非对话驱动散篇</td></tr>
+        <tr><td class="l a">三土城市笔记</td><td>读者社群（十几个群）+ 见面会 + 鲜明观点（敢泼冷水）</td><td>早期就建<b>读者群</b>，用"城经笔记数据站"做钩子导私域；观点要鲜明，别四平八稳</td></tr>
+        <tr><td class="l g">国民经略</td><td>出书 IP 化（总阅读 3 亿+）+ 政策数据解密</td><td>把系列卡片沉淀为<b>付费合集 / 电子手册</b>，作为第一层变现</td></tr>
+      </tbody>
+    </table>
+    <div class="note blue" style="margin-top:12px">
+      <b>变现顺序建议（从轻到重，先不碰软文灰色地带）：</b><br>
+      ① 流量主（垂类点击价值高）→ ② 免费"城市决策 checklist"模板引流 → ③ 知识星球/付费合集（城市选址、旅居决策）→ ④ 1v1 咨询。独立 = 信任 = 长期资产，别为快钱接楼盘软文。
+    </div>
+  </div>
+
+  <!-- 结论 -->
+  <div class="card">
+    <h2><span class="idx">结</span>一句话结论</h2>
+    <p style="font-size:13.5px">
+      城经笔记现在是个<b class="p">"数据与可视化长板极长、变现与社群短板极短"</b>的 newborn 号。
+      对标头部不必焦虑——<b>城市财经赢在体量与商业、三土赢在区域深度与社群、国民经略赢在 IP 与政策</b>，
+      而你的位置是它们都没占的<b>"数据可视化 × 城市居住决策 × 亲自实践"</b>交叉点。
+      先把长板做成栏目品牌（城市体检系列 + 旅居决策系列），同步补最短的两条腿（发布日历 + 读者群），半年内可形成清晰辨识度。
+    </p>
+    <p class="kv">数据来源：各号公开专访 / 百科 / 媒体资料（2024–2026）；评分为基于公开信息的结构性判断，非精确计量。本卡为城经笔记内容战略内部参考，可推 CodeForFun 数据站归档。</p>
+  </div>
+
+</div>
+</body>
+</html>
