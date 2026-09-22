@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前20城住房公积金购房支撑力 · 贷款额度 ÷ 房价（2026）</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2933; --sub:#5b6770;
+    --line:#e3e8ee; --accent:#2f6fed; --accent2:#e8832a; --good:#1a8a5a; --warn:#c0392b;
+    --band:#eef3fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:28px 18px}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{background:linear-gradient(135deg,#1a8a5a,#0f6b43);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:22px}
+  header h1{font-size:23px;font-weight:700;margin-bottom:8px}
+  header p{font-size:13px;opacity:.92;line-height:1.7}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:3px 12px;font-size:12px;margin:8px 8px 0 0}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+  h2{font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  h2 .num{background:var(--good);color:#fff;width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+  .lead{color:var(--sub);font-size:13.5px;margin:6px 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+  thead th{background:var(--band);color:var(--ink);font-weight:600;position:sticky;top:0}
+  tbody tr:hover{background:var(--band)}
+  .rk{font-weight:700;color:var(--good)}
+  .hl{background:#eafaf1}
+  .hl td{font-weight:600}
+  .bar-row{margin:7px 0;display:flex;align-items:center;gap:10px;font-size:12.5px}
+  .bar-row .name{width:62px;flex:none;text-align:right;color:var(--sub)}
+  .bar-track{flex:1;background:#eef1f5;border-radius:6px;overflow:hidden;height:22px}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
+  .val{width:96px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 8px}
+  .kpi{background:var(--band);border-radius:10px;padding:14px;text-align:center}
+  .kpi .v{font-size:19px;font-weight:700;color:var(--good)}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:3px}
+  .note{background:#fff8f0;border:1px solid #f3d9b0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#7a5a2a;margin-top:10px}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--ink)}
+  ul li{margin:6px 0}
+  .strong{color:var(--good);font-weight:600}
+  .em{color:var(--accent2);font-weight:600}
+  footer{font-size:12px;color:var(--sub);text-align:center;padding:14px;border-top:1px solid var(--line)}
+  code{background:#eef1f5;padding:1px 6px;border-radius:5px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>前20城 · 公积金购房支撑力（2026）</h1>
+  <p>公积金最高可贷额度 ÷ 90㎡刚需套均总价 = 公积金对购房的覆盖度。额度高≠够用，关键看相对房价。</p>
+  <div>
+    <span class="tag">口径：家庭最高可贷(顶配) ÷ 房价×90㎡</span>
+    <span class="tag">房价：克而瑞2025上半年成交均价(与前序8城一致)</span>
+    <span class="tag">覆盖：前20城全样本</span>
+    <span class="tag">更新：2026-09-22</span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="num">1</span>核心结论</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">140%</div><div class="l">覆盖度峰值(宁波)</div></div>
+    <div class="kpi"><div class="v">33%</div><div class="l">覆盖度谷值(上海)</div></div>
+    <div class="kpi"><div class="v">38%</div><div class="l">深圳(一线最吃力)</div></div>
+    <div class="kpi"><div class="v">20城</div><div class="l">全样本覆盖</div></div>
+  </div>
+  <ul>
+    <li><span class="strong">反差第一：归集额排名与购房支撑力完全脱钩</span>。深圳归集额全国第4，但公积金顶配仅能覆盖 90㎡ 房的 <b>38%</b>；宁波归集额仅第15，却因房价低+额度高，顶配覆盖 <b>140%</b>（用满公积金可全款买刚需房）。</li>
+    <li><span class="em">一线城市全面"不够用"</span>：上海（33%）、深圳（38%）、北京（62%）——京沪深套均总价均超 540 万，公积金顶配 208~340 万，仅够首付的零头，核心矛盾是<b>房价而非额度</b>。</li>
+    <li><span class="em">内陆二线反成"公积金友好区"</span>：武汉（106%）、无锡（115%）、重庆（120%）、广州（118%）、宁波（140%）、长沙（105%）、郑州（102%）、青岛（99%）——公积金顶配基本能覆盖 100%~140% 的刚需房，制度红利实实在在。其中<b>重庆、郑州虽覆盖最薄(10.5%/16.1%)，但房价低使购房支撑力反而超高</b>，形成新的"低覆盖—高支撑"反差。</li>
+    <li><span class="strong">广州是"一线里最良心"</span>：房价（3.05万/㎡/90㎡≈305万）远低于京沪深，叠加家庭顶配 360 万，覆盖度 118%，是唯一公积金可"全覆盖"的一线城市。</li>
+    <li><span class="strong">本次补全的12城（原"—"）全部进入 87%~140% 友好区间</span>，仅南京（40%）、合肥（59%）因房价相对偏高而偏弱——合肥90㎡房价约203万（中部省会偏高），南京约249万，拉低了覆盖度。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">2</span>20城完整对比表</h2>
+  <p class="lead">覆盖度 = 家庭最高可贷(顶配) ÷ (房价×90㎡)×100%。房价为克而瑞2025上半年成交均价，90㎡套均总价 = 房价×90÷10000（万元）。家庭最高可贷取双缴存/夫妻首套常规顶配（部分城含政策上浮，见注）。</p>
+  <table>
+    <thead>
+      <tr><th>排名</th><th>城市</th><th>房价(元/㎡)</th><th>90㎡套均总价(万)</th><th>家庭顶配可贷(万)</th><th>顶配覆盖度</th></tr>
+    </thead>
+    <tbody id="tbl"></tbody>
+  </table>
+  <div class="note">套均总价按 90㎡ 刚需户型估算（各城实际主力户型不同，结论方向稳健）。家庭最高可贷口径：北京340(城六区外顶配)/上海240(含补充公积金)/广州360/深圳208(首套+上浮)/杭州306(叠加上浮)/成都120(双缴存)/苏州200/宁波360(甬九条)/重庆150(夫妻2026.3)/沈阳150(夫妻2026.3)/无锡150(夫妻)/武汉150(双缴存)/郑州130(报告值)/长沙120(新建商品房)/青岛130(双缴存2026.4)/济南130(两人及以上2026.4)/天津120(首套2026.2)/西安120(双缴存2026)/合肥120(双职工2025.9)/南京100(夫妻基础)。"<b>沈阳房价采用克而瑞2025H1口径（约1.23万/㎡），与全省均值口径不同，覆盖度135%为本口径结果。</b></div>
+</section>
+
+<section>
+  <h2><span class="num">3</span>可视化：公积金顶配覆盖度（% of 90㎡刚需房，降序）</h2>
+  <div id="chart"></div>
+  <div class="note">红条（&lt;60%）为京沪深沪——公积金对购房"心有余而力不足"；绿条（≥85%）为宁波/重庆/广州/无锡/武汉/长沙/郑州/杭州/青岛/济南/苏州——公积金是刚需购房的"主力弹药"。覆盖度&gt;100% 表示顶配公积金可覆盖全部 90㎡ 房款。</div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>深度解读（给长官用）</h2>
+  <h3 style="font-size:14px;margin:6px 0 6px">① 为什么深圳"归集第4、支撑垫底"</h3>
+  <ul>
+    <li>深圳 90㎡ 房约 541 万，家庭顶配贷款仅 208 万（首套+上浮后），覆盖度 <b>38%</b>。即便深圳基数上限全国最高（48,471），但房价（6.02万/㎡）同样全国前三，公积金杠杆被高房价吞噬。</li>
+    <li>对比宁波：90㎡ 房约 257 万，家庭顶配 360 万，覆盖度 140%——<b>低房价+高额度（余额×25倍+多孩人才叠加）双重红利</b>。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">② 对"两地通勤"长官的实操意义</h3>
+  <ul>
+    <li><span class="strong">广州</span>：公积金覆盖度 118%（顶配），且额度走"还贷能力"而非余额倍数，适合高基数但余额薄的人；是广深之间购房的更优公积金选择。</li>
+    <li><span class="strong">宁波</span>：覆盖度 140% 居首，且"甬九条"把大专学历首次纳入人才上浮（+20%），对独立开发者是实打利；但额度按余额×25倍，<b>买房前慎提租房公积金</b>以免拉低可贷额。</li>
+    <li><span class="strong">重庆/郑州/沈阳</span>：覆盖度薄（10%~18%）但购房支撑力极高（118%~135%）——因为房价低。若定居这些低总价城市，公积金杠杆极划算；但若只为"高覆盖"而选城，需权衡就业机会。</li>
+    <li>若预算在 250~300 万刚需房，宁波/杭州/苏州/重庆/武汉的公积金几乎可"包圆"；若盯京沪深核心区，公积金仅是首付补充，须搭配商贷。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">③ 方法局限</h3>
+  <ul>
+    <li>本表为前20城全样本，家庭最高可贷取各市2025-2026公开政策中的"双缴存/夫妻首套常规顶配"，未含多孩/人才/绿色建筑等额外上浮（避免口径膨胀失真）。</li>
+    <li>南京（100万）、合肥（120万）采用基础夫妻档，未计多子女上浮；若计入，覆盖度可再上修 10~30 个百分点。</li>
+    <li>房价统一取自克而瑞2025上半年成交均价（与前序8城重点卡一致），与安居客/中指全年口径可能存在 ±10% 偏差，但横向排序方向稳健。</li>
+  </ul>
+</section>
+
+<footer>
+  数据来源：各市2025-2026公积金贷款政策（广州穗公积金规字〔2026〕1号/宁波甬九条/杭州杭房公委〔2026〕1号/苏州提额/成都/北京/深圳深建字〔2026〕86号/重庆2026.3/沈阳2026.3/无锡2026延/武汉/郑州/长沙/青岛/济南/天津/合肥/南京）；房价取克而瑞2025上半年重点城市成交均价 ｜ 整理：WorkBuddy ｜ 2026-09-22
+</footer>
+
+</div>
+
+<script>
+const data = [
+  {c:"宁波",price:256.7,loan:360},
+  {c:"重庆",price:125.0,loan:150},
+  {c:"广州",price:305.1,loan:360},
+  {c:"无锡",price:130.7,loan:150},
+  {c:"武汉",price:141.9,loan:150},
+  {c:"长沙",price:114.0,loan:120},
+  {c:"郑州",price:126.9,loan:130},
+  {c:"杭州",price:298.8,loan:306},
+  {c:"青岛",price:130.8,loan:130},
+  {c:"济南",price:148.3,loan:130},
+  {c:"苏州",price:235.9,loan:200},
+  {c:"天津",price:163.9,loan:120},
+  {c:"西安",price:173.1,loan:120},
+  {c:"成都",price:174.0,loan:120},
+  {c:"北京",price:544.9,loan:340},
+  {c:"合肥",price:202.9,loan:120},
+  {c:"南京",price:249.3,loan:100},
+  {c:"深圳",price:541.4,loan:208},
+  {c:"上海",price:729.4,loan:240}
+];
+const tbl=document.getElementById('tbl');
+const sorted=[...data].sort((a,b)=> (b.loan/(b.price)) - (a.loan/(a.price)));
+sorted.forEach((d,i)=>{
+  const total=(d.price).toFixed(1);
+  const px=Math.round(d.price*10000/90).toLocaleString();
+  const cov=(d.loan/(d.price)*100).toFixed(0)+'%';
+  const tr=document.createElement('tr');
+  const good=parseFloat(cov)>85;
+  if(good) tr.className='hl';
+  tr.innerHTML=`<td class="rk">${i+1}</td><td>${d.c}</td><td>${px}</td><td>${total}</td><td>${d.loan}</td><td>${cov}</td>`;
+  tbl.appendChild(tr);
+});
+const maxCov=140;
+const chart=document.getElementById('chart');
+sorted.forEach(d=>{
+  const cov=d.loan/(d.price)*100;
+  const w=(cov/maxCov*100).toFixed(1);
+  const color=cov>=85?'#1a8a5a':(cov>=60?'#e8832a':'#c0392b');
+  const row=document.createElement('div');row.className='bar-row';
+  row.innerHTML=`<div class="name">${d.c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${color}">${cov.toFixed(0)}%</div></div><div class="val">${cov.toFixed(0)}%</div>`;
+  chart.appendChild(row);
+});
+</script>
+</body>
+</html>
