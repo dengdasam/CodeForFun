@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前20城公积金缴存人数 vs 常住人口 vs 适龄劳动人数 深度对比</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2933; --sub:#5b6770;
+    --line:#e3e8ee; --accent:#2f6fed; --accent2:#e8832a; --good:#1a8a5a; --warn:#c0392b;
+    --band:#eef3fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:28px 18px}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{background:linear-gradient(135deg,#2f6fed,#1f4fa8);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:22px}
+  header h1{font-size:23px;font-weight:700;margin-bottom:8px}
+  header p{font-size:13px;opacity:.92;line-height:1.7}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:3px 12px;font-size:12px;margin:8px 8px 0 0}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+  h2{font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  h2 .num{background:var(--accent);color:#fff;width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+  .lead{color:var(--sub);font-size:13.5px;margin:6px 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+  thead th{background:var(--band);color:var(--ink);font-weight:600;position:sticky;top:0}
+  tbody tr:hover{background:var(--band)}
+  .rk{font-weight:700;color:var(--accent)}
+  .hl{background:#fff6ea}
+  .hl td{font-weight:600}
+  .bar-row{margin:7px 0;display:flex;align-items:center;gap:10px;font-size:12.5px}
+  .bar-row .name{width:62px;flex:none;text-align:right;color:var(--sub)}
+  .bar-track{flex:1;background:#eef1f5;border-radius:6px;overflow:hidden;height:20px}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
+  .val{width:86px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 8px}
+  .kpi{background:var(--band);border-radius:10px;padding:14px;text-align:center}
+  .kpi .v{font-size:19px;font-weight:700;color:var(--accent)}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:3px}
+  .note{background:#fff8f0;border:1px solid #f3d9b0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#7a5a2a;margin-top:10px}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--ink)}
+  ul li{margin:6px 0}
+  .strong{color:var(--accent);font-weight:600}
+  .em{color:var(--accent2);font-weight:600}
+  footer{font-size:12px;color:var(--sub);text-align:center;padding:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>前20城 · 公积金缴存人数 vs 常住人口 vs 适龄劳动人数</h1>
+  <p>缴存人数（实缴职工）÷ 常住人口 = 公积金覆盖率；÷ 适龄劳动人数（15-59岁） = 劳动人口渗透率</p>
+  <div>
+    <span class="tag">数据年度：2025</span>
+    <span class="tag">缴存人数：各市公积金年报</span>
+    <span class="tag">常住人口：各市统计局公报</span>
+    <span class="tag">适龄劳动人数：七普年龄结构估算</span>
+    <span class="tag">更新：2026-09-22</span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="num">1</span>核心结论</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">42.8%</div><div class="l">覆盖率峰值(北京)</div></div>
+    <div class="kpi"><div class="v">10.5%</div><div class="l">覆盖率谷值(重庆)</div></div>
+    <div class="kpi"><div class="v">62.4%</div><div class="l">渗透率峰值(北京)</div></div>
+    <div class="kpi"><div class="v">16.9%</div><div class="l">渗透率谷值(重庆)</div></div>
+  </div>
+  <ul>
+    <li><span class="strong">公积金是"就业特权"，不是全民福利</span>：前20城公积金覆盖率中位数约 <b>22%</b>、渗透率中位数约 <b>35%</b>——即常住人口里仅约 1/5 缴存，适龄劳动人数里约 1/3 缴存。</li>
+    <li><span class="em">北京双冠</span>：覆盖率 42.8%、渗透率 62.4% 均第一；央企/国企/机关密度最高，正规就业占比最大。</li>
+    <li><span class="em">重庆最极端</span>：3187万常住人口全国第一，但缴存仅 336万，覆盖率 <b>10.5%</b>、渗透率 <b>16.9%</b> 双双垫底——"超大城市的公积金洼地"，农民工/灵活就业未纳入。</li>
+    <li><span class="strong">苏州反直觉</span>：渗透率 57.4%（第3高，仅次于京沪），但覆盖率仅 36.1%——制造业正规就业面极宽，只是被 1305万总人口摊薄，是"高质量覆盖"样本。</li>
+    <li>排名口径：本表按<b>归集额前20</b>排序（与归集额/人均卡一致），便于跨维度对照；若按覆盖率排序，北京仍居首，重庆将跌至末位。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">2</span>前20城完整对比表</h2>
+  <p class="lead">实缴职工人数取自公积金年报；常住人口取各市统计局2025公报；适龄劳动人数 = 2025常住人口 × 七普(2020)15-59岁占比（估算，详见第5节口径）。</p>
+  <table>
+    <thead>
+      <tr><th>排名</th><th>城市</th><th>实缴职工(万)</th><th>常住人口(万)</th><th>适龄劳动人数(万)</th><th>覆盖率</th><th>渗透率</th></tr>
+    </thead>
+    <tbody id="tbl"></tbody>
+  </table>
+  <div class="note">注：黄色高亮为"覆盖率与渗透率显著背离"或极值的奇异城市（重庆 / 北京 / 苏州 / 成都 / 郑州）。覆盖率=实缴÷常住；渗透率=实缴÷适龄劳动人数（15-59岁）。数据交叉自各市《2025公积金年报》《2025统计公报》及七普年龄结构。</div>
+</section>
+
+<section>
+  <h2><span class="num">3</span>可视化：覆盖率 vs 渗透率</h2>
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:14px;margin-bottom:8px;color:var(--accent)">公积金覆盖率 = 实缴÷常住 · 降序</h3>
+      <div id="chartCov"></div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;margin-bottom:8px;color:var(--accent2)">劳动人口渗透率 = 实缴÷适龄劳动人数 · 降序</h3>
+      <div id="chartPen"></div>
+    </div>
+  </div>
+  <div class="note">规律：<b>覆盖率</b>长条北京一柱擎天、重庆压到谷底；<b>渗透率</b>长条京沪苏抱团高位、重庆仍垫底——说明"人口规模大"与"公积金覆盖好"完全两回事，重庆/成都/郑州是典型"人多但覆盖薄"。</div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>深度解读（奇异数据专题）</h2>
+  <h3 style="font-size:14px;margin:6px 0 6px">① 双冠与双底</h3>
+  <ul>
+    <li><span class="strong">北京（双冠）</span>：覆盖率 42.8%、渗透率 62.4% 全部第一。逻辑清晰——央企总部、机关事业单位、国企高度集中，正规就业+高基数，公积金几乎是"默认福利"。</li>
+    <li><span class="em">重庆（双底）</span>：覆盖率 10.5%、渗透率 16.9% 全部垫底，且断层式低于第二名（郑州 16.1%/27.3%）。3187万人口里大量为区县农业转移人口、灵活就业、制造业临时工，未进入公积金体系。这是前20城里"盘子最大、覆盖最薄"的反差极点。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">② "人口大城、公积金洼地"</h3>
+  <ul>
+    <li><span class="em">成都</span>：常住人口 2153.5万（全国第4），但缴存仅 469.9万，覆盖率 21.8%、渗透率 35.1%——人口体量远超缴存体量，是"规模红利未转化为公积金覆盖"的典型。</li>
+    <li><span class="em">郑州</span>：覆盖率 16.1%（第19）、渗透率 27.3%（第19），两项均倒数第二；作为河南省会、千万级人口，正规就业缴存面明显偏窄。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">③ 反直觉：苏州的高渗透</h3>
+  <ul>
+    <li><span class="strong">苏州</span>：渗透率 57.4%（第3，仅次于京沪），但覆盖率仅 36.1%——制造业大市、规上企业密集，适龄劳动人数几乎全员正规参保，只是被 1305万常住人口（含大量非缴存户籍/外来非正规）摊薄了覆盖率。是"质量型覆盖"范本，与深圳"总量大但人均低"形成对照。</li>
+    <li><span class="strong">深圳</span>：覆盖率 40.0%、渗透率 50.3%，绝对值不低，但适龄劳动人数达 1451万（全国劳动人口最多之一），庞大的务工群体拉低了人均缴存（见归集额卡：深圳人均垫底）。"覆盖不低、缴费偏低"。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">④ 梯队速览（按覆盖率）</h3>
+  <ul>
+    <li><b>第一档（≥35%）</b>：北京 42.8、深圳 40.0、苏州 36.1 —— 正规就业主导。</li>
+    <li><b>第二档（27%~35%）</b>：上海 37.1、杭州 31.7、南京 31.1、无锡 26.6、广州 27.8、天津 24.4 —— 强一线/新一线主体。</li>
+    <li><b>第三档（18%~27%）</b>：宁波 22.1、西安 22.1、济南 22.3、长沙 21.4、成都 21.8、青岛 20.4、武汉 21.1、沈阳 18.0、合肥 18.9。</li>
+    <li><b>第四档（&lt;18%，洼地）</b>：郑州 16.1、重庆 10.5 —— 人口规模与覆盖严重错配。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">5</span>数据口径与可靠度</h2>
+  <ul>
+    <li><b>实缴职工人数</b>：取自各市《2025住房公积金年度报告》，可靠；前序归集额卡已与官方逐项核验。</li>
+    <li><b>常住人口</b>：取自各市统计局 2025 年国民经济统计公报（行政口径，含下辖县市），重庆 3187.26 / 上海 2485.41 / 北京 2180 等与官方一致。</li>
+      <li><b>适龄劳动人数（15-59岁）</b>：2025 城市级年龄结构未在公报全量披露，采用 <b>2025常住人口 × 七普(2020)15-59岁占比</b> 估算。广州/深圳/杭州用城市级七普值（74.72/79.53/70.1%），其余用所属省份七普值近似（如苏州/无锡/南京用江苏 62.95%、宁波用浙江 67.86%）。</li>
+      <li><b>方向性偏差提示</b>：2025 全国 15-59 岁占比（60.6%）较七普（63.35%）低约 2.7 个百分点，城市亦同向下行，故适龄劳动人数估算<b>略偏高</b>、渗透率/覆盖率<b>略偏低</b>；但所有城市同向偏差，排序与结论稳健。</li>
+    <li>本表为<b>缴存覆盖维度</b>，与归集额卡（收入侧）、贷款额度卡（支出侧）互补，三张合并即城市公积金全景。</li>
+  </ul>
+</section>
+
+<footer>
+  数据来源：各市《2025住房公积金年度报告》· 各市统计局2025公报 · 第七次全国人口普查（2020）年龄结构 · 国家统计局 ｜ 整理：WorkBuddy ｜ 2026-09-22
+</footer>
+
+</div>
+
+<script>
+const data = [
+  {rk:1,c:"北京",ppl:932.5,pop:2180.0,youth:1494,cov:42.8,pen:62.4},
+  {rk:2,c:"上海",ppl:923.3,pop:2485.4,youth:1661,cov:37.1,pen:55.6},
+  {rk:3,c:"广州",ppl:530.2,pop:1910.1,youth:1427,cov:27.8,pen:37.2},
+  {rk:4,c:"深圳",ppl:729.4,pop:1824.9,youth:1451,cov:40.0,pen:50.3},
+  {rk:5,c:"杭州",ppl:402.5,pop:1270.0,youth:890,cov:31.7,pen:45.2},
+  {rk:6,c:"成都",ppl:469.9,pop:2153.5,youth:1339,cov:21.8,pen:35.1,hl:true},
+  {rk:7,c:"苏州",ppl:471.4,pop:1304.8,youth:821,cov:36.1,pen:57.4,hl:true},
+  {rk:8,c:"南京",ppl:299.4,pop:963.9,youth:607,cov:31.1,pen:49.3},
+  {rk:9,c:"天津",ppl:331.9,pop:1363.0,youth:884,cov:24.4,pen:37.5},
+  {rk:10,c:"武汉",ppl:292.3,pop:1386.2,youth:877,cov:21.1,pen:33.3},
+  {rk:11,c:"重庆",ppl:336.0,pop:3187.3,youth:1983,cov:10.5,pen:16.9,hl:true},
+  {rk:12,c:"西安",ppl:292.6,pop:1323.6,youth:840,cov:22.1,pen:34.8},
+  {rk:13,c:"济南",ppl:214.1,pop:961.6,youth:580,cov:22.3,pen:36.9},
+  {rk:14,c:"郑州",ppl:210.9,pop:1313.8,youth:772,cov:16.1,pen:27.3,hl:true},
+  {rk:15,c:"宁波",ppl:217.7,pop:983.3,youth:667,cov:22.1,pen:32.6},
+  {rk:16,c:"长沙",ppl:229.4,pop:1072.1,youth:650,cov:21.4,pen:35.3},
+  {rk:17,c:"青岛",ppl:214.5,pop:1051.6,youth:634,cov:20.4,pen:33.8},
+  {rk:18,c:"合肥",ppl:189.4,pop:1000.5,youth:620,cov:18.9,pen:30.5},
+  {rk:19,c:"无锡",ppl:200.7,pop:753.7,youth:474,cov:26.6,pen:42.3},
+  {rk:20,c:"沈阳",ppl:167.0,pop:927.6,youth:586,cov:18.0,pen:28.5},
+];
+// 表格
+const tbl=document.getElementById('tbl');
+data.forEach(d=>{
+  const tr=document.createElement('tr');
+  if(d.hl) tr.className='hl';
+  tr.innerHTML=`<td class="rk">${d.rk}</td><td>${d.c}</td><td>${d.ppl}</td><td>${d.pop.toLocaleString()}</td><td>${d.youth.toLocaleString()}</td><td>${d.cov.toFixed(1)}%</td><td>${d.pen.toFixed(1)}%</td>`;
+  tbl.appendChild(tr);
+});
+// 覆盖率条形
+const covSorted=[...data].sort((a,b)=>b.cov-a.cov);
+const maxCov=Math.max(...covSorted.map(d=>d.cov));
+const cc=document.getElementById('chartCov');
+covSorted.forEach(d=>{
+  const w=(d.cov/maxCov*100).toFixed(1);
+  const row=document.createElement('div');row.className='bar-row';
+  row.innerHTML=`<div class="name">${d.c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${d.hl?'#e8832a':'#2f6fed'}">${d.cov.toFixed(1)}%</div></div><div class="val">${d.cov.toFixed(1)}%</div>`;
+  cc.appendChild(row);
+});
+// 渗透率条形
+const penSorted=[...data].sort((a,b)=>b.pen-a.pen);
+const maxPen=Math.max(...penSorted.map(d=>d.pen));
+const cp=document.getElementById('chartPen');
+penSorted.forEach(d=>{
+  const w=(d.pen/maxPen*100).toFixed(1);
+  const row=document.createElement('div');row.className='bar-row';
+  row.innerHTML=`<div class="name">${d.c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${d.hl?'#e8832a':'#e8832a'}">${d.pen.toFixed(1)}%</div></div><div class="val">${d.pen.toFixed(1)}%</div>`;
+  cp.appendChild(row);
+});
+</script>
+</body>
+</html>
