@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>各城市住房公积金2026年度深度对比</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#fff; --ink:#1f2933; --muted:#697586;
+    --line:#e4e9f0; --blue:#2f6fed; --green:#1f9d6b; --amber:#e0892b;
+    --red:#d64545; --purple:#7a5af0; --bar:#dbe7fb; --bar2:#fde7c8;
+    --bar3:#d6f0e2; --bar4:#f3dbe6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+    line-height:1.65;padding:30px 18px 60px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.5px;}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:22px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(20,40,80,.04);}
+  .card h2{font-size:18px;margin:0 0 14px;display:flex;align-items:center;gap:8px;}
+  .tag{font-size:11px;padding:2px 8px;border-radius:20px;background:#eef3fb;color:var(--blue);font-weight:600;}
+  .insight{background:linear-gradient(135deg,#1f2a44,#2f6fed);color:#fff;border:none;}
+  .insight h2{color:#fff;}
+  .insight p{margin:6px 0;font-size:14px;color:#eaf0ff;}
+  .insight b{color:#ffd98a;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:4px;}
+  th,td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--line);}
+  th{background:#f7f9fc;color:var(--muted);font-weight:600;font-size:12.5px;}
+  td.l,th.l{text-align:left;}
+  tr:hover td{background:#fafcff;}
+  .hl{background:#fff7e8 !important;font-weight:600;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px;}
+  .bar-name{width:64px;text-align:right;color:var(--muted);flex:none;}
+  .bar-track{flex:1;background:var(--bar);border-radius:6px;height:18px;position:relative;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--blue);border-radius:6px;}
+  .bar-val{width:88px;flex:none;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+  .vs{border-radius:12px;padding:14px 16px;font-size:13.5px;}
+  .vs-gz{background:#eef4ff;border:1px solid #cfdcfb;}
+  .vs-nb{background:#eefbf3;border:1px solid #c7ecd5;}
+  .vs h3{margin:0 0 8px;font-size:15px;}
+  .vs ul{margin:6px 0 0;padding-left:18px;}
+  .vs li{margin:5px 0;color:#33414f;}
+  .note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:6px;margin-right:4px;}
+  .p-green{background:#e3f6ec;color:#1f7a4d;}
+  .p-red{background:#fbe3e3;color:#b13232;}
+  .p-amber{background:#fdeccf;color:#9a6212;}
+  .src{font-size:11.5px;color:var(--muted);line-height:1.7;}
+  .src a{color:var(--blue);text-decoration:none;}
+  .big{font-size:22px;font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>各城市住房公积金 · 2026年度深度对比</h1>
+<div class="sub">数据时效：2026-09-22 整理 ｜ 执行周期：2026年7月1日—2027年6月30日（缴存基数年度，部分城市贷款/提取政策为2026年内新发）｜ 覆盖：北上广深 + 杭州/苏州/成都/宁波</div>
+
+<div class="card insight">
+  <h2>🔑 三个核心洞察</h2>
+  <p>① <b>利率全国统一定价</b>：公积金贷款利率由央行统一规定（2025-05-08起），首套5年以上 <b>2.6%</b>、二套 <b>3.075%</b>，<b>城市之间无差异</b>。所谓"城市差异"只体现在<b>缴存基数、贷款额度上限、提取范围</b>三点。</p>
+  <p>② <b>缴存基数上限深圳最高</b>（48,471元），因深圳社平工资最高；广州（41,697）、杭州（42,151）紧随。基数上限直接决定"高收入群体公积金月缴上限"与未来可贷额度。</p>
+  <p>③ <b>贷款额度普遍跃升</b>：一线城市已普遍提至单人100万/家庭200万级；宁波首次首套户160万、叠加多孩+人才最高可至<b>360万/户</b>；广州家庭基础200万、叠加上限同为360万。</p>
+</div>
+
+<!-- 维度1 缴存基数 -->
+<div class="card">
+  <h2>📊 维度一：缴存基数 & 比例（2026年度）</h2>
+  <table>
+    <thead><tr><th class="l">城市</th><th>基数上限(元)</th><th>基数下限(元)</th><th>单位+个人比例</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td class="l" class="hl">深圳</td><td class="hl">48,471</td><td>2,520<span style="color:var(--muted)">（新入职9月起2,700）</span></td><td>5%–12%</td><td class="l">在岗职工月均16,157×3</td></tr>
+      <tr><td class="l">杭州</td><td>42,151</td><td>—</td><td>—</td><td class="l">2025非私营3倍</td></tr>
+      <tr><td class="l" class="hl">广州</td><td class="hl">41,697</td><td>2,500</td><td>5%–12%</td><td class="l">2025社平3倍</td></tr>
+      <tr><td class="l">苏州</td><td>40,600</td><td>—</td><td>—</td><td class="l">—</td></tr>
+      <tr><td class="l" class="hl">宁波</td><td class="hl">38,907<span style="color:var(--amber)">（暂）</span></td><td>2,660市区 / 2,430县市</td><td>5%–12%</td><td class="l">暂按2025上限，待新标公布</td></tr>
+      <tr><td class="l">上海</td><td>37,731</td><td>2,740</td><td>各5%–7%</td><td class="l">沪公积金管委会〔2026〕3号</td></tr>
+      <tr><td class="l">北京</td><td>36,348</td><td>2,540<span style="color:var(--muted)">（领生活费1,778）</span></td><td>5%–12%</td><td class="l">—</td></tr>
+      <tr><td class="l">成都</td><td>32,969</td><td>—</td><td>—</td><td class="l">—</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:16px;">
+    <div class="bar-row"><span class="bar-name">深圳</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">48,471</span></div>
+    <div class="bar-row"><span class="bar-name">杭州</span><div class="bar-track"><div class="bar-fill" style="width:86.9%"></div></div><span class="bar-val">42,151</span></div>
+    <div class="bar-row"><span class="bar-name">广州</span><div class="bar-track"><div class="bar-fill" style="width:86.0%"></div></div><span class="bar-val">41,697</span></div>
+    <div class="bar-row"><span class="bar-name">苏州</span><div class="bar-track"><div class="bar-fill" style="width:83.8%"></div></div><span class="bar-val">40,600</span></div>
+    <div class="bar-row"><span class="bar-name">宁波</span><div class="bar-track"><div class="bar-fill" style="width:80.3%"></div></div><span class="bar-val">38,907</span></div>
+    <div class="bar-row"><span class="bar-name">上海</span><div class="bar-track"><div class="bar-fill" style="width:77.8%"></div></div><span class="bar-val">37,731</span></div>
+    <div class="bar-row"><span class="bar-name">北京</span><div class="bar-track"><div class="bar-fill" style="width:75.0%"></div></div><span class="bar-val">36,348</span></div>
+    <div class="bar-row"><span class="bar-name">成都</span><div class="bar-track"><div class="bar-fill" style="width:68.0%"></div></div><span class="bar-val">32,969</span></div>
+  </div>
+  <div class="note">注：上海比例区间为"单位与个人各5%~7%"（非5%-12%），与多数城市不同。宁波2026上限暂按2025年值，新标公布后或上浮。深圳新入职职工下限自2026-09-01起由2,520调至2,700。</div>
+</div>
+
+<!-- 维度2 贷款额度 -->
+<div class="card">
+  <h2>💰 维度二：最高贷款额度（2026年最新政策）</h2>
+  <table>
+    <thead><tr><th class="l">城市</th><th>单人基础</th><th>家庭基础</th><th>最高可叠加</th><th>可贷额度公式</th><th class="l">主要上浮机制</th></tr></thead>
+    <tbody>
+      <tr><td class="l" class="hl">广州</td><td class="hl">100万</td><td class="hl">200万</td><td class="hl">360万</td><td class="l">按还贷能力测（月还贷≤家庭收入50%）</td><td class="l">一孩+10%/二孩+40%/三孩+50%；绿建一星+10%/二星+20%/好房子+30%</td></tr>
+      <tr><td class="l">上海</td><td>100万<span style="color:var(--muted)">(首套)</span></td><td>200万<span style="color:var(--muted)">(首套)</span></td><td>+40万<span style="color:var(--muted)">(补充公积金)</span></td><td class="l">—</td><td class="l">多子女+20%；绿建二星+15%；可叠加+35%</td></tr>
+      <tr><td class="l">深圳</td><td>70万</td><td>130万</td><td>上浮后更高</td><td class="l">账户余额×16倍</td><td class="l">首套+60%；初婚初育+50%；两子女+70%；保障房+40%</td></tr>
+      <tr><td class="l" class="hl">宁波</td><td class="hl">80万<span style="color:var(--muted)">×2</span></td><td class="hl">160万<span style="color:var(--muted)">(首套首贷)</span></td><td class="hl">360万</td><td class="l">账户余额×25倍</td><td class="l">多孩+50%；人才大专+20%/本科+30%/研+40%；高才+50%；可叠加</td></tr>
+      <tr><td class="l">北京</td><td>—</td><td>—</td><td>340万<span style="color:var(--muted)">(城六区外首套+多条件)</span></td><td class="l">—</td><td class="l">二孩及以上多子女家庭+40万</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <span class="pill p-amber">广州</span>家庭基础200万、叠加上限360万（穗公积金中心规字〔2026〕1号，2026-04-30）；首付首套/二套均20%，保障房15%。<br>
+    <span class="pill p-amber">宁波</span>首次首套160万/户、非首次首套130万/户（"甬九条"，2026-03-30）；二套首付降至20%。<br>
+    <span class="pill p-green">关键差异</span>广州重"孩次阶梯"，宁波重"人才学历+多孩"双引擎；宁波有<b>余额×25倍</b>明确公式，广州按<b>还贷能力</b>测、无余额倍数。
+  </div>
+</div>
+
+<!-- 维度3 利率 -->
+<div class="card">
+  <h2>📉 维度三：贷款利率（全国统一，2025-05-08起执行）</h2>
+  <table>
+    <thead><tr><th class="l">套数</th><th>5年以下(含5年)</th><th>5年以上</th><th>与商贷(LPR)利差</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><span class="pill p-green">首套</span></td><td>2.1%</td><td>2.6%</td><td rowspan="2" style="color:var(--muted)">商贷5年以上约3.5–3.6%，<br>公积金省约1个百分点</td></tr>
+      <tr><td class="l"><span class="pill p-red">二套</span></td><td>2.525%</td><td>3.075%</td></tr>
+    </tbody>
+  </table>
+  <div class="note">利率为央行统一规定，<b>所有城市一致</b>。二套利率上浮约0.475个百分点。贷款期限1年以上的，次年1月1日起执行新利率。</div>
+</div>
+
+<!-- 维度4 租房提取 -->
+<div class="card">
+  <h2>🏠 维度四：租房提取额度（2026年）</h2>
+  <table>
+    <thead><tr><th class="l">城市</th><th>单人月限额</th><th>单人年限额</th><th>多子女上浮</th><th class="l">说明</th></tr></thead>
+    <tbody>
+      <tr><td class="l">上海</td><td>3,000元</td><td>3.6万</td><td>+20%~40%</td><td class="l">家庭最高4,000/月</td></tr>
+      <tr><td class="l" class="hl">广州</td><td class="hl">2,500元</td><td class="hl">3.0万</td><td class="hl">二孩+40%</td><td class="l">征求意见稿(2026-09-18)，尚未施行</td></tr>
+      <tr><td class="l">北京</td><td>约2,000元</td><td>约2.4万</td><td>+50%</td><td class="l">聚合数据有冲突，以中心公告为准</td></tr>
+      <tr><td class="l">深圳</td><td>灵活</td><td>按实际</td><td>最高</td><td class="l">当月缴存额80%可提</td></tr>
+      <tr><td class="l">杭州/成都</td><td>1,800–2,000元</td><td>2.16–2.4万</td><td>+30%</td><td class="l">新一线标准</td></tr>
+    </tbody>
+  </table>
+  <div class="note">⚠️ 租房提取为各地自主政策，聚合来源数字冲突较大（如北京1500/2000/3000均有报道），本表取较新口径，<b>实际以当地公积金中心最新公告为准</b>。趋势：取消发票/备案要求、支持按月提、多子女上浮。</div>
+</div>
+
+<!-- 专项 广州 vs 宁波 -->
+<div class="card">
+  <h2>🎯 专项：广州 vs 宁波（长官两地通勤视角）</h2>
+  <div class="grid2">
+    <div class="vs vs-gz">
+      <h3>🟦 广州（大湾区核心）</h3>
+      <ul>
+        <li><b>缴存基数上限</b>：41,697元（略高于宁波）</li>
+        <li><b>贷款基础</b>：单人100万 / 家庭200万</li>
+        <li><b>叠加上限</b>：360万（多孩+绿建/好房子）</li>
+        <li><b>额度算法</b>：按还贷能力（月还贷≤家庭收入50%），<b>无余额倍数</b></li>
+        <li><b>上浮逻辑</b>：以"孩次"为主线（一/二/三孩10%/40%/50%）+绿色建筑</li>
+        <li><b>特色提取</b>：租房提取征求意见提至2,500/月；购房提取放宽至全国</li>
+        <li><b>适合</b>：高收入、多孩、买"好房子/绿建"的家庭，额度上限高</li>
+      </ul>
+    </div>
+    <div class="vs vs-nb">
+      <h3>🟩 宁波（宜居+创业）</h3>
+      <ul>
+        <li><b>缴存基数上限</b>：38,907元（暂按2025，待公布）</li>
+        <li><b>贷款基础</b>：首次首套160万/户（高于广州家庭基础？否，广州200万更高）</li>
+        <li><b>叠加上限</b>：360万（多孩+人才叠加）</li>
+        <li><b>额度算法</b>：<b>账户余额×25倍</b>（余额高者更划算）</li>
+        <li><b>上浮逻辑</b>：以"人才学历+多孩"双引擎（大专20%/本科30%/研40%+多孩50%）</li>
+        <li><b>特色提取</b>：可提<b>物业费</b>（5000/人/年）、契税/维修资金；全款购房5年内持续提</li>
+        <li><b>适合</b>：青年人才、账户余额厚、想提物业费/契税的群体</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note">
+    <b>对长官的实操建议</b>：
+    ① 若计划1年内买房，<b>慎提租房公积金</b>——宁波按余额×25倍算，提取会直接拉低可贷额度；
+    ② 宁波"甬九条"把<b>大专学历</b>首次纳入人才上浮（20%），对学历友好的独立开发者是实打实利好；
+    ③ 广州额度走"还贷能力"而非余额倍数，账户余额多少对上限影响小，更适合高基数但余额薄的人；
+    ④ 两地均可"商转公"，若早年商贷利率高（如4%+），2026是转公积金的窗口年（首套仅2.6%）。
+  </div>
+</div>
+
+<!-- 来源 -->
+<div class="card">
+  <h2>📚 数据来源与时效</h2>
+  <div class="src">
+    • 广州缴存基数：广州市住房公积金管理中心《2026年度缴存基数和缴存比例调整通知》（2026-06-30，南方+报道）<br>
+    • 广州贷款政策：穗公积金中心规字〔2026〕1号《调整住房公积金贷款政策的通知》（2026-04-30）；广州政府门户、人民网广东<br>
+    • 广州提取征求意见：广州公积金中心《优化住房公积金提取政策的通知(征求意见稿)》（2026-09-18）<br>
+    • 宁波缴存/贷款："甬九条"《关于进一步完善宁波市住房公积金缴存使用等有关政策的通知》（2026-03-30，宁波住建局、宁波日报）<br>
+    • 北京/上海/深圳：各地公积金中心2026年新政（北京8月城六区外首套340万；上海2月26日；深圳深建字〔2026〕86号4月30日）<br>
+    • 利率：北京公积金中心历年利率表、日照/呼伦贝尔/乌海公积金中心公告（央行2025-05-08统一调整）<br>
+    • 杭州/苏州/成都：中国商报、21世纪经济报道、中指研究院2026-07汇总<br>
+    <span style="color:var(--amber)">※ 租房提取额度聚合来源存在口径冲突，已标注"以当地中心最新公告为准"；部分城市2026上限为暂定值，新标公布后将更新。</span>
+  </div>
+</div>
+
+<div class="card" style="background:#fbfcfe;border-style:dashed;">
+  <div class="note" style="margin:0;">本报告基于公开政策整理，仅供横向参考，不构成购房/缴存决策建议。具体办理以各地住房公积金管理中心官方窗口与最新公告为准。生成于 2026-09-22。</div>
+</div>
+
+</div>
+</body>
+</html>
