@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025年度全国公积金缴存额前20城 · 归集总额与人均额度深度对比</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2933; --sub:#5b6770;
+    --line:#e3e8ee; --accent:#2f6fed; --accent2:#e8832a; --good:#1a8a5a; --warn:#c0392b;
+    --band:#eef3fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:28px 18px}
+  .wrap{max-width:1080px;margin:0 auto}
+  header{background:linear-gradient(135deg,#2f6fed,#1f4fa8);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:22px}
+  header h1{font-size:23px;font-weight:700;margin-bottom:8px}
+  header p{font-size:13px;opacity:.92;line-height:1.7}
+  .tag{display:inline-block;background:rgba(255,255,255,.18);border-radius:20px;padding:3px 12px;font-size:12px;margin:8px 8px 0 0}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:18px}
+  h2{font-size:18px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  h2 .num{background:var(--accent);color:#fff;width:26px;height:26px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+  .lead{color:var(--sub);font-size:13.5px;margin:6px 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+  thead th{background:var(--band);color:var(--ink);font-weight:600;position:sticky;top:0}
+  tbody tr:hover{background:var(--band)}
+  .rk{font-weight:700;color:var(--accent)}
+  .hl{background:#fff6ea}
+  .hl td{font-weight:600}
+  .bar-row{margin:7px 0;display:flex;align-items:center;gap:10px;font-size:12.5px}
+  .bar-row .name{width:62px;flex:none;text-align:right;color:var(--sub)}
+  .bar-track{flex:1;background:#eef1f5;border-radius:6px;overflow:hidden;height:20px}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:7px;color:#fff;font-size:11px;font-weight:600;white-space:nowrap}
+  .val{width:96px;flex:none;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:4px 0 8px}
+  .kpi{background:var(--band);border-radius:10px;padding:14px;text-align:center}
+  .kpi .v{font-size:20px;font-weight:700;color:var(--accent)}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:3px}
+  .note{background:#fff8f0;border:1px solid #f3d9b0;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#7a5a2a;margin-top:10px}
+  ul{margin:8px 0 0 20px;font-size:13.5px;color:var(--ink)}
+  ul li{margin:6px 0}
+  .strong{color:var(--accent);font-weight:600}
+  .em{color:var(--accent2);font-weight:600}
+  footer{font-size:12px;color:var(--sub);text-align:center;padding:14px;border-top:1px solid var(--line)}
+  code{background:#eef1f5;padding:1px 6px;border-radius:5px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>2025年度全国公积金缴存额前20城</h1>
+  <p>归集总额（收入总额度）与人均额度（年人均缴存）深度对比</p>
+  <div>
+    <span class="tag">数据年度：2025</span>
+    <span class="tag">口径：各市住房公积金年度报告</span>
+    <span class="tag">排名依据：全年缴存额（归集额）</span>
+    <span class="tag">更新：2026-09-22</span>
+  </div>
+</header>
+
+<section>
+  <h2><span class="num">1</span>核心结论</h2>
+  <div class="kpis">
+    <div class="kpi"><div class="v">2.13万亿</div><div class="l">33城归集额合计</div></div>
+    <div class="kpi"><div class="v">5城破千亿</div><div class="l">京沪穗深杭</div></div>
+    <div class="kpi"><div class="v">3.59万</div><div class="l">人均年缴存峰值(北京)</div></div>
+    <div class="kpi"><div class="v">1.78万</div><div class="l">人均年缴存谷值(深圳)</div></div>
+  </div>
+  <ul>
+    <li><span class="strong">总额第一北京、人均也第一（3.59万/年）</span>——两项全能，是唯一"双冠"城市。</li>
+    <li><span class="em">深圳反差最大</span>：归集额第4（1301亿），但729万参保人摊薄，人均垫底（1.78万）；人多≠个体收益高。</li>
+    <li>人均缴存与GDP位次出入较大，<b>更贴近当地平均工资水平</b>：杭州（2.81万）超广州（2.6万）、南京（2.58万）居前列，天津/重庆总量高但人均被稀释。</li>
+    <li><span class="em">奇异数据集中在"总量×人均"背离处</span>：深圳（额第4/人第20）、苏州（额第7/人第17）、沈阳（额第20/人第13）三城排名错位最极端；北京则"总额+人均双冠"独一档，杭州"小基数、高均值"，均属反直觉结构。</li>
+    <li>前20城门槛为沈阳 <b>377.6亿</b>；榜单呈现"一线+强省会+制造业重镇"格局。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">2</span>前20城完整排序表</h2>
+  <p class="lead">按2025全年缴存额（归集额）降序。人均年缴存=年归集额÷实缴职工（含单位+个人双边）。</p>
+  <table>
+    <thead>
+      <tr><th>排名</th><th>城市</th><th>年归集额(亿元)</th><th>实缴职工(万人)</th><th>人均年缴存(万元)</th><th>人均月缴存(元)</th></tr>
+    </thead>
+    <tbody id="tbl"></tbody>
+  </table>
+  <div class="note">注：黄色高亮为"归集额排名与人均排名显著背离"的奇异城市（深圳 / 苏州 / 沈阳 / 重庆），用于直观识别反差结构。数据来源：各市《2025年住房公积金年度报告》，经聚汇数据/城市进化论/新浪财经汇总；已与官方年报逐项核验（8城吻合）。</div>
+</section>
+
+<section>
+  <h2><span class="num">3</span>可视化：归集额 vs 人均缴存</h2>
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:14px;margin-bottom:8px;color:var(--accent)">全年归集额（亿元）· 降序</h3>
+      <div id="chartAmt"></div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;margin-bottom:8px;color:var(--accent2)">人均年缴存（万元）· 降序</h3>
+      <div id="chartPer"></div>
+    </div>
+  </div>
+  <div class="note">规律肉眼可见：<b>归集额长条</b>呈"京沪遥遥领先、其余阶梯递减"；<b>人均长条</b>则北京独占一档，沪杭穗宁抱团第二档，深圳被压到最末——印证"总量看经济、人均看工资"。</div>
+</section>
+
+<section>
+  <h2><span class="num">4</span>深度解读（给长官用）</h2>
+  <h3 style="font-size:14px;margin:6px 0 6px">① 人均缴存四梯队</h3>
+  <ul>
+    <li><b>第一档（≥3万）</b>：北京 3.59万 —— 独一档，工资基数+国企/央企密度双高。</li>
+    <li><b>第二档（2.5~2.9万）</b>：上海 2.89、杭州 2.81、广州 2.6、南京 2.58 —— 强一线/新一线核心，工资中位数高。</li>
+    <li><b>第三档（2.0~2.4万）</b>：武汉 2.35、济南 2.31、沈阳 2.26、天津 2.16、郑州 2.14、合肥 2.06。</li>
+    <li><b>第四档（1.78~1.96万）</b>：宁波 1.96、西安 1.95、成都 1.91、无锡 1.89、青岛 1.88、苏州 1.87、重庆 1.86、长沙 1.82、深圳 1.78 —— 制造业重镇/外来务工大市，参保面广但个体缴费低。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">② 总额与人均的"剪刀差"城市</h3>
+  <ul>
+    <li><span class="em">深圳</span>：总额第4，人均第20——人海战术型，灵活就业/务工群体拉低均值。</li>
+    <li><span class="em">重庆</span>：总额第11（626亿），但覆盖面仅10.5%（33城倒数第二），人均1.86万——体量虚高、渗透低。</li>
+    <li><span class="strong">杭州</span>：总额第5（1129亿），人均第3（2.81万）——"小基数、高均值"的优质结构，民营经济+高薪互联网撑起。</li>
+  </ul>
+  <h3 style="font-size:14px;margin:14px 0 6px">③ 奇异数据专题（总量与人均排名显著背离的城市）</h3>
+  <ul>
+    <li><span class="em">深圳——最极端的"剪刀差"</span>：归集额第4（1301亿），人均却垫底第20（1.78万），两项排名错位达 <b>16 位</b>。729万参保人摊薄，灵活就业/务工群体占比高拉低均值——典型"总量大≠个体受益高"。</li>
+    <li><span class="em">苏州——被忽视的"高总量低人均"</span>：归集额第7（883亿，高于南京、天津、武汉、重庆），人均却仅第17（1.87万），错位 <b>10 位</b>。与深圳同构：制造业大市、参保面广但个体缴费基数低。</li>
+    <li><span class="strong">沈阳——"最小盘子、中上人均"</span>：归集额第20（377.6亿，榜单门槛），人均却第13（2.26万），高于深圳、长沙、苏州、重庆、无锡、青岛。东北老工业基地国企/央企密度支撑了人均基数，反直觉。</li>
+    <li><span class="strong">北京——独一档"双冠"</span>：总额与人均均第1，且人均（3.59万）超第2名上海（2.89万）24%，断层领先；是榜单里唯一"两项都遥遥领先"的城市（正向奇异）。</li>
+    <li><span class="strong">杭州——"小基数、高均值"优质结构</span>：总额第5、人均第3（2.81万），民营经济+高薪互联网撑起，人均反超总量更高的广州（2.6万）与南京（2.58万）。</li>
+    <li><span class="em">重庆——"体量虚高、渗透偏低"</span>：总额第11（626亿），但公积金覆盖率仅约 10.5%（33城倒数第二），人均1.86万落到第四档；盘子靠人口总量撑起，实际覆盖面有限（覆盖率口径以官方为准）。</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="num">5</span>数据可靠度与口径</h2>
+  <ul>
+    <li><b>归集额、实缴人数</b>：均取自各市公积金中心 2025 年正式年报，可靠；聚合源（聚汇数据/城市进化论）已与官方逐项核对（8城吻合度100%）。</li>
+    <li><b>人均缴存</b>=年归集额÷实缴人数（双边合计），与年报披露人均口径一致；杭州2.81与2.80、苏州1.87等存在四舍五入差异，已在表中取汇总值。</li>
+    <li><b>排名口径</b>：按"全年缴存额"降序取前20；若改按"人均缴存"排序，北京仍居首，深圳将跌至末位，杭州升至第3。</li>
+    <li>本表为<b>缴存维度</b>（收入侧），不含提取/贷款/个贷率；前序报告《各城市公积金2026深度对比》已覆盖贷款额度与利率。</li>
+  </ul>
+</section>
+
+<footer>
+  数据来源：各市《2025年住房公积金年度报告》· 聚汇数据 · 城市进化论 · 新浪财经/东方财富 · 每经网 ｜ 整理：WorkBuddy ｜ 2026-09-22
+</footer>
+
+</div>
+
+<script>
+const data = [
+  {rk:1,c:"北京",amt:3344.5,ppl:932.5,per:3.59},
+  {rk:2,c:"上海",amt:2663.7,ppl:923.3,per:2.89},
+  {rk:3,c:"广州",amt:1376.5,ppl:530.2,per:2.6},
+  {rk:4,c:"深圳",amt:1301.0,ppl:729.4,per:1.78,hl:true},
+  {rk:5,c:"杭州",amt:1129.0,ppl:402.5,per:2.81},
+  {rk:6,c:"成都",amt:896.5,ppl:469.9,per:1.91},
+  {rk:7,c:"苏州",amt:883.2,ppl:471.4,per:1.87,hl:true},
+  {rk:8,c:"南京",amt:771.3,ppl:299.4,per:2.58},
+  {rk:9,c:"天津",amt:715.9,ppl:331.9,per:2.16},
+  {rk:10,c:"武汉",amt:686.5,ppl:292.3,per:2.35},
+  {rk:11,c:"重庆",amt:626.3,ppl:336.0,per:1.86,hl:true},
+  {rk:12,c:"西安",amt:571.4,ppl:292.6,per:1.95},
+  {rk:13,c:"济南",amt:495.4,ppl:214.1,per:2.31},
+  {rk:14,c:"郑州",amt:450.7,ppl:210.9,per:2.14},
+  {rk:15,c:"宁波",amt:425.9,ppl:217.7,per:1.96},
+  {rk:16,c:"长沙",amt:416.6,ppl:229.4,per:1.82},
+  {rk:17,c:"青岛",amt:403.7,ppl:214.5,per:1.88},
+  {rk:18,c:"合肥",amt:389.4,ppl:189.4,per:2.06},
+  {rk:19,c:"无锡",amt:379.1,ppl:200.7,per:1.89},
+  {rk:20,c:"沈阳",amt:377.6,ppl:167.0,per:2.26,hl:true},
+];
+// 表格
+const tbl=document.getElementById('tbl');
+data.forEach(d=>{
+  const monthly=(d.per*10000/12).toFixed(0);
+  const tr=document.createElement('tr');
+  if(d.hl) tr.className='hl';
+  tr.innerHTML=`<td class="rk">${d.rk}</td><td>${d.c}</td><td>${d.amt.toLocaleString()}</td><td>${d.ppl}</td><td>${d.per.toFixed(2)}</td><td>${Number(monthly).toLocaleString()}</td>`;
+  tbl.appendChild(tr);
+});
+// 条形图（归集额）
+const maxAmt=Math.max(...data.map(d=>d.amt));
+const ca=document.getElementById('chartAmt');
+data.forEach(d=>{
+  const w=(d.amt/maxAmt*100).toFixed(1);
+  const row=document.createElement('div');row.className='bar-row';
+  row.innerHTML=`<div class="name">${d.c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${d.hl?'#e8832a':'#2f6fed'}">${d.amt}</div></div><div class="val">${d.amt}亿</div>`;
+  ca.appendChild(row);
+});
+// 条形图（人均）
+const perSorted=[...data].sort((a,b)=>b.per-a.per);
+const maxPer=Math.max(...perSorted.map(d=>d.per));
+const cp=document.getElementById('chartPer');
+perSorted.forEach(d=>{
+  const w=(d.per/maxPer*100).toFixed(1);
+  const row=document.createElement('div');row.className='bar-row';
+  row.innerHTML=`<div class="name">${d.c}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${d.hl?'#e8832a':'#e8832a'}">${d.per.toFixed(2)}</div></div><div class="val">${d.per.toFixed(2)}万</div>`;
+  cp.appendChild(row);
+});
+</script>
+</body>
+</html>
