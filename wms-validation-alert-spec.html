@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雪花WMS 系统校验与告警规范 V1.0</title>
+<style>
+:root{
+  --primary:#185FA5; --primary-light:#E6F1FB; --primary-dark:#0C447C;
+  --text:#1a1a1a; --text-2:#5F5E5A; --text-3:#888780;
+  --border:#e3e3e0; --bg-soft:#F7F7F5; --bg-code:#F5F6F8;
+  --red:#A32D2D; --red-bg:#FCEBEB; --amber:#854F0B; --amber-bg:#FAEEDA;
+  --green:#3B6D11; --green-bg:#EAF3DE; --blue:#185FA5; --blue-bg:#E6F1FB;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--text);background:#fff;line-height:1.75;font-size:14px;}
+.layout{display:flex;max-width:1400px;margin:0 auto;}
+/* 侧栏 */
+.sidebar{width:250px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+  border-right:1px solid var(--border);padding:24px 0;background:var(--bg-soft);}
+.sidebar h4{margin:0 0 12px;padding:0 20px;font-size:12px;color:var(--text-3);
+  text-transform:uppercase;letter-spacing:.08em;font-weight:500;}
+.sidebar a{display:block;padding:7px 20px;color:var(--text-2);text-decoration:none;font-size:13px;
+  border-left:2px solid transparent;}
+.sidebar a:hover{color:var(--primary);background:var(--primary-light);}
+.sidebar a.sub{padding-left:36px;font-size:12.5px;color:var(--text-3);}
+.sidebar .brand{padding:0 20px 20px;margin-bottom:8px;border-bottom:1px solid var(--border);}
+.sidebar .brand .t{font-size:15px;font-weight:500;color:var(--primary-dark);}
+.sidebar .brand .s{font-size:12px;color:var(--text-3);margin-top:2px;}
+/* 主内容 */
+.main{flex:1;min-width:0;padding:40px 48px 100px;}
+header.hero{border-bottom:2px solid var(--primary);padding-bottom:20px;margin-bottom:32px;}
+header.hero h1{margin:0 0 8px;font-size:26px;font-weight:500;color:var(--primary-dark);}
+.meta{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--text-3);}
+.meta b{color:var(--text-2);font-weight:500;}
+h2{font-size:20px;font-weight:500;margin:44px 0 16px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);color:var(--primary-dark);scroll-margin-top:20px;}
+h3{font-size:16px;font-weight:500;margin:28px 0 12px;color:var(--text);scroll-margin-top:20px;}
+h4{font-size:14px;font-weight:500;margin:20px 0 8px;color:var(--text-2);}
+p{margin:10px 0;}
+ul,ol{margin:10px 0;padding-left:22px;}
+li{margin:5px 0;}
+code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  background:var(--bg-code);padding:1px 5px;border-radius:4px;font-size:12.5px;color:#B4404A;}
+pre{background:var(--bg-code);border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;overflow-x:auto;margin:12px 0;line-height:1.6;}
+pre code{background:none;padding:0;font-size:12.5px;color:#24292e;}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+th{background:var(--bg-soft);text-align:left;padding:9px 12px;border:1px solid var(--border);
+  font-weight:500;color:var(--text-2);white-space:nowrap;}
+td{padding:9px 12px;border:1px solid var(--border);vertical-align:top;}
+tbody tr:nth-child(even){background:#FCFCFB;}
+.callout{border-left:3px solid;border-radius:0 6px 6px 0;padding:12px 16px;margin:14px 0;font-size:13.5px;}
+.callout .ct{font-weight:500;margin-bottom:4px;}
+.c-info{border-color:var(--blue);background:var(--blue-bg);}
+.c-info .ct{color:var(--blue);}
+.c-warn{border-color:var(--amber);background:var(--amber-bg);}
+.c-warn .ct{color:var(--amber);}
+.c-danger{border-color:var(--red);background:var(--red-bg);}
+.c-danger .ct{color:var(--red);}
+.c-ok{border-color:var(--green);background:var(--green-bg);}
+.c-ok .ct{color:var(--green);}
+.badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11.5px;font-weight:500;}
+.b-block{background:#F09595;color:#791F1F;}
+.b-warn{background:#FAC775;color:#633806;}
+.b-info{background:#B5D4F4;color:#0C447C;}
+.b-l1{background:#E1F5EE;color:#085041;}
+.b-l2{background:#FAEEDA;color:#633806;}
+.b-l3{background:#F1EFE8;color:#444441;}
+.flow{background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;padding:16px;margin:14px 0;}
+.flow-row{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;}
+.step{flex:1;min-width:110px;background:#fff;border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center;}
+.step .n{font-size:11px;color:var(--text-3);}
+.step .t{font-size:13px;font-weight:500;color:var(--primary-dark);}
+.step .d{font-size:11.5px;color:var(--text-2);line-height:1.4;}
+.arrow-self{text-align:center;color:var(--text-3);font-size:12px;margin:4px 0;}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13px;margin:10px 0;}
+.kv dt{color:var(--text-3);white-space:nowrap;}
+.kv dd{margin:0;}
+hr{border:none;border-top:1px dashed var(--border);margin:28px 0;}
+.footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--text-3);}
+@media(max-width:960px){
+  .sidebar{display:none;}
+  .main{padding:24px 18px 60px;}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar">
+  <div class="brand">
+    <div class="t">雪花WMS 校验与告警规范</div>
+    <div class="s">V1.0 · 可落地版</div>
+  </div>
+  <h4>目录</h4>
+  <a href="#ch1">1. 总则与核心原则</a>
+  <a href="#ch2">2. 校验体系：四层模型</a>
+  <a href="#ch2-2" class="sub">2.2 校验时机</a>
+  <a href="#ch2-3" class="sub">2.3 不可绕过原则</a>
+  <a href="#ch3">3. 校验规则登记规范</a>
+  <a href="#ch3-2" class="sub">3.2 台账字段定义</a>
+  <a href="#ch4">4. 统一结果模型</a>
+  <a href="#ch4-2" class="sub">4.2 错误码体系</a>
+  <a href="#ch4-3" class="sub">4.3 JSON 响应示例</a>
+  <a href="#ch5">5. 提示规范与文案</a>
+  <a href="#ch5-3" class="sub">5.3 PDA 现场规范</a>
+  <a href="#ch5-4" class="sub">5.4 文案三段式</a>
+  <a href="#ch6">6. 技术实现规范</a>
+  <a href="#ch6-1" class="sub">6.1 数据层校验</a>
+  <a href="#ch6-2" class="sub">6.2 规则层校验</a>
+  <a href="#ch6-3" class="sub">6.3 校验编排</a>
+  <a href="#ch7">7. 系统告警体系</a>
+  <a href="#ch7-3" class="sub">7.3 告警治理四原则</a>
+  <a href="#ch8">8. 与配置治理衔接</a>
+  <a href="#ch9">9. 落地路线与验收</a>
+  <a href="#apxA">附录A 台账模板</a>
+  <a href="#apxB">附录B 错误码速查</a>
+</nav>
+
+<main class="main">
+<header class="hero">
+  <h1>雪花WMS 系统校验与告警规范</h1>
+  <div class="meta">
+    <span><b>版本</b> V1.0</span>
+    <span><b>适用范围</b> 雪花 WMS（入出库、盘点、翻包、拆组垛、库存、接口）</span>
+    <span><b>技术栈</b> HZERO + Java + OceanBase(MySQL)</span>
+    <span><b>状态</b> 待评审</span>
+  </div>
+</header>
+
+<div class="callout c-info">
+  <div class="ct">这份规范要解决什么</div>
+  版本迭代中校验逻辑与提示文案不断堆积，最终演变为：同一类错误在不同页面文案不一致、有的地方拦有的地方不拦、PDA 上报错看不懂、跨系统差异无人告警。本规范通过<b>「校验分层 + 规则编码 + 统一结果模型 + 三级分级 + 告警治理」</b>五件套，把校验与提示从散落的 <code>if-else</code> 变成可登记、可测试、可追溯、可运营的体系。
+</div>
+
+<h2 id="ch1">1. 总则与核心原则</h2>
+
+<h3>1.1 术语定义</h3>
+<table>
+<thead><tr><th style="width:130px">术语</th><th>定义</th></tr></thead>
+<tbody>
+<tr><td>校验（Validation）</td><td>对输入数据、业务状态、关联关系、跨系统一致性进行检查并给出结论的过程</td></tr>
+<tr><td>提示（Feedback）</td><td>把校验结论反馈给<b>当前操作用户</b>的界面行为（弹窗、Toast、红字、声音等）</td></tr>
+<tr><td>告警（Alert）</td><td>系统检测到需要<b>人员介入处理</b>的异常，主动推送到告警渠道（企微、短信、邮件）</td></tr>
+<tr><td>级别（Level）</td><td>校验结论的严重程度：阻断 / 警告 / 提示</td></tr>
+<tr><td>规则（Rule）</td><td>一条可被独立登记、独立测试、独立复用的校验逻辑单元，拥有唯一规则编码</td></tr>
+</tbody>
+</table>
+
+<div class="callout c-warn">
+  <div class="ct">提示 ≠ 告警（务必区分）</div>
+  <b>提示</b>是同步的、面向个人的、操作级的 —— "你这一次扫描错了"。<br>
+  <b>告警</b>是异步的、面向组织的、系统级的 —— "这个仓库的库存与下游系统对不上了，需要人来查"。<br>
+  二者对象、时机、渠道、处理方式完全不同，不允许混用同一套机制。
+</div>
+
+<h3>1.2 五条核心原则</h3>
+<table>
+<thead><tr><th style="width:150px">原则</th><th>含义</th><th>违反的典型后果</th></tr></thead>
+<tbody>
+<tr><td><b>① 统一出口</b></td><td>所有校验结论必须经由统一结果模型返回，禁止各模块自行拼 <code>String</code> 或裸抛异常</td><td>前端无法统一处理错误，文案与级别不可控</td></tr>
+<tr><td><b>② 规则登记</b></td><td>每条校验规则必须有唯一编码、登记台账、可关联测试用例</td><td>规则不可追溯，测试覆盖率无法量化</td></tr>
+<tr><td><b>③ 后端为王</b></td><td>前端校验只为体验优化，<b>后端必须独立完整校验</b>，前端可绕过</td><td>绕过页面的接口调用可写入脏数据</td></tr>
+<tr><td><b>④ 分级响应</b></td><td>校验结论必须明确级别，不同级别对应不同的表现形式与后续流程</td><td>所有错误都做成弹窗，用户疲劳后盲点"确定"</td></tr>
+<tr><td><b>⑤ 告警可行动</b></td><td>每条告警必须回答「谁、做什么、不做的后果」；不可行动的告警一律降级或删除</td><td>告警风暴，真正的问题被淹没</td></tr>
+</tbody>
+</table>
+
+<h2 id="ch2">2. 校验体系：四层模型</h2>
+
+<p>所有校验按<b>校验对象</b>归入四层，每层职责单一、实现手段固定。禁止跨层混写（例如把"库存是否充足"写在 Controller 里做格式判断）。</p>
+
+<div class="flow">
+  <div class="flow-row">
+    <div class="step"><div class="n">L1</div><div class="t">数据格式校验</div><div class="d">必填·类型·长度<br>范围·枚举·正则</div></div>
+    <div class="step"><div class="n">L2</div><div class="t">业务规则校验</div><div class="d">状态流转·数量逻辑<br>效期·批次·配额</div></div>
+    <div class="step"><div class="n">L3</div><div class="t">关联一致性校验</div><div class="d">主数据存在性<br>单据上下游·库存账实</div></div>
+    <div class="step"><div class="n">L4</div><div class="t">外部对账校验</div><div class="d">跨系统一致性<br>接口结果校验</div></div>
+  </div>
+  <div class="arrow-self">四层自上而下串行通过，任一层产出「阻断」即终止流程</div>
+</div>
+
+<h3>2.1 各层职责与实现手段</h3>
+<table>
+<thead><tr><th style="width:110px">层级</th><th style="width:120px">校验对象</th><th>典型规则示例</th><th style="width:150px">推荐实现手段</th><th style="width:90px">执行位置</th></tr></thead>
+<tbody>
+<tr>
+  <td><b>L1 数据格式</b></td>
+  <td>单个字段本身</td>
+  <td>箱码不能为空且符合 18~32 位编码规则；入库数量必须 &gt; 0；日期格式合法；单位必须在值集内</td>
+  <td>Jakarta Bean Validation（<code>@NotBlank</code> / <code>@Pattern</code> / <code>@DecimalMin</code>） + 自定义约束注解</td>
+  <td>Controller 入参 / DTO</td>
+</tr>
+<tr>
+  <td><b>L2 业务规则</b></td>
+  <td>单据内部逻辑与状态</td>
+  <td>入库数量不得超过订单剩余量；已完结单据不可再修改；出库不得超可用库存；盘点单存在未处理暂挂行时不可完结</td>
+  <td>Specification 模式 + 状态机守卫</td>
+  <td>Domain Service</td>
+</tr>
+<tr>
+  <td><b>L3 关联一致性</b></td>
+  <td>跨实体、跨主数据</td>
+  <td>箱码必须存在于箱码主数据；托盘与箱码归属关系必须一致；物料必须在 WMS 物料表存在且启用；库位必须属于当前仓库</td>
+  <td>领域查询 + 断言，结果进入统一结果模型</td>
+  <td>Domain Service</td>
+</tr>
+<tr>
+  <td><b>L4 外部对账</b></td>
+  <td>跨系统、异步</td>
+  <td>WMS 净数与 OCMS 净数一致性；STTS 返回的箱数与实物扫码数一致；ERP 出库单据回执状态一致</td>
+  <td>定时任务 + 差异记录表 + 告警</td>
+  <td>Job / 异步对账</td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout c-info">
+  <div class="ct">关于 L4</div>
+  L4 与前三层最大的不同在于：<b>它无法在操作时同步拦截</b>。例如 WMS 与 OCMS 的净数差异，往往在单据完成后才暴露。因此 L4 必须落地为<b>定时对账任务 + 差异结果表 + 告警推送</b>，而不是指望在业务操作时拦住。这正是历史「1096 净数差异」需要投入大量人力逐单排查的根因——缺少常态化对账与差异告警。
+</div>
+
+<h3 id="ch2-2">2.2 校验时机</h3>
+<table>
+<thead><tr><th style="width:130px">时机</th><th>触发点</th><th>典型校验</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><b>即时校验</b></td><td>单个字段失焦 / 扫码枪回车</td><td>箱码格式、箱码是否存在、物料一致性</td><td>PDA 场景的主要校验方式，要求响应 &lt; 500ms</td></tr>
+<tr><td><b>提交校验</b></td><td>点击【提交】/【确认】</td><td>全部 L1~L3 规则、单据级完整性</td><td>收集全部错误一次性返回，不做快速失败</td></tr>
+<tr><td><b>过账校验</b></td><td>单据状态流转（如完结、审批）</td><td>状态合法性、下游依赖已满足</td><td>由状态机守卫统一判断</td></tr>
+<tr><td><b>异步校验</b></td><td>定时任务 / 消息队列消费</td><td>跨系统对账、超时未处理单据扫描</td><td>产出告警，不阻塞前台操作</td></tr>
+</tbody>
+</table>
+
+<h3 id="ch2-3">2.3 不可绕过原则</h3>
+<ul>
+  <li><b>所有写操作接口必须在服务端完成 L1~L3 全量校验</b>，前端校验不得作为唯一依据。</li>
+  <li>批量接口（Excel 导入、批量扫描、消息消费）同样执行全量校验，<b>不得因为"数据是内部产生的"而省略</b>。</li>
+  <li>数据层补充<b>兜底约束</b>：唯一索引、非空约束、外键、库存不可为负的检查约束。应用层校验是用户体验，<b>数据层约束是最后防线</b>。</li>
+</ul>
+
+<pre><code>-- 兜底约束示例：确保同一单据同一行同一差异类型不重复记账，库存数量不为负
+ALTER TABLE xhinv_difference_record
+  ADD CONSTRAINT uk_diff UNIQUE (source_bill_code, source_line_num, difference_type,
+                                 org_id, owner_id, warehouse_id, wharea_id,
+                                 location_id, goods_id, batch_id, tenant_id);
+
+ALTER TABLE xhinv_onhand_qty
+  ADD CONSTRAINT chk_qty_non_negative CHECK (onhand_qty &gt;= 0);</code></pre>
+
+<h2 id="ch3">3. 校验规则登记规范</h2>
+
+<h3>3.1 规则编码规则</h3>
+<pre><code>WMS-{模块码}-{三位序号}
+
+示例：
+  WMS-IN-001     入库 - 单据不存在
+  WMS-IN-003     入库 - 入库数量超过订单剩余量
+  WMS-CNT-005    盘点 - 存在未处理暂挂行
+  WMS-IF-002     接口 - STTS 调用失败</code></pre>
+
+<table>
+<thead><tr><th style="width:100px">模块码</th><th>模块</th><th style="width:100px">模块码</th><th>模块</th></tr></thead>
+<tbody>
+<tr><td><code>IN</code></td><td>入库管理</td><td><code>CNT</code></td><td>盘点管理</td></tr>
+<tr><td><code>OUT</code></td><td>出库管理</td><td><code>PLT</code></td><td>托盘 / 组垛拆垛</td></tr>
+<tr><td><code>STK</code></td><td>库存管理</td><td><code>TRF</code></td><td>翻包管理</td></tr>
+<tr><td><code>PKG</code></td><td>包装物</td><td><code>IF</code></td><td>外部接口</td></tr>
+<tr><td><code>MDM</code></td><td>主数据</td><td><code>COM</code></td><td>公共 / 通用</td></tr>
+</tbody>
+</table>
+
+<div class="callout c-ok">
+  <div class="ct">规则编码的价值：直接对接测试</div>
+  测试用例与规则编码一一对应后，可量化统计「规则覆盖率 = 已覆盖规则数 / 已登记规则数」。您此前编写的《入库增加校验入口》《出库增加校验入口》《拆组垛》等测试用例，建议按本编码重新挂载，评审时可直接看哪条规则没有用例覆盖。
+</div>
+
+<h3 id="ch3-2">3.2 台账字段定义</h3>
+<table>
+<thead><tr><th style="width:130px">字段</th><th style="width:80px">必填</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>规则编码</td><td>✅</td><td>唯一，格式见 3.1，一经登记不得复用</td></tr>
+<tr><td>规则名称</td><td>✅</td><td>简短动宾或陈述式，如「入库数量不得超过订单剩余量」</td></tr>
+<tr><td>所属模块</td><td>✅</td><td>对应模块码</td></tr>
+<tr><td>校验层级</td><td>✅</td><td>L1 / L2 / L3 / L4</td></tr>
+<tr><td>触发时机</td><td>✅</td><td>即时 / 提交 / 过账 / 异步</td></tr>
+<tr><td>校验级别</td><td>✅</td><td><span class="badge b-block">阻断</span> / <span class="badge b-warn">警告</span> / <span class="badge b-info">提示</span></td></tr>
+<tr><td>提示文案</td><td>✅</td><td>遵循 5.4 三段式模板</td></tr>
+<tr><td>定位字段</td><td>—</td><td>出错的输入项（用于字段级红字定位），如 <code>qty</code></td></tr>
+<tr><td>处理建议</td><td>—</td><td>告诉用户下一步怎么办</td></tr>
+<tr><td>是否可配置</td><td>✅</td><td>严格程度是否按组织差异化；若"是"必须指定<b>值集编码</b>（见第 8 章）</td></tr>
+<tr><td>适用范围值集</td><td>—</td><td>如 <code>XHWINV.COUNT_NEW_MODE_ORG</code></td></tr>
+<tr><td>关联测试用例</td><td>✅</td><td>测试用例编号，可多个</td></tr>
+<tr><td>Owner</td><td>✅</td><td>规则负责人</td></tr>
+<tr><td>来源需求/版本</td><td>✅</td><td>哪个版本的需求引入，便于日后清理</td></tr>
+<tr><td>状态</td><td>✅</td><td>生效 / 下线 / 待清理</td></tr>
+</tbody>
+</table>
+
+<h3>3.3 登记示例（节选）</h3>
+<table>
+<thead><tr><th style="width:110px">规则编码</th><th style="width:170px">规则名称</th><th style="width:50px">层</th><th style="width:70px">级别</th><th>提示文案（含处理建议）</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>WMS-IN-003</code></td><td>入库数量超过订单剩余量</td><td>L2</td><td><span class="badge b-block">阻断</span></td>
+  <td>本次入库 120 箱，订单 RK20260808001 剩余可入 100 箱，超出 <b>20 箱</b>。入库量不得大于订单剩余量。请拆分入库，或先在 ERP 追加订单数量后再操作。</td>
+</tr>
+<tr>
+  <td><code>WMS-PLT-002</code></td><td>箱码与托盘归属不一致</td><td>L3</td><td><span class="badge b-block">阻断</span></td>
+  <td>箱码 <b>X20260808A001</b> 当前归属托盘 <b>T-B</b>，与您扫描的托盘 <b>T-A</b> 不一致。请核对托盘，或先执行拆组垛调整归属关系。</td>
+</tr>
+<tr>
+  <td><code>WMS-OUT-007</code></td><td>可用库存不足</td><td>L2</td><td><span class="badge b-warn">警告</span></td>
+  <td>物料 31A10000006000000 当前可用 100 箱，本次需出库 120 箱，缺口 <b>20 箱</b>。继续将产生负库存。如需继续请点击【强制出库】并填写原因，系统将提交审批。</td>
+</tr>
+<tr>
+  <td><code>WMS-CNT-005</code></td><td>存在未处理暂挂行</td><td>L2</td><td><span class="badge b-block">阻断</span></td>
+  <td>盘点单 PD20260808 尚有 <b>3 行</b>处于暂挂状态，未录入盘点结果。请先处理全部暂挂行，或对其登记延迟原因后再申请完结。</td>
+</tr>
+<tr>
+  <td><code>WMS-STK-011</code></td><td>毛数小于净数</td><td>L2</td><td><span class="badge b-block">阻断</span></td>
+  <td>物料 141138012201 毛数 5,567 小于净数 5,600。净数（合格数）不得大于毛数（实物数）。请重新录入质检合格数，或修正毛数。</td>
+</tr>
+<tr>
+  <td><code>WMS-IF-002</code></td><td>STTS 接口调用失败</td><td>L4</td><td><span class="badge b-block">阻断</span></td>
+  <td>STTS 服务暂不可用（连续失败 3 次，超时 5s）。请稍后重试；若持续失败请联系系统管理员，错误流水号 TR-20260808-0001。</td>
+</tr>
+<tr>
+  <td><code>WMS-PKG-004</code></td><td>PX03 库区不启用净数管理</td><td>L2</td><td><span class="badge b-info">提示</span></td>
+  <td>库区 PX03 未启用净数管理，净数将自动等于毛数。此为正常现象，无需处理。</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="ch4">4. 统一结果模型</h2>
+
+<p>所有校验结论统一由 <code>ValidateResult</code> 承载，<b>禁止</b>各模块自行构造异常文案或返回裸字符串。</p>
+
+<h3>4.1 数据结构定义</h3>
+<pre><code>/**
+ * 统一校验结果对象
+ */
+public class ValidateResult implements Serializable {
+
+    /** 是否全部通过（无任何 BLOCK 级错误） */
+    private boolean passed;
+
+    /** 错误明细列表，批量场景可包含多条 */
+    private List&lt;ValidateError&gt; errors = new ArrayList&lt;&gt;();
+
+    public static ValidateResult ok() {
+        return new ValidateResult(true, Collections.emptyList());
+    }
+
+    /** 快速失败：产出一条阻断错误 */
+    public static ValidateResult block(String code, String message) {
+        return ValidateResult.block(code, null, message, null);
+    }
+
+    public static ValidateResult block(String code, String field, String message, String suggestion) {
+        return single(ErrorLevel.BLOCK, code, field, message, suggestion);
+    }
+
+    /** 警告：不阻断，需二次确认 */
+    public static ValidateResult warn(String code, String field, String message, String suggestion) {
+        return single(ErrorLevel.WARN, code, field, message, suggestion);
+    }
+
+    /** 收集器模式：批量场景收集全部错误，不做快速失败 */
+    public static ValidateResult collector() {
+        return new ValidateResult(false, new ArrayList&lt;&gt;());
+    }
+
+    public ValidateResult add(ErrorLevel level, String code, String field, String message, String suggestion) {
+        this.errors.add(new ValidateError(level, code, field, message, suggestion));
+        this.passed = this.errors.stream().noneMatch(e -&gt; e.getLevel() == ErrorLevel.BLOCK);
+        return this;
+    }
+}
+
+/**
+ * 单条校验错误
+ */
+public class ValidateError implements Serializable {
+    private ErrorLevel level;    // BLOCK / WARN / INFO
+    private String code;         // WMS-IN-003
+    private String field;        // 定位字段，如 qty
+    private String message;      // 面向用户的错误描述
+    private String suggestion;   // 处理建议
+}
+
+public enum ErrorLevel {
+    BLOCK,   // 阻断：必须处理后才能继续
+    WARN,    // 警告：二次确认后可强制继续，需留痕
+    INFO     // 提示：仅信息反馈，不阻断流程
+}</code></pre>
+
+<h3 id="ch4-2">4.2 错误码体系</h3>
+<p>错误码与<b>校验规则编码同号</b>（一套编码，两个用途），避免"异常码"与"规则码"两套体系对不上。</p>
+
+<table>
+<thead><tr><th style="width:130px">构成</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td>系统前缀</td><td>固定 <code>WMS</code></td><td><code>WMS</code></td></tr>
+<tr><td>模块码</td><td>见 3.1 模块码表</td><td><code>IN</code></td></tr>
+<tr><td>序号</td><td>三位数字，模块内递增，<b>一经分配不可复用</b></td><td><code>003</code></td></tr>
+</tbody>
+</table>
+
+<div class="callout c-warn">
+  <div class="ct">错误文案不要写死在代码里</div>
+  错误码对应的文案、级别、处理建议统一维护在<b>错误码字典</b>中（可用 HZERO 消息/多语言能力或独立字典表 <code>xhinv_error_code</code>），代码里只引用<b>错误码 + 动态参数</b>。好处：改文案不用改代码和重新发版；可支持多语言；可做统一审计。
+</div>
+
+<pre><code>-- 建议配套的错误码字典表结构（示意）
+CREATE TABLE xhinv_error_code (
+  id            bigint NOT NULL AUTO_INCREMENT,
+  error_code    varchar(64)  NOT NULL COMMENT '错误码，如 WMS-IN-003',
+  module_code   varchar(32)  NOT NULL COMMENT '模块码',
+  level         varchar(16)  NOT NULL COMMENT 'BLOCK/WARN/INFO',
+  message_tpl   varchar(500) NOT NULL COMMENT '文案模板，含 {0} {1} 占位符',
+  suggestion    varchar(500) COMMENT '处理建议',
+  owner         varchar(64)  COMMENT '规则负责人',
+  source_ver    varchar(64)  COMMENT '来源需求/版本',
+  status        varchar(16)  NOT NULL DEFAULT 'ACTIVE' COMMENT 'ACTIVE/DEPRECATED',
+  tenant_id     bigint NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_code (error_code, tenant_id)
+) COMMENT = '雪花-错误码字典表';</code></pre>
+
+<h3 id="ch4-3">4.3 JSON 响应示例</h3>
+<p>HTTP 层建议对齐 <b>RFC 7807 Problem Details</b>，便于前端统一处理。</p>
+<pre><code>HTTP/1.1 400 Bad Request
+Content-Type: application/problem+json
+
+{
+  "type": "https://wms.snow.com/errors/WMS-IN-003",
+  "title": "入库数量超过订单剩余量",
+  "status": 400,
+  "code": "WMS-IN-003",
+  "instance": "/api/wms/receipt/scan",
+  "traceId": "TR-20260808-0001",
+  "detail": "本次入库 120 箱，订单 RK20260808001 剩余可入 100 箱，超出 20 箱。",
+  "violations": [
+    {
+      "field": "qty",
+      "code": "WMS-IN-003",
+      "level": "BLOCK",
+      "message": "本次入库 120 箱，订单 RK20260808001 剩余可入 100 箱，超出 20 箱。",
+      "suggestion": "请拆分入库，或先在 ERP 追加订单数量后再操作。"
+    },
+    {
+      "field": "locationCode",
+      "code": "WMS-COM-014",
+      "level": "WARN",
+      "message": "库位 CPWG-A-01-03 与物料推荐库区不一致。",
+      "suggestion": "确认后点击【继续】，系统将记录本次例外。"
+    }
+  ]
+}</code></pre>
+
+<h2 id="ch5">5. 提示规范与文案</h2>
+
+<h3>5.1 三级分级定义</h3>
+<table>
+<thead><tr><th style="width:80px">级别</th><th style="width:180px">语义</th><th>流程行为</th><th>留痕要求</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge b-block">阻断 BLOCK</span></td>
+  <td>数据或业务不合法，继续会产生错误数据</td>
+  <td><b>流程终止</b>，用户必须修正后重试</td>
+  <td>记录操作日志（谁、何时、被哪条规则拦下）</td>
+</tr>
+<tr>
+  <td><span class="badge b-warn">警告 WARN</span></td>
+  <td>存在风险或例外，但业务上允许继续</td>
+  <td>弹出确认框，用户显式确认后继续；部分场景需<b>填写原因并触发审批</b></td>
+  <td><b>必须记录</b>：操作人、确认时间、原因说明</td>
+</tr>
+<tr>
+  <td><span class="badge b-info">提示 INFO</span></td>
+  <td>中性信息反馈，无需用户决策</td>
+  <td>流程正常继续</td>
+  <td>一般不记录，成功类操作除外</td>
+</tr>
+</tbody>
+</table>
+
+<h3>5.2 PC 端提示形态对照</h3>
+<table>
+<thead><tr><th style="width:90px">级别</th><th style="width:140px">首选形态</th><th>适用位置</th><th>消失方式</th></tr></thead>
+<tbody>
+<tr><td><span class="badge b-block">阻断</span></td><td>字段级红字 + 顶部错误汇总条</td><td>出错输入框正下方 + 表单顶部</td><td>修正后自动消失</td></tr>
+<tr><td><span class="badge b-block">阻断</span></td><td>模态对话框（Modal）</td><td>全局性、无法定位到单一字段的错误</td><td>点击【确定】</td></tr>
+<tr><td><span class="badge b-warn">警告</span></td><td>确认对话框（含【继续】【取消】）</td><td>需要用户决策的例外</td><td>用户选择后</td></tr>
+<tr><td><span class="badge b-info">提示</span></td><td>Toast / Snackbar</td><td>右下角或顶部居中</td><td>3 秒自动消失</td></tr>
+<tr><td><span class="badge b-info">提示</span></td><td>内联状态条</td><td>结果区域</td><td>常驻或下次操作消失</td></tr>
+</tbody>
+</table>
+
+<div class="callout c-danger">
+  <div class="ct">禁止的做法</div>
+  <ul style="margin:4px 0">
+    <li>用 <code>alert()</code> 做业务提示。</li>
+    <li>阻断级错误只用 Toast 轻描淡写飘过（用户会漏看）。</li>
+    <li>批量操作逐条弹窗 100 次（必须收集全部错误一次性展示，支持点击跳转定位）。</li>
+    <li>把技术异常栈直接展示给终端用户。</li>
+  </ul>
+</div>
+
+<h3 id="ch5-3">5.3 PDA / 移动端现场规范</h3>
+<p>现场环境噪音大、作业人员戴手套、屏幕小且距离远，提示必须多重感官冗余。</p>
+
+<table>
+<thead><tr><th style="width:80px">级别</th><th style="width:110px">视觉</th><th style="width:120px">听觉/触觉</th><th>交互要求</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge b-block">阻断</span></td>
+  <td>红底白字，字号 ≥ 18sp，全屏或半屏</td>
+  <td>长蜂鸣（2 声）+ 长震动</td>
+  <td>必须提供<b>可一键执行的下一步</b>（如【重新扫描】【返回修改】），不要求用户记忆后再操作</td>
+</tr>
+<tr>
+  <td><span class="badge b-warn">警告</span></td>
+  <td>黄底黑字，字号 ≥ 16sp</td>
+  <td>短蜂鸣（1 声）+ 短震动</td>
+  <td>提供【继续】【取消】双按钮，按钮足够大（≥ 44dp 高）</td>
+</tr>
+<tr>
+  <td><span class="badge b-info">提示</span></td>
+  <td>绿底白字 / 蓝底白字</td>
+  <td>单短响（成功音）</td>
+  <td>自动消失（2s），不阻塞连续扫码作业</td>
+</tr>
+</tbody>
+</table>
+
+<div class="callout c-info">
+  <div class="ct">PDA 特殊要求</div>
+  连续扫码作业场景下，成功提示<b>不能阻塞流程</b>（不能用需要点击才能消失的弹窗），否则严重影响作业节拍。失败提示则必须<b>中断并强制确认</b>，防止作业人员未察觉错误继续扫下一箱。
+</div>
+
+<h3 id="ch5-4">5.4 文案三段式模板</h3>
+<pre><code>模板：{发生了什么}（{实际值 → 期望值}）。{为什么不允许}。{下一步怎么做}。
+
+变量占位：使用 {0} {1} 占位符，运行时填充真实数值，禁止拼接字符串</code></pre>
+
+<table>
+<thead><tr><th style="width:70px">评价</th><th>文案示例</th><th style="width:230px">问题 / 优点</th></tr></thead>
+<tbody>
+<tr><td>❌ 反例</td><td>操作失败</td><td>未说明失败原因、未给出处理路径</td></tr>
+<tr><td>❌ 反例</td><td>校验不通过</td><td>无信息量，用户无法自助解决，必然提工单</td></tr>
+<tr><td>❌ 反例</td><td>库存不足</td><td>缺关键数据：缺多少、哪个物料、怎么办</td></tr>
+<tr><td>❌ 反例</td><td>NullPointerException</td><td>技术栈暴露给终端用户</td></tr>
+<tr><td>✅ 正例</td><td>物料 <b>31A10000006000000</b>（红爵8.5度330ml纤体听）当前可用 <b>100 箱</b>，本次需出库 <b>120 箱</b>，缺口 <b>20 箱</b>。出库量不得大于可用库存。请调整出库数量，或点击【强制出库】登记原因并提交审批。</td><td>要素齐全：物料 + 数值对比 + 原因 + 两条处理路径</td></tr>
+<tr><td>✅ 正例</td><td>盘点单 <b>PD20260808</b> 尚有 <b>3 行</b>处于暂挂状态未录入结果。存在暂挂行时不允许完结。请先处理暂挂行，或登记延迟原因后再申请完结。</td><td>定位明确，给出两条合规路径</td></tr>
+</tbody>
+</table>
+
+<h4>文案编写检查清单</h4>
+<ul>
+  <li>是否包含<b>具体数值</b>（实际值 vs 期望值）？</li>
+  <li>是否包含<b>可定位标识</b>（单据号 / 物料编码 / 箱码 / 库位）？</li>
+  <li>是否说明了<b>为什么不允许</b>（业务规则本身）？</li>
+  <li>是否给出了<b>可立即执行的下一步</b>？</li>
+  <li>是否使用业务术语而非技术术语（不说"外键约束失败"，说"该物料尚未在 WMS 建档"）？</li>
+</ul>
+
+<h2 id="ch6">6. 技术实现规范</h2>
+
+<h3 id="ch6-1">6.1 L1 数据层校验：Bean Validation</h3>
+<pre><code>public class ReceiptScanCmd {
+
+    @NotBlank(message = "箱码不能为空")
+    @Pattern(regexp = "^[A-Z0-9]{18,32}$", message = "箱码格式不正确，应为 18~32 位大写字母与数字")
+    private String boxCode;
+
+    @NotNull(message = "入库数量不能为空")
+    @DecimalMin(value = "0.0001", message = "入库数量必须大于 0")
+    @Digits(integer = 12, fraction = 4, message = "入库数量整数位不超过 12 位，小数位不超过 4 位")
+    private BigDecimal qty;
+
+    @NotNull(message = "毛数不能为空")
+    private BigDecimal grossQty;
+
+    /** 净数（合格数）由现场检验得出，非公式换算 */
+    private BigDecimal netQty;
+
+    @NotBlank(message = "库位编码不能为空")
+    private String locationCode;
+}
+
+// Controller 入口统一触发
+@PostMapping("/receipt/scan")
+public ResponseEntity&lt;?&gt; scan(@Valid @RequestBody ReceiptScanCmd cmd, BindingResult br) {
+    if (br.hasErrors()) {
+        // BindingResult → ValidateResult 统一转换，错误码统一为 WMS-COM-001
+        return ResponseEntity.badRequest().body(ValidateConverter.from(br));
+    }
+    ...
+}</code></pre>
+
+<h4>自定义约束示例（跨字段联动）</h4>
+<pre><code>/**
+ * 校验：净数不得大于毛数（L2，但也常作为字段联动校验前置）
+ * 注意：PX03 库区不启用净数管理，此时毛数 = 净数允许相等放行
+ */
+@Target({TYPE}) @Retention(RUNTIME)
+@Constraint(validatedBy = NetNotExceedGrossValidator.class)
+public @interface NetNotExceedGross {
+    String message() default "净数不得大于毛数";
+    Class&lt;?&gt;[] groups() default {};
+    Class&lt;? extends Payload&gt;[] payload() default {};
+}
+
+public class NetNotExceedGrossValidator
+        implements ConstraintValidator&lt;NetNotExceedGross, ReceiptScanCmd&gt; {
+
+    @Override
+    public boolean isValid(ReceiptScanCmd cmd, ConstraintValidatorContext ctx) {
+        if (cmd.getNetQty() == null || cmd.getGrossQty() == null) {
+            return true; // 空值交给 @NotNull 处理，此处不重复报错
+        }
+        boolean pass = cmd.getNetQty().compareTo(cmd.getGrossQty()) &lt;= 0;
+        if (!pass) {
+            ctx.disableDefaultConstraintViolation();
+            ctx.buildConstraintViolationWithTemplate("WMS-STK-011")
+               .addPropertyNode("netQty")
+               .addConstraintViolation();
+        }
+        return pass;
+    }
+}</code></pre>
+
+<h3 id="ch6-2">6.2 L2 规则层：Specification 模式 + 状态机</h3>
+<p>业务规则<b>禁止</b>写成一长串 <code>if-else</code>，应封装为可组合、可复用、可单测的 Specification 对象。</p>
+<pre><code>public interface Specification&lt;T&gt; {
+    boolean isSatisfiedBy(T candidate);
+    ValidateError error(T candidate);   // 不满足时产出标准化的 ValidateError
+
+    default Specification&lt;T&gt; and(Specification&lt;T&gt; other) {
+        return new AndSpecification&lt;&gt;(this, other);
+    }
+    default Specification&lt;T&gt; or(Specification&lt;T&gt; other) {
+        return new OrSpecification&lt;&gt;(this, other);
+    }
+}
+
+/** WMS-OUT-007 可用库存充足 */
+public class StockEnoughSpec implements Specification&lt;OutboundLine&gt; {
+
+    private final StockQueryService stockQuery;
+
+    @Override
+    public boolean isSatisfiedBy(OutboundLine line) {
+        BigDecimal available = stockQuery.availableQty(
+                line.getOrgId(), line.getWarehouseId(),
+                line.getLocationId(), line.getSku(), line.getBatchId());
+        return available.compareTo(line.getQty()) &gt;= 0;
+    }
+
+    @Override
+    public ValidateError error(OutboundLine line) {
+        BigDecimal available = stockQuery.availableQty(...);
+        BigDecimal gap = line.getQty().subtract(available);
+        return new ValidateError(
+                // 是否阻断由值集决定（见第 8 章）：有的组织允许强制出库（警告），有的严格阻断
+                policy.levelOf("WMS-OUT-007", line.getOrgId()),
+                "WMS-OUT-007", "qty",
+                msg("WMS-OUT-007", line.getSku(), available, line.getQty(), gap),
+                "请调整出库数量，或点击【强制出库】登记原因并提交审批。");
+    }
+}
+
+/** WMS-STK-011 净数不得大于毛数 */
+public class NetNotExceedGrossSpec implements Specification&lt;StockLine&gt; {
+    @Override public boolean isSatisfiedBy(StockLine line) {
+        return line.getNetQty().compareTo(line.getGrossQty()) &lt;= 0;
+    }
+    @Override public ValidateError error(StockLine line) {
+        return new ValidateError(ErrorLevel.BLOCK, "WMS-STK-011", "netQty",
+            "物料 " + line.getSku() + " 毛数 " + line.getGrossQty()
+              + " 小于净数 " + line.getNetQty() + "。净数（合格数）不得大于毛数（实物数）。",
+            "请重新录入质检合格数，或修正毛数。");
+    }
+}</code></pre>
+
+<h4>状态机守卫（替代散落的"当前状态不允许该操作"）</h4>
+<pre><code>/**
+ * 过账校验统一由状态机守卫：WMS-COM-020 非法状态流转
+ */
+@Component
+public class CountOrderStateMachine {
+
+    /** 状态流转白名单 */
+    private static final Map&lt;String, Set&lt;String&gt;&gt; ALLOWED = Map.of(
+        "DRAFT",      Set.of("COUNTING", "CANCELLED"),
+        "COUNTING",   Set.of("RECHECKING", "SUSPENDED", "CLOSED"),
+        "SUSPENDED",  Set.of("COUNTING", "CLOSED"),
+        "RECHECKING", Set.of("FINISHED", "COUNTING"),
+        "FINISHED",   Set.of("CLOSED")
+    );
+
+    public ValidateResult checkTransfer(CountOrder order, String targetStatus) {
+        Set&lt;String&gt; allowed = ALLOWED.getOrDefault(order.getStatus(), Set.of());
+        if (allowed.contains(targetStatus)) {
+            return ValidateResult.ok();
+        }
+        return ValidateResult.block(
+            "WMS-COM-020", "status",
+            String.format("盘点单 %s 当前状态为【%s】，不允许变更为【%s】。",
+                order.getOrderCode(), display(order.getStatus()), display(targetStatus)),
+            "请返回列表刷新查看最新状态，或联系管理员处理。");
+    }
+}</code></pre>
+
+<h3 id="ch6-3">6.3 校验编排：收集模式 + 责任链</h3>
+<pre><code>/**
+ * 提交校验编排：收集全部错误后一次性返回（禁止快速失败 + 逐条弹窗）
+ */
+@Service
+public class OutboundSubmitValidator {
+
+    private final List&lt;Specification&lt;OutboundOrder&gt;&gt; orderSpecs;   // 单据级规则
+    private final List&lt;Specification&lt;OutboundLine&gt;&gt;  lineSpecs;    // 行级规则
+
+    public ValidateResult validate(OutboundOrder order) {
+        ValidateResult result = ValidateResult.collector();   // 收集模式
+
+        // 单据级
+        for (Specification&lt;OutboundOrder&gt; spec : orderSpecs) {
+            if (!spec.isSatisfiedBy(order)) {
+                result.add(spec.error(order));
+            }
+        }
+        // 行级：携带行号定位，便于前端跳转到具体行
+        for (OutboundLine line : order.getLines()) {
+            for (Specification&lt;OutboundLine&gt; spec : lineSpecs) {
+                if (!spec.isSatisfiedBy(line)) {
+                    ValidateError e = spec.error(line);
+                    // 附加行号，前端可渲染「第 3 行：xxx」并支持跳转
+                    result.add(e.getLevel(), e.getCode(),
+                               "lines[" + line.getLineNum() + "]." + e.getField(),
+                               "第 " + line.getLineNum() + " 行：" + e.getMessage(),
+                               e.getSuggestion());
+                }
+            }
+        }
+        return result;
+    }
+}
+
+// Service 层统一出口
+if (!result.isPassed()) {
+    throw new WmsValidateException(result);   // 由全局异常处理器转为 400 Problem JSON
+}</code></pre>
+
+<div class="callout c-ok">
+  <div class="ct">编排要点</div>
+  <ul style="margin:4px 0">
+    <li><b>提交/批量</b>场景用<b>收集模式</b>（<code>collector()</code>），一次性返回全部错误；<b>即时</b>校验用<b>快速失败</b>（单字段，立即反馈）。</li>
+    <li>行级错误必须带<b>行号定位</b>（<code>lines[3].qty</code>），否则用户面对 100 行的错误列表无法下手。</li>
+    <li>每个 Specification 独立单测，测试用例编号回填规则台账的「关联测试用例」字段。</li>
+  </ul>
+</div>
+
+<h2 id="ch7">7. 系统告警体系</h2>
+
+<h3>7.1 告警分类与分级</h3>
+<table>
+<thead><tr><th style="width:70px">级别</th><th style="width:110px">定义</th><th>典型场景</th><th style="width:130px">通知渠道</th><th style="width:90px">响应时限</th></tr></thead>
+<tbody>
+<tr><td><b>P0</b></td><td>业务中断</td><td>核心接口全面不可用、WMS 主库不可连、单据大面积积压</td><td>电话 + 短信 + 企微</td><td>15 分钟</td></tr>
+<tr><td><b>P1</b></td><td>严重异常</td><td><b>跨系统净数差异超阈值</b>、外部接口失败率超 50%、定时任务连续失败</td><td>企微群 + 值班人</td><td>2 小时</td></tr>
+<tr><td><b>P2</b></td><td>一般异常</td><td>单条单据处理失败、偶发接口超时、盘点差异率超预警线</td><td>企微群</td><td>当日</td></tr>
+<tr><td><b>P3</b></td><td>需关注</td><td>慢查询、磁盘水位、单据滞留超时</td><td>系统内告警中心</td><td>3 个工作日</td></tr>
+</tbody>
+</table>
+
+<h3>7.2 告警规则登记示例</h3>
+<table>
+<thead><tr><th style="width:140px">告警编码</th><th style="width:150px">告警名称</th><th style="width:50px">级别</th><th>触发条件</th><th>处理建议</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>ALM-STK-001</code></td><td>跨系统净数差异</td><td><b>P1</b></td>
+  <td>WMS 期末净数与 OCMS 净数差异绝对值 &gt; 0，持续 30 分钟未收敛</td>
+  <td>核对入出库明细报表与库存事务日志，定位差异单据（参考差异记录表 <code>xhinv_difference_record</code>）</td>
+</tr>
+<tr>
+  <td><code>ALM-IF-002</code></td><td>STTS 接口连续失败</td><td><b>P1</b></td>
+  <td>5 分钟窗口内失败率 &gt; 50% 或连续失败 ≥ 3 次</td>
+  <td>检查网络连通性与 STTS 服务状态，必要时降级为本地校验并记录待同步</td>
+</tr>
+<tr>
+  <td><code>ALM-JOB-003</code></td><td>定时任务连续失败</td><td><b>P2</b></td>
+  <td>定时任务连续 3 次执行失败</td>
+  <td>查看任务日志，检查数据源与下游系统可用性</td>
+</tr>
+<tr>
+  <td><code>ALM-CNT-004</code></td><td>盘点差异率超标</td><td><b>P2</b></td>
+  <td>单张盘点单差异行数占比 &gt; 5%</td>
+  <td>通知盘点负责人复核，必要时发起二次盘点</td>
+</tr>
+<tr>
+  <td><code>ALM-STK-005</code></td><td>负库存</td><td><b>P1</b></td>
+  <td>存在 <code>onhand_qty &lt; 0</code> 的记录</td>
+  <td>立即暂停相关出库作业，排查出库/退货单据数据</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="ch7-3">7.3 告警治理四原则</h3>
+<table>
+<thead><tr><th style="width:90px">原则</th><th>说明</th><th>示例</th></tr></thead>
+<tbody>
+<tr><td><b>收敛</b></td><td>同类告警在时间窗口内合并为一条，避免刷屏</td><td>STTS 失败 50 次合成 1 条「5分钟内失败 50 次」</td></tr>
+<tr><td><b>抑制</b></td><td>上游故障已告警时，抑制下游被连带引发的告警</td><td>数据库宕机时不告所有业务的"查询失败"</td></tr>
+<tr><td><b>升级</b></td><td>超过时限未认领自动升级通知对象</td><td>P1 告警 30 分钟未认领，通知组长；1 小时通知经理</td></tr>
+<tr><td><b>静默</b></td><td>已知的、计划内的告警可临时静默</td><td>系统升级窗口期静默接口类告警</td></tr>
+</tbody>
+</table>
+
+<pre><code># Alertmanager 告警治理配置示例（收敛 / 抑制 / 路由）
+route:
+  receiver: 'wms-default'
+  group_by: ['alertname', 'module']
+  group_wait: 30s          # 等待同类告警聚合
+  group_interval: 5m       # 同组告警发送间隔
+  repeat_interval: 4h      # 未恢复告警重复提醒间隔
+  routes:
+    - match: { severity: "P0" }
+      receiver: 'wms-p0-phone'
+    - match: { severity: "P1" }
+      receiver: 'wms-p1-wecom'
+
+inhibit_rules:
+  # 数据库故障告警触发后，抑制所有"接口失败"告警（上游已告，不必重复）
+  - source_match: { alertname: "DatabaseDown" }
+    target_match: { alertname: "InterfaceCallFailed" }
+    equal: ['module']
+
+receivers:
+  - name: 'wms-p0-phone'
+    webhook_configs:
+      - url: 'http://alert-gateway/phone'
+  - name: 'wms-p1-wecom'
+    webhook_configs:
+      - url: 'http://alert-gateway/wecom'</code></pre>
+
+<pre><code># 跨系统净数差异告警规则示例（Prometheus）
+- alert: CrossSystemNetQtyDiff
+  expr: abs(wms_net_qty_total - ocms_net_qty_total) &gt; 0
+  for: 30m
+  labels:
+    severity: P1
+    module: stock
+  annotations:
+    summary: "WMS 与 OCMS 净数存在差异，当前差异 {{ $value }}"
+    description: "请核查入出库明细报表与库存事务日志，定位差异单据；参考 xhinv_difference_record。"
+    runbook: "https://wiki.snow.com/runbook/ALM-STK-001"</code></pre>
+
+<div class="callout c-warn">
+  <div class="ct">告警设计红线</div>
+  <b>不可行动的告警 = 噪音。</b>每条告警上线前必须回答三个问题：谁来处理？做什么？不做的后果是什么？回答不了任何一个，就降级为 P3 或删除。长期忽视告警会导致团队对告警脱敏，真正的 P0 也会被当成背景噪音。
+</div>
+
+<h2 id="ch8">8. 与配置治理衔接</h2>
+<p>本章承接《配置项治理》讨论，明确<b>校验规则与配置项的关系</b>——避免把校验本身做成新的配置项地狱。</p>
+
+<table>
+<thead><tr><th style="width:150px">内容</th><th>应放在哪里</th><th>反模式</th></tr></thead>
+<tbody>
+<tr><td>校验规则逻辑</td><td><b>代码</b>（Specification / Validator）</td><td>❌ 做成"表达式配置"，难调试难测试</td></tr>
+<tr><td>阈值数值（如差异率预警线 5%）</td><td>平台参数配置（可按层级覆盖）</td><td>❌ 硬编码在代码里</td></tr>
+<tr><td><b>适用范围</b>（哪些组织/工厂启用该校验）</td><td><b>值集</b>（如 <code>XHWINV.COUNT_NEW_MODE_ORG</code>）</td><td>❌ 每个工厂一个配置项</td></tr>
+<tr><td>校验<b>严格程度</b>（阻断 or 警告）</td><td>值集 + 默认级别，子节点只覆盖差异</td><td>❌ 为"某工厂是否严格"单独建开关</td></tr>
+<tr><td>文案与错误码</td><td>错误码字典表（数据）</td><td>❌ 写死在 Java 代码里</td></tr>
+</tbody>
+</table>
+
+<pre><code>/**
+ * 校验严格程度的分层解析（约定优于配置）
+ *   1) 取全局默认级别（来自错误码字典）
+ *   2) 按「组织 → 工厂 → 仓库」逐级查找覆盖值集，命中则用覆盖值
+ *   3) 任何一层都未配置 → 用默认值
+ *
+ * 关键：覆盖值的载体是「值集里的一行数据」，而不是新增一个配置项。
+ */
+public ErrorLevel levelOf(String ruleCode, Long orgId, Long factoryId, Long warehouseId) {
+    ErrorLevel level = errorCodeDict.getDefaultLevel(ruleCode);       // 默认
+    level = overrideFrom(level, ruleCode, "ORG",      orgId);         // 组织覆盖
+    level = overrideFrom(level, ruleCode, "FACTORY",  factoryId);     // 工厂覆盖
+    level = overrideFrom(level, ruleCode, "WAREHOUSE", warehouseId);  // 仓库覆盖
+    return level;
+}</code></pre>
+
+<div class="callout c-ok">
+  <div class="ct">一句话总结</div>
+  <b>规则一个版本 + 适用范围数据化 + 阈值可配置 + 文案字典化。</b>新增一个工厂时，只需在适用范围值集里加一行，而不是新增 N 个配置项或复制一份校验逻辑。
+</div>
+
+<h2 id="ch9">9. 落地路线与验收</h2>
+
+<h3>9.1 分阶段路线</h3>
+<table>
+<thead><tr><th style="width:110px">阶段</th><th style="width:130px">目标</th><th>交付物</th><th style="width:80px">周期参考</th></tr></thead>
+<tbody>
+<tr><td><b>S1 盘点家底</b></td><td>摸清现状</td><td>现有校验点全量清单，按四层分类，标出重复、冲突、级别不合理项</td><td>3~5 天</td></tr>
+<tr><td><b>S2 立骨架</b></td><td>统一出口</td><td><code>ValidateResult</code> + 错误码字典表 + 全局异常处理器 + Problem JSON 转换</td><td>5 天</td></tr>
+<tr><td><b>S3 定规范</b></td><td>规则可登记</td><td>规则台账 + 编码规范 + 文案模板 + PC/PDA 提示形态规范</td><td>3 天</td></tr>
+<tr><td><b>S4 试点改造</b></td><td>验证可行</td><td>选 1 个模块（建议入库或盘点）完成 Specification 化改造，配套单测</td><td>8 天</td></tr>
+<tr><td><b>S5 告警体系</b></td><td>系统侧闭环</td><td>告警分级表 + 渠道接入 + 收敛抑制规则 + 值班机制</td><td>5 天</td></tr>
+<tr><td><b>S6 全面推广</b></td><td>全模块对齐</td><td>其余模块改造 + 旧 <code>if-else</code> 清理 + 规则覆盖率达标</td><td>按模块滚动</td></tr>
+</tbody>
+</table>
+
+<h3>9.2 验收标准</h3>
+<div class="callout c-info">
+  <div class="ct">可量化的验收清单</div>
+  <ul style="margin:4px 0">
+    <li>✅ 新增写操作接口 <b>100%</b> 通过统一 <code>ValidateResult</code> 返回错误</li>
+    <li>✅ 每条在册校验规则都有唯一编码，且<b>测试用例覆盖率 ≥ 90%</b></li>
+    <li>✅ 错误文案 <b>100%</b> 来自字典表，代码中无硬编码中文错误串</li>
+    <li>✅ 批量操作的错误 <b>一次性全部返回</b>并支持行号定位跳转</li>
+    <li>✅ PDA 阻断类提示具备「视觉 + 听觉 + 触觉」三重反馈</li>
+    <li>✅ 新增「适用范围」需求时，<b>不得新增配置项</b>，只允许在值集中加行</li>
+    <li>✅ P1 及以上告警 <b>100%</b> 具备 runbook（处理手册链接）</li>
+    <li>✅ 每季度执行一次「僵尸规则 / 僵尸配置项 / 噪音告警」清理</li>
+  </ul>
+</div>
+
+<h2 id="apxA">附录A 校验规则台账模板</h2>
+<p>建议以 Excel/在线表格维护，字段如下（示例行见 3.3）：</p>
+<pre><code>规则编码 | 规则名称 | 所属模块 | 校验层级 | 触发时机 | 校验级别(BLOCK/WARN/INFO)
+  | 定位字段 | 提示文案(含占位符) | 处理建议 | 是否可配置 | 适用范围值集
+  | 关联测试用例编号 | Owner | 来源需求/版本 | 状态(生效/下线/待清理) | 备注</code></pre>
+
+<h2 id="apxB">附录B 错误码速查示例</h2>
+<table>
+<thead><tr><th style="width:130px">错误码</th><th style="width:60px">级别</th><th>含义</th></tr></thead>
+<tbody>
+<tr><td><code>WMS-COM-001</code></td><td><span class="badge b-block">阻断</span></td><td>入参格式校验不通过（通用）</td></tr>
+<tr><td><code>WMS-COM-014</code></td><td><span class="badge b-warn">警告</span></td><td>库位与物料推荐库区不一致</td></tr>
+<tr><td><code>WMS-COM-020</code></td><td><span class="badge b-block">阻断</span></td><td>非法状态流转</td></tr>
+<tr><td><code>WMS-IN-001</code></td><td><span class="badge b-block">阻断</span></td><td>入库单据不存在</td></tr>
+<tr><td><code>WMS-IN-002</code></td><td><span class="badge b-block">阻断</span></td><td>入库单据状态不允许继续入库</td></tr>
+<tr><td><code>WMS-IN-003</code></td><td><span class="badge b-block">阻断</span></td><td>入库数量超过订单剩余量</td></tr>
+<tr><td><code>WMS-OUT-007</code></td><td><span class="badge b-warn">警告</span></td><td>可用库存不足（可配置为阻断）</td></tr>
+<tr><td><code>WMS-STK-011</code></td><td><span class="badge b-block">阻断</span></td><td>净数大于毛数</td></tr>
+<tr><td><code>WMS-CNT-005</code></td><td><span class="badge b-block">阻断</span></td><td>存在未处理暂挂行</td></tr>
+<tr><td><code>WMS-PLT-002</code></td><td><span class="badge b-block">阻断</span></td><td>箱码与托盘归属不一致</td></tr>
+<tr><td><code>WMS-PKG-004</code></td><td><span class="badge b-info">提示</span></td><td>PX03 库区不启用净数管理，净数等于毛数</td></tr>
+<tr><td><code>WMS-IF-002</code></td><td><span class="badge b-block">阻断</span></td><td>STTS 接口调用失败</td></tr>
+</tbody>
+</table>
+
+<div class="footer">
+  雪花WMS 系统校验与告警规范 V1.0 · 待评审 · 本规范应与《配置项治理规范》配套使用
+</div>
+</main>
+</div>
+</body>
+</html>
