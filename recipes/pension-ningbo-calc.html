@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>落户宁波的养老金测算 v2 · 基于参保证明实数</title>
+<title>落户宁波的养老金测算 v4 · 两份证明核实版</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -30,6 +30,8 @@
   .neg { color:#1a7f5a; font-weight:600; }
   .hi { background:#fdf8ef; }
   .tag { display:inline-block; font-size:11px; padding:1px 7px; border-radius:3px; background:#e8e4dc; color:#6b6357; margin-left:6px; vertical-align:1px; }
+  .tag.ok { background:#e3f0e9; color:#1a7f5a; }
+  .tag.fix { background:#f7e6e0; color:#a04030; }
   .card { background:#fff; border:1px solid #e5e2db; padding:18px 20px; margin-bottom:14px; }
   .card.warn { border-left:3px solid #b8860b; background:#fdfaf3; }
   .card.good { border-left:3px solid #1a7f5a; background:#f6faf8; }
@@ -58,39 +60,71 @@
 <div class="wrap">
 
 <header>
-  <div class="kicker">养老金测算 v2 · 2026-11-03 · 依据广东省参保证明实数修订</div>
+  <div class="kicker">养老金测算 v4 · 2026-11-03 · 两份官方证明核实 · 全国累计 116 月</div>
   <h1>落户宁波，对养老金是加分还是减分？</h1>
-  <div class="sub">1993 年 3 月生 · 广东实际累计 100 个月（8 年 4 个月）· 户籍广西 · 计划落户宁波<br>本版取代 v1：v1 基于口述「2016.07 起约 10 年 4 个月」，与参保证明不符，结论已修正</div>
+  <div class="sub">1993 年 3 月生 · 广东 <strong>100</strong> 个月 ／ 浙江（宁波）<strong>16</strong> 个月 · <strong>全国累计 116 个月（9 年 8 个月）</strong> · 户籍广西 · 计划落户宁波<br>
+  <strong>v4 变更</strong>：浙江历年参保证明已到手，宁波段由「口述 17 个月」更正为<strong>官方 16 个月</strong>（2016.08 起，非 07），总年限 117→116。结论不变，所有时点顺延 1 个月。<span class="tag ok">口述数据已清零</span></div>
 </header>
 
 <section>
-  <h2>〇、参保证明实载记录（广东省社保局 2026-07-01 出具）</h2>
+  <h2>〇、两份证明说了什么（本次核对的核心）</h2>
   <table>
-    <tr><th>#</th><th>起止</th><th>属地 / 单位类型</th><th class="num">养老月数</th></tr>
-    <tr><td>1</td><td class="num">2018.01 – 2019.04</td><td>佛山 · 汽车零部件</td><td class="num">16</td></tr>
-    <tr><td>2</td><td class="num">2019.05 – 2019.07</td><td>广州</td><td class="num">3</td></tr>
-    <tr><td>3</td><td class="num">2019.09 – 2020.03</td><td>肇庆 · 物流</td><td class="num">7</td></tr>
-    <tr><td>4</td><td class="num">2020.04 – 2020.09</td><td>广州 · 电子</td><td class="num">6</td></tr>
-    <tr><td>5</td><td class="num">2020.10 – 2021.08</td><td>东莞 · 数据服务</td><td class="num">11</td></tr>
-    <tr><td>6</td><td class="num">2021.09 – 2022.10</td><td>广州 · 科技</td><td class="num">14</td></tr>
-    <tr><td>7</td><td class="num">2022.11 – 2024.10</td><td>广州</td><td class="num">36</td></tr>
-    <tr><td>8</td><td class="num">2025.12 – 2026.06</td><td>广州 · 分公司</td><td class="num">7</td></tr>
-    <tr class="hi"><td colspan="3"><strong>合计（官方盖章数与逐行加总一致）</strong></td><td class="num"><strong>100</strong></td></tr>
+    <tr><th style="width:30%">证明</th><th>打印日 / 覆盖范围</th><th>核对结果</th></tr>
+    <tr><td><strong>① 浙江省社会保险参保证明</strong><br>（48 个月版）</td><td class="num">2026-11-03 ／ 2022.11–2026.10</td><td>表格<strong>一行数据都没有</strong> —— 这 48 个月浙江零缴费<span class="tag ok">证伪成功</span></td></tr>
+    <tr class="hi"><td><strong>② 浙江省职工基本养老保险历年参保证明</strong><br>（全历史版）</td><td class="num">2026-11-03 ／ 2016.08–2017.11</td><td><strong>累计缴费 1 年 4 月（16 个月）</strong>，全部缴在同一家单位<span class="tag ok">权威数据</span></td></tr>
   </table>
+
+  <h3>浙江段逐条明细（证明②原文）</h3>
+  <table>
+    <tr><th>参保地</th><th>年度</th><th class="num">缴费起止</th><th class="num">月缴费基数</th><th class="num">月数</th><th>参保单位</th></tr>
+    <tr><td>宁波市</td><td class="num">2016</td><td class="num">201608 – 201612</td><td class="num">2,878 元</td><td class="num">5</td><td rowspan="3">宁波某汽车零部件企业<br><span style="color:#8a8a8a;font-size:12px">统一社会信用代码 已隐去</span></td></tr>
+    <tr><td>宁波市</td><td class="num">2017</td><td class="num">201701 – 201704</td><td class="num">2,878 元</td><td class="num">4</td></tr>
+    <tr><td>宁波市</td><td class="num">2017</td><td class="num">201705 – 201711</td><td class="num">3,068 元</td><td class="num">7</td></tr>
+    <tr class="hi"><td colspan="4"><strong>合计（= 证明②"累计缴费 1 年 4 月"，逐行加总一致）</strong></td><td class="num"><strong>16</strong></td><td></td></tr>
+  </table>
+  <p style="font-size:12.5px;color:#7a7267">证明②另载：<strong>参保状态「暂停缴费」</strong>（截至 2026-11-03），险种为养老保险，社保号 4522********3339。<br>
+  注：证明②第 4 条特别提示「如有重复缴费，需在办理退休前做重复缴费清退」，第 5 条提示「未包含特殊情形补缴记录」——即本证明<strong>不含</strong>任何视同/补缴年限，是纯实际缴费。</p>
+
   <div class="card warn">
-    <div class="lead">证明揭示的三个关键事实</div>
-    <p><strong>① 广东首段为 2018.01，不是口述的 2016.07。</strong>若 2016.07–2017.12（约 19 个月）确有缴费，发生在广东省外，需到该省打印参保证明并办理转移归集——那部分计入全国总年限，但<strong>计入不了广东的「满 10 年」认定</strong>。</p>
-    <p><strong>② 两段断缴</strong>：2019.08（1 个月）；2024.11–2025.11（约 13 个月，第 7 段结束至现单位入职之间）。「满 10 年」按累计月数认定，断缴不减已缴月数，但把锁定时点推迟了 13 个月。</p>
-    <p><strong>③ 证明止于 2026.06</strong>（2026-07-01 出具）。2026 年 7 月至今是否在缴，状态未知——若已断缴，下文所有时点顺延。</p>
+    <div class="lead">v4 纠正了什么，没纠正什么</div>
+    <p><strong>① 纠正：</strong>宁波段是 <strong>2016.08–2017.11 = 16 个月</strong>，不是此前按口述推算的「2016.07 起、17 个月」。浙江首缴月是 <strong>8 月</strong>，你记的 7 月可能只是入职或登记月。累计缴费官方写死 <strong>1 年 4 月</strong>。</p>
+    <p><strong>② 纠正：</strong>全国累计 117 → <strong>116 个月（9 年 8 个月）</strong>。所有"距离满 X"的时点整体顺延 1 个月。</p>
+    <p><strong>③ 没纠正——结论一个字都不用改：</strong>广东 100 个月仍然<strong>差 20 个月</strong>才满 10 年；宁波 16 个月仍然<strong>不能</strong>帮广东加速；「落户宁波」的价值仍然只体现在<strong>户籍地兜底</strong>这一层。1 个月的差异不改变任何判断。</p>
+    <p><strong>④ 新增一条硬证据：</strong>48 个月版证明表格全空，说明 <strong>2022.11–2026.10 你在浙江一分没缴</strong>，也排除了"存在隐藏的浙江补缴段导致重复计算"的可能。这段的 100 个月广东数可以放心用。</p>
   </div>
 </section>
 
 <section>
-  <h2>一、时间坐标（按实数重算）</h2>
+  <h2>一、全部参保记录（广东证明 + 浙江证明，全部为官方数据）</h2>
+  <table>
+    <tr><th>#</th><th>起止</th><th>属地 / 单位类型</th><th class="num">养老月数</th><th>数据来源</th></tr>
+    <tr style="background:#f4f0fb"><td>0</td><td class="num">2016.08 – 2017.11</td><td><strong>宁波 · 浙江</strong>（汽车零部件）</td><td class="num"><strong>16</strong></td><td><span class="tag ok">浙江证明②</span></td></tr>
+    <tr><td>1</td><td class="num">2018.01 – 2019.04</td><td>佛山 · 汽车零部件</td><td class="num">16</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>2</td><td class="num">2019.05 – 2019.07</td><td>广州</td><td class="num">3</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>3</td><td class="num">2019.09 – 2020.03</td><td>肇庆 · 物流</td><td class="num">7</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>4</td><td class="num">2020.04 – 2020.09</td><td>广州 · 电子</td><td class="num">6</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>5</td><td class="num">2020.10 – 2021.08</td><td>东莞 · 数据服务</td><td class="num">11</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>6</td><td class="num">2021.09 – 2022.10</td><td>广州 · 科技</td><td class="num">14</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>7</td><td class="num">2022.11 – 2024.10</td><td>广州</td><td class="num">36</td><td><span class="tag">广东证明</span></td></tr>
+    <tr><td>8</td><td class="num">2025.12 – 2026.06</td><td>广州 · 分公司</td><td class="num">7</td><td><span class="tag">广东证明</span></td></tr>
+    <tr class="hi"><td colspan="3"><strong>合计（广东 100 + 浙江 16，逐行加总一致）</strong></td><td class="num"><strong>116</strong></td><td></td></tr>
+  </table>
+  <div class="card">
+    <div class="lead">两处断缴，位置更清楚了</div>
+    <p><strong>2017.12（1 个月）</strong>：浙江止于 201711，广东起于 201801，中间空一个月。<br>
+    <strong>2019.08（1 个月）</strong>：省内跳槽间隙。<br>
+    <strong>2024.11–2025.11（约 13 个月）</strong>：最长的空档，也是全年限最大的窟窿。</p>
+    <p>断缴不减已累计月数，但把任何"满 10 年"的时点往后推。2024.11–2025.11 这 13 个月，等于把广东满 10 年的时点整体推迟了一年多。</p>
+  </div>
+</section>
+
+<section>
+  <h2>二、时间坐标（按 116 个月重算）</h2>
   <div class="timeline">
-    <div class="tl-item"><span class="y">2018.01</span><span class="l">广东首段参保</span></div>
-    <div class="tl-item active"><span class="y">2026.06</span><span class="l">累计 100 个月</span></div>
-    <div class="tl-item"><span class="y">2028.02</span><span class="l">满 120 月锁广东</span></div>
+    <div class="tl-item"><span class="y">2016.08</span><span class="l">浙江首保（16 月）</span></div>
+    <div class="tl-item"><span class="y">2018.01</span><span class="l">转入广东段</span></div>
+    <div class="tl-item active"><span class="y">2026.06</span><span class="l">全国累计 116 月</span></div>
+    <div class="tl-item"><span class="y">2028.02</span><span class="l">广东满 120 月</span></div>
     <div class="tl-item"><span class="y">2056.03</span><span class="l">63 岁退休</span></div>
   </div>
   <table>
@@ -98,29 +132,43 @@
     <tr><td>法定退休年龄</td><td class="num">63 岁（1993 年 3 月生，男性，适用延迟退休终值）</td></tr>
     <tr><td>预计退休时点</td><td class="num">2056 年 3 月（距今约 29 年 4 个月）</td></tr>
     <tr><td>最低缴费年限要求</td><td class="num">20 年 = 240 个月（2030 年起逐步提高，2039 年后稳定）</td></tr>
-    <tr><td>广东已缴</td><td class="num"><strong>100 个月（8 年 4 个月）</strong></td></tr>
-    <tr><td>距「满 10 年」锁广东</td><td class="num"><strong>还差 20 个月</strong> → 若自 2026.07 起连续缴，2028 年 2 月达成</td></tr>
-    <tr><td>距 240 个月最低门槛</td><td class="num">还差 140 个月（11 年 8 个月）</td></tr>
-    <tr><td>计发月数（63 岁）</td><td class="num">117 个月（现行表；后续是否调整官方未发布）</td></tr>
+    <tr class="hi"><td><strong>全国累计已缴</strong></td><td class="num"><strong>116 个月（9 年 8 个月）</strong>＝ 广东 100 ＋ 浙江 16</td></tr>
+    <tr><td>广东本地累计</td><td class="num">100 个月（8 年 4 个月）</td></tr>
+    <tr><td>浙江（宁波）本地累计</td><td class="num">16 个月（1 年 4 个月）<span class="tag ok">官方</span></td></tr>
+    <tr><td>距「满 10 年」锁广东</td><td class="num"><strong>还差 20 个月</strong> → 若自 2026.07 起连续缴，<strong>2028 年 2 月</strong>达成</td></tr>
+    <tr><td>距「满 10 年」锁宁波</td><td class="num">还差 104 个月（8 年 8 个月）→ 若 2026.07 起在宁波连续缴，<strong>2035 年 2 月</strong>达成</td></tr>
+    <tr><td>距 240 个月最低门槛</td><td class="num">还差 124 个月（10 年 4 个月）→ 若连续缴，<strong>2036 年 10 月</strong>达标</td></tr>
+    <tr><td>个人账户计发月数（63 岁）</td><td class="num">117（现行表数值；与"累计 116 个月"无关，勿混）</td></tr>
   </table>
 </section>
 
 <section>
-  <h2>二、v1 结论修正：「广州已锁定」作废</h2>
+  <h2>三、结论：落户宁波的作用，是「保险」不是「加分」</h2>
   <div class="card bad">
-    <div class="lead">当前真实状态：哪都没满 10 年，保底不存在</div>
-    <p>v1 曾按口述年限得出「广州已满 10 年、退休地保底锁在广州」。参保证明显示广东累计仅 100 个月——<strong>这个保底目前不成立</strong>。</p>
-    <p>若此刻停缴、或迁去宁波后又缴不满 10 年，按国办发〔2009〕66 号第④条：<strong>回户籍地广西领取</strong>（计发基数比广州低约 24%）。这是当前最差情形，务必避免。</p>
+    <div class="lead">先说不变的部分：哪都没满 10 年，保底仍不存在</div>
+    <p>广东本地 100 个月、浙江本地 16 个月，<strong>各自都不满 120 个月</strong>。此刻若停缴，按国办发〔2009〕66 号第④条会归集到<strong>户籍地</strong>。所以「广州保底」这个结论不成立——这一点从 v2 到 v4 都没变。</p>
   </div>
   <div class="card good">
-    <div class="lead">锁定的正确路径：在广东连续缴到 2028 年 2 月</div>
-    <p>「满 10 年」按<strong>累计</strong>缴费月数认定，断缴不减已缴月数——但锁定前别把养老关系转出广东。累计满 120 个月后，第③条「上一个满 10 年的地方」兜底生效，<strong>此后无论去哪、缴不缴、缴多久，退休地最差都是广州</strong>。</p>
-    <p>注：广东省已实行省级统筹，省内佛山/肇庆/东莞/广州各段<strong>合并计算</strong>，均计入广东的 120 个月，无需省内归集手续。</p>
+    <div class="lead">再说值钱的部分：落户宁波把「最差兜底」抬高了一档</div>
+    <p>兜底看的是<strong>户籍地</strong>：户籍在广西就按广西的计发基数领，在宁波就按宁波的领。这个差额是实的：</p>
+    <table style="margin-top:10px">
+      <tr><th>路径</th><th class="num">计发基数</th><th>触发条件</th></tr>
+      <tr class="hi"><td><strong>广州退休</strong></td><td class="num">9,493</td><td>广东满 120 个月（还差 20 个月），且最后参保地在广东</td></tr>
+      <tr><td><strong>宁波退休</strong></td><td class="num">8,537</td><td>宁波满 120 个月（还差 104 个月）</td></tr>
+      <tr><td><strong>户籍宁波兜底</strong></td><td class="num">8,537</td><td>落户宁波 + 各地均不满 10 年</td></tr>
+      <tr><td>户籍广西兜底（现状）</td><td class="num">≈7,200 <span class="tag">未核实</span></td><td>不落户 + 各地均不满 10 年</td></tr>
+    </table>
+    <p style="margin-top:10px">落户宁波值 <strong>1,337 元/月的基数差（约 +18.6%，20 年约 32 万）</strong>——但这笔钱只在「哪都没缴满 10 年」这种最差情形下才兑现。</p>
+  </div>
+  <div class="card">
+    <div class="lead">但真正该做的事没变：广东那 20 个月</div>
+    <p>从「兜底 8,537」走到「确定性 9,493」，只需要在广东再缴 20 个月。<strong>用 20 个月的缴费换每月多 956 元（20 年约 23 万），这是整盘账里性价比最高的一步。</strong>顺序必须是：先锁广东，再谈落户。</p>
+    <p>注：广东省已实行省级统筹，省内佛山/肇庆/东莞/广州各段<strong>合并计算</strong>，均计入广东的 120 个月，无需省内归集手续；浙江那 16 个月跨省转入广东<strong>不增加</strong>广东的 120 个月计数，只并入全国总年限。</p>
   </div>
 </section>
 
 <section>
-  <h2>三、三地基数差距（口径同 v1）</h2>
+  <h2>四、三地基数差距</h2>
   <table>
     <tr><th>退休地</th><th class="num">2026 计发基数</th><th class="num">相对广州</th><th>来源与可靠性</th></tr>
     <tr class="hi"><td><strong>广州</strong>（广东除深圳）</td><td class="num">9,493 元/月</td><td class="num">100%</td><td>腾讯新闻引广东人社；另有 9,693 说法，待官方公告核实</td></tr>
@@ -133,36 +181,37 @@
 </section>
 
 <section>
-  <h2>四、按实数推演：退休地三情景</h2>
+  <h2>五、退休地三情景推演</h2>
   <table>
     <tr><th style="width:42%">情景</th><th>退休地 / 结果</th></tr>
     <tr class="hi"><td><strong>A. 广东连续缴到 2028.02 满 120 月，之后随意</strong></td><td>退休地锁定<strong>广州</strong>，按 9,493 领。此后去宁波定居不改变退休地（只要最后参保地或历史满 10 年地认定落在广州）。<strong>最优解</strong></td></tr>
-    <tr><td><strong>B. 现在转宁波，宁波缴满 10 年且为最后参保地</strong></td><td>按 8,537 在<strong>宁波</strong>领，比广州低约 11%（每月 −306 至 −574 元）。但注意：若广东先满 120 月、之后宁波也满 10 年，最后参保地为宁波 → 仍按宁波领，<strong>待久了反而「降级」</strong></td></tr>
-    <tr><td><strong>C. 现在转宁波，宁波缴不满 10 年</strong></td><td>若届时广东已满 120 月 → 回<strong>广州</strong>；若未满（且外省也无满 10 年地）→ 回<strong>广西</strong>户籍地，计发基数最低。<strong>最差情形</strong></td></tr>
+    <tr><td><strong>B. 现在转宁波，宁波缴满 10 年且为最后参保地</strong></td><td>按 8,537 在<strong>宁波</strong>领，比广州低约 11%（每月 −306 至 −574 元）。注意：若广东先满 120 月、之后宁波也满 10 年，最后参保地为宁波 → 仍按宁波领，<strong>待久了反而「降级」</strong></td></tr>
+    <tr><td><strong>C. 现在转宁波，宁波缴不满 10 年</strong></td><td>若届时广东已满 120 月 → 回<strong>广州</strong>（9,493）；若广东也未满 → 归集到<strong>户籍地</strong>：已落户宁波则按 <strong>8,537</strong> 领，未落户则回<strong>广西</strong>（≈7,200）。<strong>这一格正是「落户宁波」的养老金价值所在</strong></td></tr>
   </table>
   <div class="card dark">
     <div class="lead">决策规则一句话</div>
-    <p><strong>120 个月之前：人可以在宁波，关系和缴费留在广东。</strong>120 个月之后：随便搬，所有路径都不差于「回广西」。</p>
+    <p><strong>120 个月之前：人可以在宁波，关系和缴费留在广东。</strong>120 个月之后：随便搬，所有路径都不差于「回广西」。落户宁波可作为兜底保险提前做，但它替代不了那 20 个月。</p>
   </div>
 </section>
 
 <section>
-  <h2>五、真正的量级差异不在城市，在年限（口径同 v1）</h2>
+  <h2>六、真正的量级差异不在城市，在年限</h2>
   <div class="formula">基础养老金 = 计发基数 ×（1 + 平均缴费指数）÷ 2 × 缴费年限 × 1%</div>
   <table>
     <tr><th>情形</th><th class="num">缴费年限</th><th class="num">基础养老金（指数 0.6，广州基数）</th></tr>
-    <tr class="hi"><td>一路缴到 63 岁（约 34 年）</td><td class="num">34 年</td><td class="num">2,582</td></tr>
+    <tr class="hi"><td>一路缴到 63 岁（约 38 年）</td><td class="num">38 年</td><td class="num">2,886</td></tr>
     <tr><td>只缴到最低门槛</td><td class="num">20 年</td><td class="num">1,519</td></tr>
-    <tr><td>停留在现有 100 个月</td><td class="num">8 年 4 月</td><td class="num">638 · 且不达 20 年门槛，领不到</td></tr>
+    <tr><td>停留在现有 116 个月</td><td class="num">9 年 8 月</td><td class="num">734 · 且不达 20 年门槛，领不到</td></tr>
   </table>
   <div class="card">
     <p>个人账户养老金 = 账户余额 ÷ 117，<strong>与退休地无关</strong>（账户余额随关系全额转移）。地区差异全部来自基础养老金部分。</p>
-    <p>从 34 年掉到 20 年，少约 1,000 元/月；从广州换到宁波，只少 306 元/月。<strong>你的养老金真正的敌人是断缴和低基数，不是城市选择。</strong></p>
+    <p>从 38 年掉到 20 年，少约 1,367 元/月；从广州换到宁波，只少 306 元/月。<strong>你养老金真正的敌人是断缴和低基数，不是城市选择。</strong></p>
+    <p>顺带算清一件事：浙江那 16 个月如果转入广东，并入总年限后本身值 <strong>约 101 元/月</strong>（16/12 × 0.8 × 9,493 × 1%）。金额不大，但它是白捡的——这也是"不要轻易放弃任何一个月"的具体价格。</p>
   </div>
 </section>
 
 <section>
-  <h2>六、如果到龄仍不满 240 个月：四条出路，代价差一个数量级</h2>
+  <h2>七、如果到龄仍不满 240 个月：四条出路，代价差一个数量级</h2>
   <div class="card">
     <p><strong>制度原文</strong>（《国务院关于渐进式延迟法定退休年龄的办法》第二条）：从 2030 年 1 月 1 日起，最低缴费年限由 15 年逐步提高至 20 年、每年提高 6 个月，2039 年达到 20 年；<strong>「职工达到法定退休年龄但不满最低缴费年限的，可以按照规定通过延长缴费或者一次性缴费的办法达到最低缴费年限，按月领取基本养老金。」</strong></p>
     <p>也就是说，不满年限<strong>不等于领不到</strong>——制度留了口子，只是要你「补够」。</p>
@@ -170,7 +219,7 @@
   <table>
     <tr><th style="width:22%">出路</th><th>做法与代价</th><th style="width:22%">对本人可行性</th></tr>
     <tr><td><strong>① 延长缴费</strong><br><span class="tag">主流</span></td><td>到龄后继续按月缴，缴够再办退休。差 3 年即：少领约 <strong>7.2 万</strong>（3×12×2,000 元），另多缴约 <strong>3.6 万</strong>（灵活就业 20% 费率、按最低基数估），合计 10 万量级</td><td>✅ <strong>唯一现实路径</strong></td></tr>
-    <tr><td><strong>② 一次性补缴</strong></td><td>一次性补齐缺口。门槛极窄：仅限 <strong>2011 年 7 月 1 日（社保法实施）前参保</strong>、且延长缴费 5 年后仍不足者</td><td>❌ <strong>不适用</strong>：本人广东首参保 2018.01，在社保法实施之后</td></tr>
+    <tr><td><strong>② 一次性补缴</strong></td><td>一次性补齐缺口。门槛极窄：仅限 <strong>2011 年 7 月 1 日（社保法实施）前参保</strong>、且延长缴费 5 年后仍不足者</td><td>❌ <strong>不适用</strong>：本人浙江首参保 2016.08，在社保法实施之后</td></tr>
     <tr><td><strong>③ 转城乡居民养老</strong></td><td>职工个人账户全额并入居民账户，缴费年限合并计算。待遇<strong>断崖</strong>：职工 20 年约 2,300 元/月 vs 居民约 500–800 元/月（宁波基础 390 元 + 个人账户；广西更低），月差约 1,500 元，20 年累计 <strong>35 万+</strong></td><td>技术上可行，经济上属下策</td></tr>
     <tr><td><strong>④ 终止关系、取个人账户</strong></td><td>只领个人账户余额（本人缴费 8%），<strong>单位缴的 16% 统筹部分全部放弃</strong></td><td>最亏，不应考虑</td></tr>
   </table>
@@ -178,22 +227,22 @@
   <h3>缺口换算成本人的具体数字</h3>
   <table>
     <tr><th>项</th><th class="num">值</th></tr>
-    <tr><td>已缴（广东，2026.06）</td><td class="num">100 个月</td></tr>
+    <tr><td>已缴（广东 100 ＋ 浙江 16，至 2026.06）</td><td class="num">116 个月</td></tr>
     <tr><td>2056 年退休门槛</td><td class="num">240 个月</td></tr>
-    <tr class="hi"><td><strong>缺口</strong></td><td class="num"><strong>140 个月 = 11 年 8 个月</strong></td></tr>
-    <tr><td>若自 2026.07 起连续缴，达标时点</td><td class="num">2038 年 2 月（早于退休 18 年）</td></tr>
+    <tr class="hi"><td><strong>缺口</strong></td><td class="num"><strong>124 个月 = 10 年 4 个月</strong></td></tr>
+    <tr><td>若自 2026.07 起连续缴，达标时点</td><td class="num">2036 年 10 月（早于退休 19 年半）</td></tr>
     <tr><td>每少缴 1 年，基础养老金减少</td><td class="num">−76 元/月（指数 0.6）／−95 元/月（指数 1.0）</td></tr>
-    <tr><td>20 年 vs 34 年</td><td class="num neg">−1,064 至 −1,329 元/月</td></tr>
+    <tr><td>20 年 vs 38 年</td><td class="num neg">−1,367 元/月</td></tr>
   </table>
   <div class="card good">
     <div class="lead">结论：门槛不是问题，断缴才是</div>
-    <p>140 个月分摊到未来 29 年，等于每年只需缴 5 个月。真正会出事的只有一种情况：<strong>40 岁后长期停工且不自行缴</strong>。只要不在 40—55 岁之间出现多年空档，20 年门槛绰绰有余。</p>
+    <p>124 个月分摊到未来 29 年，等于每年只需缴 4 个月多一点。真正会出事的只有一种情况：<strong>40 岁后长期停工且不自行缴</strong>。只要不在 40—55 岁之间出现多年空档，20 年门槛绰绰有余。</p>
   </div>
 
   <h3>两个容易被忽略的规则</h3>
   <ul>
     <li><strong>到龄后仍可继续缴，且渠道在放宽。</strong>2026 年人社部新规明确：超龄劳动者累计缴费不足最低年限的，<strong>可以个人身份继续缴</strong>；经与单位协商一致，单位也可为其缴。所以「不够」不是死局，只是「推迟」。</li>
-    <li><strong>医保退休年限是另一套账，比养老长得多。</strong>养老 20 年 ≠ 医保可退休。职工医保退休后免缴待遇另有年限要求（各地不同，广东在推进全省统一且普遍明显高于 20 年），本人 100 个月的医保年限同样远未达标——<span class="tag">需单独核实</span>建议向广州医保局单独确认，这个坑比养老更早咬人。</li>
+    <li><strong>医保退休年限是另一套账，比养老长得多。</strong>养老 20 年 ≠ 医保可退休。职工医保退休后免缴待遇另有年限要求（各地不同，广东在推进全省统一且普遍明显高于 20 年），本人累计 116 个月的医保年限同样远未达标——<span class="tag">需单独核实</span>建议向广州医保局单独确认，这个坑比养老更早咬人。</li>
     <li><strong>弹性提前退休的前提是「已达最低缴费年限」。</strong>年限不够时，提前退休这条路直接关闭，只能往后延。</li>
   </ul>
 
@@ -204,24 +253,30 @@
 </section>
 
 <section>
-  <h2>七、结论与行动清单</h2>
+  <h2>八、结论与行动清单</h2>
   <div class="card dark">
-    <div class="lead">别把养老金当落户宁波的理由；但落户的「姿势」有讲究</div>
-    <p>养老金维度上宁波是减分项（−11%）。但这不构成「不去宁波」的理由——医保、长护险、教育与住房才是落户决策的主战场。养老金只需要做对一件事：<strong>锁定广东之前，缴费别出省。</strong></p>
+    <div class="lead">你原来的直觉对了一半，而且对的是「兜底」那一半</div>
+    <p>你说「宁波会比经济一团糟的城市养老金充足」——在<strong>职工养老金按省统一</strong>这一层不成立（浙江全省 8,537，与城市贫富无关）；但在<strong>户籍地兜底</strong>这一层成立：户籍在宁波就按 8,537 兜，在广西就按 ≈7,200 兜。差别不在「宁波富」，而在「户籍落在哪」。</p>
+    <p>只是这笔收益只在最差情形兑现。真正拿到手的确定性，仍取决于<strong>广东那 120 个月</strong>——它还差 20 个月。</p>
   </div>
   <h3>按优先级排序的五个动作</h3>
   <ul>
-    <li><strong>① 在广东连续缴到 2028 年 2 月（累计满 120 个月）。</strong>锁住之前养老关系不转出广东。先确认 2026.07 至今是否在缴。</li>
-    <li><strong>② 查清 2016.07–2017.12 的参保记录在哪个省</strong>，打印当地参保证明存档，退休前办理转移归集（约 19 个月计入总年限）。</li>
-    <li><strong>③ 核对 2024.11–2025.11 那 13 个月断缴</strong>：确认期间无跨省缴费；如有，打印证明合并。</li>
-    <li><strong>④ 到「粤税通」/ 电子社保卡核对各段缴费基数</strong>，推算真实平均缴费指数，把测算从「假设指数」变成「实数」。</li>
-    <li><strong>⑤ 落户宁波的时点可以自由选</strong>：落户本身不影响退休地认定（认定看参保记录不看户籍），但若户籍迁入宁波，广西兜底就没了——锁定广东 120 月之前<strong>别迁户口</strong>。</li>
+    <li><strong>① 在广东连续缴到累计满 120 个月（2028 年 2 月左右）。</strong>在此前养老关系不转出广东。先确认 2026.07 至今是否在缴——每断 1 个月，时点顺延 1 个月。<span class="tag">最高优先级</span></li>
+    <li><strong>② <s>打宁波 2016.07–2017.11 的参保证明</s> <span class="tag ok">已完成</span></strong>　浙江两份证明已取回，确认：16 个月、全部职工养老、无同期断月、基数为最低档 2,878→3,068 元。<strong>浙江侧数据已闭环，无需再查。</strong></li>
+    <li><strong>③ 决定这 16 个月要不要转到广东。</strong>转：并入全国总年限（这 16 个月本身值约 101 元/月），但<strong>不加速广东的 120 个月</strong>；不转：保留在宁波，为「宁波满 10 年」和户籍兜底留底。若落户宁波，建议<strong>暂不转</strong>。</li>
+    <li><strong>④ 核对 2024.11–2025.11 那 13 个月断缴</strong>：这是全年限最大的窟窿。确认期间无跨省缴费；如有，打印证明合并。另外 2017.12 也空了 1 个月。</li>
+    <li><strong>⑤ 落户宁波可以正常推进</strong>，它不影响退休地认定（认定看参保记录不看户籍），且能把兜底从 ≈7,200 抬到 8,537。但<strong>别把落户当成"解决养老金"的方案</strong>——它只是把最差情形改善一档。</li>
   </ul>
+
+  <div class="card warn">
+    <div class="lead">本页为公开脱敏版</div>
+    <p>身份证号、参保单位全称、统一社会信用代码、证明授权码均已隐去，仅保留测算所需的月数与基数。含完整信息的原件仅存本地。</p>
+  </div>
 </section>
 
 <footer>
-  <p><strong>数据来源</strong>：《广东省社会保险个人参保证明》（2026-07-01 出具，养老/工伤/失业各累计 100 个月）；浙江省人社厅等 5 部门《关于公布 2026 年社会保险有关基数的通知》（浙人社发〔2026〕52 号，计发基数 8,537 元/月）；广东省 2026 年计发基数 9,493 元/月（腾讯新闻引广东省人社厅，另有 9,693 说法待核）；《国务院办公厅关于转发人力资源社会保障部财政部城镇企业职工基本养老保险关系转移接续暂行办法的通知》（国办发〔2009〕66 号）第六条、第七条。</p>
-  <p><strong>口径说明</strong>：① 「满 10 年」按累计缴费月数认定（66 号文口径），断缴不减月数；② 广东省已实行省级统筹，省内各段合并计算；③ 基础养老金测算采用 2026 年计发基数与 2026 年购买力，2056 年名义值将因社平工资增长而更高，本表用于比较相对差异；④ 平均缴费指数为假设值，实际以历年缴费工资为准；⑤ 63 岁计发月数 117 为现行表数值；⑥ 广西计发基数为量级参考，未核实官方公告；⑦ 第 7 段截止月按 36 个月倒推为 2024.10，与证明模糊处可能存在辨识误差，以原件为准。本文为个人测算，不构成法律或投资建议。</p>
+  <p><strong>数据来源</strong>：① 《浙江省职工基本养老保险历年参保证明》（浙江省社保经办机构，2026-11-03 打印，授权码 已隐去，累计缴费 1 年 4 月，2016.08–2017.11 共 16 个月）；② 《浙江省社会保险参保证明（个人专用）》（2026-11-03 打印，授权码 已隐去，48 个月缴费表为空，参保状态「暂停缴费」）；③ 《广东省社会保险个人参保证明》（2026-07-01 出具，养老/工伤/失业各累计 100 个月）；④ 浙人社发〔2026〕52 号《关于公布 2026 年社会保险有关基数的通知》（计发基数 8,537 元/月）；⑤ 广东省 2026 年计发基数 9,493 元/月（腾讯新闻引广东省人社厅，另有 9,693 说法待核）；⑥ 国办发〔2009〕66 号《城镇企业职工基本养老保险关系转移接续暂行办法》第三条、第六条；⑦ 人社部发〔2009〕187 号第六条（「一地累计缴费年限」认定口径）。</p>
+  <p><strong>口径说明</strong>：① 「满 10 年」按<strong>在该地的实际缴费年限</strong>认定（187 号文口径），跨省转入的年限并入全国总年限、<strong>不并入转入地的 10 年计数</strong>，断缴不减已缴月数；② 广东省已实行省级统筹，省内各段合并计算；③ 基础养老金测算采用 2026 年计发基数与 2026 年购买力，2056 年名义值将因社平工资增长而更高，本表用于比较相对差异；④ 平均缴费指数为假设值（浙江段实际按月最低基数缴，指数约 0.6 档），实际以历年缴费工资为准；⑤ 63 岁计发月数 117 为现行表数值；⑥ 广西计发基数为量级参考，未核实官方公告；⑦ 广东段第 7 段截止月按 36 个月倒推为 2024.10，与证明模糊处可能存在 1 个月辨识误差，以原件为准；⑧ 浙江证明第 5 条载明「未包含特殊情形补缴的记录」，故本页浙江 16 个月为纯实际缴费，不含视同/补缴。本文为个人测算，不构成法律或投资建议。</p>
 </footer>
 
 </div>
