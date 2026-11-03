@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>落户宁波的养老金测算 v6 · 分段纠正版（脱敏）</title>
+<title>落户宁波的养老金测算 v7 · 断缴影响补充版（脱敏）</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -60,11 +60,12 @@
 <div class="wrap">
 
 <header>
-  <div class="kicker">养老金测算 v6 · 2026-11-03 · 分段纠正：广东无长断档 · 全国累计 120 月 / 广东差 16 月</div>
+  <div class="kicker">养老金测算 v7 · 2026-11-03 · 断缴影响对照 · 全国累计 120 月 / 广东差 16 月</div>
   <h1>落户宁波，对养老金是加分还是减分？</h1>
   <div class="sub">1993 年 3 月生 · 广东 <strong>104</strong> 个月 ／ 浙江（宁波）<strong>16</strong> 个月 · <strong>全国累计 120 个月（整 10 年）</strong> · 户籍广西 · 计划落户宁波<br>
-  <strong>v5 变更</strong>：确认 2026.07 起仍在广东连续缴纳，广东本地由 100 → <strong>104</strong>（截至 2026.10），全国累计 116 → <strong>120</strong>。<br>
-  <strong>v6 变更</strong>：确认 2024.11–2025.11 未断缴（一直在广东）。复核后发现这是<strong>此前分段录入错误</strong>——第 7 段标「36 个月」却只写到 2024.10（实际仅 24 个月），终点应为 2025.10。<strong>「最长 13 个月窟窿」作废</strong>，广东从 2022.11 起基本连续。<span class="tag fix">重大纠正</span></div>
+  <strong>v5 变更</strong>：确认 2026.07 起仍在广东连续缴纳，广东本地 100 → <strong>104</strong>，全国累计 116 → <strong>120</strong>。<br>
+  <strong>v6 变更</strong>：第 7 段终点由 2024.10 更正为 <strong>2025.10</strong>（36 个月的正确终点）。<strong>「断缴 13 个月」系录入错误，作废</strong>。<span class="tag fix">重大纠正</span><br>
+  <strong>v7 补充</strong>：新增<strong>「断缴到底影响什么」</strong>对照表 —— 养老看<strong>累计</strong>不看连续，2025.11 那 1 个月按总数处理即可；真正怕断的是医保与落户类资格。</div>
 </header>
 
 <section>
@@ -131,6 +132,24 @@
     <strong>2025.11（1 个月，待核）</strong>：第 7 段止于 2025.10，第 8 段起于 2025.12，中间这一个月在分段上无处安放。<strong>但总数 100 已经官方锁定</strong>，所以它只有两种可能：要么确实空着，要么被算在第 7 段或第 8 段内（两种情况总数都是 100）。</p>
     <p><strong>v4/v5 的「2024.11–2025.11 断缴 13 个月」是错的</strong>：那 13 个月里 12 个月在第 7 段内（2024.11–2025.10），实际一直在缴。错误的来源是第 7 段终点被写成 2024.10（那是 24 个月的终点，不是 36 个月的）。<span class="tag fix">已纠正</span></p>
     <p>修正后的图景完全变了：<strong>广东自 2022.11 起基本连续缴纳，没有长达一年的空档。</strong>此前那句「13 个月把满 10 年的时点推迟了一年多」也随之作废——真正推迟你的是 2017.12 和 2019.08 这两处跳槽间隙，各 1 个月，加起来才 2 个月。</p>
+  </div>
+
+  <div class="card warn">
+    <div class="lead">断缴到底影响什么：养老看累计不怕断，怕断的是另外几项</div>
+    <p>一句话结论：<strong>「养老金断缴没影响」——对已缴月数成立，对总年限和时点不成立，对医保和落户类资格完全不成立。</strong></p>
+    <table style="margin-top:10px">
+      <tr><th style="width:23%">维度</th><th>规则</th><th style="width:27%">对本人的量级</th></tr>
+      <tr class="hi"><td><strong>已缴月数</strong></td><td>断缴<strong>不清零</strong>。制度口径是「累计缴费满 15 年（将提高到 20 年）」，<strong>不是「连续」</strong></td><td>104 个月一分不少</td></tr>
+      <tr><td><strong>总缴费年限</strong></td><td>断掉的月份<strong>不计入</strong>总年限，基础养老金与个人账户同步少一点</td><td>每少 1 个月 ≈ <strong>−6.3 元/月</strong><br><span style="color:#8a8a8a;font-size:12px">9,493×0.8×1/12×1%，可忽略</span></td></tr>
+      <tr class="hi"><td><strong>退休地「满 10 年」</strong></td><td>按<strong>在该地累计</strong>的月数算，<strong>不看连续</strong>——断缴不会让已有的 104 个月失效</td><td>资格判定不变，但<strong>达标时点后移</strong>：断 1 个月 → 2028.02 变 2028.03</td></tr>
+      <tr><td><strong>个人账户</strong></td><td>已缴余额照常计息，断缴期间不再新增积累</td><td>影响极小</td></tr>
+      <tr><td><strong>医保（另一套账）</strong></td><td>断缴<strong>次月起停止住院报销</strong>；3 个月内补缴可连续计算，<strong>超 3 个月连续缴费年限重新计算</strong>，并推迟退休医保年限达标</td><td><span class="tag fix">后果比养老重得多</span></td></tr>
+      <tr><td><strong>落户／购房／车牌／子女入学</strong></td><td>多数城市按<strong>连续缴纳</strong>认定，断 1 个月即重新起算</td><td><span class="tag fix">断缴最贵的地方，且与养老金无关</span></td></tr>
+    </table>
+    <p style="margin-top:10px"><strong>所以 2025.11 那 1 个月不必再追。</strong>养老口径只看总数，官方 100 个月已经锁定，那 1 个月算在哪一段都不改变任何结论。你说「按总数就行」，这个判断是<strong>对</strong>的。</p>
+    <p><strong>但有两处别顺着这个逻辑推下去</strong>：<br>
+    ① <strong>2028.02 之前尽量别断</strong>。不是为了那 6 块钱，而是断 1 个月就把锁广州的时点推后 1 个月；一旦这个时点跨过了退休窗口，代价是每月 956 元（20 年 23 万）。<br>
+    ② <strong>医保的断缴后果和养老完全不同</strong>。你未来几年若换工作、空窗，养老断几个月只是少几块钱，<strong>医保断超 3 个月是实打实的待遇损失</strong>（停报销 + 连续年限清零）。这两件事不能套用同一个"无所谓"。</p>
   </div>
 </section>
 
