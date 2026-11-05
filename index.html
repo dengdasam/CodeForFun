@@ -272,7 +272,8 @@ async function load(){
     const r = await fetch(TREE_API, {headers:{"Accept":"application/vnd.github+json"}});
     if(!r.ok) throw new Error("HTTP "+r.status);
     const j = await r.json();
-    const blobs = (j.tree||[]).filter(n => n.type==="blob" && /\.html?$/i.test(n.path) && baseName(n.path).toLowerCase()!=="index.html");
+    const SKIP = ["index.html","404.html"];
+    const blobs = (j.tree||[]).filter(n => n.type==="blob" && /\.html?$/i.test(n.path) && SKIP.indexOf(baseName(n.path).toLowerCase()) === -1);
     DATA = blobs.map(b=>{
       const name = baseName(b.path);
       return {path:b.path, name, title:TITLE_MAP[name]||humanize(name), size:b.size, cat:catOf(b.path), updated:null};
