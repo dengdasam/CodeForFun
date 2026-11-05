@@ -134,7 +134,7 @@
   <aside class="sidebar">
     <div class="cats" id="cats"></div>
     <div class="search"><input id="q" placeholder="搜索文件名 / 标题…" oninput="render()"></div>
-    <div class="hint">分类按文件所在的<b>真实子目录</b>自动生成：<code>calendar/</code>→日历、<code>components/</code>→组件、根目录→根目录。预览区点「⛶ 放大」可全屏展示（不跳新标签）。</div>
+    <div class="hint">分类按文件所在的<b>真实子目录</b>自动生成：<code>研究/</code>、<code>种植日历/</code>、<code>组件/</code>，根目录单独归一类。预览区点「⛶ 放大」可全屏展示（不跳新标签）。</div>
   </aside>
 
   <section class="main">
@@ -206,18 +206,18 @@ const FALLBACK = [
   {path:"公积金全景总卡20城.html", title:"前20城住房公积金全景总卡 · 六维度整合"},
   {path:"公积金购房支撑力20城.html", title:"前20城公积金购房支撑力 · 贷款额度 ÷ 房价"},
   {path:"公积金个贷率20城.html", title:"前20城住房公积金资金使用效率 · 个贷率"},
-  {path:"calendar/哈巴纳达广西来宾种植日历.html", title:"哈巴纳达 · 广西来宾全年种植日历"},
-  {path:"calendar/哈巴纳达浙江宁波种植日历.html", title:"哈巴纳达 · 浙江宁波全年种植日历"},
-  {path:"components/数值输入框组件.html", title:"Vue 数值输入框组件（带计算器弹窗）"},
-  {path:"recipes/北海两居室选房推荐.html", title:"北海买两居 · 选房推荐卡"},
-  {path:"recipes/北海对比宁波春晓梅山.html", title:"广西北海 vs 宁波春晓/梅山 · 沿海旅居深度对比"},
-  {path:"recipes/四城人口结构与房价验证.html", title:"四城人口结构 vs 房价见底验证"},
-  {path:"recipes/沿海旅居决策合集.html", title:"沿海旅居决策合集 · 六城对比"},
-  {path:"recipes/城经笔记竞品对标卡.html", title:"城市经济号竞品对标卡"},
-  {path:"recipes/竞品深度拆解.html", title:"竞品深度拆解 · 城经笔记 vs 三土 / 国民经略"},
-  {path:"recipes/哈巴纳达食用指南.html", title:"哈巴纳达食用指南 · 0辣度哈瓦那甜椒"},
-  {path:"recipes/哈拉佩纽品种图鉴.html", title:"哈拉佩纽 Jalapeño · 品种图鉴与产量"},
-  {path:"recipes/宁波养老金测算.html", title:"落户宁波的养老金测算 v13 · 脱敏版"}
+  {path:"种植日历/哈巴纳达广西来宾种植日历.html", title:"哈巴纳达 · 广西来宾全年种植日历"},
+  {path:"种植日历/哈巴纳达浙江宁波种植日历.html", title:"哈巴纳达 · 浙江宁波全年种植日历"},
+  {path:"组件/数值输入框组件.html", title:"Vue 数值输入框组件（带计算器弹窗）"},
+  {path:"研究/北海两居室选房推荐.html", title:"北海买两居 · 选房推荐卡"},
+  {path:"研究/北海对比宁波春晓梅山.html", title:"广西北海 vs 宁波春晓/梅山 · 沿海旅居深度对比"},
+  {path:"研究/四城人口结构与房价验证.html", title:"四城人口结构 vs 房价见底验证"},
+  {path:"研究/沿海旅居决策合集.html", title:"沿海旅居决策合集 · 六城对比"},
+  {path:"研究/城经笔记竞品对标卡.html", title:"城市经济号竞品对标卡"},
+  {path:"研究/竞品深度拆解.html", title:"竞品深度拆解 · 城经笔记 vs 三土 / 国民经略"},
+  {path:"研究/哈巴纳达食用指南.html", title:"哈巴纳达食用指南 · 0辣度哈瓦那甜椒"},
+  {path:"研究/哈拉佩纽品种图鉴.html", title:"哈拉佩纽 Jalapeño · 品种图鉴与产量"},
+  {path:"研究/宁波养老金测算.html", title:"落户宁波的养老金测算 v13 · 脱敏版"}
 ];
 const TITLE_MAP = {
   "比莱洛20条投资法则精读.html":"查理·比莱洛《20条市场与投资法则》精读",
@@ -287,7 +287,7 @@ async function load(){
   render();
 }
 
-const CAT_LABEL = { "calendar":"日历", "components":"组件", "根目录":"根目录", "recipes":"研究" };
+const CAT_LABEL = { "种植日历":"种植日历", "组件":"组件", "根目录":"根目录", "研究":"研究" };
 function renderCats(){
   const cats = ["all", ...Array.from(new Set(DATA.map(d=>d.cat)))];
   const label = c => c==="all" ? "全部" : (CAT_LABEL[c] || c);
