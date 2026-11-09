@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东京大学数学入学考试试题 1951–1954（中文译本）</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+function toggleAll(open) {
+  document.querySelectorAll("details").forEach(function(d){ d.open = open; });
+}
+</script>
+<style>
+  :root {
+    --ink: #222; --muted: #667; --accent: #8b1a1a; --line: #d8d5cf; --bg: #fbfaf7; --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+    color: var(--ink); background: var(--bg);
+    margin: 0; line-height: 1.75; font-size: 16px;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header.hero { border-bottom: 3px double var(--accent); padding-bottom: 18px; margin-bottom: 24px; }
+  header.hero h1 { font-size: 26px; margin: 0 0 6px; letter-spacing: 1px; }
+  header.hero .sub { color: var(--muted); font-size: 14px; }
+  .notice {
+    background: #f3efe6; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 18px; font-size: 14px; margin: 18px 0 26px; color: #444;
+  }
+  .notice p { margin: 4px 0; }
+  nav.toc { margin-bottom: 30px; font-size: 15px; }
+  nav.toc h2 { font-size: 17px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 8px; }
+  nav.toc ol { padding-left: 24px; }
+  nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted #aaa; }
+  nav.toc a:hover { color: var(--accent); }
+  h2.year {
+    font-size: 22px; color: var(--accent); text-align: center;
+    margin: 48px 0 6px; letter-spacing: 3px;
+  }
+  .year-sub { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+  h3.subject {
+    font-size: 18px; background: var(--accent); color: #fff;
+    padding: 6px 14px; border-radius: 4px; margin: 34px 0 14px;
+  }
+  section.problem {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 16px 20px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  section.problem > h4 {
+    margin: 0 0 10px; font-size: 17px; color: var(--accent);
+    border-bottom: 1px solid var(--line); padding-bottom: 6px;
+  }
+  .statement { margin: 0 0 4px; }
+  .statement p { margin: 6px 0; }
+  ol.q { padding-left: 26px; }
+  ol.q li { margin: 4px 0; }
+  details.solution { border: 1px solid var(--line); border-radius: 6px; background: #faf9f5; margin-top: 12px; }
+  details.solution > summary {
+    cursor: pointer; font-weight: bold; padding: 8px 14px; color: var(--accent);
+    user-select: none; list-style-position: inside;
+  }
+  details.solution[open] > summary { border-bottom: 1px dashed var(--line); }
+  details.solution .sol-body { padding: 10px 16px; }
+  details.solution .sol-body p { margin: 8px 0; }
+  .note {
+    font-size: 14px; color: #555; background: #f6f3ea;
+    border-left: 3px solid #b8a86a; padding: 8px 12px; margin: 10px 0; border-radius: 0 4px 4px 0;
+  }
+  .alt { border-left: 3px solid #9aa86a; background: #f4f6ea; padding: 8px 12px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+  .figdesc { color: #7a6a4a; font-size: 14px; font-style: italic; }
+  table.mini { border-collapse: collapse; margin: 10px auto; font-size: 15px; }
+  table.mini th, table.mini td { border: 1px solid var(--line); padding: 4px 12px; text-align: center; }
+  table.mini th { background: #f0ede5; }
+  .column-box {
+    background: #f7f2e8; border: 1px dashed #b8a86a; border-radius: 8px;
+    padding: 14px 18px; margin: 20px 0; font-size: 15px;
+  }
+  .column-box .c-title { font-weight: bold; color: #7a6a2a; margin-bottom: 6px; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+  .toolbar { font-size: 14px; margin-bottom: 6px; }
+  .toolbar a { color: var(--accent); cursor: pointer; text-decoration: underline; margin-right: 14px; }
+  footer { margin-top: 50px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media print {
+    body { background: #fff; }
+    details.solution { border: none; background: none; }
+    details.solution > summary { display: none; }
+    details.solution .sol-body { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>东京大学数学入学考试试题 · 中文译本</h1>
+  <div class="sub">1951 – 1954 年（原书第 1 章 1.2 节「第 1 次指导要领修订」所收试题）</div>
+  <div class="toolbar">
+    <a onclick="toggleAll(true)">展开全部解答</a>
+    <a onclick="toggleAll(false)">收起全部解答</a>
+  </div>
+</header>
+
+<div class="notice">
+  <p><strong>译本说明</strong></p>
+  <p>1. 本文档译自《東京大学 数学入試問題72年 [1949～2020年入試全問題]》（大原仁 著）的试题部分，收录 1951–1954 四个年份的<strong>全部题目与书末所附【解答】</strong>（含别解与注）。上接《东京大学数学入试_1949-1950_中文译本.html》。</p>
+  <p>2. 数学公式均已重新转写为 LaTeX，由 KaTeX 渲染——<strong>打开本文件需要联网</strong>（加载公式渲染脚本）。若公式显示为源代码，请检查网络连接后刷新。</p>
+  <p>3. 原书中的坐标图、几何图形无法以文本形式再现，以<span class="figdesc">〔图：……〕</span>的简要描述代替，需要时可对照原书。</p>
+  <p>4. 按翻译范围设定，原书每题的「分野」「考え方」栏目未收录；【解答】内附带的（注）与【解说】作为答案组成部分已保留；原书插于 1954 年几何之后的「专栏」一篇一并译出。</p>
+</div>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#y1951">1951 年</a>：解析Ⅰ · 解析Ⅱ · 几何 · 一般数学</li>
+    <li><a href="#y1952">1952 年</a>：解析Ⅰ · 解析Ⅱ · 几何 · 一般数学</li>
+    <li><a href="#y1953">1953 年</a>：解析Ⅰ · 解析Ⅱ · 几何 · 一般数学</li>
+    <li><a href="#y1954">1954 年</a>：解析Ⅰ · 解析Ⅱ · 几何（附专栏）· 一般数学</li>
+  </ol>
+</nav>
+
+<!-- ==================== 1951 ==================== -->
+<h2 class="year" id="y1951">1951 年</h2>
+<div class="year-sub">第 1 次指导要领修订之年（各科均为选考科目：解析Ⅰ / 解析Ⅱ / 几何 / 一般数学）</div>
+
+<h3 class="subject">1951 年 · 解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>方程 $|x^2-1|+x+k=0$ 的实根的个数随实数 $k$ 的值如何变化？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题文中的「实根」即「实数解」。计算不同解的个数。</p>
+      <p>(i) 当 $x^2-1 \geqq 0$，即 $x \leqq -1, x \geqq 1$ 时</p>
+      $$x^2+x-1+k=0.$$
+      <p>设 $f_1(x)=x^2+x-1+k$，则 $f_1(x)=\left(x+\frac{1}{2}\right)^2-\frac{5}{4}+k$。</p>
+      $$f_1(-1)=-1+k,\quad f_1\left(-\frac{1}{2}\right)=-\frac{5}{4}+k,\quad f_1(1)=1+k.$$
+      <p>因此，在范围 $x \leqq -1, x \geqq 1$ 内 $f_1(x)=0$ 的解的个数为：当 $k \leqq -1$ 时有 2 个，当 $-1 < k \leqq 1$ 时有 1 个，当 $k > 1$ 时有 0 个。</p>
+      <p><span class="figdesc">〔图：抛物线 $y=f_1(x)$，开口向上，标注了 $x=-1, -\frac{1}{2}, 1$ 处的函数值符号〕</span></p>
+      <p>(ii) 当 $-1 < x < 1$ 时，</p>
+      $$-x^2+x+1+k=0 \iff x^2-x-1-k=0.$$
+      <p>设 $f_2(x)=x^2-x-1-k$，则 $f_2(x)=\left(x-\frac{1}{2}\right)^2-\frac{5}{4}-k$。</p>
+      $$f_2(-1)=1-k,\quad f_2\left(\frac{1}{2}\right)=-\frac{5}{4}-k,\quad f_2(1)=-1-k.$$
+      <p>因此，在范围 $-1 < x < 1$ 内 $f_2(x)=0$ 的解的个数为：当 $k < -\frac{5}{4}$ 时有 0 个，当 $k = -\frac{5}{4}$ 时有 1 个，当 $-\frac{5}{4} < k < -1$ 时有 2 个，当 $-1 \leqq k < 1$ 时有 1 个，当 $k \geqq 1$ 时有 0 个。</p>
+      <p><span class="figdesc">〔图：抛物线 $y=f_2(x)$，开口向上，标注了 $x=-1, \frac{1}{2}, 1$ 处的函数值符号〕</span></p>
+      <p>由上可知，不同解的总个数为：当 $k < -\frac{5}{4}$ 时有 2 个，当 $k = -\frac{5}{4}$ 时有 3 个，当 $-\frac{5}{4} < k < -1$ 时有 4 个，当 $k = -1$ 时有 3 个，当 $-1 < k < 1$ 时有 2 个，当 $k = 1$ 时有 1 个，当 $k > 1$ 时有 0 个。 ……（答）</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>设 $|x^2-1| = -x-k$，考虑 $y=|x^2-1|$ 的图像与 $y=-x-k$ 的图像的交点个数。</p>
+        <p>$y=-x^2+1$（$-1 < x < 1$）与 $y=-x-k$ 相切时，由 $x^2-x-1-k=0$ 的重根条件 $1+4(1+k)=4k+5=0$，得 $k=-\frac{5}{4}$。</p>
+        <p>$y=-x-k$ 经过 $(1,0), (-1,0)$ 时分别是 $k=-1, k=1$。</p>
+        <p>由图可知交点的个数，所求个数为</p>
+        <p><span class="figdesc">〔图：$y=|x^2-1|$ 的 W 型图像与多条斜率为 $-1$ 的直线族相交的示意图〕</span></p>
+        <table class="mini">
+          <tr><th>$k$</th><td>$\cdots$</td><td>$-\frac{5}{4}$</td><td>$\cdots$</td><td>$-1$</td><td>$\cdots$</td><td>$1$</td><td>$\cdots$</td></tr>
+          <tr><th>个数</th><td>2</td><td>3</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr>
+        </table>
+        <p>……（答）</p>
+      </div>
+      <p class="note">（注）此外，也可以设 $k = -|x^2-1|-x$，通过数 $y=k$ 与 $y=-|x^2-1|-x$ 的图像的交点个数来求解。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>设 $f=x^2-xy-6$，$g=x^2-y^2-1$。</p>
+    <ol class="q">
+      <li>求满足 $f=g=0$ 的 $x, y$ 的值。</li>
+      <li>画出满足 $f<0, g<0$ 的点 $(x,y)$ 所在的区域。</li>
+      <li>画出满足 $fg<0$ 的点 $(x,y)$ 所在的区域。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(1) 由 $f=0$ 得 $y=x-\frac{6}{x}$。代入 $g=0$ 中，</p>
+      $$x^2-\left(x-\frac{6}{x}\right)^2-1=12-\frac{36}{x^2}-1=0. \quad \therefore \quad x=\pm\frac{6}{\sqrt{11}}.$$
+      <p>由此，$y=\pm\frac{6}{\sqrt{11}} \mp \sqrt{11} = \mp \frac{5}{11}\sqrt{11}$。</p>
+      $$\therefore (x,y)=\left(\frac{6}{11}\sqrt{11}, -\frac{5}{11}\sqrt{11}\right) \text{ 或 } \left(-\frac{6}{11}\sqrt{11}, \frac{5}{11}\sqrt{11}\right). \quad \cdots (\text{答})$$
+      <p>(2) $f=0$ 的图像是双曲线 $y=x-\frac{6}{x}$，$g=0$ 的图像是以原点为中心、渐近线为 $y=\pm x$ 且经过 $(\pm 1, 0)$ 的双曲线。两者都以 $y=x$ 为渐近线。</p>
+      <p>$f<0, g<0$ 分别表示以 $f=0, g=0$ 的图像为边界、包含原点的一侧。因此，满足 $f<0, g<0$ 的区域如下图中阴影部分所示（不含边界）。</p>
+      <p><span class="figdesc">〔图：平面直角坐标系，双曲线 $y=x-\frac{6}{x}$ 与等轴双曲线 $x^2-y^2=1$，两曲线围成的中间上下两个区域被画上阴影〕</span></p>
+      <p>(3) $fg<0$ 表示以 $f=0, g=0$ 的图像为边界，一个在原点侧、另一个在原点反侧的区域。因此，满足 $fg<0$ 的区域如下图中阴影部分所示（不含边界）。</p>
+      <p><span class="figdesc">〔图：双曲线将平面分为多个区域，左右两侧靠近原点的部分以及上下远离原点的部分被画上阴影〕</span> ……（答）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>为了测量山的高度，在同一水平面上选取两点 A, B，从山顶 C 向该水平面作垂线，垂足为 D。测得 $AB=a$，$\angle CAB=\alpha$，$\angle ABC=\beta$，$\angle CAD=\gamma$。此时，</p>
+    <ol class="q">
+      <li>试建立求山高 $CD=h$ 的公式。</li>
+      <li>当 $a=1000\,\mathrm{m}, \alpha=75^\circ, \beta=53^\circ, \gamma=39^\circ$ 时，利用三角函数表和对数表求 $h$。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(1) 对于三角形 ABC，利用正弦定理，</p>
+      $$\frac{a}{\sin(\alpha+\beta)} = \frac{AC}{\sin\beta}. \quad \therefore \quad AC = \frac{\sin\beta}{\sin(\alpha+\beta)}a.$$
+      <p>因为 $h = AC \sin\gamma$，所以</p>
+      $$h = \frac{\sin\beta\sin\gamma}{\sin(\alpha+\beta)}a. \quad \cdots (\text{答})$$
+      <p><span class="figdesc">〔图：立体几何示意图，三角形 ABC 位于水平面，C 在上方，D 在水平面内，AD、CD 构成直角三角形 ADC〕</span></p>
+      <p>(2) 由 (1)</p>
+      $$h = \frac{\sin 53^\circ \sin 39^\circ}{\sin(75^\circ+53^\circ)} \cdot 1000 = \frac{\cos 37^\circ \sin 39^\circ}{\cos 38^\circ} \cdot 1000.$$
+      <p>由三角函数表得 $\cos 37^\circ = 0.7986$，$\sin 39^\circ = 0.6293$，$\cos 38^\circ = 0.7880$，故</p>
+      $$h = \frac{0.7986 \times 0.6293}{0.7880} \cdot 1000.$$
+      <p>取常用对数，得</p>
+      $$\log_{10} h = \log_{10} 7.986 + \log_{10} 6.293 - \log_{10} 7.880 + \log_{10} 100.$$
+      <p>由对数表可得</p>
+      $$\log_{10} 7.986 = \log_{10} 7.98 + 0.6(\log_{10} 7.99 - \log_{10} 7.98) = 0.9020 + 0.6 \times 0.0005 = 0.9023,$$
+      $$\log_{10} 6.293 = \log_{10} 6.29 + 0.3(\log_{10} 6.30 - \log_{10} 6.29) = 0.7987 + 0.3 \times 0.0006 = 0.7989,$$
+      $$\log_{10} 7.880 = \log_{10} 7.88 = 0.8965.$$
+      $$\log_{10} h = 0.9023 + 0.7989 - 0.8965 + 2 = 2.8047.$$
+      <p>由对数表可得</p>
+      $$0.8047 = 0.8041 + 0.0006 = \log_{10} 6.37 + \frac{0.0006}{0.0007} \times (\log_{10} 6.38 - \log_{10} 6.37)$$
+      $$= \log_{10}\left(6.37 + \frac{0.0006}{0.0007} \times (6.38 - 6.37)\right),$$
+      $$h = 637 + \frac{0.0006}{0.0007} \times 10 = 637.9 \text{ m}. \quad \cdots \text{(答)}$$
+      <p class="note">（注1）看起来这是久违地利用对数进行近似计算。如今这种近似计算本身已经不再进行了。如果今天用电子计算器进行同样的计算，它会给出精度更高的结果 $637.80552$。</p>
+      <p class="note">（注2）关于对数表和线性插值（线形近似）的说明：即使在今天（2020 年），对数表也刊登在数学Ⅱ教科书的卷末。其精确度到百分之一，表中记载的数字从 $1.00$ 到 $9.99$。因此对于前 3 位数字给出的数，查表即可得到其对数；但如果想要更高位数数字的对数，是否非得有更高精度的对数表不可呢？其实并非如此。实际上对数函数变化极其缓慢，因此在考虑提高精度时，截取图像的一部分，这部分可以看作几乎是一条直线。于是，在上述【解答】中求 $\log_{10} 7.986$ 时，我们视其为 $\log_{10} 7.98$ 与 $\log_{10} 7.99$ 之间按 $6:4$ 分比的值来求解。这种方法被称为线性插值（线形近似），当时的教科书上登载了这样的近似方法。求 $\log_{10} 6.293$ 时，使用 $\log_{10} 6.29 + \frac{3}{10}(\log_{10} 6.30 - \log_{10} 6.29)$ 也是线性插值。此外，求 $h$ 时利用 $\log_{10} 6.37 = 0.8041$、$\log_{10} 6.38 = 0.8048$ 的事实，对上述近似进行逆运算。虽然当时的教科书上没有登载，但在 3 位数的对数表中，通过线性插值可以保证万分之一的精确度。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1951 年 · 解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>求体积为定值 $V$ 的直圆柱全表面积的最小值。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设底面圆的半径为 $r$，高为 $h$，全表面积为 $S$。</p>
+      $$V = \pi r^2 h, \quad S = 2\pi r^2 + 2\pi rh.$$
+      <p>将 $h = \frac{V}{\pi r^2}$ 代入 $S$ 的式子，得</p>
+      $$S = 2\pi r^2 + 2\pi r \frac{V}{\pi r^2} = 2\pi r^2 + \frac{2V}{r}.$$
+      <p>把 $S$ 看作 $r$ 的函数记为 $S(r)$。</p>
+      $$S'(r) = 4\pi r - \frac{2V}{r^2} = \frac{2(2\pi r^3 - V)}{r^2}.$$
+      <table class="mini">
+        <tr><th>$r$</th><td>$(0)$</td><td>$\cdots$</td><td>$\sqrt[3]{\frac{V}{2\pi}}$</td><td>$\cdots$</td></tr>
+        <tr><td>$S'(r)$</td><td></td><td>$-$</td><td>$0$</td><td>$+$</td></tr>
+        <tr><td>$S(r)$</td><td></td><td>$\searrow$</td><td></td><td>$\nearrow$</td></tr>
+      </table>
+      $$S\left(\sqrt[3]{\frac{V}{2\pi}}\right) = 2\pi \left(\sqrt[3]{\frac{V}{2\pi}}\right)^2 + \frac{2V}{\sqrt[3]{\frac{V}{2\pi}}} = 3\sqrt[3]{2\pi V^2}.$$
+      <p>由此可知，全表面积的最小值为 $3\sqrt[3]{2\pi V^2}$。$\cdots$(答)</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>推导至 $S = 2\pi r^2 + \frac{2V}{r}$ 与【解答】相同。将其写为 $S = 2\pi r^2 + \frac{V}{r} + \frac{V}{r}$，利用三个数的算术平均·几何平均的关系，得</p>
+        $$S \geqq 3\sqrt[3]{2\pi r^2 \cdot \frac{V}{r} \cdot \frac{V}{r}} = 3\sqrt[3]{2\pi V^2}.$$
+        <p>等号成立的条件是 $\frac{V}{r} = 2\pi r^2$，即 $r = \sqrt[3]{\frac{V}{2\pi}}$ 时。由此可知，全表面积的最小值为 $3\sqrt[3]{2\pi V^2}$。$\cdots$(答)</p>
+      </div>
+      <p class="note">（注）此时，$h = \sqrt[3]{\frac{4V}{\pi}}$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>将线缠绕在半径为 $a$ 的固定圆上，从圆周上一点 A 开始解开线的端点，使线不松弛地在圆平面内移动，试将该端点画出的曲线弧 AP 的长度用解开的线长 $l$ 表示。</p>
+    <p><span class="figdesc">〔图：圆及其渐开线示意图〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设圆心为 O，令 $\angle AOQ = \theta$，则 $a\theta = l$。以 O 为原点、OA 为 $x$ 轴正方向建立坐标系，则 Q 的坐标为 $(a \cos \theta, a \sin \theta)$。</p>
+      <p>QP 垂直于 OQ，且 $PQ = l = a\theta$，所以 P 的坐标为 $(a \cos \theta + a\theta \sin \theta, a \sin \theta - a\theta \cos \theta)$。</p>
+      <p>设</p>
+      $$x = a \cos \theta + a\theta \sin \theta, \quad y = a \sin \theta - a\theta \cos \theta,$$
+      <p>则</p>
+      $$\frac{dx}{d\theta} = -a \sin \theta + a \sin \theta + a\theta \cos \theta = a\theta \cos \theta, \quad \frac{dy}{d\theta} = a \cos \theta - a \cos \theta + a\theta \sin \theta = a\theta \sin \theta.$$
+      <p>曲线的长度为</p>
+      $$\int_0^\theta \sqrt{\left(\frac{dx}{d\theta}\right)^2 + \left(\frac{dy}{d\theta}\right)^2}\, d\theta = \int_0^\theta a\theta \, d\theta = \frac{a}{2}\theta^2 = \frac{l^2}{2a}. \quad \cdots \text{(答)}$$
+      <p class="note">（注）当时三角函数的微积分以及曲线长度都在范围之外，但若是今天（2020 年）来解的话，应该是上述方法。那么当时是如何利用手段解决这个问题呢？设从 A 开始的曲线长为 $s$，当 P 稍微移动时，推测是通过 $l, s$ 的变化来求解的：设圆心为 O，当 $\angle AOQ$ 变化 $\Delta \theta$ 时，$l, s$ 的变化分别为 $\Delta l, \Delta s$，则 $\Delta l = a \Delta \theta$，$\Delta s = l \Delta \theta$。由此得 $\frac{ds}{dl} = \frac{l}{a}$，$s = \int_0^l \frac{l}{a}\, dl = \frac{l^2}{2a}$。推测是这样处理的。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>求两条曲线</p>
+    $$x^2 + y^2 = 4\sqrt{3}py, \quad y^2 = px$$
+    <p>围成的面积。其中 $p > 0$。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>圆被抛物线分为两部分。假设要求的是较窄部分的面积，以此进行解答。</p>
+      <p>求交点的 $y$ 坐标。由 $x = \frac{y^2}{p}$ 得</p>
+      $$\frac{y^4}{p^2} + y^2 = 4\sqrt{3}py \implies y^4 + p^2 y^2 - 4\sqrt{3}p^3 y = 0,$$
+      $$y(y - \sqrt{3}p)(y^2 + \sqrt{3}py + 4p^2) = 0.$$
+      <p>由于</p>
+      $$y^2 + \sqrt{3}py + 4p^2 = \left(y + \frac{\sqrt{3}}{2}p\right)^2 + \frac{13}{4}p^2 > 0,$$
+      <p>所以 $y = 0, \sqrt{3}p$。交点为 $(0, 0), (3p, \sqrt{3}p)$，分别记为 O, P。</p>
+      <p>直线 OP：$x = \sqrt{3}y$，因此抛物线 $y^2 = px$ 与 OP 围成部分的面积为</p>
+      $$\int_0^{\sqrt{3}p} \left(\sqrt{3}y - \frac{y^2}{p}\right) dy = \frac{\sqrt{3}}{2}p^2.$$
+      <p>圆的方程为 $x^2 + (y - 2\sqrt{3}p)^2 = 12p^2$。设圆心为 A，则 $A(0, 2\sqrt{3}p)$。半径为 $2\sqrt{3}p$，所以 $\angle OAP = 60^\circ$。因此，圆被 OP 截得的较小弓形的面积为</p>
+      $$\frac{\pi(2\sqrt{3}p)^2}{6} - \frac{1}{2}(2\sqrt{3}p)^2 \sin 60^\circ = 2p^2\pi - 3\sqrt{3}p^2.$$
+      <p>由此，所求面积为</p>
+      $$\frac{\sqrt{3}}{2}p^2 + (2p^2\pi - 3\sqrt{3}p^2) = 2p^2\pi - \frac{5\sqrt{3}}{2}p^2. \quad \cdots \text{(答)}$$
+      <p class="note">（注）从题意来看，圆与抛物线围成的另一部分也可能是答案。因为圆的面积为 $12p^2\pi$，所以那部分的面积为 $10p^2\pi + \frac{5\sqrt{3}}{2}p^2$。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1951 年 · 几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>在正方形 $ABCD$ 的边 $CB$、$CD$ 上分别取点 $E$、$F$，使得 $CE=CF$。从 $E$ 向 $AF$ 作垂线，垂足为 $G$。当 $E$ 在边 $BC$ 上移动时，$G$ 在什么样的线上运动？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>以 $A$ 为原点，$AB$ 为 $x$ 轴，$AD$ 为 $y$ 轴。设正方形的边长为 $a$，则 $B(a, 0)$，$C(a, a)$，$D(0, a)$。</p>
+      <p>当 $E=B$ 时，$F=D$，$G=A$；当 $E=C$ 时，$F=C$，$G=C$。</p>
+      <p>当 $E \neq B, E \neq C$ 时，设 $CE=CF=b$（$0<b<a$），则 $E(a, a-b)$，$F(a-b, a)$。</p>
+      <p>直线 $AF$：$y=\frac{a}{a-b}x$。直线 $EG$：$y=-\frac{a-b}{a}(x-a)+a-b$。</p>
+      <p>$AF$、$EG$ 的交点 $G$ 的坐标是 $\left(\frac{2(a-b)^{2} a}{a^{2}+(a-b)^{2}}, \frac{2 a^{2}(a-b)}{a^{2}+(a-b)^{2}}\right)$。</p>
+      <p>令 $X=\frac{2(a-b)^{2} a}{a^{2}+(a-b)^{2}}, Y=\frac{2 a^{2}(a-b)}{a^{2}+(a-b)^{2}}$，由 $0<b<a$ 可知 $Y>0$。</p>
+      <p>由 $Y=\frac{a}{a-b} X$ 得 $b=\frac{Y-X}{Y} a$。</p>
+      $$\therefore \quad Y=\frac{2 a^{2}\left(a-\frac{Y-X}{Y} a\right)}{a^{2}+\left(a-\frac{Y-X}{Y} a\right)^{2}}=\frac{2 X Y}{Y^{2}+X^{2}} a.$$
+      <p>因为 $Y \neq 0$，所以</p>
+      $$X^{2}+Y^{2}=2 a X, \quad (X-a)^{2}+Y^{2}=a^{2}.$$
+      <p>由 $0<b=\frac{Y-X}{Y}a<a, Y>0$ 可知，$Y>X, X>0$。</p>
+      <p>因为 $G=A$、$G=C$ 也包含在轨迹中，所以 $G$ 的轨迹是以 $B$ 为中心、经过 $A, C$ 的圆在正方形 $ABCD$ 的周界及内部的部分。……（答）</p>
+      <div class="alt"><strong>【别解 1】</strong>
+        <p>设 $AB$ 与 $GE$ 的交点为 $K$。<span class="figdesc">〔图：正方形 ABCD，线段 AF 与垂线 EG 相交于 G，延长 EG 交 AB 于 K〕</span></p>
+        <p>在 $\triangle AFD$ 和 $\triangle KAG$ 中，$\angle D, \angle G$ 为直角，且 $\angle AFD=\angle KAG$（错角），所以 $\triangle AFD \sim \triangle KAG$。</p>
+        <p>在 $\triangle KAG$ 和 $\triangle KEB$ 中，$\angle G, \angle B$ 为直角，且 $\angle AKG=\angle EKB$，所以 $\triangle KAG \sim \triangle KEB$。</p>
+        <p>由此，$\triangle AFD \sim \triangle KEB$。又因为 $DF=CD-CF=BC-CE=BE$，所以 $\triangle AFD \cong \triangle KEB$。由此，$DA=BK$（定值）。因此，$K$ 是定点。</p>
+        <p>因为 $\angle AGK$ 为直角，所以 $G$ 在以 $AK$ 为直径的圆周上。$AK$ 的中点 $B$ 即为中心。当 $E$ 在 $B$ 处时，$G$ 在 $A$ 处；当 $E$ 在 $C$ 处时，$G$ 在 $C$ 处。从而，$G$ 的轨迹是以 $B$ 为中心、经过 $A, C$ 的圆的弧 $\widehat{AC}$。……（答）</p>
+      </div>
+      <div class="alt"><strong>【别解 2】</strong>
+        <p>因为 $\angle ECF, \angle EGF$ 都是直角，所以 4 点 $E, C, F, G$ 共圆。从而，由 $\angle CGE=\angle CFE=45^{\circ}$ 可知，$\angle CGA=135^{\circ}$。因此 $G$ 在以 $AC$ 为弦的圆弧上。由于圆心角为 $270^{\circ}$，所以中心是 $B$。</p>
+        <p><span class="figdesc">〔图：正方形 ABCD，E 在 BC 上，F 在 CD 上，G 在三角形 CEF 的外接圆上〕</span></p>
+        <p>当 $E$ 在边 $BC$ 上移动时，$G$ 在以 $B$ 为中心的圆弧 $AC$ 上运动。</p>
+      </div>
+      <p class="note">（注）在这个问题中，当 $E$ 与 $C$ 重合的情况 $CE=CF=0$，此时 $E$ 是 $AF$ 上的点。在这种情况下，从 $E$ 向 $AF$ 作垂线是什么意思呢？本【解答】中虽然 $E$ 在 $AF$ 上，但也把过 $E$ 垂直于 $AF$ 的直线与 $AF$ 的交点 $E=F=C$ 解释为垂足，此时 $G$ 是 $C$。另一方面，也可以解释为因为 $E$ 在 $AF$ 上所以无法作垂线，那样这个轨迹中就会排除 $C$。另外，关于 $E$ 在边 $BC$ 的另一端 $B$ 的情况，似乎没有特别的问题。实际上，因为是「在什么样的线上运动」这样的提问，这种讨论是不需要的。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>证明以经过抛物线焦点的弦为直径的圆与该抛物线的准线相切。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设抛物线为 $C$，焦点为 $F$，经过 $F$ 的直线与抛物线相交的点为 $A, B$，设 $AB$ 的中点为 $C$。从 $A, B, C$ 向准线作垂线，垂足分别为 $H, K, M$。因为 $C$ 是 $AB$ 的中点，所以 $M$ 是 $HK$ 的中点。</p>
+      <p><span class="figdesc">〔图：抛物线及其准线，过焦点 F 的弦 AB，中点 C，投影到准线上的 H, K, M〕</span></p>
+      <p>因为 $F$ 是焦点，所以 $FA=AH$，$FB=BK$。在梯形 $AHKB$ 中，$CM$ 是中位线，所以</p>
+      $$CM = \frac{AH+BK}{2} = \frac{FA+FB}{2} = \frac{AB}{2} = AC = BC.$$
+      <p>因此，$A, B, M$ 距离 $C$ 相等，且 $CM$ 垂直于准线，所以以 $AB$ 为直径的圆在 $M$ 处与准线相切。（证明完毕）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>如图所示的立方体 $ABCD$–$A'B'C'D'$ 中，设边 $AB, BB', B'C', C'D', D'D, DA$ 的中点分别为 $L, M, N, P, Q, R$，证明六边形 $LMNPQR$ 是正六边形。</p>
+    <p><span class="figdesc">〔图：立方体 ABCD-A'B'C'D'，标出各边中点 L, M, N, P, Q, R 构成的截面〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设立方体的棱长为 $a$，从 $C, A'$ 到 6 个点 $L, M, N, P, Q, R$ 的距离都相等，均为 $\sqrt{1^2 + \left(\frac{1}{2}\right)^2}\, a = \frac{\sqrt{5}}{2} a$，所以这 6 个点都在 $CA'$ 的垂直平分面上，即 6 点共面。</p>
+      <p>此外，6 条边 $LM, MN, NP, PQ, QR, RL$ 长度相等，其长度为 $\frac{\sqrt{2}}{2} a$。</p>
+      <p>经过 $LP$ 且平行于 $AA'D'D$ 的截面根据对称性是过立方体中心 $O$ 的正方形，且 $LP=\sqrt{2} a$，$LP$ 的中点是 $O$。因此，$OL=OP=\frac{\sqrt{2}}{2} a$。</p>
+      <p>同理，$OL, OM, ON, OP, OQ, OR$ 相等且均为 $\frac{\sqrt{2}}{2} a$。</p>
+      <p>$L, M, N, P, Q, R$ 在同一平面上，且 $\triangle OLM, \triangle OMN, \triangle ONP, \triangle OPQ, \triangle OQR, \triangle ORL$ 都是正三角形，所以六边形 $LMNPQR$ 是正六边形。（证明完毕）</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1951 年 · 一般数学</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>某公司的产品每 50 个中有 1 个不良品。将该产品 3 个装一箱出售，包装的不良率为 100 箱中有 1 箱。求 1 万箱中内容物或包装有问题的有多少箱？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>单个产品为良品的概率是 $1 - \frac{1}{50} = \frac{49}{50}$；包装为良品的概率是 $1 - \frac{1}{100} = \frac{99}{100}$。</p>
+      <p>因此，3 个产品和包装全部为良品的概率是</p>
+      $$\left(\frac{49}{50}\right)^3 \frac{99}{100} = \frac{11647251}{12500000}.$$
+      <p>从而 10000 箱中的不良品数约为</p>
+      $$10000 \times \left(1 - \frac{11647251}{12500000}\right) = 10000 - \frac{11647251}{1250} \approx 10000 - 9317.8 \approx 682 \text{ 箱。} \dots (\text{答})$$
+      <p class="note">（注）因设问问的是「多少箱」，故以最接近的整数 682 作答。考虑到不良品的安全性宜多算，683 箱也可视为正确。推定值为 682.2 箱。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>在 12 小时内，时钟的分针与时针成直角的时刻是如何分布的？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>分针 1 小时转 1 圈，时针 12 小时转 1 圈。因此，分针与时针转速之差为每小时 $1 - \frac{1}{12} = \frac{11}{12}$ 圈。从而，每隔 $\frac{12}{11}$ 小时，分针与时针的位置关系重复一次。</p>
+      <p>成直角有两种情况：时针在右侧（如 3 点）和时针在左侧（如 9 点），这两种情况相差半个圆周，因此每隔 $\frac{6}{11}$ 小时，分针与时针成直角。……（答）</p>
+      <p>从 0 时开始最初成直角是在 $n=-5$ 的时候，即 $\frac{3}{11}$ 时，也就是 0 时 16 分 $21+\frac{9}{11}$ 秒。</p>
+      <p>另外，在 12 时之前最后成直角是在 $n=16$ 的时候，即 $3+\frac{96}{11}=11+\frac{8}{11}$ 时，也就是 11 时 43 分 $38+\frac{2}{11}$ 秒。</p>
+      <p class="note">（注）以 3 点为基准，时刻为 $3 + \frac{6}{11}n$ 时（$n$ 为整数）。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>甲将 1 万日元以年利率 $7\%$、半年复利进行储蓄，乙将 10 万日元以年利率 $3\%$、一年复利进行储蓄。问甲的本利和首次超过乙的本利和是在什么时候？</p>
+    <ol class="q">
+      <li>请使用 $\log 1.03=0.0128, \log 1.035=0.0149$ 进行计算。</li>
+      <li>注意此对数的最后一位数字是四舍五入后的结果，考虑到其误差，可以说明到什么程度？</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(1) $n$ 年后甲的本利和为 $(1.035)^{2n}$ 万日元，其半年后为 $(1.035)^{2n+1}$ 万日元；$n$ 年后乙的本利和为 $10 \times (1.03)^n$ 万日元。</p>
+      <p>令 $\log_{10}\{(1.035)^{2n}\}-\log_{10}\{10 \times (1.03)^n\} = 2n \times 0.0149 - 1 - n \times 0.0128 = n \cdot 0.0170 - 1 > 0$，</p>
+      <p>则有 $58 \times 0.0170 = 0.9860$，$59 \times 0.0170 = 1.0030$。因为 $0.9860 + 0.0149 = 1.0009$，所以甲的本利和超过乙的本利和是在 58 年半年后。……（答）</p>
+      <p>(2) 各自对数的误差最大为 $0.00005$，因此其 $3 \times 59$ 倍即 $0.00885$ 为最大误差。$0.9860$ 与 $1$ 之差大于百分之一，故对上述结果没有影响；但 $1.0009, 1.0030$ 与 $1$ 之差在 $0.00885$ 以下，$1.0030 + 0.0149 = 1.0179$ 即使考虑误差也比 $1$ 大。因此，甲的本利和首次超过乙的本利和是在 $58.5$ 年到 $59.5$ 年之间。……（答）</p>
+      <p class="note">（注1）设问中的「何时」是以甲领取利息的半年为单位考虑的。若按每年解释，则 (1) 是 59 年后，(2) 是 59 年或 60 年。<br>（注2）对数是指常用对数，参照 1951 年解析Ⅰ第 3 问的（注）。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== 1952 ==================== -->
+<h2 class="year" id="y1952">1952 年</h2>
+<div class="year-sub">各科均为选考科目：解析Ⅰ / 解析Ⅱ / 几何 / 一般数学</div>
+
+<h3 class="subject">1952 年 · 解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>画出下列函数的图像。</p>
+    $$f(x)=\frac{x^2+3x+3}{x+1}$$
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题干中的「函数」是当时对「関数」的表记。</p>
+      $$f(x)=\frac{(x+2)(x+1)+1}{x+1}=x+2+\frac{1}{x+1}$$
+      <p>当 $x+1>0$ 时，$f(x)=x+1+1+\frac{1}{x+1} \geqq 1+2\sqrt{(x+1)\frac{1}{x+1}}=3$，等号在 $x=0$ 时成立。</p>
+      <p>当 $x+1<0$ 时，$f(x)=-(-x-1)+1-\frac{1}{-x-1} \leqq 1-2\sqrt{(-x-1)\frac{1}{-x-1}}=-1$，等号在 $x=-2$ 时成立。</p>
+      <p>由此，$y=f(x)$ 的图像是以 $x=-1$、$y=x+2$ 为渐近线的曲线。图示如下：</p>
+      <p><span class="figdesc">〔图：双曲线图像，有垂直渐近线 $x=-1$ 和斜渐近线 $y=x+2$〕</span>……（答）</p>
+      <p class="note">（注）本来应该利用 $f'(x)=\frac{(2x+3)(x+1)-(x^2+3x+3)}{(x+1)^2}=\frac{(x+2)x}{(x+1)^2}$ 来调查增减性，但解析Ⅰ中不处理微分法。当时，图像的合成是在解析Ⅰ中学习的。关于图像合成的方法，请参照 1991 年文科第 3 问的（注）。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>二次方程</p>
+    $$ax^2+(1-5a)x+6a=0, \quad a \neq 0$$
+    <p>的两个根都是比 1 大的实根时，实数 $a$ 处于怎样的范围？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题干中的「实根」是当时对「实数解」的表记。令 $f(x)=ax^2+(1-5a)x+6a$。</p>
+      <p>$y=f(x)$ 的轴是 $x=\frac{5a-1}{2a}$。令 $\frac{5a-1}{2a}>1$：当 $a>0$ 时，$a>\frac{1}{3}$；当 $a<0$ 时，恒成立。由此，</p>
+      $$a<0, \quad a>\frac{1}{3}. \quad \cdots①$$
+      <p>设 $f(x)=0$ 的判别式为 $D$，则 $D=(1-5a)^2-24a^2=a^2-10a+1 \geqq 0$。</p>
+      $$\therefore \quad a \leqq 5-2\sqrt{6}, \quad a \geqq 5+2\sqrt{6}. \quad \cdots②$$
+      <p>$f(1)=2a+1$。当 $a>0$ 时，$y=f(x)$ 开口向上（下凸），故 $f(1)=2a+1>0$ 恒成立；当 $a<0$ 时，$y=f(x)$ 开口向下（上凸），故需满足 $f(1)=2a+1<0$，于是得 $a<-\frac{1}{2}$。</p>
+      $$\therefore \quad a<-\frac{1}{2}, \quad a>0. \quad \cdots③$$
+      <p>由 ①、②、③ 可得，</p>
+      $$a<-\frac{1}{2} \quad \text{或} \quad a \geqq 5+2\sqrt{6}. \quad \cdots（答）$$
+      <div class="alt"><strong>【别解】</strong>
+        <p>两边除以 $a$，令 $\frac{1}{a}=b$，则方程化为 $x^2+(b-5)x+6=0$，即 $bx=-x^2+5x-6$。</p>
+        <p>求 $y=-x^2+5x-6$ 与 $y=bx$ 在 $x>1$ 范围内相交于两个不同点（或相切）时的斜率 $b$ 的范围。</p>
+        <p>对于 $y=-x^2+5x-6$，当 $x=1$ 时，$y=-2$。$y=bx$ 经过 $(1, -2)$ 时是 $b=-2$ 的情况。另外，$y=bx$ 与 $y=-x^2+5x-6$ 相切是在 $b=5 \pm 2\sqrt{6}$ 的时候，其中在 $x>1$ 处相切的是 $b=5-2\sqrt{6}$。</p>
+        <p>由此，$-2 < b \leqq 5-2\sqrt{6}$。由 $a=\frac{1}{b}$ 得到与【解答】相同的结论。</p>
+        <p><span class="figdesc">〔图：抛物线与过原点的直线系示意图〕</span></p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>比较 $\dfrac{\log a+\log b+\log c+\log d}{4}$ 与 $\log \dfrac{a+b+c+d}{4}$ 的大小。但对数为常用对数，且 $a, b, c, d$ 为正数。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>当 $a>0, b>0, c>0, d>0$ 时，</p>
+      $$\frac{a+b+c+d}{4}=\frac{\frac{a+b}{2}+\frac{c+d}{2}}{2} \geqq \sqrt{\frac{a+b}{2}\cdot\frac{c+d}{2}} \geqq \sqrt{\sqrt{ab}\sqrt{cd}}=\sqrt[4]{abcd}.$$
+      <p>由此，</p>
+      $$\log_{10}\frac{a+b+c+d}{4} \geqq \log_{10}\sqrt[4]{abcd}=\frac{\log_{10}a+\log_{10}b+\log_{10}c+\log_{10}d}{4}.$$
+      <p>等号在 $a=b=c=d$ 时成立。由此，</p>
+      $$a=b=c=d \text{ 时}, \quad \frac{\log_{10}a+\log_{10}b+\log_{10}c+\log_{10}d}{4}=\log_{10}\frac{a+b+c+d}{4}.$$
+      $$\text{其他时候} \quad \frac{\log_{10}a+\log_{10}b+\log_{10}c+\log_{10}d}{4}<\log_{10}\frac{a+b+c+d}{4}. \quad \cdots（答）$$
+      <p class="note">（注）觉得直接从 4 个正数的算术平均·几何平均的关系推导有些牵强，所以是从 2 个数的算术平均·几何平均的关系导出的。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1952 年 · 解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>当 $a_1=0,\ a_2=1,\ a_{n+2}=\dfrac{a_{n+1}+a_n}{2}\ (n=1, 2, 3, \cdots)$ 时，求 $\lim\limits_{n\to\infty} a_n$。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      $$a_{n+2}-a_{n+1}=-\frac{1}{2}(a_{n+1}-a_n)$$
+      <p>由此可知，数列 $\{a_{n+1}-a_n\}$ 是公比为 $-\frac{1}{2}$ 的等比数列。于是，</p>
+      $$a_{n+1}-a_n=\left(-\frac{1}{2}\right)^{n-1}(a_2-a_1)=\left(-\frac{1}{2}\right)^{n-1} \quad \cdots①$$
+      <p>此外，</p>
+      $$a_{n+2}+\frac{1}{2}a_{n+1}=a_{n+1}+\frac{1}{2}a_n$$
+      <p>由此可知，数列 $\left\{a_{n+1}+\frac{1}{2}a_n\right\}$ 是常数列。于是，</p>
+      $$a_{n+1}+\frac{1}{2}a_n=a_2+\frac{1}{2}a_1=1. \quad \cdots②$$
+      <p>由 ② $-$ ① 得</p>
+      $$\frac{3}{2}a_n = 1-\left(-\frac{1}{2}\right)^{n-1}, \quad \therefore \quad a_n = \frac{2}{3}\left\{1-\left(-\frac{1}{2}\right)^{n-1}\right\}.$$
+      <p>因此，</p>
+      $$\lim_{n\to\infty} a_n = \lim_{n\to\infty} \frac{2}{3}\left\{1-\left(-\frac{1}{2}\right)^{n-1}\right\} = \frac{2}{3}. \quad \cdots(\text{答})$$
+      <p class="note">（注）由 ① 可得，将 $a_n=a_1+\sum_{k=1}^{n-1}\left(-\frac{1}{2}\right)^{k-1}=\frac{1-\left(-\frac{1}{2}\right)^{n-1}}{1+\frac{1}{2}}\ (n\geqq 2)$ 作为 $a_n$ 来求解亦可。此外，由 ② 可得，将 $a_{n+1}-\frac{2}{3}=-\frac{1}{2}\left(a_n-\frac{2}{3}\right)$，即 $a_n=\frac{2}{3}-\frac{2}{3}\left(-\frac{1}{2}\right)^{n-1}$ 作为 $a_n$ 来求解亦可。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>在直角坐标系中，坐标 $(1, 1)$ 的点绕原点沿正方向旋转 $30^\circ$ 后，该点的坐标会变成什么样？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>原点 O$(0, 0)$ 与点 A$(1, 1)$ 的距离为 $\sqrt{2}$，OA 与 $x$ 轴所成的角为 $45^\circ$，故可设 A 的坐标为 $(\sqrt{2}\cos 45^\circ, \sqrt{2}\sin 45^\circ)$。</p>
+      <p>将 A 绕 O 旋转 $30^\circ$ 后的点设为 B，则</p>
+      $$B(\sqrt{2}\cdot\cos(45^\circ+30^\circ),\ \sqrt{2}\cdot\sin(45^\circ+30^\circ)) = \left(\sqrt{2}\cdot\frac{\sqrt{3}-1}{2\sqrt{2}},\ \sqrt{2}\cdot\frac{\sqrt{3}+1}{2\sqrt{2}}\right) = \left(\frac{\sqrt{3}-1}{2},\ \frac{\sqrt{3}+1}{2}\right). \quad \cdots(\text{答})$$
+      <p class="note">（注）若使用矩阵，则是计算 $\begin{pmatrix} \cos 30^\circ & -\sin 30^\circ \\ \sin 30^\circ & \cos 30^\circ \end{pmatrix} \begin{pmatrix} 1 \\ 1 \end{pmatrix}$。此外，若是复数，则是计算 $(\cos 30^\circ+i\sin 30^\circ)(1+i)$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>当 $f(x)=x^3+x^2+x+1$ 时，如何确定 $g(x)=ax^2+2bx+c$ 的系数 $a, b, c$，才能在满足 $f(1)=g(1),\ f(-1)=g(-1)$ 的基础上，使得 $\int_{-1}^{1}\{f(x)-g(x)\}^2 dx$ 取得最小值？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>因为 $f(1)=g(1)$，所以 $4=a+2b+c$。$\cdots①$</p>
+      <p>因为 $f(-1)=g(-1)$，所以 $0=a-2b+c$。$\cdots②$</p>
+      <p>由 ①、② 得 $b=1,\ a+c=2$。$\cdots③$</p>
+      <p>于是，$g(x)=ax^2+2x+2-a$，$f(x)-g(x)=x^3+(1-a)x^2-x+a-1$。</p>
+      $$\begin{aligned}
+      \int_{-1}^{1}\{f(x)-g(x)\}^2 dx &= \int_{-1}^{1}\{x^3+(1-a)x^2-x+a-1\}^2 dx \\
+      &= \int_{-1}^{1}\{(x^3-x)^2+2(1-a)(x^3-x)(x^2-1)+(1-a)^2(x^2-1)^2\} dx \\
+      &= 2\int_{0}^{1}\{(x^3-x)^2+(1-a)^2(x^2-1)^2\} dx = \frac{16}{105}+(1-a)^2\frac{16}{15}.
+      \end{aligned}$$
+      <p>使其最小的条件是 $a=1$。由 ③ 得</p>
+      $$a=1, \quad b=1, \quad c=1. \quad \cdots(\text{答})$$
+      <div class="alt"><strong>【别解】</strong>
+        <p>$g(x)=ax^2+2bx+c$ 意味着除了 $g(x)$ 是二次以下的整式之外没有任何规定。令 $f(x)-g(x)=F(x)$，由于 $F(x)$ 中 $x^3$ 的系数为 1，且 $F(1)=F(-1)=0$，故 $F(x)$ 能被 $(x-1)(x+1)$ 整除，可以设 $F(x)=(x-\alpha)(x^2-1)$。</p>
+        $$\begin{aligned}
+        \int_{-1}^{1}F(x)^2 dx &= \int_{-1}^{1}(x-\alpha)^2(x^2-1)^2 dx \\
+        &= \alpha^2\int_{-1}^{1}(x^2-1)^2 dx - 2\alpha\int_{-1}^{1}x(x^2-1)^2 dx + \int_{-1}^{1}x^2(x^2-1)^2 dx \\
+        &= 2\alpha^2\int_{0}^{1}(x^2-1)^2 dx + 2\int_{0}^{1}x^2(x^2-1)^2 dx.
+        \end{aligned}$$
+        <p>因为 $\int_{0}^{1}(x^2-1)^2 dx \geqq 0$，所以当 $\alpha=0$ 时，该积分取最小值。于是，$F(x)=x(x^2-1)=(x^3+x^2+x+1)-g(x)$，由此可得 $g(x)=x^2+2x+1$，即 $a=1, b=1, c=1$。$\cdots(\text{答})$</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1952 年 · 几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>(i) 设 $\angle AOB$ 为平面上的角，P 为该平面上任意一点。设 P 关于直线 OA 的对称点为 P'，P' 关于直线 OB 的对称点为 P''，证明 P'' 是将 P 绕 O 旋转 $2\angle AOB$ 后到达的位置。</p>
+    <p>(ii) 设 P 为 $\triangle ABC$ 平面上任意一点。在该平面上，按图示方式先将 P 绕 B 旋转 $2\angle CBA$，接着绕 A 旋转 $2\angle BAC$，最后绕 C 旋转 $2\angle ACB$，最终位置在哪里？</p>
+    <p><span class="figdesc">〔图：三角形 ABC，顶点 A 处有逆时针箭头，顶点 B 处有逆时针箭头，顶点 C 处有顺时针箭头〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(i) $OP=OP'=OP''$ 显然成立。以下用 $\angle AOP=\theta$ 表示将半直线 OA 向正方向旋转 $\theta$（一般角）后与半直线 OP 重合的意思，因此 $\angle POA = -\angle AOP$。设 $\angle AOB=\alpha,\ \angle AOP=\theta$。</p>
+      <p>P' 是关于 OA 与 P 对称的点，所以 $\angle AOP' = -\theta$。P'' 是关于 OB 与 P' 对称的点，因为 $\angle P'OB = \theta+\alpha$，所以 $\angle BOP'' = \theta+\alpha$。由此得到 $\angle AOP'' = \theta+2\alpha$。因此 $\angle POP'' = 2\alpha = 2\angle AOB$。</p>
+      <p>从而，P'' 是将 P 绕 O 旋转 $2\angle AOB$ 得到的点。（证毕）</p>
+      <p><span class="figdesc">〔图：射线 OA 水平向右，射线 OB 斜向上；点 P 在第一象限，P' 在第四象限，P'' 在第二象限；标注了角度 $\alpha, \theta, -\theta, 2\alpha+\theta$ 以及旋转箭头〕</span></p>
+      <p>(ii) 由 (i) 可知，绕 B 旋转 $2\angle CBA$ 等同于先关于 BC 进行对称移动、再关于 BA 进行对称移动；绕 A 旋转 $2\angle BAC$ 等同于先关于 AB 进行对称移动、再关于 AC 进行对称移动；绕 C 旋转 $2\angle ACB$ 等同于先关于 CA 进行对称移动、再关于 CB 进行对称移动。</p>
+      <p>因此，将 P 关于 BC 对称移动后的点设为 P'，将 P' 关于 BA 对称移动后的点设为 $P_1$，那么 $P_1$ 就是将 P 绕 B 仅旋转 $2\angle CBA$ 得到的点。</p>
+      <p>将 $P_1$ 关于 AB 对称移动后的点是 P'，将 P' 关于 AC 对称移动后的点设为 $P_2$，$P_2$ 是将 $P_1$ 绕点 A 旋转 $2\angle BAC$ 后得到的点。</p>
+      <p>将 $P_2$ 关于直线 CA 对称移动得到的点是 P'，将 P' 关于直线 CB 对称移动得到的点是 P。因此，将 $P_2$ 绕点 C 旋转 $2\angle ACB$ 后得到的点是原来的点 P。</p>
+      <p><span class="figdesc">〔图：三角形 ABC，内部有一点 P 及其对称点序列 P', P₁, P₂，展示了连续的反射过程〕</span></p>
+      <p>综上所述，这些移动的结果使得点 P 移到了自身的位置。 ……（答）</p>
+      <p class="note">（注）作为变换的合成，(ii) 是：(C 的周围 $2\angle ACB$ 的旋转) $\circ$ (A 的周围 $2\angle BAC$ 的旋转) $\circ$ (B 的周围 $2\angle CBA$ 的旋转) $=$ (CB 的对称移动) $\circ$ (CA 的对称移动) $\circ$ (AC 的对称移动) $\circ$ (AB 的对称移动) $\circ$ (BA 的对称移动) $\circ$ (BC 的对称移动) $=$ (CB 的对称移动) $\circ$ (BC 的对称移动) $=$ 恒等变换，即如此。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>半径为 $R$ 的大圆周长的内侧，半径为 $\frac{R}{2}$ 的小圆不滑动地滚动时，求小圆圆周上一点的轨迹。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设大圆的中心为 O，最初小圆圆周上的点 P 与大圆圆周上的点 A 重合，此时假设小圆与大圆在该点相切。接着假设小圆在大圆内部不滑动地滚动，设小圆的中心为 C，此时小圆与大圆的切点为 T。</p>
+      <p>因为是不滑动滚动，所以大圆的弧 $\widehat{AT}$ 与小圆的弧 $\widehat{PT}$ 的长度相等。设 $\angle AOT = \theta\ (0 \leqq \theta \leqq \frac{\pi}{2})$，则 $\widehat{AT}$ 的长度为 $R\theta$。另一方面，因为小圆的半径是 $\frac{R}{2}$，为了使 $\widehat{PT}$ 的长度为 $R\theta$，必须满足 $\angle PCT = 2\theta$。</p>
+      <p>因为 T 是切点，所以 $O, C, T$ 三点共线，因此 $\angle COA = \theta$。另一方面，$OC = R - \frac{R}{2} = \frac{R}{2} = CP$。</p>
+      <p>当 $0 < \theta < \frac{\pi}{2}$ 时，$\triangle COP$ 是等腰三角形，顶角 $\angle OCP$ 的外角为 $2\theta$，所以底角 $\angle COP = \angle CPO = \theta$。因此 $O, P, A$ 三点共线。当 $\theta = 0$ 时 $P=A$；当 $\theta = \frac{\pi}{2}$ 时 $P=O$。由以上可知，当 $0 \leqq \theta \leqq \frac{\pi}{2}$ 时，P 在线段 OA 上运动。</p>
+      <p><span class="figdesc">〔图：两个内切的圆，大圆圆心为 O，小圆圆心为 C，切点为 T，圆周上有动点 P 和起始点 A〕</span></p>
+      <p>设经过 A 的大圆直径的另一端为 A'，当 $\frac{\pi}{2} \leqq \theta \leqq \pi$ 时，同理 P 在线段 OA' 上运动。此后当 $\theta > \pi$ 时，P 在线段 AA' 上来回运动。</p>
+      <p>因此，P 在以 A 为一个端点的大圆直径上运动。P 的轨迹是大圆的一条直径。 ……（答）</p>
+      <p class="note">（注）以 O 为原点，使 A 为 $(R, 0)$ 建立坐标系，则 $T(R\cos\theta, R\sin\theta)$，$C\left(\frac{R}{2}\cos\theta, \frac{R}{2}\sin\theta\right)$，$\overrightarrow{OP} = \frac{R}{2}(\cos\theta, \sin\theta) + \frac{R}{2}(\cos(\theta-2\theta), \sin(\theta-2\theta)) = R(\cos\theta, 0)$。这样更容易理解 P 在线段 AA' 上来回运动。这个时代解析几何似乎并不十分盛行。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>求棱长为 1 的立方体中如图所示内接的四面体 $ACFH$ 的体积。</p>
+    <p><span class="figdesc">〔图：立方体 ABCD-EFGH，连接顶点 A, C, F, H 形成一个内接四面体〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>「棱」指的是边。立方体的体积是 1。</p>
+      <p>四面体 $BACF$、四面体 $DACH$、四面体 $EAFH$、四面体 $GCFH$ 全等，且它们的体积均为 $\frac{1}{6}$。由此，</p>
+      $$\text{四面体 } ACFH = 1 - 4 \times \frac{1}{6} = \frac{1}{3}. \quad \cdots(\text{答})$$
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1952 年 · 一般数学</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>将正三角形的板如图所示分割成四个全等的正三角形，用红、黄、青、白这 4 种颜色进行涂色。</p>
+    <ol class="q">
+      <li>使用全部 4 种颜色时有多少种涂法？</li>
+      <li>从 4 种颜色中任意选取 3 种颜色，使得相邻的三角形颜色不同，有多少种方法？</li>
+      <li>如果使用 2 种颜色，有多少种方法？</li>
+    </ol>
+    <p><span class="figdesc">〔图：一个大正三角形被分为四个小正三角形〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>旋转后变成相同涂色的情况视为不同。</p>
+      <p>(i) 因为是向 4 个三角形配置不同的 4 种颜色，所以个数是 $4! = 24$ 种。 ……（答）</p>
+      <p>(ii) 解释为使用的颜色个数是 3 种。首先选择中央三角形的颜色，该颜色有 4 种选法。周围 3 个三角形中有 2 个同色，另外 1 个异色。拥有 2 个同色三角形的那种颜色的选法有 3 种，剩下的 1 个三角形的颜色选法是 2 种，同色的 2 个三角形的位置选法有 3 种。由此，满足条件的涂色方法是 $4 \times 3 \times 2 \times 3 = 72$ 种。 ……（答）</p>
+      <p>(iii) 解释为相邻的正三角形可以是同一种颜色。颜色的选法有 ${}_4C_2 = 6$ 种。用 2 种颜色中的任一种涂 4 个正三角形的涂法个数是 $2^4 = 16$ 种，其中 2 种是全部同一种颜色的情况，除去这些剩 14 种。由此，所求涂色方法的个数是 $6 \times 14 = 84$ 种。 ……（答）</p>
+      <p class="note">（注）题意不明确。是否将旋转后变成相同涂色的情况视为同一？在任选 3 种颜色的情况下，是否允许有不使用的颜色？(ii) 中写着相邻的三角形要涂不同的颜色，但 (iii) 中如何呢？解答中将旋转后变成相同涂色的情况视为不同。此外，(ii)、(iii) 中被选出的 3 种、2 种颜色中没有不使用的颜色。如果这里有未使用的颜色，例如仅用红色和黄色涂成的图形，是选择了红、黄、青而没用青色呢，还是选择了红、黄、白而没用白色呢，这就产生了将它们看作 2 种还是 1 种的问题。若将 (iii) 视为相邻的三角形涂不同颜色，则其个数为 ${}_4P_2 = 12$ 种。另外，若将旋转后变成相同涂色的情况视为同一，并按照【解答】同样的解释，则 (i) 是 $4 \times 2 = 8$ 种，(ii) 是 $4 \times 3 \times 2 = 24$ 种，(iii) 是 ${}_4C_2 \times 6 = 36$ 种。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>若干人乘车前往某距离时，大型车需要 2 台，小型车需要 3 台。大型车的费用每台最初 $1\,\mathrm{km}$ 以内是 100 日元，之后每 $320\,\mathrm{m}$ 加 20 日元。小型车的费用每台最初 $1\,\mathrm{km}$ 以内是 70 日元，之后每 $480\,\mathrm{m}$ 加 20 日元。前往怎样的距离时使用小型车更划算？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>列出利用大型车 2 台和小型车 3 台时的费用表如下。</p>
+      <table class="mini">
+        <tr><th>距离(m)</th><td>～1000</td><td>～1320</td><td>～1480</td><td>～1640</td><td>～1960</td><td>～2280</td><td>…</td></tr>
+        <tr><th>大型 2 台(日元)</th><td>200</td><td>240</td><td>280</td><td>280</td><td>320</td><td>360</td><td></td></tr>
+        <tr><th>小型 3 台(日元)</th><td>210</td><td>270</td><td>270</td><td>330</td><td>330</td><td>390</td><td></td></tr>
+      </table>
+      <p>无论利用哪种，在最初的 $1\,\mathrm{km}$ 以后 $960\,\mathrm{m}$ 内，增加的费用都是 $3 \times 20 \times 2 = 2 \times 20 \times 3 = 120$ 日元，所以在 $1\,\mathrm{km}$ 以后每隔 $960\,\mathrm{m}$ 增加费用的差值是相同的。</p>
+      <p>在 $1\,\mathrm{km}$ 到 $1960\,\mathrm{m}$ 之间，使用小型车更划算的是 $1320\,\mathrm{m}$ 到 $1480\,\mathrm{m}$，此后每隔 $960\,\mathrm{m}$ 都有小型车划算的区间。</p>
+      <p>由此，小型车划算的区间是距离超过 $1\,\mathrm{km}$ 时，距离(m)除以 960 所得的余数在 360 以上且小于 520 的区间。 ……（答）</p>
+      <p class="note">（注）设距离为 $L\,\mathrm{m}$，则为 $1320 + 960k \leqq L < 1480 + 960k\ (k=0, 1, 2, \dots)$ 的距离。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>在北纬 $30^\circ$ 的地点，将一根长 $4\,\mathrm{m}$ 的杆子的顶端指向北极星竖立在平地上。当太阳的方位在南偏东 $30^\circ$、高度为 $45^\circ$ 时，这根杆子的影长是多少？</p>
+    <p><span class="figdesc">〔图：三维空间示意图，显示杆子、影子及投影关系〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设杆子的根部为 O，从杆子的顶端向地面所作垂线的垂足为 H，杆子顶端的影子为 S。</p>
+      <p>杆子的长度为 $4\,\mathrm{m}$，且杆子的顶端指向北极星（在北纬 $30^\circ$ 处北极星的高度为 $30^\circ$），因此顶端的高度是 $2\,\mathrm{m}$，$OH=2\sqrt{3}\,\mathrm{m}$。</p>
+      <p><span class="figdesc">〔图：侧面三角形示意图，标注了角度与边长〕</span></p>
+      <p>由于太阳的方向在南偏东 $30^\circ$，所以杆子顶端的影子在 OH 向西偏转 $30^\circ$ 的位置。因此 $\angle OHS=150^\circ$。</p>
+      <p>又因为太阳的高度为 $45^\circ$，所以 $HS=2\,\mathrm{m}$。</p>
+      <p><span class="figdesc">〔图：地面平面几何示意图，显示方向与夹角〕</span></p>
+      <p>由余弦定理得</p>
+      $$OS^2=OH^2+HS^2-2\,OH\cdot HS\cos 150^\circ=(2\sqrt{3})^2+2^2+2\cdot 2\sqrt{3}\cdot 2\cdot \frac{\sqrt{3}}{2}=28$$
+      <p>从而，影长为 $\sqrt{28}=2\sqrt{7}\,\mathrm{m}$。 ……（答）</p>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== 1953 ==================== -->
+<h2 class="year" id="y1953">1953 年</h2>
+<div class="year-sub">各科均为选考科目：解析Ⅰ / 解析Ⅱ / 几何 / 一般数学</div>
+
+<h3 class="subject">1953 年 · 解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>有一个以点 A$(2, 3)$、B$(0, 0)$、C$(3, 0)$ 为顶点的三角形。过底边 BC 上的一点 P$(x, 0)$ 作垂直于 BC 的直线将此三角形分为两部分，位于顶点 B 一侧的部分的面积可以看作 $x$ 的函数。那是什么样的函数？并画出其图像。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题目中的「函数」是当时对「関数」的表记。设所求的函数为 $f(x)$。</p>
+      <p>由 AB：$y=\frac{3}{2}x$ 可知，当 $0 \leqq x \leqq 2$ 时，</p>
+      $$f(x)=\frac{1}{2}x\cdot \frac{3}{2}x=\frac{3}{4}x^2$$
+      <p>由 AC：$y=-3x+9$ 可知，当 $2 \leqq x \leqq 3$ 时，</p>
+      $$f(x)=\frac{1}{2}\cdot 3\cdot 3-\frac{1}{2}(3-x)(-3x+9)=\frac{9}{2}-\frac{3}{2}(3-x)^2=-\frac{3}{2}x^2+9x-9$$
+      $$\therefore \quad f(x)=\begin{cases} \frac{3}{4}x^2 & (0 \leqq x \leqq 2 \text{ 时}), \\ -\frac{3}{2}x^2+9x-9 & (2 < x \leqq 3 \text{ 时}). \end{cases} \quad \cdots(\text{答})$$
+      <p>图示如下。</p>
+      <p><span class="figdesc">〔图：分段函数的曲线图，定义域为 $[0,3]$，先凸增后凹减，最高点纵坐标为 $\frac{9}{2}$〕</span></p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>将给定长度为 $l$ 的线段分割成适当的六段线段，用它们组成如图所示的三个面积相等的长方形拼接而成的图形。求这样制作得到的长方形 ABCD 面积的最大值。</p>
+    <p><span class="figdesc">〔图：一个大长方形被分割为三个小长方形，左侧一个竖直放置，右侧两个水平叠放〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设 AB 的长度为 $3a$，BC 的长度为 $2b$，则纵向分割线的长度是 $2b$，横向分割线的长度是 $2a$。于是，</p>
+      $$l=8a+6b$$
+      <p>由此可得 $2b=\frac{l}{3}-\frac{8}{3}a$。</p>
+      <p>长方形 ABCD 的面积为</p>
+      $$6ab=3a\left(\frac{l}{3}-\frac{8}{3}a\right)=-8\left(a-\frac{l}{16}\right)^2+\frac{l^2}{32}$$
+      <p>因此，当 $a=\frac{l}{16}$，即 $AB=\frac{3}{16}l$、$BC=\frac{l}{6}$ 时，长方形的面积取得最大值 $\frac{l^2}{32}$。 ……（答）</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>令 $S=6ab$，由算术平均·几何平均的关系可知，</p>
+        $$l=8a+6b \geqq 2\sqrt{48ab}=4\sqrt{2S}, \quad \therefore \quad S \leqq \frac{l^2}{32}$$
+        <p>等号成立的条件是 $8a=6b=\frac{l}{2}$，即 $AB=\frac{3}{16}l$、$BC=\frac{l}{6}$ 时。于是，长方形面积的最大值是 $\frac{l^2}{32}$。 ……（答）</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>当 $1<x<a$ 时，$(\log_a x)^2$、$\log_a x^2$、$\log_a(\log_a x)$ 的大小顺序如何？又是为什么？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>当 $1<x<a$ 时，$0<\log_a x<1$。</p>
+      $$(\log_a x)^2-\log_a x^2=(\log_a x)^2-2\log_a x=\log_a x(\log_a x-2)$$
+      <p>由 $\log_a x>0$、$\log_a x<2$ 可知 $(\log_a x)^2-\log_a x^2<0$。</p>
+      <p>又因为 $\log_a(\log_a x)<\log_a 1=0$，所以</p>
+      $$\log_a(\log_a x)<0<(\log_a x)^2<\log_a x^2 \quad \cdots（答）$$
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1953 年 · 解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>关于函数 $y=Ax+B+\dfrac{C}{x}$，求满足下列各条件的式子。</p>
+    <ol class="q">
+      <li>其图像关于原点对称的条件。</li>
+      <li>其图像与 $x$ 轴没有公共点的条件。</li>
+      <li>既无极大值也无极小值的条件。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题文中的「函数」是当时对「関数」的表记。将 $A, B, C$ 作为实数进行解答。</p>
+      <p>(1) 关于原点对称移动时，由 $-y=-Ax+B-\frac{C}{x}$ 得 $y=Ax-B+\frac{C}{x}$。因此，与原函数一致的条件是 $B=0$。$\cdots(\text{答})$</p>
+      <p>(2) 因为 $x \neq 0$，去分母得 $Ax^2+Bx+C=0$。该方程没有 $x \neq 0$ 的实数解即为条件。当 $A \neq 0$ 时，$B^2-4AC<0$ 或者 $B=C=0$；当 $A=0, B \neq 0$ 时，$C=0$；当 $A=0, B=0$ 时，$C \neq 0$。综上所述，</p>
+      $$[A \neq 0, B^2-4AC<0] \text{ 或 } [B=C=0, A \neq 0] \text{ 或 } [A=C=0, B \neq 0] \text{ 或 } [A=B=0, C \neq 0]. \quad \cdots (\text{答})$$
+      <p>(3) $y'=A-\frac{C}{x^2}=\frac{Ax^2-C}{x^2}$。$Ax^2-C=0$ 没有实数解、有重根或恒成立即为条件：$A \neq 0, AC \leqq 0$ 或 $A=0$。综上，</p>
+      $$AC \leqq 0. \quad \cdots (\text{答})$$
+      <p class="note">（注1）(2) 中 $A \neq 0, B=C=0$ 的情况是否算作答案有些微妙。若 $B=C=0$ 则 $y=Ax$，但保留原函数的定义域并将 $x \neq 0$ 作为条件，此处也视为正解。<br>（注2）(3) 中 $A=C=0$ 的情况，则变为 $y=B$（常函数）。此时对于所有 $x$，「$y$ 取极大值且取极小值」这种解释也是存在的（广义极值）。若遵循该解释，则需从 (3) 的答案中排除 $A=C=0$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>画出函数 $y=|\sin x+\cos x-1|$ 的图像。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题文中的「函数」是当时对「関数」的表记。</p>
+      $$y=|\sin x+\cos x-1|=\left|\sqrt{2}\sin\left(x+\frac{\pi}{4}\right)-1\right|.$$
+      <p>使 $\sin\left(x+\frac{\pi}{4}\right)=\frac{1}{\sqrt{2}}$ 成立的 $x$ 为</p>
+      $$x+\frac{\pi}{4}=\frac{\pi}{4}+2n\pi \text{ 或 } x+\frac{\pi}{4}=\frac{3}{4}\pi+2n\pi$$
+      <p>由此可得，$x=2n\pi$ 或 $\frac{\pi}{2}+2n\pi$（$n$ 为整数）。</p>
+      <p>当 $x=\frac{\pi}{4}+2n\pi$ 时，$y=\sqrt{2}-1$；当 $x=-\frac{3}{4}\pi+2n\pi$ 时，$y=\sqrt{2}+1$。</p>
+      <p>此函数具有 $2\pi$ 的周期。其图像如下图。</p>
+      <p><span class="figdesc">〔图：函数 $y=|\sin x+\cos x-1|$ 的图像，纵轴标有 $\sqrt{2}-1$ 和 $\sqrt{2}+1$，横轴标有 $O, \frac{\pi}{4}, \frac{\pi}{2}, \pi, \frac{5}{4}\pi, 2\pi$ 等〕</span> $\cdots (\text{答})$</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>已知抛物线 $y=x^2$。求经过点 $(1,2)$ 的弦中，与该抛物线围成面积最小的弦。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>经过点 $(1,2)$ 且斜率为 $m$ 的直线方程为 $y=m(x-1)+2$。</p>
+      <p>求其与 $y=x^2$ 交点的 $x$ 坐标的方程为</p>
+      $$x^2=mx-m+2, \text{ 即 } x^2-mx+m-2=0.$$
+      <p>设该方程的两个解为 $\alpha, \beta\ (\alpha < \beta)$，则</p>
+      $$\alpha=\frac{m-\sqrt{m^2-4m+8}}{2}, \quad \beta=\frac{m+\sqrt{m^2-4m+8}}{2}, \quad \beta-\alpha=\sqrt{m^2-4m+8}.$$
+      <p>直线与抛物线围成的面积为</p>
+      $$\int_{\alpha}^{\beta}\{(mx-m+2)-x^2\}dx = -\int_{\alpha}^{\beta}(x-\alpha)(x-\beta)dx = \frac{1}{6}(\beta-\alpha)^3$$
+      $$= \frac{1}{6}\left(\sqrt{m^2-4m+8}\right)^3 = \frac{1}{6}\left(\sqrt{(m-2)^2+4}\right)^3.$$
+      <p>使其取得最小值的是 $m=2$ 时。</p>
+      <p>面积最小时，弦重合于直线 $y=2x$。此时弦的两端点为 $(0,0), (2,4)$。 $\cdots (\text{答})$</p>
+      <p class="note">（注）面积的最小值为 $\frac{4}{3}$。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1953 年 · 几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>四条直线</p>
+    $$x-y-4=0, \quad 2x+5y-15=0, \quad 4x-y+3=0, \quad x+3y+4=0$$
+    <p>所围成的图形面积是多少？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>计算四条直线围成的四边形中凸四边形部分的面积。设</p>
+      $$l_1: x-y-4=0, \quad l_2: 2x+5y-15=0, \quad l_3: 4x-y+3=0, \quad l_4: x+3y+4=0$$
+      <p>$l_1$ 与 $l_2$ 的交点设为 A$(5,1)$，$l_2$ 与 $l_3$ 的交点设为 B$(0,3)$，$l_3$ 与 $l_4$ 的交点设为 C$(-1,-1)$，$l_4$ 与 $l_1$ 的交点设为 D$(2,-2)$。</p>
+      <p>此外，考虑包围 ABCD 且边平行于坐标轴的长方形，设 K$(5,3)$、L$(-1,3)$、M$(-1,-2)$、N$(5,-2)$。</p>
+      $$\begin{aligned}
+      \text{四边形 } ABCD &= \text{四边形 } KLMN - \triangle KAB - \triangle LBC - \triangle MCD - \triangle NDA \\
+      &= (5+1)(3+2) - \frac{1}{2}(3-1)(5-0) - \frac{1}{2}(0+1)(3+1) \\
+      &\quad - \frac{1}{2}(-1+2)(2+1) - \frac{1}{2}(5-2)(1+2) \\
+      &= 30 - 5 - 2 - \frac{3}{2} - \frac{9}{2} = 17. \quad \cdots (\text{答})
+      \end{aligned}$$
+      <p><span class="figdesc">〔图：直角坐标系中画出的四条相交直线及围成的四边形 ABCD，并辅以矩形 KLMN 示意〕</span></p>
+      <p class="note">（注）一般情况下，若四条直线两两不平行且三条直线不共点，则这四条直线围成的凸四边形是唯一确定的。但是，四条直线构成的四边形根据直线的排列顺序有 3 种情况，其中一种是扭四边形，另一种是凹四边形。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>试证明：经过给定椭圆的两个焦点 $F, F'$ 且以椭圆上一点为焦点的抛物线的准线，与一定圆相切。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设椭圆为 E，其长半轴长为 $a$。在 E 上任取一点 P，设 C 是以 P 为焦点、且经过 $F, F'$ 的抛物线。设 C 的准线为 $l$，从 $F, F'$ 分别向 $l$ 作垂线，垂足分别为 $H, H'$。</p>
+      <p>因为 $F, F'$ 在以 P 为焦点、$l$ 为准线的抛物线上，所以</p>
+      $$FP=FH, \quad F'P=F'H'. \quad \cdots ①$$
+      <p>因为 P 在椭圆 E 的圆周上，所以</p>
+      $$FP+F'P=2a. \quad \cdots ②$$
+      <p>这里，设从椭圆 E 的中心 O 向抛物线 C 的准线 $l$ 作垂线，垂足为 M。由于 O 是 $FF'$ 的中点，且 $FH, OM, F'H'$ 相互平行，故 M 是 $HH'$ 的中点。由 ①、② 得，</p>
+      $$OM=\frac{1}{2}(FH+F'H')=\frac{1}{2}(FP+F'P)=a.$$
+      <p><span class="figdesc">〔图：椭圆及其内切于辅助圆的抛物线示意图〕</span></p>
+      <p>因此，OM 不依赖于 P 的位置而恒为定值。从而，M 位于以 O 为中心、半径为 $a$ 的圆（辅助圆）的圆周上。又因 $OM \perp l$，故 $l$ 与辅助圆相切。</p>
+      <p>综上所述，以椭圆 E 上任意一点 P 为焦点、且经过 $F, F'$ 的抛物线 C 的准线 $l$ 与 E 的辅助圆相切。（证明完毕）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>从边长为 $a$ 的正 $n$ 边形纸片中，剪下以其中心 O 为顶点、其中一边 AB 为底边的三角形 OAB，将 OA 与 OB 重合拼合，制成一个底面为正 $(n-1)$ 边形、顶点为 O 的角锥，求其容积。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设边长为 $a$ 的正 $m$ 边形的外接圆半径为 $R_m$，则由 $R_m \sin \frac{\pi}{m} = \frac{a}{2}$ 可得</p>
+      $$R_m = \frac{a}{2 \sin \frac{\pi}{m}}.$$
+      <p>边长为 $a$ 的正 $(n-1)$ 边形的面积为</p>
+      $$(n-1) \times \frac{1}{2} R_{n-1}^2 \sin \frac{2\pi}{n-1} = \frac{(n-1)a^2}{8 \sin^2 \frac{\pi}{n-1}} \sin \frac{2\pi}{n-1} = \frac{(n-1)a^2}{4 \sin \frac{\pi}{n-1}} \cos \frac{\pi}{n-1}.$$
+      <p>另一方面，容器（角锥）的深度为</p>
+      $$\sqrt{R_n^2 - R_{n-1}^2} = \frac{a}{2} \sqrt{\frac{1}{\sin^2 \frac{\pi}{n}} - \frac{1}{\sin^2 \frac{\pi}{n-1}}}$$
+      <p>所求体积为</p>
+      $$\frac{a^3(n-1)}{24} \cdot \frac{\cos \frac{\pi}{n-1}}{\sin \frac{\pi}{n-1}} \sqrt{\frac{1}{\sin^2 \frac{\pi}{n}} - \frac{1}{\sin^2 \frac{\pi}{n-1}}}. \quad \cdots (\text{答})$$
+      <p><span class="figdesc">〔图：正多边形分割成三角形的局部示意图〕</span></p>
+      <p class="note">（注）若用 $\cot$ 来表示此结果，则为 $\dfrac{a^3(n-1)}{24} \cot \dfrac{\pi}{n-1} \sqrt{\cot^2 \dfrac{\pi}{n} - \cot^2 \dfrac{\pi}{n-1}}$。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1953 年 · 一般数学</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>有一种约定在 $n$ 日后支付 $A$ 日元的期票。以日息 $a$ 钱存入 $n$ 日后能收到 $A$ 日元的金额，即为该期票相对于日息 $a$ 钱的理论现值。银行通常习惯支付 $A \times (1 - \frac{na}{10000})$ 日元。试证明银行支付的金额总是小于理论现值。然而，当 $a$ 与 $n$ 不是很大时，其差额对 $A$ 的比值是很小的。当 $a \leqslant 5, n \leqslant 100$ 时，这个比值大约是多少？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>理论现值为</p>
+      $$A \div \left(1 + \frac{na}{10000}\right).$$
+      <p>另一方面，银行支付的金额为</p>
+      $$A \left(1 - \frac{na}{10000}\right).$$
+      <p>于是，</p>
+      $$\frac{A}{1+\frac{na}{10000}} - A \left(1 - \frac{na}{10000}\right) = \frac{\left(\frac{na}{10000}\right)^2}{1+\frac{na}{10000}} A > 0.$$
+      <p>因此，银行支付的金额总是小于理论现值。（证明完毕）</p>
+      <p>当 $a=5, n=100$ 时，$na=500$。此时比值为</p>
+      $$\frac{\left(\frac{500}{10000}\right)^2}{1+\frac{500}{10000}} = \frac{1}{420}.$$
+      <p>因此，当 $a \leqslant 5, n \leqslant 100$ 时，差额的比值在 $\frac{1}{420}$ 以下。</p>
+      <p class="note">（注）「日步」是指对 100 日元而言每日产生的利息，其单位是 $\frac{1}{100}$ 日元。因此，当日步为 $a$ 钱时，对 $A$ 日元而言每日产生的利息是 $\frac{A}{100} \cdot \frac{a}{100} = \frac{a}{10000} A$ 日元。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>有 A, B, C, D 四个袋子。A 袋中有白球 4 个、红球 1 个；B 袋中有白球 3 个、红球 1 个；C 袋中有白球 2 个、红球 1 个；D 袋中有白球 1 个、红球 1 个。从各袋中各取出一个球，求至少有 2 个是红球的概率。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>求对立事件的概率。</p>
+      <p>取出的 4 个球全是白球的概率是 $\frac{4}{5} \cdot \frac{3}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} = \frac{1}{5}$。</p>
+      <p>从 A 中取出红球、其余袋中取出白球的概率是 $\frac{1}{5} \cdot \frac{3}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} = \frac{1}{20}$。</p>
+      <p>从 B 中取出红球、其余袋中取出白球的概率是 $\frac{4}{5} \cdot \frac{1}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} = \frac{1}{15}$。</p>
+      <p>从 C 中取出红球、其余袋中取出白球的概率是 $\frac{4}{5} \cdot \frac{3}{4} \cdot \frac{1}{3} \cdot \frac{1}{2} = \frac{1}{10}$。</p>
+      <p>从 D 中取出红球、其余袋中取出白球的概率是 $\frac{4}{5} \cdot \frac{3}{4} \cdot \frac{2}{3} \cdot \frac{1}{2} = \frac{1}{5}$。</p>
+      <p>故所求概率是</p>
+      $$1 - \frac{1}{5} - \frac{1}{20} - \frac{1}{15} - \frac{1}{10} - \frac{1}{5} = 1 - \frac{37}{60} = \frac{23}{60}. \quad \cdots (\text{答})$$
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>下图中的正方形 $A'B'C'D'$ 是将正方形 $ABCD$ 绕其中心向正方向旋转 $30^\circ$ 得到的。点 P 以恒定速度在正方形 $ABCD$ 的周边上 5 分钟内绕行 7 圈，点 Q 以恒定速度在正方形 $A'B'C'D'$ 的周边上 25 分钟内绕行 33 圈。当 P、Q 同时从 E 出发并以相同方向运动时，</p>
+    <ol class="q">
+      <li>P、Q 在从 E 出发后多少分钟第一次在哪里相遇？</li>
+      <li>P、Q 不会在 E'、F'、G'、H' 处相遇。请说明理由。</li>
+    </ol>
+    <p><span class="figdesc">〔图：两个重叠的正方形 ABCD 和 A'B'C'D'，顶点及交点标记为 H, D', D, A, H', E', G, A', E, C', G', F', F, B, C, B'〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(1) 设边长为 $a$。根据全等性和对称性，</p>
+      $$\triangle AE'H \cong \triangle A'E'E \cong \triangle BF'E \cong \triangle B'F'F \cong \triangle CG'F \cong \triangle C'G'G \cong \triangle DH'G \cong \triangle D'H'H$$
+      $$a = AE' + E'E + EB = EB + BF' + F'F = FC + CG' + G'G = GD + DH' + H'H = EF' + F'B' + B'F = \cdots$$
+      <p>因此，从 E 到 F，无论经过哪个正方形的路径，移动的距离都是 $a$。同理，从 F 到 G、从 G 到 H、从 H 到 E 的距离也是 $a$。</p>
+      <p>设 P、Q 的速度分别为 $u$、$v$，因为 P 在 5 分钟内转 7 圈，所以 $u = \frac{7}{5} \times 4a$ / 分；因为 Q 在 25 分钟内转 33 圈，所以 $v = \frac{33}{25} \times 4a$ / 分。于是，$u : v = \frac{7}{5} : \frac{33}{25} = 35 : 33$。</p>
+      <p>P、Q 同时到达 E、F、G、H 中某一点的时间是 $\frac{25}{4}$ 分钟后，此时 P 行进了 $35a$，Q 行进了 $33a$。设 $t_0 = \frac{25}{4}$，则 P、Q 同时到达 E、F、G、H 中某一点的时刻是 $t_0$ 的整数倍。$kt_0$ 分后（$k$ 为自然数），P、Q 的移动距离之差为 $35ak - 33ak = 2ak$。这成为一周 $4a$ 的整数倍的条件是 $k$ 为偶数，其中最小的 $k$ 是 2。</p>
+      <p>当 $k=2$ 时，$2t_0 = \frac{25}{2} = 12.5$ 分后，P、Q 的移动距离分别是 $70a$、$66a$。因为 70、66 除以 4 余数为 2，所以相遇位置是 G。</p>
+      <p>由上可知，<strong>12.5 分后在 G 处相遇</strong>。 …(答)</p>
+      <p>(2) 假设 P、Q 的回转方向为逆时针方向进行解答。</p>
+      <p>因为正方形 $A'B'C'D'$ 是将正方形 $ABCD$ 旋转 $30^\circ$ 得到的，所以在 $\triangle AE'H$ 中，$\angle AHE' = 30^\circ$，$\angle AE'H = 60^\circ$，$AE' : E'H : HA = 1 : 2 : \sqrt{3}$。因为这些线段之和为 $a$，所以</p>
+      $$AE' = \frac{a}{3+\sqrt{3}} = \frac{3-\sqrt{3}}{6}a, \quad E'H = \frac{2a}{3+\sqrt{3}} = \frac{3-\sqrt{3}}{3}a, \quad HA = \frac{\sqrt{3}a}{3+\sqrt{3}} = \frac{\sqrt{3}-1}{2}a$$
+      <p>P 到达 E'、F'、G'、H' 之前的移动距离是 $a$ 的整数倍加上 $\frac{3-\sqrt{3}}{3}a$ 的距离，而 Q 到达 E'、F'、G'、H' 之前的移动距离是 $a$ 的整数倍加上 $\frac{a+\sqrt{3}a}{3+\sqrt{3}} = \frac{\sqrt{3}}{3}a$ 的距离。设 $m, n$ 为整数，若两者相等，则其比为</p>
+      $$\frac{ma+\frac{3-\sqrt{3}}{3}a}{na+\frac{\sqrt{3}}{3}a} = \frac{3m+3-\sqrt{3}}{3n+\sqrt{3}}$$
+      <p>分母有理化后，分子中 $\sqrt{3}$ 的系数为 $(m+n+1)$，是正数，不会消去，因此该比值是无理数。另一方面，P、Q 的移动速度之比为 $35:33$ 是有理数，因此 P、Q 不可能同时到达 E'、F'、G'、H'。（证明结束）</p>
+      <p class="note">（注）即使 P、Q 的回转方向为顺时针方向，结果也是一样的。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== 1954 ==================== -->
+<h2 class="year" id="y1954">1954 年</h2>
+<div class="year-sub">各科均为选考科目：解析Ⅰ / 解析Ⅱ / 几何 / 一般数学</div>
+
+<h3 class="subject">1954 年 · 解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>画出函数 $y = \sqrt{x^2+x+1}$ 的图像。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题干中的「函数」是当时对「関数」的表记。</p>
+      <p>因为 $\sqrt{x^2+x+1} \geqq 0$，所以 $y \geqq 0$。两边平方得，</p>
+      $$y^2 = x^2+x+1 = \left(x+\frac{1}{2}\right)^2 + \frac{3}{4}$$
+      $$-\frac{\left(x+\frac{1}{2}\right)^2}{\frac{3}{4}} + \frac{y^2}{\frac{3}{4}} = 1$$
+      <p>因此该图像是双曲线 $y \geqq 0$ 的部分。中心是 $\left(-\frac{1}{2}, 0\right)$，渐近线是 $y = \pm\left(x+\frac{1}{2}\right)$。</p>
+      <p><span class="figdesc">〔图：双曲线上支，顶点位于 $(-\frac{1}{2}, \frac{\sqrt{3}}{2})$，渐近线为 $y=x+\frac{1}{2}$ 与 $y=-x-\frac{1}{2}$〕</span> ……（答）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>当点 $(x, y)$ 在以原点为中心、半径为 1 的圆的内部运动时，图示出点 $(x+y, xy)$ 的运动范围。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设 $X = x+y$，$Y = xy$。由 $x^2+y^2 < 1$ 得</p>
+      $$x^2+y^2 = (x+y)^2 - 2xy = X^2 - 2Y < 1, \quad \therefore \quad Y > \frac{1}{2}(X^2 - 1)$$
+      <p>此外，$x, y$ 是方程</p>
+      $$t^2 - (x+y)t + xy = 0, \text{ 即 } t^2 - Xt + Y = 0$$
+      <p>的两个解，因为 $x, y$ 是实数，所以（判别式）$X^2 - 4Y \geqq 0$。由上可知，</p>
+      $$\frac{1}{2}(X^2 - 1) < Y \leqq \frac{1}{4}X^2$$
+      <p>因此，点 $(X, Y)$ 存在的范围如下图中阴影部分所示：边界包含粗实线（上侧抛物线），不包含虚线（下侧抛物线）以及两曲线交点处的空心圆点。</p>
+      <p><span class="figdesc">〔图：平面直角坐标系，横轴标有 $-\sqrt{2}, -1, 1, \sqrt{2}$，纵轴标有 $-\frac{1}{2}, \frac{1}{2}$。阴影区域位于两条抛物线之间：下边界为虚线抛物线 $Y=\frac{1}{2}(X^2-1)$，上边界为实线抛物线 $Y=\frac{1}{4}X^2$，两曲线在 $X=\pm\sqrt{2}$ 处相交于空心圆点〕</span> ……（答）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>$a, b$ 是正数，当存在满足 $\log ax \cdot \log bx + 1 = 0$ 的正数 $x$ 时，$\frac{b}{a}$ 处于怎样的范围内？不过，$\log$ 表示常用对数。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>由原式可得</p>
+      $$(\log_{10} x + \log_{10} a)(\log_{10} x + \log_{10} b) + 1 = 0$$
+      <p>设 $X = \log_{10} x$，$A = \log_{10} a$，$B = \log_{10} b$，</p>
+      $$(X+A)(X+B)+1=0, \quad \therefore \quad X^2+(A+B)X+AB+1=0 \quad \dots \text{①}$$
+      <p>当 $x$ 在正数范围内取遍所有值时，$X=\log_{10} x$ 取遍所有实数。① 有实数解的条件是</p>
+      $$(A+B)^2 - 4(AB+1) = (A-B)^2 - 4 \geqq 0$$
+      <p>由上可知，$B-A \leqq -2$ 或 $B-A \geqq 2$。因为 $B-A = \log_{10} b - \log_{10} a = \log_{10} \frac{b}{a}$，所以</p>
+      $$\log_{10} \frac{b}{a} \leqq -2 \text{ 或 } \log_{10} \frac{b}{a} \geqq 2, \quad \therefore \quad 0 < \frac{b}{a} \leqq \frac{1}{100} \text{ 或 } \frac{b}{a} \geqq 100 \quad \dots \text{(答)}$$
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1954 年 · 解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>求下列函数的最大值与最小值。</p>
+    $$a \cos^2 x + 2b \cos x \sin x + c \sin^2 x$$
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>题文中的「函数」是当时对「関数」的写法。设</p>
+      $$f(x) = a \cos^2 x + 2b \cos x \sin x + c \sin^2 x$$
+      <p>由倍角公式、半角公式得</p>
+      $$f(x) = a \cdot \frac{1+\cos 2x}{2} + b \sin 2x + c \cdot \frac{1-\cos 2x}{2} = \frac{a+c}{2} + b \sin 2x + \frac{a-c}{2} \cos 2x$$
+      <p>由合成（辅助角）公式得</p>
+      $$f(x) = \frac{a+c}{2} + \frac{1}{2}\sqrt{4b^2+(a-c)^2}\, \sin(2x+\alpha)$$
+      <p>其中，当 $4b^2+(a-c)^2 \neq 0$ 时，$\alpha$ 满足</p>
+      $$\cos \alpha = \frac{2b}{\sqrt{4b^2+(a-c)^2}}, \quad \sin \alpha = \frac{a-c}{\sqrt{4b^2+(a-c)^2}}$$
+      <p>当 $b=0, a=c$ 时，$\alpha$ 为任意值。因为 $x$ 取遍所有实数值，所以</p>
+      <p>$f(x)$ 的最大值为 $\frac{1}{2}\left(a+c+\sqrt{4b^2+(a-c)^2}\right)$ ……（答）</p>
+      <p>$f(x)$ 的最小值为 $\frac{1}{2}\left(a+c-\sqrt{4b^2+(a-c)^2}\right)$ ……（答）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>等腰梯形的一个底边长为 $7a$，腰长为 $2a$。要使其面积最大，高应为多少？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设等腰梯形的高为 $h$，则 $0 < h \leqq 2a$。设上底长为 $7a$，只需考虑下底比上底长或相等的情况。下底长为</p>
+      $$7a + 2\sqrt{(2a)^2 - h^2} = 7a + 2\sqrt{4a^2 - h^2}$$
+      <p>将等腰梯形的面积设为关于 $h$ 的函数 $S(h)$，则</p>
+      $$S(h) = \frac{1}{2}\{7a + (7a + 2\sqrt{4a^2 - h^2})\}h = (7a + \sqrt{4a^2 - h^2})h$$
+      $$S'(h) = \frac{-h}{\sqrt{4a^2-h^2}}h + 7a + \sqrt{4a^2-h^2} = \frac{7a\sqrt{4a^2-h^2} + 4a^2 - 2h^2}{\sqrt{4a^2-h^2}}$$
+      <p>当 $S'(h)=0$ 时，$7a\sqrt{4a^2-h^2} = 2h^2 - 4a^2$。由此可知 $h \geqq \sqrt{2}a$，且</p>
+      $$49a^2(4a^2-h^2) = (2h^2-4a^2)^2 \implies 4h^4 + 33a^2h^2 - 180a^4 = 0$$
+      $$\therefore \quad (4h^2-15a^2)(h^2+12a^2) = 0$$
+      <table class="mini">
+        <tr><th>$h$</th><td>$(0)$</td><td>$\cdots$</td><td>$\frac{\sqrt{15}}{2}a$</td><td>$\cdots$</td><td>$2a$</td></tr>
+        <tr><td>$S'(h)$</td><td></td><td>$+$</td><td>$0$</td><td>$-$</td><td></td></tr>
+        <tr><td>$S(h)$</td><td></td><td>$\nearrow$</td><td></td><td>$\searrow$</td><td></td></tr>
+      </table>
+      <p>因此，使 $S(h)$ 最大的高为 $h = \frac{\sqrt{15}}{2}a$。 ……（答）</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>设等腰梯形的底角为 $\theta$，则高为 $2a \sin \theta$。设上底为 $7a$，则下底为 $7a + 4a \cos \theta$。</p>
+        <p>将面积设为关于 $\theta$ 的函数 $f(\theta)$，则</p>
+        $$f(\theta) = \frac{1}{2}\{7a + (7a + 4a \cos \theta)\} \cdot 2a \sin \theta = 2a^2(7 + 2\cos \theta)\sin \theta$$
+        $$f'(\theta) = 2a^2\{(-2\sin \theta)\sin \theta + (7 + 2\cos \theta)\cos \theta\} = 2a^2(4\cos^2 \theta + 7\cos \theta - 2) = 2a^2(4\cos \theta - 1)(\cos \theta + 2)$$
+        <p>设满足 $\cos \theta = \frac{1}{4}$ 且在 $0 < \theta < \frac{\pi}{2}$ 范围内的角为 $\alpha$，则</p>
+        <table class="mini">
+          <tr><th>$\theta$</th><td>$(0)$</td><td>$\cdots$</td><td>$\alpha$</td><td>$\cdots$</td><td>$(\frac{\pi}{2})$</td></tr>
+          <tr><td>$f'(\theta)$</td><td></td><td>$+$</td><td>$0$</td><td>$-$</td><td></td></tr>
+          <tr><td>$f(\theta)$</td><td></td><td>$\nearrow$</td><td></td><td>$\searrow$</td><td></td></tr>
+        </table>
+        <p>因此，当 $\theta=\alpha$ 时 $f(\theta)$ 取得最大值。此时，$\sin \alpha = \sqrt{1-\cos^2 \alpha} = \frac{\sqrt{15}}{4}$，故高为 $\frac{\sqrt{15}}{2}a$。 ……（答）</p>
+      </div>
+      <p class="note">（注1）当时，三角函数的微分、无理函数的微分在教科书中仅作为研究课题涉及，$x^\alpha$ 的微分仅限于 $\alpha$ 为整数且到 $-1$ 左右。因此上述两个解答在当时属于超纲内容。于是，将面积看作关于从下底顶点和上底顶点作垂线所得垂足间距离 $x = \sqrt{4a^2-h^2}$ 的函数 $S = (7a+x)\sqrt{4a^2-x^2}$，只有对 $S^2 = (7a+x)^2(4a^2-x^2)$ 关于 $x$ 求导等方法才行得通。<br>（注2）初等几何的方法是先放宽条件，考虑边长为 $2a, 7a, 2a$ 的四边形 ABCD 面积最大的情况。求 $AB=2a, BC=7a, CD=2a$ 的四边形面积最大的情况时，固定 $\angle C$ 移动 AB，当 $\angle ABD$ 为直角时面积最大；同样固定 $\angle B$ 移动 CD，当 $\angle ACD$ 为直角时面积最大。由此可知，若存在面积最大的情况，那便是 $\angle ABD, \angle ACD$ 均为直角的等腰梯形。因此在等腰梯形中，面积最大的也是 $\angle ABD, \angle ACD$ 为直角的情况。这仅仅只是必要条件而已，但如果不能轻易使用微积分法，或许这种解法也是被认可的吧。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>下图中的曲线 ACB 关于 $y$ 轴对称，在点 A、B 处与 $x$ 轴相切，且为 $x$ 的四次整式的图像。</p>
+    <ol class="q">
+      <li>求曲线 ACB 的方程。</li>
+      <li>求曲线 ACB 绕 $y$ 轴旋转一周所形成的立体体积。</li>
+    </ol>
+    <p><span class="figdesc">〔图：坐标系中一条开口向下的钟形曲线，顶点在 C$(0, 2a)$，两端与 $x$ 轴相切于 A$(-a, 0)$ 和 B$(a, 0)$〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(i) 因为在 $x=a$ 和 $x=-a$ 处与 $x$ 轴相切，且为四次式，所以设</p>
+      $$y = A(x-a)^2(x+a)^2$$
+      <p>因为经过点 $(0, 2a)$，所以 $2a = Aa^4$，由此得 $A = \frac{2}{a^3}$。因此，该曲线的方程为</p>
+      $$y = \frac{2}{a^3}(x-a)^2(x+a)^2 \quad \cdots(\text{答})$$
+      <p>(ii) 将此题理解为求曲线与 $x$ 轴围成的部分绕 $y$ 轴旋转所生成的立体体积。</p>
+      <p>由 $y = \frac{2}{a^3}(x^2-a^2)^2$ 且 $|x| \leqq a$ 得</p>
+      $$a^2-x^2 = \sqrt{\frac{a^3y}{2}} \implies x^2 = a^2 - \sqrt{\frac{a^3y}{2}}$$
+      <p>因此，所求体积为</p>
+      $$\pi \int_0^{2a} x^2\, dy = \pi \int_0^{2a} \left(a^2 - \sqrt{\frac{a^3}{2}}\, y^{\frac{1}{2}}\right) dy = \pi \left[a^2y - \frac{2}{3}\sqrt{\frac{a^3}{2}}\, y^{\frac{3}{2}}\right]_0^{2a}$$
+      $$= \pi \left(2a^3 - \frac{2}{3}\sqrt{\frac{a^3}{2}}\,(2a)^{\frac{3}{2}}\right) = \pi \left(2 - \frac{4}{3}\right)a^3 = \frac{2}{3}\pi a^3 \quad \cdots(\text{答})$$
+      <p class="note">（注）曲线本身旋转后体积应为 $0$。而且此曲线绕 $y$ 轴旋转后的形状并非闭合曲面，而是类似帽子的形状。若是绕 $x$ 轴旋转则会形成闭合曲面。最合理的理解是求与 $x$ 轴围成区域旋转后的体积，故按此进行了解答。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1954 年 · 几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>两圆 O、O' 交于点 A、B。过 A 的一条直线与圆 O、O' 分别再次交于 P、P'；过 B 且与该直线平行的直线与圆 O、O' 分别交于 Q、Q'。</p>
+    <ol class="q">
+      <li>证明四边形 $PQQ'P'$ 是平行四边形。</li>
+      <li>此平行四边形的面积在什么情况下最大？</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(i) 按 P、P' 关于 A 的位置（同侧/异侧）与 Q、Q' 关于 B 的位置分四种情形讨论（原图给出三个图）：</p>
+      <p>(a) 当 P、P' 位于 A 的异侧，且 Q、Q' 位于 B 的异侧时（〔图：左图〕），由圆内接四边形对角互补的性质可知 $\angle APQ$ 与 $\angle ABQ'$ 相等。又因为 $\angle ABQ'$ 与 $\angle AP'Q'$ 是圆内接四边形的对角，故互补。所以 $\angle APQ$ 与 $\angle AP'Q'$ 互补。由于 $\angle APQ$ 与 $\angle AP'Q'$ 是直线 PP' 的同旁内角，故 $PQ \parallel P'Q'$。又已知 $PP' \parallel QQ'$，因此四边形 $PQQ'P'$ 是平行四边形。</p>
+      <p>(b) 当 P、P' 位于 A 的异侧，且 Q、Q' 位于 B 的同侧时（〔图：中图〕），由圆内接四边形对角互补的性质可知 $\angle APQ$ 与 $\angle ABQ'$ 互补。又因为 $\angle ABQ'$ 与 $\angle AP'Q'$ 是同弧所对的圆周角，故相等。所以 $\angle APQ$ 与 $\angle AP'Q'$ 互补，从而 $PQ \parallel P'Q'$，四边形 $PQQ'P'$ 是平行四边形。</p>
+      <p>(c) 当 P、P' 位于 A 的同侧，且 Q、Q' 位于 B 的异侧时，同 (b) 可证四边形 $PQQ'P'$ 是平行四边形。</p>
+      <p>(d) 当 P、P' 位于 A 的同侧，且 Q、Q' 位于 B 的同侧时（〔图：右图〕），由同弧所对圆周角的性质可知 $\angle APQ$ 与 $\angle ABQ'$ 相等，$\angle ABQ'$ 与 $\angle AP'Q'$ 是同弧所对的圆周角，故相等。所以 $\angle APQ$ 与 $\angle AP'Q'$ 相等，由于二者是直线 PP' 的同位角，故 $PQ \parallel P'Q'$，四边形 $PQQ'P'$ 是平行四边形。</p>
+      <p>综上所述，四边形 $PQQ'P'$ 是平行四边形。（证明完毕）</p>
+      <p>(ii) 固定圆 O 的弦 AB，考虑以 AB 为底且内接于圆 O 的等腰梯形。设 $\angle OBA = \alpha$，$\angle BAP = \theta$，则 $\angle OAP = \theta - \alpha$，$\angle OBQ = (\pi - \theta) - \alpha = \pi - \alpha - \theta$。设圆 O 的半径为 $r$，</p>
+      $$\text{梯形 } ABQP = \triangle OAB + \triangle OPQ + \triangle OAP + \triangle OBQ$$
+      <p>因为 AB 是定长弦，所以 $\alpha$ 是定值，从而 $\triangle OAB = \triangle OPQ$ 也是定值。</p>
+      $$\triangle OAP + \triangle OBQ = \frac{r^2}{2} \cdot 2\sin(\theta-\alpha)\cos(\theta-\alpha) + \frac{r^2}{2} \cdot 2\sin(\pi-\alpha-\theta)\cos(\pi-\alpha-\theta)$$
+      $$= \frac{r^2}{2}\sin 2(\theta-\alpha) - \frac{r^2}{2}\sin 2(\theta+\alpha) = -r^2\cos 2\theta\sin 2\alpha$$
+      <p>当 $\alpha$ 为定值、变动 $\theta$ 时，若 $2\theta = \pi$ 即 $\theta = \frac{\pi}{2}$ 时，梯形 ABQP 的面积取最大值。同理，梯形 ABQ'P' 取最大值时也是 $\theta = \frac{\pi}{2}$ 的时候。当两个梯形都取最大值时，A、P、P' 以及 B、Q、Q' 共线，此时平行四边形 $PQQ'P'$ 的面积也达到最大，且满足 $AB \perp PP'$。</p>
+      <p>这个平行四边形面积最大的条件是 $PP' \perp AB$。 ……(答)</p>
+      <p class="note">（注1）(i) 的情形严格来说还有 $P=A, P'=A, Q=B$ 或 $Q'=B$ 的情况，但这并无本质区别，只会使讨论变得繁琐，故省略。<br>（注2）(ii) 中的四边形 APQB 包含了 P、Q 位于 AB 异侧的情况。从图形上看，这些情况下的 APQB 是扭歪四边形（蝴蝶形），计算导出的「面积」实际上是构成该四边形的两个三角形面积之差，但将其直接用于求平行四边形面积也能得到正确结果，且该差值显然小于最大面积，故直接应用了公式。<br>（注3）(ii) 中平行四边形 $PQQ'P'$ 面积的最大值是 $\triangle AOO'$ 面积的 8 倍。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>平面上给定一点 A 和不过该点的直线 g。在此平面上取一点 P，设 P 到 g 的垂足为 Q。求满足 $AP:AQ$ 为定值的点 P 的轨迹，并画出其图形。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>取坐标系使 g 为 $x$ 轴、A 在 $y$ 轴上。设 A 的坐标为 $(0, a)$。设 P 的坐标为 $(X, Y)$，则 Q 的坐标为 $(X, 0)$。</p>
+      <p>令 $AP:AQ = k:1$，则</p>
+      $$k^2(X^2+a^2) = X^2+(Y-a)^2, \quad \therefore \quad (1-k^2)X^2+(Y-a)^2 = k^2a^2$$
+      <p>这是中心在 A 的二次曲线。</p>
+      <p>(i) 当 $0 < k < 1$ 时，是椭圆</p>
+      $$\frac{x^2}{\left(\frac{ka}{\sqrt{1-k^2}}\right)^2} + \frac{(y-a)^2}{(ka)^2} = 1$$
+      <p>这是一个横长椭圆，半长轴为 $\frac{ka}{\sqrt{1-k^2}}$，半短轴为 $ka$。</p>
+      <p>(ii) 当 $k=1$ 时，变为两条平行直线 $y=0, y=2a$。（其中一条是 g，另一条是关于点 A 与 g 对称的直线。）</p>
+      <p>(iii) 当 $k > 1$ 时，是双曲线</p>
+      $$-\frac{x^2}{\left(\frac{ka}{\sqrt{k^2-1}}\right)^2} + \frac{(y-a)^2}{(ka)^2} = 1$$
+      <p>这是一个主轴为 $y$ 轴、渐近线为 $y = \pm\sqrt{k^2-1}\,x + a$ 的双曲线。汇总图示如下。</p>
+      <p><span class="figdesc">〔图：展示不同 $k$ 值对应的椭圆、平行直线与双曲线族〕</span> ……(答)</p>
+      <p class="note">（注）当 $0 < k < 1$ 时，焦点为 $\left(\pm\frac{ak^2}{\sqrt{1-k^2}}, a\right)$，准线为 $x = \pm\frac{a}{\sqrt{1-k^2}}$，离心率为 $k$。当 $k > 1$ 时，焦点为 $\left(0, a\pm\frac{ak^2}{\sqrt{k^2-1}}\right)$，准线为 $y = a \pm a\sqrt{k^2-1}$，离心率为 $\frac{k}{\sqrt{k^2-1}}$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>在空间中，求到 3 个定点 A、B、C 的距离平方和为定值的点的轨迹。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>考虑满足 $AP^2+BP^2+CP^2=k^2$ 的点 P 的轨迹。设 AB 的中点为 M，由中线定理得</p>
+      $$PA^2+PB^2 = 2AM^2+2PM^2$$
+      <p>于是</p>
+      $$PA^2+PB^2+PC^2 = 2AM^2+2PM^2+PC^2$$
+      <p>设 G 为线段 MC 按 $1:2$ 内分的点，H 为 P 向直线 MC 所作垂线的垂足，将 GC、GH、GM 视为从 C 指向 M 方向的有向线段长度，则</p>
+      $$2PM^2+PC^2 = 3PH^2+2MH^2+CH^2 = 3PH^2+2(GH-GM)^2+(GC-GH)^2$$
+      $$= 3PH^2+3GH^2-2GH(2GM+GC)+2GM^2+GC^2 = 3PG^2+\frac{3}{2}GC^2$$
+      <p>（因为 $2GM+GC=0$，$GM^2=\frac{1}{4}GC^2$。）再由中线定理，</p>
+      $$AG^2+BG^2 = 2GM^2+2AM^2 = \frac{1}{2}GC^2+2AM^2$$
+      <p>从而</p>
+      $$PA^2+PB^2+PC^2 = 2AM^2+3PG^2+\frac{3}{2}GC^2 = 3PG^2+AG^2+BG^2+GC^2$$
+      <p>于是</p>
+      $$PG^2 = \frac{1}{3}(k^2-AG^2-BG^2-CG^2) = (\text{常数})$$
+      <p>成立。</p>
+      <p>当 $k > \sqrt{AG^2+BG^2+CG^2}$ 时，P 的轨迹是以 $\triangle ABC$ 的重心（广义）G 为中心的球面；当 $k = \sqrt{AG^2+BG^2+CG^2}$ 时，P 的轨迹是一个点 G；当 $k < \sqrt{AG^2+BG^2+CG^2}$ 时，P 的轨迹不存在。 ……(答)</p>
+      <p class="note">（注1）即使仅由 $k^2=2AM^2+3PG^2+\frac{3}{2}GC^2$ 也能看出 P 描绘出以 G 为中心的球面（点或虚球面）。解答的最后一步变形是为了让对称性更明显。<br>（注2）使用向量可以更自然地导出 G 为中心这一结论（当时向量尚未进入教科书）：
+      $$|\vec{AP}|^2+|\vec{BP}|^2+|\vec{CP}|^2 = |\vec{AP}|^2+|\vec{AP}-\vec{AB}|^2+|\vec{AP}-\vec{AC}|^2 = 3|\vec{AP}|^2-2(\vec{AB}+\vec{AC})\cdot\vec{AP}+|\vec{AB}|^2+|\vec{AC}|^2$$
+      此处取满足 $\frac{1}{3}(\vec{AB}+\vec{AC})=\vec{AG}$ 的点 G，则 G 是 $\triangle ABC$ 的重心（广义），代入整理得
+      $$|\vec{AP}|^2+|\vec{BP}|^2+|\vec{CP}|^2 = 3|\vec{GP}|^2+|\vec{GA}|^2+|\vec{GB}|^2+|\vec{GC}|^2$$
+      <br>（注3）本题中并未规定 A、B、C 三点的位置关系，故包含三点共线的情况。即使在这种情况下，将 AB 的中点 M 与 MC 按 $1:2$ 内分的点 G 依然存在。因此我们将包含这种情况在内的 G 称为 $\triangle ABC$ 的重心（广义）。</p>
+    </div>
+  </details>
+</section>
+
+<div class="column-box">
+  <div class="c-title">专栏 · 最大能打出多少个孔？</div>
+  <p>「从边长为 $1\,\mathrm{m}$ 的正方形铁板中，尽可能多地冲出直径为 $10\,\mathrm{cm}$ 的圆板。问至少能冲出多少个？」</p>
+  <p>这是 1949 年名古屋工业大学的问题（数值略有改动）。当然，冲出 100 个很容易想象。当时 O 社的答案是「105 个」，并回答「我认为这是最多的」。然而，实际上可以冲出 106 个（请思考是怎样的方法）。因此，若是我会回答「我认为 106 个是最大的」。但是，要证明这是最大值，就必须说明无法冲出 107 个。那个证明似乎极其困难。</p>
+  <p>题面说的是「至少多少个」，所以从恶作剧的角度来说，答 1 个应该也是对的。作为入学考试，大概可以根据是否能给出 100 个以上的个数来评分吧。我觉得这是个有趣时代的一道有趣的题目。</p>
+</div>
+
+<h3 class="subject">1954 年 · 一般数学</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>半径等于弧长的圆心角称为 1 弧度。因此 1 弧度是 $\frac{180}{\pi}$ 度。将 $\pi = 3.1415926\cdots$ 用尽量少的位数四舍五入，计算 1 弧度的近似值，并使误差在 30 秒以下。$\pi$ 的近似值取多少合适？</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1 弧度是 $\frac{180}{\pi}$ 度；相对于此，30 秒 $= \frac{1}{2 \times 60} = \frac{1}{120}$ 度是 $\frac{\pi}{180 \times 120} = \frac{\pi}{21600} \fallingdotseq \frac{1}{7200}$ 的比例。</p>
+      <p>因此，只需考虑对 $\pi$ 的误差不超过 $\frac{1}{2400}$。</p>
+      <p>若取到 $3.142$，误差为 $0.00040\cdots \fallingdotseq \frac{1}{2500}$，勉强在误差范围内。</p>
+      <p>由上可知，取 $\pi$ 为 $3.142$ 或更精确的近似值即可。 …(答)</p>
+      <p class="note">（注）这里所说的「秒」不是时间单位而是角度单位，即 60 秒 $=$ 1 分，60 分 $=$ 1 度。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>从 4 个班级各选出 3 名选手，将这 12 人分成每组 4 人的 3 组进行接力赛跑。</p>
+    <ol class="q">
+      <li>当同班选手不编在同一组时，有多少种分组方式？</li>
+      <li>任意分组时，有多少种分组方式？</li>
+      <li>在 (ii) 的情况下，特定的 2 人在同一组的概率是多少？</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>(i) 只要决定各班级的 3 人以何种顺序参加赛跑即可，所以分组数为</p>
+      $$(3!)^4 = 1296 \text{ 种。} \quad \dots (\text{答})$$
+      <p>(ii) 从 12 人中选 4 人，再从剩下的 8 人中选 4 人，于是有</p>
+      $${}_{12}C_4 \cdot {}_8C_4 = \frac{12 \cdot 11 \cdot 10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5}{4 \cdot 3 \cdot 2 \cdot 1 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = 34650 \text{ 种。} \quad \dots (\text{答})$$
+      <p>(iii) 包含特定 2 人的组有 3 种可能。该组另外 2 人有 ${}_{10}C_2$ 种选法，剩下两组是从 8 人中选 4 人，故有 ${}_8C_4$ 种。于是，所求概率为</p>
+      $$\frac{3 \times {}_{10}C_2 \cdot {}_8C_4}{{}_{12}C_4 \cdot {}_8C_4} = \frac{3 \times {}_{10}C_2}{{}_{12}C_4} = \frac{3}{11}. \quad \dots (\text{答})$$
+      <div class="alt"><strong>【别解】（iii）</strong>
+        <p>特定 1 人所在的组已经确定。另 1 人是成为特定 1 人所在组剩余 3 人中的一个，还是成为剩余两组的 8 人中的 1 人，二者必居其一。于是，特定 2 人在同一组的概率是</p>
+        $$\frac{3}{3+8} = \frac{3}{11}. \quad \dots (\text{答})$$
+      </div>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>下图是处于某位置的立方体的平面图。ABCDEF 是正六边形，边 BC、EF 垂直于基线 l。</p>
+    <ol class="q">
+      <li>画出这个立方体的立面图。</li>
+      <li>如果 AB 在图上的长度为 $a$，棱长和对角线的实际长度分别是多少？</li>
+    </ol>
+    <p><span class="figdesc">〔图：正六边形 ABCDEF，中心与各顶点相连，对角线 AD、BE、CF 为虚线，上方有一条水平直线标为 l〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>「棱」即边的意思。</p>
+      <p>(i) 由平面图的对称性可知，A、C、E 以及 B、D、F 各自在同一高度。由此，AC 为实长，以 AC 为对角线的正方形的边长即为 AB 的实际长度。此外，以 AB 的实际长度和对角线 BD 的实际长度为两边的长方形的对角线长度，即为立方体对角线的实际长度。以此作为高度，将高度三等分的位置上有 A、C、E 和 B、D、F。宽度与平面图相同。</p>
+      <p><span class="figdesc">〔图：上图为立面图（顶点标有 A, B, C, D, E, F 的菱形排列），下图为正六边形平面图〕</span></p>
+      <p>(ii) 因为 AB 在平面图上的长度为 $a$，正六边形由边长为 $a$ 的正三角形组成，其高为 $\frac{\sqrt{3}}{2}a$。这个值的 2 倍 $\sqrt{3}a$ 就是正方形（立面）对角线的实际长度。于是，正方形的 1 边即立方体的 1 条棱长为 $\frac{\sqrt{3}a}{\sqrt{2}} = \frac{\sqrt{6}}{2}a$。 …(答)</p>
+      <p>立方体对角线的长度是以 $\sqrt{3}a$ 与 $\frac{\sqrt{3}}{\sqrt{2}}a$ 为两边的长方形的对角线长度，即</p>
+      $$\sqrt{(\sqrt{3}a)^2 + \left(\frac{\sqrt{3}}{\sqrt{2}}a\right)^2} = \frac{3}{2}\sqrt{2}\,a. \quad \dots (\text{答})$$
+      <p class="note">（注）关于投影图参见 1974 年理科第 3 问的（注）。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>译本范围：原书第 1 章 1.2 节「第 1 次指导要领修订（1951 年）」所收 1951–1954 年全部试题与解答（PDF 第 45–96 页，共 48 题，另附专栏 1 篇）。</p>
+  <p>翻译方式：原书扫描页逐页视觉识别 → 数学公式转写 LaTeX → 中文翻译；公式由 KaTeX 渲染。</p>
+  <p>上接《东京大学数学入试_1949-1950_中文译本.html》；后续年份（1955 起，原书 1.3 节）可按同格式续译。</p>
+</footer>
+
+</div>
+</body>
+</html>
