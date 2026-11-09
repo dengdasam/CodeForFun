@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>宁波十区县 · 落户定居全景对比</title>
+<style>
+:root{
+  --ink:#191817; --ink2:#565049; --ink3:#8b847b;
+  --bg:#f4f2ee; --card:#ffffff; --line:#e7e3dc; --soft:#faf9f6;
+  --rose:#8f4e57; --clay:#b5834a; --sage:#4e7a70; --rust:#a8503f;
+  --rose-bg:#f7ecee; --sage-bg:#f1f7f5; --rust-bg:#fbf1ef; --clay-bg:#f8f2e9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px;margin:0 auto;padding:30px 18px 64px}
+
+/* ---------- 头部 ---------- */
+.head{margin-bottom:26px}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;margin-bottom:12px}
+.eyebrow b{color:var(--rose);font-weight:600;letter-spacing:.1em}
+h1{font-family:Georgia,"Songti SC",serif;font-size:34px;line-height:1.3;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:14px;margin:0 0 14px}
+.meta{font-size:12px;color:var(--ink3);border-top:1px solid var(--line);padding-top:12px;display:flex;flex-wrap:wrap;gap:6px 18px}
+.meta span{white-space:nowrap}
+
+/* ---------- 卡片 ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px 26px;margin-bottom:18px}
+.card.tight{padding:20px 22px}
+h2{font-size:17px;margin:0 0 4px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+h2 .num{font-size:11px;font-weight:600;color:#fff;background:var(--ink);border-radius:3px;padding:1px 6px;letter-spacing:.06em;transform:translateY(-2px)}
+.lead{font-size:13px;color:var(--ink3);margin:0 0 18px}
+h3{font-size:14px;margin:22px 0 10px;font-weight:700}
+h3:first-child{margin-top:0}
+p{margin:0 0 13px}
+p:last-child{margin-bottom:0}
+strong{font-weight:700}
+.hl{background:linear-gradient(transparent 62%,#f3dfc4 62%);padding:0 1px}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;border-radius:3px;padding:1px 6px;line-height:16px;white-space:nowrap}
+.t-best{background:var(--sage-bg);color:var(--sage)}
+.t-value{background:var(--rose-bg);color:var(--rose)}
+.t-mid{background:var(--clay-bg);color:var(--clay)}
+.t-no{background:var(--rust-bg);color:var(--rust)}
+
+/* ---------- KPI ---------- */
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:18px}
+.kpi div{background:var(--card);padding:16px 14px}
+.kpi .v{font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .v small{font-size:12px;font-weight:600;color:var(--ink3);margin-left:3px;letter-spacing:0}
+.kpi .l{font-size:11.5px;color:var(--ink3);margin-top:5px;line-height:1.5}
+.kpi .v.rose{color:var(--rose)} .kpi .v.sage{color:var(--sage)}
+
+/* ---------- 表格 ---------- */
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:820px}
+th,td{padding:8px 7px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+thead th{font-size:11px;color:var(--ink3);font-weight:600;border-bottom:1.5px solid var(--ink);cursor:pointer;user-select:none}
+thead th:hover{color:var(--rose)}
+thead th.nosort{cursor:default}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--soft)}
+tbody tr.top3{background:#fbfaf7}
+td.n{font-variant-numeric:tabular-nums}
+td.nm{font-weight:700}
+.up{color:var(--sage)} .down{color:var(--rust)}
+.mut{color:var(--ink3)}
+.score{font-weight:700;color:var(--rose);font-variant-numeric:tabular-nums}
+
+/* ---------- 权重切换 ---------- */
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--soft);margin-bottom:12px}
+.seg button{border:0;border-right:1px solid var(--line);background:transparent;color:var(--ink2);padding:6px 12px;font-size:12px;cursor:pointer;transition:.14s;font-family:inherit}
+.seg button:last-child{border-right:0}
+.seg button:hover{background:#fff}
+.seg button.on{background:var(--rose);color:#fff;font-weight:600}
+.wlabel{font-size:11.5px;color:var(--ink3);margin:0 0 14px;line-height:1.6}
+
+/* ---------- 提示块 ---------- */
+.note-box{border-left:3px solid var(--ink);background:var(--soft);padding:14px 16px;font-size:13px;color:var(--ink2);border-radius:0 6px 6px 0;margin:14px 0}
+.note-box.warn{border-left-color:var(--rust);background:var(--rust-bg)}
+.note-box.good{border-left-color:var(--sage);background:var(--sage-bg)}
+.note-box.rose{border-left-color:var(--rose);background:var(--rose-bg)}
+.note-box b{color:var(--ink)}
+.note-box p{margin:0 0 8px}
+.note-box p:last-child{margin:0}
+ol.pts{margin:0;padding-left:20px}
+ol.pts li{margin-bottom:12px;font-size:13.5px;color:var(--ink2)}
+ol.pts li b{color:var(--ink)}
+
+/* ---------- 散点 ---------- */
+.scatter{width:100%;height:auto;display:block;margin:2px 0 4px}
+.sc-cap{font-size:11px;color:var(--ink3);text-align:center;margin-bottom:18px;line-height:1.7}
+
+/* ---------- 建议档位 ---------- */
+.tiers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tier{border:1px solid var(--line);border-radius:8px;padding:14px 15px;position:relative;overflow:hidden}
+.tier::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:currentColor}
+.tier.best{color:var(--sage)} .tier.value{color:var(--rose)}
+.tier.mid{color:var(--clay)} .tier.no{color:var(--rust)}
+.tier .th{font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.tier .tn{font-size:11px;color:currentColor;font-weight:600;margin-bottom:8px}
+.tier .tx{font-size:12px;color:var(--ink2);line-height:1.7}
+
+/* ---------- 结论 ---------- */
+.final{background:var(--ink);color:#f4f2ee;border-radius:10px;padding:24px 26px;margin-bottom:18px}
+.final h2{color:#fff;margin-bottom:12px}
+.final h2 .num{background:#f4f2ee;color:var(--ink)}
+.final p{font-size:13.5px;color:#ded7cf;margin-bottom:11px;line-height:1.85}
+.final p:last-child{margin-bottom:0}
+.final b{color:#fff}
+.final .big{font-size:16px;color:#e8c9a0;font-weight:700}
+
+.foot{font-size:11.5px;color:var(--ink3);line-height:1.85;padding:0 4px}
+.foot b{color:var(--ink2)}
+.foot ol{padding-left:18px;margin:6px 0}
+
+@media(max-width:720px){
+  h1{font-size:25px}
+  .card,.final{padding:18px 16px}
+  .kpi{grid-template-columns:1fr 1fr}
+  .tiers{grid-template-columns:1fr}
+  table{font-size:12px}
+}
+@media print{
+  body{background:#fff}
+  .seg{display:none}
+  .card,.final{break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="eyebrow"><b>城经笔记</b> · 数据卡</div>
+    <h1>宁波十区县 · 落户定居全景</h1>
+    <p class="sub">6 区 + 2 县 + 2 县级市，2025 官方统计 × 2026 房价 × 现行落户口径</p>
+    <div class="meta">
+      <span>数据：宁波市统计局 2025 年公报与 12 月进度数据</span>
+      <span>房价：中国房价行情（禧泰）2026-10，幸福里/房天下交叉验证</span>
+      <span>落户：甬政办发〔2023〕53 号</span>
+      <span>制卡：2026-11-09</span>
+    </div>
+  </div>
+
+  <div class="kpi">
+    <div><div class="v">10<small>个</small></div><div class="l">区 / 县 / 县级市，全域 GDP 破千亿</div></div>
+    <div><div class="v">983.3<small>万</small></div><div class="l">常住人口，一年净增 5.6 万</div></div>
+    <div><div class="v rose">18,715.7<small>亿</small></div><div class="l">2025 GDP，全国第 11 位</div></div>
+    <div><div class="v sage">85.3<small>%</small></div><div class="l">全市财政自给率，区间 64.5%–116.4%</div></div>
+  </div>
+
+  <!-- 01 落户 -->
+  <div class="card">
+    <h2><span class="num">01</span>先把落户定死：三条路都不查宁波社保</h2>
+    <p class="lead">现行依据是《宁波市人民政府办公厅关于进一步放宽我市户口准入条件的通知》（甬政办发〔2023〕53 号，2023-11-24 施行）。</p>
+    <div class="tscroll">
+    <table style="min-width:640px">
+      <thead><tr><th class="nosort" style="text-align:left">路径</th><th class="nosort" style="text-align:left">条件</th><th class="nosort" style="text-align:left">落到哪</th><th class="nosort">要宁波社保</th></tr></thead>
+      <tbody>
+        <tr><td class="nm">居住落户（买房）</td><td style="text-align:left">市区城镇有合法稳定住所，房主同意</td><td style="text-align:left">自己房产，最干净</td><td class="up">否</td></tr>
+        <tr><td class="nm">人才落户</td><td style="text-align:left">全日制高校毕业 20 年内、有意愿来甬就业</td><td style="text-align:left">人才服务机构集体户 / 亲友处</td><td class="up">否</td></tr>
+        <tr><td class="nm">租赁落户</td><td style="text-align:left">同一区租成套住宅满 1 年 + 市区无房 + 居住证</td><td style="text-align:left">社区公共集体户</td><td class="up">否</td></tr>
+        <tr><td class="nm mut">就业 / 投资创业落户</td><td style="text-align:left">市区稳定就业并参保满 6–12 个月</td><td style="text-align:left">单位或社区集体户</td><td class="down">是</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note-box good">
+      <p><b>宁波公安 2024-06-13 政策直播原话：</b>"人才类落户对居住登记时间和社保缴纳年限都不作要求。"2026 年 2、3、5、9 月四次民生 e 点通答复，租赁落户材料清单也只有户口簿、身份证、租赁备案证明、浙江省居住证。</p>
+      <p>2016 年全日制本科毕业 → 2026 年是第 10 年，<b>仍在 20 年内</b>，人才落户可用。</p>
+    </div>
+    <div class="note-box warn">
+      <p><b>边界一：</b>53 号文的"市区"仅指海曙、江北、北仑、镇海、鄞州、奉化<strong>六区</strong>。慈溪、余姚、宁海、象山是县和县级市，另按各市县政策办（2019 年 54 号文规定宁海、象山不得设社保与居住年限，反而更松，但须到窗口确认）。</p>
+      <p><b>边界二：</b>落户 ≠ 社保转移。养老退休地仍按"社保缴在哪、满 10 年"判定，锁广东 9,493 计发基数；医保按广州参保地政策，在宁波就医走跨省异地结算。此前聊到的"毕业十年内已过"是购房/安家<strong>补贴</strong>类文件口径，不是落户，别混。</p>
+    </div>
+  </div>
+
+  <!-- 02 总表 -->
+  <div class="card">
+    <h2><span class="num">02</span>十区县市硬数据总表</h2>
+    <p class="lead">默认按 2025 GDP 官方排名。点权重预设可按 9 维度综合分重排，前三名高亮。</p>
+    <div class="seg" id="seg">
+      <button data-w="gdp" class="on">GDP 官方排名</button>
+      <button data-w="balance">综合均衡</button>
+      <button data-w="asset">资产安全优先</button>
+      <button data-w="life">生活便利优先</button>
+    </div>
+    <p class="wlabel" id="wlabel">当前：按 2025 年 GDP 总量降序（宁波市统计局口径）。收入为 2025 年上半年全体居民人均可支配收入。</p>
+    <div class="tscroll">
+    <table id="mainTable">
+      <thead><tr>
+        <th class="nosort">#</th><th data-k="n" class="nosort" style="text-align:left">地区</th>
+        <th data-k="gdp">GDP<br>亿元</th><th data-k="gr">增速<br>%</th>
+        <th data-k="pop">常住<br>万人</th><th data-k="inc">年增<br>万人</th>
+        <th data-k="income">收入<br>元</th><th data-k="price">房价<br>元/㎡</th>
+        <th data-k="fis">财政<br>自给率</th><th data-k="hosp">三甲<br>家</th>
+        <th data-k="score">综合分</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    </div>
+    <div class="note-box">
+      <p><b>9 维度打分口径：</b>房价（低好）、财政自给率、居民收入、人口增量率、三甲数、轨交覆盖、商品房销售面积增速、GDP 增速、库存风险（低好）。各维度 min-max 归一化后加权，满分 100。权重是决策偏好，不是官方评价。</p>
+      <p><b>轨交赋值：</b>3 = 核心多线换乘（鄞州）；2 = 核心双线（海曙、江北）；1 = 单线或市域线（北仑、镇海、奉化、慈溪 10 号线在建、象山 12 号线已通）；0 = 暂无（余姚、宁海）。</p>
+    </div>
+  </div>
+
+  <!-- 03 象限 -->
+  <div class="card">
+    <h2><span class="num">03</span>房价 × 财政自给率：便宜的地方往往财政也弱</h2>
+    <p class="lead">横轴为 2026-10 二手房挂牌均价，纵轴为 2025 年一般公共预算收入 ÷ 支出。虚线为全市基准。</p>
+    <svg class="scatter" viewBox="0 0 680 380" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title>宁波10个区县市二手房均价与财政自给率散点象限图</title>
+      <desc>江北、鄞州、海曙、北仑位于强财政区；奉化、宁海、象山位于弱财政区。北仑是唯一低价且强财政的区县。</desc>
+      <text x="80" y="30" font-size="13" fill="#191817" font-family="sans-serif">财政自给率 ↑ / 二手房均价 →</text>
+      <line x1="80" y1="60" x2="80" y2="320" stroke="#c9c3b9" stroke-width=".8"/>
+      <line x1="80" y1="320" x2="620" y2="320" stroke="#c9c3b9" stroke-width=".8"/>
+      <line x1="80" y1="60" x2="620" y2="60" stroke="#e7e3dc" stroke-width=".8" stroke-dasharray="3 4"/>
+      <line x1="80" y1="146.7" x2="620" y2="146.7" stroke="#e7e3dc" stroke-width=".8" stroke-dasharray="3 4"/>
+      <line x1="80" y1="233.3" x2="620" y2="233.3" stroke="#e7e3dc" stroke-width=".8" stroke-dasharray="3 4"/>
+      <line x1="366.8" y1="60" x2="366.8" y2="320" stroke="#8b847b" stroke-width=".8" stroke-dasharray="6 4"/>
+      <line x1="80" y1="210.4" x2="620" y2="210.4" stroke="#8b847b" stroke-width=".8" stroke-dasharray="6 4"/>
+      <text x="74" y="64" text-anchor="end" font-size="11" fill="#8b847b" font-family="sans-serif">120%</text>
+      <text x="74" y="150.7" text-anchor="end" font-size="11" fill="#8b847b" font-family="sans-serif">100%</text>
+      <text x="74" y="237.3" text-anchor="end" font-size="11" fill="#8b847b" font-family="sans-serif">80%</text>
+      <text x="74" y="324" text-anchor="end" font-size="11" fill="#8b847b" font-family="sans-serif">60%</text>
+      <text x="117" y="336" text-anchor="middle" font-size="11" fill="#8b847b" font-family="sans-serif">10,000</text>
+      <text x="303" y="336" text-anchor="middle" font-size="11" fill="#8b847b" font-family="sans-serif">15,000</text>
+      <text x="490" y="336" text-anchor="middle" font-size="11" fill="#8b847b" font-family="sans-serif">20,000</text>
+      <text x="350" y="358" text-anchor="middle" font-size="12" fill="#565049" font-family="sans-serif">二手房均价（元/㎡，2026 年 10 月）</text>
+      <text x="372" y="204" font-size="11" fill="#8b847b" font-family="sans-serif">全市自给率 85.3%</text>
+      <text x="372" y="74" font-size="11" fill="#8b847b" font-family="sans-serif">全市均价 16,702</text>
+      <text x="90" y="76" font-size="11" fill="#4e7a70" font-family="sans-serif">低价 · 强财政</text>
+      <text x="610" y="180" text-anchor="end" font-size="11" fill="#4e7a70" font-family="sans-serif">高价 · 强财政</text>
+      <text x="90" y="280" font-size="11" fill="#a8503f" font-family="sans-serif">低价 · 弱财政</text>
+      <circle cx="577.7" cy="75.6" r="6" fill="#4e7a70" stroke="#fff" stroke-width="1.5"/>
+      <text x="567" y="79" text-anchor="end" font-size="12" fill="#191817" font-family="sans-serif">江北 116%</text>
+      <circle cx="580" cy="126.7" r="6" fill="#4e7a70" stroke="#fff" stroke-width="1.5"/>
+      <text x="570" y="130" text-anchor="end" font-size="12" fill="#191817" font-family="sans-serif">鄞州 105%</text>
+      <circle cx="395.2" cy="127.6" r="6" fill="#4e7a70" stroke="#fff" stroke-width="1.5"/>
+      <text x="385" y="131" text-anchor="end" font-size="12" fill="#191817" font-family="sans-serif">海曙 104%</text>
+      <circle cx="257.3" cy="91.7" r="7" fill="#8f4e57" stroke="#fff" stroke-width="1.5"/>
+      <text x="269" y="95" font-size="12" fill="#8f4e57" font-family="sans-serif" font-weight="700">北仑 113% ★</text>
+      <circle cx="299.7" cy="161" r="6" fill="#8b847b" stroke="#fff" stroke-width="1.5"/>
+      <text x="311" y="165" font-size="12" fill="#191817" font-family="sans-serif">慈溪 97%</text>
+      <circle cx="224.6" cy="194.8" r="6" fill="#8b847b" stroke="#fff" stroke-width="1.5"/>
+      <text x="236" y="198" font-size="12" fill="#191817" font-family="sans-serif">余姚 89%</text>
+      <circle cx="332.6" cy="205.2" r="6" fill="#8b847b" stroke="#fff" stroke-width="1.5"/>
+      <text x="344" y="209" font-size="12" fill="#191817" font-family="sans-serif">镇海 87%</text>
+      <circle cx="105.7" cy="257.6" r="6" fill="#a8503f" stroke="#fff" stroke-width="1.5"/>
+      <text x="117" y="261" font-size="12" fill="#a8503f" font-family="sans-serif">奉化 74%</text>
+      <circle cx="259" cy="293.1" r="6" fill="#a8503f" stroke="#fff" stroke-width="1.5"/>
+      <text x="271" y="290" font-size="12" fill="#a8503f" font-family="sans-serif">宁海 66%</text>
+      <circle cx="220.8" cy="300.5" r="6" fill="#a8503f" stroke="#fff" stroke-width="1.5"/>
+      <text x="210" y="304" text-anchor="end" font-size="12" fill="#a8503f" font-family="sans-serif">象山 65%</text>
+    </svg>
+    <p class="sc-cap">财政自给率 = 2025 年一般公共预算收入 ÷ 一般公共预算支出（宁波市统计局分区数据）。房价为挂牌均价，不同平台口径差 20%–40%，此处只用于相对排序。</p>
+    <div class="note-box rose">
+      <p><b>图上唯一的异常值是北仑。</b>13,761 元/㎡ 配 46,070 元半年收入、112.7% 财政自给率、+1.2 万人口增量、+10% 固投（全市唯一正增长）。它便宜不是因为衰败，是因为港区与重化工压住了居住溢价。</p>
+    </div>
+  </div>
+
+  <!-- 04 反直觉 -->
+  <div class="card">
+    <h2><span class="num">04</span>四条反直觉</h2>
+    <ol class="pts">
+      <li><b>人均 GDP 在宁波是失真的。</b>北仑 34.4 万、镇海 29.7 万，看着远富过鄞州 18.6 万，其实是镇海炼化、北仑港与石化这类资本密集产值堆出来的。落到居民口袋，2025 上半年反而是<span class="hl">鄞州 49,685 &gt; 海曙 47,946 &gt; 江北 47,409 &gt; 镇海 46,684 &gt; 北仑 46,070</span>。判断宜居看收入，不看 GDP。</li>
+      <li><b>财政自给率决定十年后的配套。</b>江北 116.4%、北仑 112.7%、鄞州 104.6%、海曙 104.4% 自己养得起自己；象山 64.5%、宁海 66.2%、奉化 74.4% 靠转移支付，学校、医院、道路的追加投入弹性很小。全市均值 85.3%。</li>
+      <li><b>最便宜的三个地方，恰恰最不能买。</b>奉化新建商品住宅可售 128.1 万㎡、占市六区 35%，2025 固投 −39.7%、商品房销售 −19.9%；前湾新区二手房均价从 2021 年约 10,151 元跌到 2026 年 8 月 4,904 元（−52%），有中介实例 117㎡ 挂 46.7 万、月租 1,000 出头，租售比约 1:400，二手流动性接近枯竭。<strong>熟悉一个地方不等于它适合安家。</strong></li>
+      <li><b>轨交刚改写了一个县的价值，但只改了一半。</b>12 号线象山线 2026-09-22 已开通，小洋江→大目湾 61.45 km、最快不到 30 分钟、全程 10 元，象山首次进入中心城区半小时圈；10 号线慈溪线年内投运。但象山仍是<strong>零三甲、财政自给率全市倒数第一、2025 人口零增长</strong>——适合周末住，不适合落户当主居所。</li>
+    </ol>
+  </div>
+
+  <!-- 05 建议 -->
+  <div class="card">
+    <h2><span class="num">05</span>分层建议（按远程一人公司、社保留广州、买房落户的条件）</h2>
+    <p class="lead">无通勤刚需，所以"离公司多远"不进评价；权重给到资产安全、医疗可达、财政健康、二手房流动性。</p>
+    <div class="tiers">
+      <div class="tier best"><div class="th">鄞州</div><div class="tn">首选 · 要资源与安全</div><div class="tx">收入最高、三甲 4 家、人口年增 +1.4 万全市第一、财政 105%、地铁最密。代价 22,426 元/㎡ 最贵，且 2025 商品房销售 −45.1%。只挑地铁次新房，别碰老破大和远郊新盘。</div></div>
+      <div class="tier value"><div class="th">北仑</div><div class="tn">性价比首选 · 唯一低价强财政</div><div class="tx">房价收入比约 13.4 年全市最低（90㎡ ÷ 年可支配收入）；财政 113%、人口 +1.33%、固投 +10% 全市唯一正增长、60 岁以上仅 18.8% 最年轻。代价：港区与重化工、零三甲、离核心医疗远。</div></div>
+      <div class="tier mid"><div class="th">海曙 / 江北</div><div class="tn">稳健折中</div><div class="tx">海曙 17,465 元/㎡、三甲 4 家、老城烟火气、财政 104%；江北财政 116% 全市第一、离核心最近，但 22,365 元/㎡ 和鄞州一样贵，性价比反而最差，可直接排除。</div></div>
+      <div class="tier mid"><div class="th">镇海</div><div class="tn">教育特例</div><div class="tx">镇海中学断层第一，收入 46,684、GDP 增速 6.0%、人口 +1.5% 全市最快。有子女且看重高考才值得优先；否则炼化在侧、仅 1 家精神专科三甲是硬伤。</div></div>
+      <div class="tier mid"><div class="th">慈溪 / 余姚</div><div class="tn">自住可以，落户别急</div><div class="tx">慈溪 GDP 3,014 亿、财政 96.7%、商品房销售 +5.0% 全市最抗跌、城乡收入倍差 1.48 全市最优。但离核心三甲 40 分钟以上，10 号线通车前不算同城；余姚至今无轨交。</div></div>
+      <div class="tier no"><div class="th">奉化 / 前湾 / 宁海 / 象山</div><div class="tn">不建议定居或买房</div><div class="tx">库存、财政、医疗三弱共振。前湾腰斩且流动性枯竭；奉化库存占市六区 35%；象山、宁海财政自给率 64.5% / 66.2% 全市垫底且无三甲。象山适合旅居，不适合把户口和首付押上去。</div></div>
+    </div>
+  </div>
+
+  <!-- 06 风险 -->
+  <div class="card tight">
+    <h2><span class="num">06</span>四个容易踩的坑</h2>
+    <ol class="pts" style="margin-top:12px">
+      <li><b>为落户仓促买房。</b>人才落户（毕业 20 年内、零社保）与租赁落户（同一区租满 1 年 + 居住证）几乎零成本，先拿户籍、真住满一年再决定把钱押在哪个板块，这是整个决策里最值钱的一步。</li>
+      <li><b>把"市区"当成全宁波。</b>53 号文的购房落户只覆盖六区；买在慈溪、余姚、宁海、象山要按当地县市政策单独确认，别默认一样。</li>
+      <li><b>以为落户就带医保。</b>医保跟参保地走，不跟户口走。社保留广州，宁波看病靠跨省异地结算，报销比例按广东政策；长期居住要提前做异地就医备案。</li>
+      <li><b>用挂牌价当成交价。</b>三个平台对同一区域的报价能差 20%–40%（例：宁海 11,295 / 13,151 / 16,184 元/㎡）。本卡只用于相对排序，真出手要看同小区近 90 天实际网签。</li>
+    </ol>
+  </div>
+
+  <!-- 结论 -->
+  <div class="final">
+    <h2><span class="num">07</span>结论</h2>
+    <p>十区县里，真正同时满足<strong>"资产安全 + 医疗可达 + 财政健康 + 人口还在进"</strong>的只有两个：<span class="big">鄞州（要资源）与北仑（要性价比）</span>。江北资源好但价格没优势，可直接排除；镇海只在有子女高考需求时才升到第一梯队。</p>
+    <p>按 90㎡ 总价 ÷ 年可支配收入算，房价收入比从低到高是<span class="big">奉化 12.6 · 北仑 13.4 · 余姚 14.0 · 镇海 15.2 · 象山 15.6 · 慈溪 15.8 · 宁海 16.1 · 海曙 16.4 · 鄞州 20.3 · 江北 21.2 年</span>。奉化最"便宜"却是最危险的便宜——库存和财政决定了它便宜得有理由。</p>
+    <p><b>落地顺序：</b>先走人才落户或租赁落户拿户籍（不动广州社保）→ 在鄞州、北仑各短租一段时间实测生活半径与就医通勤 → 再买房，且只买核心区地铁次新房。退休地仍锁广东 9,493，宁波户口给的是身份、购房与办证便利，不改变养老金的计发基数。</p>
+  </div>
+
+  <div class="foot">
+    <b>数据来源与口径</b>
+    <ol>
+      <li>宁波市统计局《2025 年宁波市人口主要数据公报》（2026 发布）、《2024 年宁波市人口主要数据公报》；人口增量由两年公报逐区相减得到，合计 +5.6 万与全市数吻合。</li>
+      <li>宁波市统计局 2025 年 12 月进度数据：国民经济核算（分区 GDP 与三次产业）、财政（分区一般公共预算收入与支出）、居民收支（2025 年 1–2 季度分区人均可支配收入）、商品房销售面积与固定资产投资（象山县政府、北仑区政府转发的主要经济指标表）。</li>
+      <li>房价：中国房价行情 / 禧泰数据 2026 年 10 月区市县排行（主口径）；幸福里 2026-11-03、房天下 2026-08 用于交叉验证。均为挂牌参考均价，非网签成交价。</li>
+      <li>落户：宁波市人民政府《甬政办发〔2023〕53 号》《甬政办发〔2020〕51 号》《甬政办发〔2019〕54 号》；宁波市公安局 2024-06-13 政策直播；2026-02 / 03 / 05 / 09 民生 e 点通治安管理支队答复。</li>
+      <li>医疗：宁波市卫生健康委 2024-02-08 关于三甲医院分布的答复（鄞州 4 家）；三甲名单按市一、市二、中医院、妇儿、李惠利、宁大附院、六院、眼科、康宁等公开资料归区。</li>
+      <li>轨交：宁波轨道交通 2026-02-24 市域铁路进度通报；12 号线（象山线）2026-09-22 开通运营公告；10 号线（慈溪线）计划 2026 年内投运。</li>
+      <li>前湾新区房价与库存、奉化可售面积来自公开媒体报道与第三方平台，属参考性数据，已在正文标注量级而非作为官方统计引用。</li>
+    </ol>
+    <p style="margin-top:10px">本卡为个人落户决策参考，不构成投资或购房建议。政策以办理窗口当日口径为准。</p>
+  </div>
+
+</div>
+
+<script>
+const D = [
+ {n:"鄞州", gdp:3201.9, gr:4.8, pop:172.5, inc:1.4, income:49685, price:22426, fis:104.6, hosp:4, metro:3, sales:-45.1, risk:1, tier:"首选",        tc:"t-best"},
+ {n:"北仑", gdp:3150.6, gr:5.8, pop:91.6,  inc:1.2, income:46070, price:13761, fis:112.7, hosp:0, metro:1, sales:-9.1,  risk:0, tier:"性价比首选", tc:"t-value"},
+ {n:"慈溪", gdp:3013.9, gr:4.0, pop:189.7, inc:0.8, income:42322, price:14900, fis:96.7,  hosp:0, metro:1, sales:5.0,   risk:1, tier:"自住可",      tc:"t-mid"},
+ {n:"海曙", gdp:1776.2, gr:4.0, pop:107.5, inc:0.3, income:47946, price:17465, fis:104.4, hosp:4, metro:2, sales:-20.0, risk:1, tier:"稳健折中",    tc:"t-mid"},
+ {n:"余姚", gdp:1733.3, gr:5.8, pop:127.0, inc:0.3, income:41490, price:12884, fis:88.9,  hosp:0, metro:0, sales:-10.3, risk:1, tier:"自住可",      tc:"t-mid"},
+ {n:"镇海", gdp:1601.9, gr:6.0, pop:54.0,  inc:0.8, income:46684, price:15784, fis:86.5,  hosp:1, metro:1, sales:0.2,   risk:1, tier:"教育特例",    tc:"t-mid"},
+ {n:"奉化", gdp:1105.2, gr:3.6, pop:59.4,  inc:0.2, income:34535, price:9690,  fis:74.4,  hosp:0, metro:1, sales:-19.9, risk:3, tier:"不建议",      tc:"t-no"},
+ {n:"宁海", gdp:1100.4, gr:4.6, pop:71.4,  inc:0.1, income:38509, price:13807, fis:66.2,  hosp:0, metro:0, sales:1.5,   risk:2, tier:"不建议",      tc:"t-no"},
+ {n:"江北", gdp:1028.2, gr:4.2, pop:52.3,  inc:0.5, income:47409, price:22365, fis:116.4, hosp:2, metro:2, sales:-13.8, risk:1, tier:"稳健折中",    tc:"t-mid"},
+ {n:"象山", gdp:1004.2, gr:6.2, pop:57.9,  inc:0.0, income:36890, price:12781, fis:64.5,  hosp:0, metro:1, sales:6.3,   risk:2, tier:"不建议",      tc:"t-no"}
+];
+D.forEach(d => d.popRate = d.inc / d.pop * 100);
+
+const DIMS = [
+  {k:"price",   dir:-1}, {k:"fis",    dir:1}, {k:"income", dir:1},
+  {k:"popRate", dir:1},  {k:"hosp",   dir:1}, {k:"metro",  dir:1},
+  {k:"sales",   dir:1},  {k:"gr",     dir:1}, {k:"risk",   dir:-1}
+];
+const W = {
+  gdp:     null,
+  balance: [.15,.15,.12,.10,.15,.08,.10,.05,.10],
+  asset:   [.18,.18,.06,.12,.02,.05,.18,.06,.15],
+  life:    [.06,.06,.08,.06,.32,.24,.06,.02,.10]
+};
+const WTEXT = {
+  gdp:     "当前：按 2025 年 GDP 总量降序（宁波市统计局口径）。收入为 2025 年上半年全体居民人均可支配收入。",
+  balance: "综合均衡：房价、财政、医疗各占 15%，其余维度均衡分配。适合没有单一强偏好的长期定居。",
+  asset:   "资产安全优先：房价 18% + 财政 18% + 销售增速 18% + 库存风险 15%，压低医疗与轨交权重。适合把房子当资产看。",
+  life:    "生活便利优先：三甲 32% + 轨交 24%，其余压低。适合看重就医、出行与日常配套。"
+};
+
+function scoreAll(weights){
+  const bounds = {};
+  DIMS.forEach(dim=>{
+    const vals = D.map(d=>d[dim.k]);
+    bounds[dim.k] = [Math.min.apply(null,vals), Math.max.apply(null,vals)];
+  });
+  D.forEach(d=>{
+    d.score = 0;
+    DIMS.forEach((dim,i)=>{
+      const [lo,hi] = bounds[dim.k];
+      const raw = hi===lo ? .5 : (d[dim.k]-lo)/(hi-lo);
+      d.score += weights[i] * (dim.dir===1 ? raw : 1-raw) * 100;
+    });
+  });
+}
+
+const fmt = (v,d=0)=>Number(v).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});
+let mode = "gdp", sortKey = null, sortAsc = false;
+
+function currentRows(){
+  let rows = D.slice();
+  if(mode === "gdp"){
+    rows.sort((a,b)=> sortKey ? (sortKey==="n" ? a.n.localeCompare(b.n,"zh") : (a[sortKey]-b[sortKey])*(sortAsc?1:-1)) : b.gdp-a.gdp);
+  }else{
+    rows.sort((a,b)=> sortKey ? (sortKey==="n" ? a.n.localeCompare(b.n,"zh") : (a[sortKey]-b[sortKey])*(sortAsc?1:-1)) : b.score-a.score);
+  }
+  return rows;
+}
+
+function render(){
+  const rows = currentRows();
+  document.getElementById("wlabel").textContent = WTEXT[mode];
+  document.getElementById("tbody").innerHTML = rows.map((d,i)=>`
+    <tr class="${i<3 && mode!=="gdp" ? "top3" : ""}">
+      <td class="mut n">${i+1}</td>
+      <td class="nm">${d.n} <span class="tag ${d.tc}">${d.tier}</span></td>
+      <td class="n">${fmt(d.gdp,1)}</td>
+      <td class="n ${d.gr>=5.5?"up":""}">${d.gr.toFixed(1)}</td>
+      <td class="n">${d.pop.toFixed(1)}</td>
+      <td class="n ${d.inc>=1?"up":""}">+${d.inc.toFixed(1)}</td>
+      <td class="n">${fmt(d.income)}</td>
+      <td class="n">${fmt(d.price)}</td>
+      <td class="n ${d.fis>=100?"up":(d.fis<80?"down":"")}">${d.fis.toFixed(1)}%</td>
+      <td class="n ${d.hosp===0?"down":""}">${d.hosp}</td>
+      <td class="n score">${mode==="gdp"?"—":d.score.toFixed(1)}</td>
+    </tr>`).join("");
+}
+
+document.getElementById("seg").addEventListener("click", e=>{
+  const btn = e.target.closest("button");
+  if(!btn) return;
+  mode = btn.dataset.w; sortKey = null;
+  document.querySelectorAll("#seg button").forEach(b=>b.classList.toggle("on", b===btn));
+  if(mode !== "gdp") scoreAll(W[mode]);
+  render();
+});
+
+document.querySelectorAll("#mainTable thead th[data-k]").forEach(th=>{
+  th.addEventListener("click", ()=>{
+    if(th.dataset.k === "score" && mode === "gdp") return;
+    const k = th.dataset.k;
+    if(sortKey === k) sortAsc = !sortAsc;
+    else { sortKey = k; sortAsc = false; }
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
