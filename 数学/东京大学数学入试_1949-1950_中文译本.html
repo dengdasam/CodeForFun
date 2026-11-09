@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东京大学数学入学考试试题 1949–1950（中文译本）</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+function toggleAll(open) {
+  document.querySelectorAll("details").forEach(function(d){ d.open = open; });
+}
+</script>
+<style>
+  :root {
+    --ink: #222; --muted: #667; --accent: #8b1a1a; --line: #d8d5cf; --bg: #fbfaf7; --card: #fff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+    color: var(--ink); background: var(--bg);
+    margin: 0; line-height: 1.75; font-size: 16px;
+  }
+  .page { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  header.hero { border-bottom: 3px double var(--accent); padding-bottom: 18px; margin-bottom: 24px; }
+  header.hero h1 { font-size: 26px; margin: 0 0 6px; letter-spacing: 1px; }
+  header.hero .sub { color: var(--muted); font-size: 14px; }
+  .notice {
+    background: #f3efe6; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 18px; font-size: 14px; margin: 18px 0 26px; color: #444;
+  }
+  .notice p { margin: 4px 0; }
+  nav.toc { margin-bottom: 30px; font-size: 15px; }
+  nav.toc h2 { font-size: 17px; color: var(--accent); border-left: 4px solid var(--accent); padding-left: 8px; }
+  nav.toc ol { padding-left: 24px; }
+  nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted #aaa; }
+  nav.toc a:hover { color: var(--accent); }
+  h2.year {
+    font-size: 22px; color: var(--accent); text-align: center;
+    margin: 48px 0 6px; letter-spacing: 3px;
+  }
+  .year-sub { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+  h3.subject {
+    font-size: 18px; background: var(--accent); color: #fff;
+    padding: 6px 14px; border-radius: 4px; margin: 34px 0 14px;
+  }
+  section.problem {
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 16px 20px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  section.problem > h4 {
+    margin: 0 0 10px; font-size: 17px; color: var(--accent);
+    border-bottom: 1px solid var(--line); padding-bottom: 6px;
+  }
+  .statement { margin: 0 0 4px; }
+  .statement p { margin: 6px 0; }
+  ol.q { padding-left: 26px; }
+  ol.q li { margin: 4px 0; }
+  .ans-label { font-weight: bold; color: var(--accent); }
+  details.solution { border: 1px solid var(--line); border-radius: 6px; background: #faf9f5; margin-top: 12px; }
+  details.solution > summary {
+    cursor: pointer; font-weight: bold; padding: 8px 14px; color: var(--accent);
+    user-select: none; list-style-position: inside;
+  }
+  details.solution[open] > summary { border-bottom: 1px dashed var(--line); }
+  details.solution .sol-body { padding: 10px 16px; }
+  details.solution .sol-body p { margin: 8px 0; }
+  .note {
+    font-size: 14px; color: #555; background: #f6f3ea;
+    border-left: 3px solid #b8a86a; padding: 8px 12px; margin: 10px 0; border-radius: 0 4px 4px 0;
+  }
+  .alt { border-left: 3px solid #9aa86a; background: #f4f6ea; padding: 8px 12px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+  .figdesc { color: #7a6a4a; font-size: 14px; font-style: italic; }
+  table.mini { border-collapse: collapse; margin: 10px auto; font-size: 15px; }
+  table.mini th, table.mini td { border: 1px solid var(--line); padding: 4px 12px; text-align: center; }
+  table.mini th { background: #f0ede5; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+  .toolbar { font-size: 14px; margin-bottom: 6px; }
+  .toolbar a { color: var(--accent); cursor: pointer; text-decoration: underline; margin-right: 14px; }
+  footer { margin-top: 50px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  @media print {
+    body { background: #fff; }
+    details.solution { border: none; background: none; }
+    details.solution > summary { display: none; }
+    details.solution .sol-body { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="hero">
+  <h1>东京大学数学入学考试试题 · 中文译本</h1>
+  <div class="sub">1949 – 1950 年（原书第1章 1.1 节「新制东京大学的发足」所收试题）</div>
+  <div class="toolbar">
+    <a onclick="toggleAll(true)">展开全部解答</a>
+    <a onclick="toggleAll(false)">收起全部解答</a>
+  </div>
+</header>
+
+<div class="notice">
+  <p><strong>译本说明</strong></p>
+  <p>1. 本文档译自《東京大学 数学入試問題72年 [1949～2020年入試全問題]》（大原仁 著）的试题部分，收录 1949、1950 两个年份的<strong>全部题目与书末所附【解答】</strong>（含别解与注）。</p>
+  <p>2. 数学公式均已重新转写为 LaTeX，由 KaTeX 渲染——<strong>打开本文件需要联网</strong>（加载公式渲染脚本）。若公式显示为源代码，请检查网络连接后刷新。</p>
+  <p>3. 原书中的坐标图、几何图形无法以文本形式再现，以<span class="figdesc">〔图：……〕</span>的简要描述代替，需要时可对照原书。</p>
+  <p>4. 按翻译范围设定，原书每题的「分野」「考え方」栏目未收录；译文中保留了【解答】内附带的（注）与【解说】，因为它们是答案的必要组成部分。</p>
+</div>
+
+<nav class="toc">
+  <h2>目录</h2>
+  <ol>
+    <li><a href="#y1949">1949 年</a>：共通问题 · 解析Ⅰ · 解析Ⅱ · 几何</li>
+    <li><a href="#y1950">1950 年</a>：共通问题 · 解析Ⅰ · 解析Ⅱ · 几何 · 一般数学</li>
+  </ol>
+</nav>
+
+<!-- ==================== 1949 ==================== -->
+<h2 class="year" id="y1949">1949 年</h2>
+<div class="year-sub">新制东大首次入学考试（3 科选 1：解析Ⅰ / 解析Ⅱ / 几何，另有共通问题）</div>
+
+<h3 class="subject">1949 年 · 共通问题</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>下列事项是否正确？正确时，请在序号后画 $\bigcirc$ 印；若一般情况下不正确，请在序号后画 $\times$ 印，并写出使其成立的条件。</p>
+    <ol class="q">
+      <li>若某整数能被整数 $a$ 整除，也能被整数 $b$ 整除，则它能被 $a \times b$ 整除。</li>
+      <li>若 $ax - b = 0$，则 $x = \frac{b}{a}$。</li>
+      <li>若 $ax > b$，则 $x > \frac{b}{a}$。</li>
+      <li>若 $a > b$，则 $a^2 > b^2$。</li>
+      <li>若 $z$ 与 $x$ 成正比例，且与 $y$ 成反比例，则 $x$ 与 $y \times z$ 成正比例。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $\times$；当 $a, b$ 互素时成立。 …（答）</p>
+      <p>2. $\times$；当 $a \neq 0$ 时成立。 …（答）</p>
+      <p>3. $\times$；当 $a > 0$ 时成立。 …（答）</p>
+      <p>4. $\times$；当 $a + b$ 为正时成立。 …（答）</p>
+      <p>5. $\times$；绝对不成立。 …（答）</p>
+      <div class="alt"><strong>【解说】</strong>
+        <p>1. 能被 $a, b$ 整除的数能被 $a, b$ 的最小公倍数整除。最小公倍数与 $ab$ 一致的情况是 $a, b$ 互素时。</p>
+        <p>2. 当 $a=0$ 时，变为 $b=0$，此时 $x$ 不定。</p>
+        <p>3. 若 $a < 0$ 则 $x < \frac{b}{a}$。若 $a=0$ 且 $b<0$ 时，$x$ 为任意值；若 $b \geqq 0$ 则不存在这样的 $x$。</p>
+        <p>4. $a, b$ 同为正数或者 $b>0$ 也是正确的解法。在 $a-b>0$ 的条件下考虑 $a^2 - b^2 = (a-b)(a+b) > 0$，可知 $a+b>0$ 是最宽泛的条件。</p>
+        <p>5. 因为 $z$ 与 $y$ 成反比例，所以 $yz$ 是不为 $0$ 的常数。因此，$x$ 不会与之成正比例。</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>请在括号内填入适当的词语。</p>
+    <ol class="q">
+      <li>等腰三角形关于（　　）对称。</li>
+      <li>菱形是（　　）的平行四边形。</li>
+      <li>正五边形的一个内角的大小是（　　）度。</li>
+      <li>球的表面积与半径的（　　）成比例，其体积与半径的（　　）成比例。</li>
+      <li>三条棱长分别为 $3, 4, 12$ 的长方体内两点间的距离不超过（　　）。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>「棱」指的是边。</p>
+      <p>1. 等腰三角形关于（从顶点向对边所作的垂线）对称。 …（答）</p>
+      <p>2. 菱形是（四条边的长度相等）的平行四边形。 …（答）</p>
+      <p>3. 正五边形的一个内角的大小是（108）度。 …（答）</p>
+      <p>4. 球的表面积与半径的（2 次幂）成比例，其体积与半径的（3 次幂）成比例。 …（答）</p>
+      <p>5. 三条棱长分别为 $3, 4, 12$ 的长方体内两点间的距离不超过（13）。 …（答）</p>
+      <div class="alt"><strong>【解说】</strong>
+        <p>1. （从顶点向对边引出的中线）、（底边的垂直平分线）、（顶角的二等分线）等也可以。</p>
+        <p class="note">（注）在等腰三角形中，两条等边共有的点称为顶点。</p>
+        <p>2. 菱形的定义是四边相等的平行四边形。（对角线互相垂直）也可以。</p>
+        <p>3. 因为一个外角为 $\frac{360^\circ}{5} = 72^\circ$，所以 $180^\circ - 72^\circ = 108^\circ$。</p>
+        <p>4. 若半径为 $r$，则表面积为 $4\pi r^2$，体积为 $\frac{4}{3}\pi r^3$。即使不知道这个公式，由所有球体均相似可知表面积与 $r^2$ 成比例、体积与 $r^3$ 成比例是显而易见的。</p>
+        <p>5. 不超过对角线的长度。$\sqrt{3^2 + 4^2 + 12^2} = 13$ 即为对角线的长度。实际上只要填入大于等于 13 的数即可。</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1949 年 · （3 科选 1）解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>画出下列函数的图象的大致形状。</p>
+    <ol class="q">
+      <li>$y=2(x-1)$</li>
+      <li>$y=(x-1)^2$</li>
+      <li>$y=2^{x-1}$</li>
+      <li>$y=\log_2(x-1)$</li>
+      <li>$y=\sin \pi x$</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p class="note">（注）问题文中的「函数」是「関数」当时的表记。</p>
+      <p>1. $x$ 截距为 $1$，$y$ 截距为 $-2$，斜率为 $2$ 的直线。<span class="figdesc">〔图：一条过点 $(1,0)$ 和 $(0,-2)$ 的上升直线〕</span> …（答）</p>
+      <p>2. 轴为 $x=1$，顶点为 $(1,0)$，$y$ 截距为 $1$ 的抛物线。<span class="figdesc">〔图：开口向上、顶点在 $(1,0)$ 且过 $(0,1)$ 的抛物线〕</span> …（答）</p>
+      <p>3. $x$ 轴为渐近线，$y$ 截距为 $\frac{1}{2}$，过点 $(1,1)$。<span class="figdesc">〔图：指数增长曲线，水平渐近线为 $x$ 轴，过 $(0, 1/2)$ 和 $(1,1)$〕</span> …（答）</p>
+      <p>4. $x=1$ 为渐近线，$x>1$ 为定义域，$x$ 截距为 $2$，过点 $(3,1)$。<span class="figdesc">〔图：对数曲线，垂直渐近线 $x=1$，过 $(2,0)$ 和 $(3,1)$〕</span> …（答）</p>
+      <p>5. 与 $x$ 轴交于 $x=\cdots, -2, -1, 0, 1, 2, \cdots$，与 $y=1$ 切于 $x=\cdots, -1.5, 0.5, 2.5, \cdots$，与 $y=-1$ 切于 $x=\cdots, -2.5, -0.5, 1.5, \cdots$。<span class="figdesc">〔图：正弦波形，振幅为 1，周期为 2〕</span> …（答）</p>
+      <p class="note">（注）问题文中有「（注：提供方格纸。）」字样，可能是旺文社加的注。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>请在下列（　）中填入适当的词语或式子。但此处 $a, b, c$ 及 $x, y$ 的值均只考虑实数值。在 $y=ax^2+bx+c$ 中，</p>
+    <ol class="q">
+      <li>无论 $x$ 取何值，$y$ 的值都不超过某一固定值，则 $a$ 的值是（　）。</li>
+      <li>无论 $x$ 取何值，$y$ 的值总是正的，则 $a$（　），$b^2-4ac$（　）。</li>
+      <li>无论 $x$ 取何值，$y$ 的值总是负的，则 $a$（　），$b^2-4ac$（　）。</li>
+      <li>随着 $x$ 的值变化，$y$ 的值既可以为正也可以为负，则 $b^2-4ac$（　）。</li>
+      <li>适当选取 $x$ 的值，$y$ 可以取任意值，则 $a$ 的值是（　）。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. 无论 $x$ 取何值，$y$ 的值都不超过某一固定值，则 $a$ 的值是（负数）。…（答）</p>
+      <p>不过，当 $a=0, b=0$ 时，$y=ax^2+bx+c$ 也是常数，不超过该值。</p>
+      <p>2. 无论 $x$ 取何值，$y$ 的值总是正的，则 $a$（$>0$），$b^2-4ac$（$<0$）。…（答）</p>
+      <p>不过，当 $a=0, b=0, c>0$ 时，$y=ax^2+bx+c$ 也总是正的。</p>
+      <p>3. 无论 $x$ 取何值，$y$ 的值总是负的，则 $a$（$<0$），$b^2-4ac$（$<0$）。…（答）</p>
+      <p>不过，当 $a=0, b=0, c<0$ 时，$y=ax^2+bx+c$ 也总是负的。</p>
+      <p>4. 随着 $x$ 的值变化，$y$ 的值既可以为正也可以为负，则 $b^2-4ac$（$>0$）。…（答）</p>
+      <p>5. 适当选取 $x$ 的值，$y$ 可以取任意值，则 $a$ 的值是（$0$）。…（答）</p>
+      <p class="note">（注）从第 1 题到第 3 题，如果不假设 $a \neq 0$ 则很难作答。然而，如果把 $a=0$ 也包含在内考虑，就无法找到能填入（　）中的恰当式子。（第 1 题中包含「$a=b=0$」的情况；第 2 题中包含「$a=b=0$ 且 $c>0$」的情况；第 3 题中包含「$a=b=0$ 且 $c<0$」的情况。）在第 4 题中情况相同，当 $a=0$ 时，条件要求 $b \neq 0$，此时 $b^2-4ac = b^2 > 0$，综合起来可写成 $b^2-4ac > 0$。另外，在第 5 题中，若求必要充分条件，则为 $a=0$ 且 $b \neq 0$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>当在直径 $AB$ 的长度为 $l$ 的半圆周上取一点 $P$ 时，求 $3AP+4BP$ 的最大值。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>因为 $AB$ 是直径，所以 $\angle APB$ 是直角，或者 $A=P$，或者 $B=P$。设 $AP=x, BP=y$，则</p>
+      $$x^2+y^2=l^2.$$
+      <p>设 $3AP+4BP=3x+4y=k$，则 $y=\frac{k-3x}{4}$。由此，</p>
+      $$x^2+\left(\frac{k-3x}{4}\right)^2=l^2 \quad \therefore \quad 25x^2-6kx+k^2-16l^2=0.$$
+      <p>实数 $x$ 存在的条件是</p>
+      $$(3k)^2-25(k^2-16l^2) \geqq 0 \quad \therefore \quad 16(25l^2-k^2) \geqq 0.$$
+      <p>由此得，$-5l \leqq k \leqq 5l$。</p>
+      <p>当 $k=5l$ 时，$x=\frac{3}{5}l, y=\frac{4}{5}l$。两者均为正值，故作为长度存在。</p>
+      <p>因此，$3AP+4BP$ 的最大值是 $5l$。 …（答）</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>因为 $AB=l$，$\angle APB$ 是直角（或者 $A=P$，或者 $B=P$），设 $\angle PAB=\theta \left(0 \leqq \theta \leqq \frac{\pi}{2}\right)$，则 $AP=l\cos\theta, BP=l\sin\theta$。由此，</p>
+        $$3AP+4BP=3l\cos\theta+4l\sin\theta=5l\sin(\theta+\alpha).$$
+        <p><span class="figdesc">〔图：半圆及其内接直角三角形示意图〕</span>其中，$\alpha$ 是满足 $\cos\alpha=\frac{4}{5}, \sin\alpha=\frac{3}{5}$ 的 $0 < \alpha < \frac{\pi}{2}$ 范围内的角。</p>
+        <p>使 $3AP+4BP$ 取得最大值是在 $\theta=\frac{\pi}{2}-\alpha$ 时，此时 $AP=\frac{3}{5}l, BP=\frac{4}{5}l$，$3AP+4BP$ 的最大值为 $5l$。 …（答）</p>
+      </div>
+      <p class="note">（注）本来这似乎是用合成的辅助角公式解决的问题，但当时该公式属于解析Ⅰ还是解析Ⅱ尚不明确，故列为【别解】。如果是 1951 年以后的标准，那确实属于解析Ⅱ，但在此之前并没有指明解析Ⅰ和解析Ⅱ区分的明确文献。查看当时的教科书，三角函数包含在解析Ⅰ中。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1949 年 · （3 科选 1）解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>下列事项是否正确？正确时在编号后画圆圈 $\bigcirc$；不正确时在编号后画叉 $\times$，并举出反例。</p>
+    <ol class="q">
+      <li>若 $\lim_{n \to \infty} a_n^2 = a^2$，则 $\lim_{n \to \infty} a_n = a$。</li>
+      <li>若 $\lim_{n \to \infty} a_n = a, \lim_{n \to \infty} b_n = b$，则 $\lim_{n \to \infty} \frac{a_n}{b_n} = \frac{a}{b}$。</li>
+      <li>若 $\lim_{n \to \infty} a_n = a, \lim_{n \to \infty} b_n = b, a_n < b_n$，则 $a < b$。</li>
+      <li>若 $\lim_{n \to \infty} a_n = \infty, \lim_{n \to \infty} b_n = \infty$，则 $\lim_{n \to \infty} (a_n - b_n) = 0$。</li>
+      <li>若 $\lim_{n \to \infty} a_n = \infty, \lim_{n \to \infty} b_n = -\infty$，则 $\lim_{n \to \infty} a_n b_n = -\infty$。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $\times$。当 $a_n=-1+\frac{1}{n}$ 时，$\lim_{n \to \infty} a_n^2 = 1^2$，但 $\lim_{n \to \infty} a_n = -1$。 …（答）</p>
+      <p>2. $\times$。当 $a_n=1+\frac{1}{n}, b_n=\frac{1}{n}$ 时，$\lim_{n \to \infty} a_n = 1, \lim_{n \to \infty} b_n = 0$，而 $\lim_{n \to \infty} \frac{a_n}{b_n} = +\infty$，$\infty$ 不是 $\frac{1}{0}$。 …（答）</p>
+      <p>3. $\times$。当 $a_n=1+\frac{1}{n}, b_n=1+\frac{2}{n}$ 时，$\lim_{n \to \infty} a_n = a = 1, \lim_{n \to \infty} b_n = b = 1$，虽然 $a_n < b_n$，但 $a < b$ 不成立。 …（答）</p>
+      <p>4. $\times$。当 $a_n=n+1, b_n=n$ 时，$\lim_{n \to \infty} a_n = \infty, \lim_{n \to \infty} b_n = \infty$，但 $\lim_{n \to \infty} (a_n - b_n) = 1$。</p>
+      <p>5. $\bigcirc$。 …（答）</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>求包含在给定的直圆锥内、且与该圆锥有相同轴的圆柱中体积最大的那个。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p><span class="figdesc">〔图：圆柱内接于圆锥的轴截面示意图〕</span></p>
+      <p>设直圆锥的底面半径为 $r$，高为 $h$。在包含在内的圆柱中，固定底面圆的半径，下底面位于圆锥底面上、上底面与圆锥面相切的圆柱是体积最大的直圆柱。</p>
+      <p>设圆柱底面圆的半径为 $x(0<x<r)$，圆柱的高为 $y$，则</p>
+      $$\frac{x}{r}+\frac{y}{h}=1 \quad \therefore \quad y=h-\frac{h}{r}x.$$
+      <p>这个圆柱的体积为</p>
+      $$\pi x^2 y = \pi x^2 \left(h-\frac{h}{r}x\right) = \pi \frac{h}{r} x^2(r-x).$$
+      <p>设 $f(x)=x^2(r-x)$，则 $f'(x)=2xr-3x^2=(2r-3x)x$。</p>
+      <table class="mini">
+        <tr><th>$x$</th><th>$0$</th><th>→</th><th>$\frac{2}{3}r$</th><th>→</th><th>$r$</th></tr>
+        <tr><td>$f'(x)$</td><td></td><td>$+$</td><td>$0$</td><td>$-$</td><td></td></tr>
+        <tr><td>$f(x)$</td><td>$(0)$</td><td>$\nearrow$</td><td></td><td>$\searrow$</td><td>$(0)$</td></tr>
+      </table>
+      <p>因此，圆柱体积最大是在 $x=\frac{2}{3}r, y=\frac{1}{3}h$ 时。</p>
+      <p>即，半径为直圆锥底面半径的 $\frac{2}{3}$、高为直圆锥高的 $\frac{1}{3}$ 的圆柱即为所求。 …（答）</p>
+      <p class="note">（注）体积的最大值是直圆锥体积的 $\frac{4}{9}$ 倍。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>求经过坐标分别为 $(0,-5), (2,3), (4,3)$ 的三点、轴平行于 $y$ 轴的抛物线与 $x$ 轴围成部分的面积。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设抛物线方程为 $y=ax^2+bx+c$。因为经过 $(0,-5), (2,3), (4,3)$，</p>
+      $$-5=c, \quad 3=4a+2b+c, \quad 3=16a+4b+c.$$
+      <p>由此得，$a=-1, b=6, c=-5$。</p>
+      <p>所以抛物线方程为 $y=-x^2+6x-5=-(x-5)(x-1)$。</p>
+      <p>抛物线与 $x$ 轴围成部分的面积为</p>
+      $$\int_1^5 (-x^2+6x-5)\, dx = \frac{32}{3}. \quad \cdots (\text{答})$$
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1949 年 · （3 科选 1）几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>下列命题是否成立？若成立，请在题号前画○；若不成立，请在题号前画×，并图示出反例。</p>
+    <ol class="q">
+      <li>若两个角的两边分别互相平行，则这两个角相等。</li>
+      <li>若长为 $a, b, c$ 的三条线段满足条件 $a+b>c$，则可以作以 $a, b, c$ 为三边的三角形。</li>
+      <li>到两个定圆的切线长相等的点的轨迹是一条直线。</li>
+      <li>被直径平分的弦垂直于该直径。</li>
+      <li>两个多边形，若其对应的内角分别相等，则它们相似。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $\times$　<span class="figdesc">〔图：两条平行射线与折线构成的角，出现相等与互补两种情况〕</span> $\cdots$（答）</p>
+      <p>2. $\times$　<span class="figdesc">〔图：当不满足任意两边之和大于第三边时退化为线段的示意图〕</span> $\cdots$（答）</p>
+      <p>3. $\times$　<span class="figdesc">〔图：两个相交的圆，轨迹并非直线的反例〕</span> $\cdots$（答）</p>
+      <p>4. $\times$　<span class="figdesc">〔图：一个圆内有被平分但不垂直于直径的弦〕</span> $\cdots$（答）</p>
+      <p>5. $\times$　<span class="figdesc">〔图：两个对应角分别相等但不相似的四边形〕</span> $\cdots$（答）</p>
+      <p class="note">（注）问题文中的旧式用语「夫夫」读作「それぞれ」（各自、分别）。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>三角形 $ABC$ 能被经过顶点 $A$ 的某条适当直线分割成两个相似的三角形。试探究三角形 $ABC$ 的形状。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设经过点 $A$ 的直线与对边 $BC$ 交于点 $D$。如果 $\angle ADB \neq \angle ADC$，那么在这两个三角形的内角中，必须同时存在与 $\angle ADB$ 和 $\angle ADC$ 相等的角。然而，由于 $\angle ADB + \angle ADC = 180^\circ$（即两直角），在同一个三角形内不可能有两个角同时与它们相等。</p>
+      <p>因此，$\angle ADB = \angle ADC$，且它们都是直角。</p>
+      <p>从而，$\angle ABD + \angle BAD = \angle ACD + \angle CAD$ 是直角。因为这两个三角形相似，</p>
+      $$\angle ABD = \angle ACD, \quad \angle BAD = \angle CAD \qquad \text{①}$$
+      <p>或者</p>
+      $$\angle ABD = \angle CAD, \quad \angle BAD = \angle ACD \qquad \text{②}$$
+      <p>当①时，三角形 $ABC$ 是 $AB=AC$ 的等腰三角形；</p>
+      <p>当②时，因为 $\angle BAD + \angle CAD$ 是直角，所以三角形 $ABC$ 是以 $\angle A$ 为直角的直角三角形。</p>
+      <p>综上，三角形 $ABC$ 是等腰三角形或直角三角形。 $\cdots$（答）</p>
+      <p><span class="figdesc">〔图：左图为等腰三角形底边上的高，右图为直角三角形斜边上的高〕</span></p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>求与一个定圆外切、且与一条定直线相切的圆的圆心的轨迹。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设定圆为 $C$，其中心为 $F$，半径为 $r$；定直线为 $l$。</p>
+      <p>再设轨迹上的点为 $P$，以 $P$ 为中心、与圆 $C$ 外切且与 $l$ 相切的圆的半径为 $R$。则 $PF = R+r$，且 $P$ 到 $l$ 的距离为 $R$。</p>
+      <p><strong>(i) 当 $C$ 与 $l$ 不相交时，</strong></p>
+      <p>$P$ 位于 $l$ 的与 $C$ 同侧。设平行于 $l$、与 $l$ 距离为 $r$、位于 $l$ 的与 $C$ 异侧的直线为 $m$，则 $P$ 到 $m$ 的距离变为 $R+r$。于是 $P$ 到 $F$ 的距离与 $P$ 到 $m$ 的距离相等。因此，$P$ 的轨迹是以 $F$ 为焦点、$m$ 为准线的抛物线。</p>
+      <p><strong>(ii) 当 $C$ 与 $l$ 相切时，</strong></p>
+      <p>当 $P$ 位于 $l$ 的与 $C$ 同侧时，情况与 (i) 几乎相同，但 $C$ 与 $l$ 的切点位于以 $F$ 为焦点、$m$ 为准线的抛物线上。不过，不存在以该切点为中心且与 $C$ 外切的圆。</p>
+      <p>另外，当 $P$ 位于 $l$ 的与 $C$ 异侧时，若在过切点垂直于 $l$ 的直线上取点 $P$，则以 $P$ 为中心且与 $l$ 相切的圆会在同一点处与 $C$ 相切。</p>
+      <p>因此，$P$ 的轨迹是从以 $F$ 为焦点、$m$ 为准线的抛物线中去掉顶点后的部分，以及从切点向 $l$ 所作垂线位于 $l$ 的与 $C$ 异侧的半直线（不含端点）。</p>
+      <p><strong>(iii) 当 $C$ 与 $l$ 相交时，</strong></p>
+      <p>设交点为 $A, B$。平行于 $l$ 且与 $l$ 距离为 $r$ 的直线有两条，分别设为 $m, m'$。$P$ 可以位于 $l$ 的任意一侧。</p>
+      <p>当 $P$ 位于 $l$ 的与 $m'$ 同侧时，$P$ 的轨迹在以 $F$ 为焦点、$m$ 为准线的抛物线上。另外，当 $P$ 位于 $l$ 的与 $m$ 同侧时，$P$ 的轨迹在以 $F$ 为焦点、$m'$ 为准线的抛物线上。</p>
+      <p>这两条抛物线在 $l$ 上的点 $A, B$ 处相交。由于不存在以这两点为中心且与 $C$ 外切的圆，故排除这两点。</p>
+      <p><strong>总结：</strong>给定圆 $C$（中心 $F$，半径 $r$）和直线 $l$ 时：</p>
+      <p>(i) 当 $C$ 与 $l$ 不相交时：以 $F$ 为焦点、平行于 $l$ 且位于 $C$ 异侧、与 $l$ 距离为 $r$ 的直线 $m$ 为准线的抛物线。</p>
+      <p>(ii) 当 $C$ 与 $l$ 相切时：以 $F$ 为焦点、直线 $m$ 为准线的抛物线（但不含顶点），以及以切点为端点、位于 $C$ 异侧的半直线（不含端点）。</p>
+      <p>(iii) 当 $C$ 与 $l$ 相交时：以 $F$ 为焦点、$m$ 为准线的抛物线位于 $l$ 的与 $m'$ 同侧的部分，以及以 $F$ 为焦点、$m'$ 为准线的抛物线位于 $l$ 的与 $m$ 同侧的部分。但是，不包含 $l$ 上的点。 $\cdots$（答）</p>
+      <p class="note">（注）将定直线设为 $x$ 轴，定圆中心设为 $(0, a) \ (a>0)$，半径设为 $r$ 时，所求轨迹为
+      $$\begin{cases} (a+r)(2y-a+r)=x^2 & (a>r \text{ 时}), \\ 4ay=x^2 \ (y>0),\ x=0 \ (y<0) & (a=r \text{ 时}), \\ (a+r)(2y-a+r)=x^2 \ (y>0),\ (a-r)(2y-a-r)=x^2 \ (y<0) & (a<r \text{ 时}). \end{cases} \cdots (\text{答})$$
+      其实这三个式子不分情况也可以写成
+      $$ (a+r)(2y-a+r)=x^2 \ (y>0), \quad (a-r)(2y-a-r)=x^2 \ (y<0) $$
+      即可。因为当 $a>r$ 时，第二个式子导致 $0 < a-r < a+r \leqq 2y$，这与 $y<0$ 矛盾，故不被满足；而当 $a=r$ 时，$x^2=0$ 即 $x=0$，结果一致。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ==================== 1950 ==================== -->
+<h2 class="year" id="y1950">1950 年</h2>
+<div class="year-sub">（共通问题为 4 科选 2，其余科目为 4 科选 1）</div>
+
+<h3 class="subject">1950 年 · （4 科选 2）共通问题</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>在下面的〔　　〕中填入适当的数。</p>
+    <p>有一条经过点 $(10, 2)$、$(2, -2)$ 的直线。</p>
+    <ol class="q">
+      <li>这条直线的方程是 $y=$〔　　〕$x+$〔　　〕。</li>
+      <li>这条直线的斜率是〔　　〕。</li>
+      <li>这条直线与 $x$ 轴交点的横坐标是〔　　〕。</li>
+      <li>这条直线与 $y$ 轴交点的纵坐标是〔　　〕。</li>
+      <li>与这条直线关于 $x$ 轴对称的直线的方程是 $y=$〔　　〕$x+$〔　　〕。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $y=\frac{2-(-2)}{10-2}(x-2)-2 = \left[\ \frac{1}{2}\ \right]x + [\ -3\ ]$ …（答）</p>
+      <p>2. 斜率是 $\left[\ \frac{1}{2}\ \right]$。 …（答）</p>
+      <p>3. $x$ 截距为 $6$。该直线与 $x$ 轴交点的横坐标是 $[\ 6\ ]$。 …（答）</p>
+      <p>4. $y$ 截距为 $-3$。该直线与 $y$ 轴交点的纵坐标是 $[\ -3\ ]$。 …（答）</p>
+      <p>5. 与这条直线关于 $x$ 轴对称的直线的方程是 $y = \left[\ -\frac{1}{2}\ \right]x + [\ 3\ ]$。 …（答）</p>
+      <p class="note">（注）因为要求「填入适当的数」，所以第 3、4 题分别填 $[\ 6\ ]$、$[\ -3\ ]$。如果优先考虑「横坐标」这一说法，则应分别填 $[\ (6, 0)\ ]$、$[\ (0, -3)\ ]$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>以下事项是否正确？正确时在编号前的〔　　〕内打○印；不正确时在编号前的〔　　〕内打×印，并举出一个说明其不正确的例子进行简要说明。</p>
+    <ol class="q">
+      <li>〔　　〕垂直于水平直线的直线是铅垂线。</li>
+      <li>〔　　〕垂直于铅垂线的直线是水平线。</li>
+      <li>〔　　〕两个四边形的对应四个角相等，则这两个四边形相似。</li>
+      <li>〔　　〕在同一个圆中，圆心角的大小与它所对的弦长成正比。</li>
+      <li>〔　　〕$\sin A$ 与 $\cos A$ 成反比。但设 $A$ 为锐角。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. 〔$\times$〕反例：在水平面内存在互相垂直的直线。 …（答）</p>
+      <p>2. 〔○〕 …（答）</p>
+      <p>3. 〔$\times$〕反例：邻边不相等的长方形和正方形，所有内角都相等但不相似。 …（答）</p>
+      <p>4. 〔$\times$〕反例：半径为 $r$ 时，对 $90^\circ$ 的弦长为 $\sqrt{2}r$，但对它的两倍角 $180^\circ$ 的弦长为 $2r$，并不是 $2$ 倍。 …（答）</p>
+      <p>5. 〔$\times$〕反例：若 $\sin A$ 与 $\cos A$ 成反比，则 $\sin A \cos A$ 应为定值。然而，当 $A=30^\circ$ 时，$\sin A \cos A = \frac{\sqrt{3}}{4}$；当 $A=45^\circ$ 时，$\sin A \cos A = \frac{1}{2}$，并非定值。 …（答）</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1950 年 · （4 科选 1）解析Ⅰ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>下图所示的是由 $x=\pm 1$、$y=\pm 1$ 围成的正方形。$x-y$ 在这个正方形中，在下图标有 $+$ 的部分取正值，标有 $-$ 的部分取负值。</p>
+    <p><span class="figdesc">〔图：一个正方形，一条对角线从左下到右上，左上部分标"−"、右下部分标"+"〕</span></p>
+    <p>若用下列各式代替 $x-y$，试问在这个正方形的哪些部分取正或负？仿照上面的例子，将结果记入图中。</p>
+    <ol class="q">
+      <li>$x+y$</li>
+      <li>$x^2-y^2$</li>
+      <li>$(x+y)^2-1$</li>
+      <li>$|x|-|y|$</li>
+      <li>$|x-y|-1$</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $x+y>0$ 的范围即 $y>-x$，如下图所示。<span class="figdesc">〔图：正方形被从左上到右下的对角线分为两半，右上部分标"+"、左下部分标"−"〕</span> …（答）</p>
+      <p>2. $x^2-y^2>0$ 的范围即 $x+y>0, x-y>0$ 或 $x+y<0, x-y<0$ 的范围。如下图所示。<span class="figdesc">〔图：正方形被两条对角线分成四个三角形区域，左右两侧标"+"、上下两侧标"−"〕</span> …（答）</p>
+      <p>3. $(x+y)^2-1>0$ 的范围即 $x+y<-1$ 或 $x+y>1$ 的范围。如下图所示。<span class="figdesc">〔图：正方形内两条平行于对角线的线段切出左下角和右上角的小三角形，这两个小三角形标"+"，中间区域标"−"〕</span> …（答）</p>
+      <p>4. $|x|-|y|>0$ 即 $|x|>|y|$ 的范围，也就是 $x^2>y^2$，即与 $x^2-y^2>0$ 相同的范围。如下图所示。<span class="figdesc">〔图：同第 2 题的图，正方形被两条对角线分成四个区域，左右标"+"、上下标"−"〕</span> …（答）</p>
+      <p>5. 满足 $|x-y|>1$ 的范围是 $x-y<-1$ 或 $x-y>1$ 的范围。如下图所示。<span class="figdesc">〔图：正方形被两条平行线分成三个区域，左上和右下的两个角部区域标"+"，中间带状区域标"−"〕</span> $\cdots$(答)</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <ol class="q">
+      <li>关于 $x$ 的函数 $2x^2+3mx+2m$ 的最小值 $y$ 是关于 $m$ 的什么函数？</li>
+      <li>这个关于 $m$ 的函数 $y$，当 $m$ 取何值时取得最大值？并求该最大值。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p class="note">（注）题干中的「函数」即当时「関数」（函数）的写法。</p>
+      <p>1. $$2x^2+3mx+2m=2\left(x+\frac{3}{4}m\right)^2-\frac{9}{8}m^2+2m$$</p>
+      <p>由此，原函数的最小值为</p>
+      $$y=-\frac{9}{8}m^2+2m \qquad \cdots(\text{答})$$
+      <p>2. 此时，$$y=-\frac{9}{8}m^2+2m=-\frac{9}{8}\left(m-\frac{8}{9}\right)^2+\frac{8}{9}$$</p>
+      <p>由此，当 $m=\frac{8}{9}$ 时，$y$ 取得最大值 $\frac{8}{9}$。 $\cdots$(答)</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>利用 $\log 2=0.3010,\ \log 3=0.4771$ 求下列各式的值。</p>
+    <ol class="q">
+      <li>$\log 125$</li>
+      <li>$\log \cos 30^\circ$</li>
+      <li>$\log \sqrt[3]{0.2}$</li>
+      <li>$6^{52}$ 的首数（位数）</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $$\log_{10} 125 = \log_{10} 5^3 = 3(1-\log_{10} 2) = 3(1-0.3010) = 2.0970$$ $\cdots$(答)</p>
+      <p>2. $$\log_{10} \cos 30^\circ = \log_{10} \frac{\sqrt{3}}{2} = \frac{1}{2}\log_{10} 3 - \log_{10} 2 = \frac{1}{2} \times 0.4771 - 0.3010 = -0.06245 = \overline{1}.93755$$ $\cdots$(答)</p>
+      <p>3. $$\log_{10} \sqrt[3]{0.2} = -\frac{1}{3}\log_{10} 5 = -\frac{1}{3}(1-\log_{10} 2) = -\frac{1}{3} \times 0.6990 = -0.2330 = \overline{1}.7670$$ $\cdots$(答)</p>
+      <p>4. $$\log_{10} 6^{52} = 52(\log_{10} 2 + \log_{10} 3) = 52 \times 0.7781 = 40.4612$$ 由此，$6^{52}$ 的首数为 41。 $\cdots$(答)</p>
+      <p class="note">（注）由于当时尚未出现电子计算机，处理大量乘除运算的有力手段是计算尺，其基础知识就是常用对数。所谓常用对数正是「日常使用」的对数。当时底数常被省略，所指即为常用对数。本题的对数从数值上也可知是常用对数。<br>
+      此外，【解答】中出现的如 $\overline{1}.93755$ 这样的记法，表示的是 $-1+0.93755$ 的意思。例如表示 $\log_{10} 0.2$ 时，比起写 $-0.6990$，写成 $-1+0.3010=\overline{1}.3010$ 能更明确地看出其与 $\log_{10} 2=0.3010$ 的关系。因此，当对数为负值时，采用只将整数部分变为负、小数部分保持正值的表示手法。为了表示整数部分为负，在整数部分的上方加一横线。<br>
+      常用对数 $\log_{10} x$ 的这种意义上的整数部分 $[\log_{10} x]$ 称为首数（characteristic），它表示 $x$ 的位数或小数点后第几位开始出现非零数字；小数部分 $\log_{10} x - [\log_{10} x]$ 称为尾数（mantissa），用于表示十进制下数字的排列顺序。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1950 年 · （4 科选 1）解析Ⅱ</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>求下列极限值。</p>
+    <ol class="q">
+      <li>$\lim_{x \to 1} \dfrac{x^2-3x+2}{x^2-4x+3}$</li>
+      <li>$\lim_{n \to \infty} \left(\log n - \log(n-1)\right)$</li>
+      <li>$\lim_{x \to \infty} \left(\sqrt{x+1}-\sqrt{x-1}\right)$</li>
+      <li>$\lim_{\theta \to 0} \dfrac{1-\cos 3\theta}{\theta^2}$</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $$\lim_{x \to 1} \frac{x^2-3x+2}{x^2-4x+3} = \lim_{x \to 1} \frac{(x-1)(x-2)}{(x-1)(x-3)} = \lim_{x \to 1} \frac{x-2}{x-3} = \frac{-1}{-2} = \frac{1}{2}$$ $\cdots$(答)</p>
+      <p>2. $$\lim_{n \to \infty} (\log n - \log(n-1)) = \lim_{n \to \infty} \log \frac{n}{n-1} = \lim_{n \to \infty} \log\left(1+\frac{1}{n-1}\right) = \log 1 = 0$$ $\cdots$(答)</p>
+      <p>3. $$\lim_{x \to \infty} (\sqrt{x+1}-\sqrt{x-1}) = \lim_{x \to \infty} \frac{(\sqrt{x+1})^2-(\sqrt{x-1})^2}{\sqrt{x+1}+\sqrt{x-1}} = \lim_{x \to \infty} \frac{2}{\sqrt{x+1}+\sqrt{x-1}} = 0$$ $\cdots$(答)</p>
+      <p>4. $$\lim_{\theta \to 0} \frac{1-\cos 3\theta}{\theta^2} = \lim_{\theta \to 0} \frac{1-\cos^2 3\theta}{\theta^2(1+\cos 3\theta)} = \lim_{\theta \to 0} \left(\frac{\sin 3\theta}{3\theta}\right)^2 \frac{9}{1+\cos 3\theta} = \frac{9}{2}$$ $\cdots$(答)</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>设 $f(x)=\dfrac{1-x}{2+x^2}$。</p>
+    <ol class="q">
+      <li>当 $x$ 增大时，$f(x)$ 增大的范围是什么？</li>
+      <li>当 $x$ 增大时，$f(x)$ 减小的范围是什么？</li>
+      <li>求 $f(x)$ 的最大值。</li>
+      <li>求 $f(x)$ 的最小值。</li>
+      <li>画出 $f(x)$ 的图象。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $$f'(x) = \frac{-(x^2+2)+(x-1)(2x)}{(x^2+2)^2} = \frac{x^2-2x-2}{(x^2+2)^2}$$</p>
+      <p>$f'(x)=0$ 成立的条件是 $x=1\pm\sqrt{3}$。<span class="figdesc">〔图：增减表，显示 $x$ 从小到大变化时 $f'(x)$ 的正负与 $f(x)$ 的增减〕</span></p>
+      <p>由此，$f(x)$ 增加的范围是 $x<1-\sqrt{3},\ x>1+\sqrt{3}$。 $\cdots$(答)</p>
+      <p>2. 另外，$f(x)$ 减少的范围是 $1-\sqrt{3}<x<1+\sqrt{3}$。 $\cdots$(答)</p>
+      <p>3. 因为 $\lim_{x \to \pm\infty} f(x)=0$，所以 $f(x)$ 的最大值是
+      $$f(1-\sqrt{3}) = \frac{\sqrt{3}}{6-2\sqrt{3}} = \frac{\sqrt{3}+1}{4}$$ $\cdots$(答)</p>
+      <p>4. $f(x)$ 的最小值是
+      $$f(1+\sqrt{3}) = \frac{1-\sqrt{3}}{4}$$ $\cdots$(答)</p>
+      <p>5. $y=f(x)$ 的 $x$ 截距是 1，$y$ 截距是 $\frac{1}{2}$。另外，$\lim_{x \to \pm\infty} f(x)=0$。综合考虑以上各点作图如下。<span class="figdesc">〔图：一条先升后降再趋近于零的曲线，标注了极值点和截距〕</span> $\cdots$(答)</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>求曲线 $y=\sin x,\ 0 \leqq x \leqq \pi$ 绕 $x$ 轴旋转一周所形成的立体的体积。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>所求的体积为</p>
+      $$\pi \int_{0}^{\pi} \sin^{2} x \, dx = \frac{\pi}{2} \int_{0}^{\pi} (1 - \cos 2x) \, dx = \frac{\pi}{2} \left[ x - \frac{1}{2} \sin 2x \right]_{0}^{\pi} = \frac{\pi^{2}}{2}.$$
+      <p>……（答）</p>
+      <p class="note">（注1）将曲线旋转所得到的立体是曲面，其体积应为 $0$，但感觉那个时代对此并不太讲究。<br>（注2）这一年三角函数的积分似乎尚未从教科书中排除。最初的教学大纲发表于 1951 年。</p>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1950 年 · （4 科选 1）几何</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>下列事项是否成立？若成立，请在编号前的 $\square$ 中打圈（○）。若不成立，请在编号前的 $\square$ 中打叉（×），并画出说明其不成立的图形。</p>
+    <ol class="q">
+      <li>$\square$　外角之和为 $4$ 个直角的凸多边形是四边形。</li>
+      <li>$\square$　对应两边和一角相等的两个锐角三角形是全等的。</li>
+      <li>$\square$　在半径相等的圆中，建立在等长弦上的圆周角相等。</li>
+      <li>$\square$　到构成三角形的三条直线距离相等的点在此平面上有四个。</li>
+    </ol>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. $\times$　<span class="figdesc">〔图：一个三角形，三个顶点处标出外角——任意凸多边形外角和都是 4 直角〕</span>……（答）</p>
+      <p>2. ○　……（答）</p>
+      <p>3. $\times$　<span class="figdesc">〔图：一个圆中两条等长的弦所对的圆周角，标注"不相等"〕</span>……（答）</p>
+      <p>4. ○　……（答）</p>
+      <div class="alt"><strong>【解说】</strong>
+        <p>1. 任意凸多边形的外角和都是 $4$ 个直角。当然三角形也是如此。因此，仅凭这一点无法断定它是四边形。</p>
+        <p>2. 对应的 $2$ 边和 $1$ 角相等的 $2$ 个三角形一般不全等。当等角是 $2$ 边的夹角时全等；但在其他情况下，例如当 $a, b, A$ 相等时，由正弦定理得 $\sin B = \frac{b}{a} \sin A$，此时 $B$ 可能不唯一。然而，如果限制 $B$ 为锐角，则 $B$ 是唯一确定的，可以说这 $2$ 个三角形是全等的。因此，若限制为锐角三角形，则是全等的。</p>
+        <p>3. 建立在一条弦上的圆周角有两种情况，它们互为补角。因此，建立在非直径的等弦上的圆周角未必相等。</p>
+        <p>4. 到构成三角形的三条直线距离相等的点是内心和 $3$ 个旁心，共 $4$ 个点。</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>设一个椭圆的焦点为 $F_1, F_2$。取椭圆上一点 $Q$，试证明：从焦点向 $\triangle F_1 Q F_2$ 在顶点 $Q$ 处的外角平分线所作垂线的垂足 $P$ 位于辅助圆上。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>设椭圆为 $\dfrac{x^{2}}{a^{2}} + \dfrac{y^{2}}{b^{2}} = 1$，且 $F_1(c, 0), F_2(-c, 0)$，其中 $c = \sqrt{a^{2} - b^{2}}$。</p>
+      <p>在 $Q(x_1, y_1)$ 处的外角平分线即为在 $Q$ 处的椭圆切线
+      $$\frac{x_1}{a^{2}} x + \frac{y_1}{b^{2}} y = 1$$
+      即是该直线。</p>
+      <p>过 $F_1$ 向此直线作垂线，其方程为 $y = \dfrac{a^{2} y_1}{b^{2} x_1} (x - c)$。</p>
+      <p>交点的 $x$ 坐标为 $x = \dfrac{a^{4} c y_1^{2} + a^{2} b^{4} x_1}{b^{4} x_1^{2} + a^{4} y_1^{2}}$，$y$ 坐标为 $y = \dfrac{b^{2} a^{2} (a^{2} - c x_1) y_1}{b^{4} x_1^{2} + a^{4} y_1^{2}}$。</p>
+      <p>在此，
+      $$x^{2} + y^{2} = \frac{a^{4} (a^{2} c y_1^{2} + b^{4} x_1)^{2} + a^{4} b^{4} (a^{2} - c x_1)^{2} y_1^{2}}{(b^{4} x_1^{2} + a^{4} y_1^{2})^{2}}$$
+      $$= \frac{a^{4} (b^{4} x_1^{2} + a^{4} y_1^{2}) (c^{2} y_1^{2} + b^{4})}{(b^{4} x_1^{2} + a^{4} y_1^{2})^{2}} = \frac{a^{4} (c^{2} y_1^{2} + b^{4})}{b^{4} x_1^{2} + a^{4} y_1^{2}}.$$
+      又因为 $\dfrac{x_1^{2}}{a^{2}} + \dfrac{y_1^{2}}{b^{2}} = 1$ 且 $c^{2} = a^{2} - b^{2}$，故有
+      $$b^{4} x_1^{2} + a^{4} y_1^{2} = a^{2} (b^{4} + c^{2} y_1^{2}).$$
+      从而，
+      $$x^{2} + y^{2} = a^{2}.$$
+      也就是说，从 $F_1$ 所作垂线的垂足位于辅助圆 $x^{2} + y^{2} = a^{2}$ 上。</p>
+      <p>此外，由对称性可知，从 $F_2$ 所作垂线的垂足也在辅助圆上。（证明完毕）</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>考虑从 $F_1$ 向外角平分线所作垂线的垂足 $P$ 的轨迹。设 $F_1 P$ 与 $F_2 Q$ 延长线的交点为 $F'$。</p>
+        <p>因 $\angle P Q F_1 = \angle P Q F'$ 且 $P Q \perp F_1 F'$，故 $F'$ 是 $F_1$ 关于 $P Q$ 的对称点。</p>
+        <p>于是 $F_1 P = F' P$ 且 $F_1 Q = F' Q$。</p>
+        <p>$F_1 Q + F_2 Q = F' Q + F_2 Q = F_2 F'$ 为定值，即椭圆的长轴长。</p>
+        <p>椭圆中心 $O$ 是连接两焦点的线段 $F_1 F_2$ 的中点，而 $P$ 是 $F_1 F'$ 的中点，故由中位线定理得 $OP = \frac{1}{2} F_2 F' = $ 半长轴的长。</p>
+        <p>因此 $OP$ 为定长。所以 $P$ 位于以 $O$ 为中心、半径为半长轴的圆（辅助圆）的圆周上。</p>
+        <p>由对称性，从 $F_2$ 向 $\angle Q$ 的外角平分线所作垂线的垂足也在辅助圆圆周上。故两垂线的垂足均在辅助圆上。（证明完毕）</p>
+      </div>
+      <p class="note">（注）在 $Q$ 处 $\triangle F_1 Q F_2$ 的外角平分线就是在 $Q$ 处的椭圆切线。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>当经过相交的两个定圆的一个交点 $A$ 的任意直线再次与该两圆相交于点 $Q, R$ 时，求按定比分割线段 $QR$ 的点 $P$ 的轨迹。</p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>使两圆的圆心在 $x$ 轴上，且 $A$ 在 $y$ 轴上。设两圆圆心为 $B(b, 0), C(c, 0)$，且 $A$ 的坐标为 $(0, a)$。</p>
+      <p><span class="figdesc">〔图：平面直角坐标系中，两个圆相交于 $y$ 轴上的点 $A$，圆心分别在 $x$ 轴上，一条直线经过 $A$ 截两圆于 $Q, R$〕</span></p>
+      <p>以 $B$ 为圆心的圆的方程为 $(x - b)^{2} + y^{2} = b^{2} + a^{2}$。</p>
+      <p>当经过 $A$ 的直线平行于 $y$ 轴时，$Q = R$ 是关于 $x$ 轴与 $A$ 对称的点 $(0, -a)$。此时 $QR$ 不构成线段。</p>
+      <p>当经过 $A$ 的直线斜率为 $m$ 时，$y = mx + a$。代入以 $B$ 为圆心的圆的方程，
+      $$(x - b)^{2} + (mx + a)^{2} = b^{2} + a^{2}, \quad (1 + m^{2}) x^{2} - 2(b - ma) x = 0.$$
+      令 $x \neq 0$，
+      $$x = \frac{2(b - ma)}{1 + m^{2}}, \quad y = \frac{2mb - (m^{2} - 1)a}{1 + m^{2}}.$$
+      于是 $Q \left( \dfrac{2(b - ma)}{1 + m^{2}},\ \dfrac{2mb - (m^{2} - 1)a}{1 + m^{2}} \right)$。</p>
+      <p>同理 $R \left( \dfrac{2(c - ma)}{1 + m^{2}},\ \dfrac{2mc - (m^{2} - 1)a}{1 + m^{2}} \right)$。</p>
+      <p>将 $QR$ 按 $t : 1-t$ 分割的点 $P$ 的坐标是
+      $$\left( \frac{2\{b(1 - t) + ct - ma\}}{1 + m^{2}},\ \frac{2m\{b(1 - t) + ct\} - (m^{2} - 1)a}{1 + m^{2}} \right)$$</p>
+      <p>令 $b(1 - t) + ct = d$，则 $P$ 的坐标是
+      $$P\left(\frac{2(d-m a)}{1+m^{2}},\ \frac{2 m d-\left(m^{2}-1\right) a}{1+m^{2}}\right).$$</p>
+      <p>这无非是将 $Q$ 的坐标中的 $b$ 替换为 $d$ 所得。因此，可知 $P$ 在定圆
+      $$(x-d)^{2}+y^{2}=d^{2}+a^{2}$$
+      上。</p>
+      <p>此外，对于经过 $A$ 的直线中所有不平行于 $y$ 轴的方向，都存在 $Q, R$ 以及按比例分割线段 $QR$ 的点，因此定圆中除 $(0,-a)$ 以外的所有点都有可能成为轨迹的一部分。</p>
+      <p>因此，$P$ 的轨迹是经过两圆交点的圆中除去 $(0,-a)$ 的部分。 …(答)</p>
+      <p class="note">（注）$P$ 在直线 $y=m x+a$ 上，且 $x=\dfrac{2(d-m a)}{1+m^{2}}$。由此消去 $m$，可以推导出
+      $$(x-d)^{2}+y^{2}=d^{2}+a^{2} \quad ((x, y) \neq(0,-a))$$</p>
+      <div class="alt"><strong>【别解】</strong>
+        <p>设两圆的交点中异于 $A$ 的点为 $H$。设以 $A$ 为端点的两圆的直径的另一端分别为 $L, M$。但是，假设 $Q$ 与 $L$、$R$ 与 $M$ 分别在同一个圆上。</p>
+        <p>由直径所对的圆周角可知，$\angle A Q L, \angle A R M$ 是直角。在线段 $LM$ 上取定点 $K$，使得 $QP: PR = LK: KM$ 成立。由于 $QL \parallel RM$，故 $QL \parallel PK$。此外，$H$ 是从 $A$ 向直线 $LM$ 所作垂线的垂足。<span class="figdesc">〔图：两个相交的圆，标有点 $Q, L, P, K, H, A, R, M$ 及相关线段〕</span></p>
+        <p>因此，$\angle KPA$ 是直角。因为 $K$ 是定点，所以 $P$ 在以 $AK$ 为直径的圆周上。此外，$H$ 也在这个圆周上。</p>
+        <p>在经过 $A$ 的直线中，关于 $AH$ 对称方向（在两圆上方相交的关系），两圆与该直线的交点重合，无法形成线段 $QR$。</p>
+        <p>另外，在经过 $A$ 的直线中，凡是不平行于 $AH$ 的直线，都存在两个不同的交点 $Q, R$，也存在按比例分割线段 $QR$ 的点。因此，定圆中除 $H$ 以外的所有点都有可能成为轨迹的一部分。</p>
+        <p>从而，$P$ 的轨迹是经过 $AH$ 的圆中除去 $H$ 的部分。 …(答)</p>
+      </div>
+    </div>
+  </details>
+</section>
+
+<h3 class="subject">1950 年 · （4 科选 1）一般数学</h3>
+
+<section class="problem">
+  <h4>第 1 问</h4>
+  <div class="statement">
+    <p>牛肉和鸡卵（鸡蛋）中含有的蛋白质量和热量如下表所示。</p>
+    <p>在 100g 鸡卵的基础上，加入多少克以上的牛肉，才能制作出蛋白质含量在 40g 以上、热量在 350Cal 以上的食品？</p>
+    <table class="mini">
+      <tr><th></th><th>蛋白质 %</th><th>Cal / 每 100g</th></tr>
+      <tr><td>牛肉</td><td>20</td><td>140</td></tr>
+      <tr><td>鸡卵</td><td>13</td><td>150</td></tr>
+    </table>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>根据表格，100g 鸡卵的蛋白质含量为 13g。为了达到 40g 以上，还需要 27g。用牛肉来补充这部分需要 $\frac{27}{0.2}=135\,\mathrm{g}$ 的牛肉。</p>
+      <p>根据表格，100g 鸡卵的热量为 150Cal。为了达到 350Cal 以上，还需要 200Cal。用牛肉来补充这部分需要 $\frac{200}{140} \times 100=143\,\mathrm{g}$ 的牛肉。</p>
+      <p>综上所述，需要牛肉 143g。 …（答）</p>
+      <p class="note">（注）将「多少克以上」作为整数回答。若用分数表示则为 $\frac{1000}{7}=142\frac{6}{7}\,\mathrm{g}$，若用小数表示则为 $142.\dot{8}5714\dot{2}\,\mathrm{g}$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 2 问</h4>
+  <div class="statement">
+    <p>对某个变量进行 $N$ 次测量，得到数值 $x_{1}, x_{2}, \cdots, x_{n}$，它们分别出现了 $f_{1}, f_{2}, \cdots, f_{n}$ 次（$f_{1}+f_{2}+\cdots+f_{n}=N$）。</p>
+    <ol class="q">
+      <li>这个变量的平均值 $M$ 如何表示？</li>
+      <li>当取一个接近 $M$ 的数为 $M'$ 时，
+        $$x_{1}-M'=h_{1}, \quad x_{2}-M'=h_{2}, \quad \cdots, \quad x_{n}-M'=h_{n}$$
+        若如此，则 $M$ 用 $M'$ 和 $h_{1}, h_{2}, \cdots, h_{n}$ 如何表示？</li>
+      <li>在某次体格检查中，得到了如下的身高频数分布表，请据此求平均身高。</li>
+    </ol>
+    <table class="mini">
+      <tr><th>身高 cm</th><th>人数</th></tr>
+      <tr><td>150–155</td><td>3</td></tr>
+      <tr><td>155–160</td><td>6</td></tr>
+      <tr><td>160–165</td><td>32</td></tr>
+      <tr><td>165–170</td><td>17</td></tr>
+      <tr><td>170–175</td><td>10</td></tr>
+      <tr><td>175–180</td><td>2</td></tr>
+    </table>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>1. 由平均值的定义得
+      $$M=\frac{f_{1} x_{1}+f_{2} x_{2}+\cdots+f_{n} x_{n}}{N}$$
+      …(答)</p>
+      <p>2. 因为 $x_{i}=M'+h_{i}$，所以
+      $$M=\frac{\sum_{i=1}^{n} f_{i} x_{i}}{N}=\frac{\sum_{i=1}^{n} f_{i}\left(M'+h_{i}\right)}{N}=\frac{\sum_{i=1}^{n} f_{i} M'+\sum_{i=1}^{n} f_{i} h_{i}}{N}=M'+\frac{\sum_{i=1}^{n} f_{i} h_{i}}{N}$$
+      即
+      $$M=M'+\frac{f_{1} h_{1}+f_{2} h_{2}+\cdots+f_{n} h_{n}}{N}$$
+      …(答)</p>
+      <p>3. 设 $M'=162.5$，$h_{1}=-10, h_{2}=-5, h_{3}=0, h_{4}=5, h_{5}=10, h_{6}=15$，$f_{1}=3, f_{2}=6, f_{3}=32$，$f_{4}=17, f_{5}=10, f_{6}=2$，$N=3+6+32+17+10+2=70$，则
+      $$M=162.5+\frac{-10 \times 3-5 \times 6+0 \times 32+5 \times 17+10 \times 10+15 \times 2}{70}=164.7$$
+      因此，身高的平均值为 $164.7\,\mathrm{cm}$。 …(答)</p>
+      <p class="note">（注）准确地说 $162.5+2.2\dot{1}4285\dot{7}=164.7\dot{1}4285\dot{7}$。</p>
+    </div>
+  </details>
+</section>
+
+<section class="problem">
+  <h4>第 3 问</h4>
+  <div class="statement">
+    <p>下图是某屋顶的平面图。该屋顶由四个面组成，这些面的坡度均为 $\frac{3}{4}$。$AB$、$BC$ 的长度分别为 18m、8m。试求该屋顶的全面积以及 $AE$ 的长度和坡度。</p>
+    <p><span class="figdesc">〔图：矩形 $ABCD$ 内部有线段 $EF$，连接 $DE, EA, CF, FB$，构成四坡屋顶平面图〕</span></p>
+  </div>
+  <details class="solution">
+    <summary>解答</summary>
+    <div class="sol-body">
+      <p>由于所有面的坡度相等，所以在平面图上，$\angle DAE, \angle ADE, \angle CBF, \angle BCF$ 均为 $45^{\circ}$。</p>
+      <p>设 $AD$、$BC$ 的中点分别为 $M$、$N$，因为 $AM=4\,\mathrm{m}$，所以 $EF=18-4-4=10\,\mathrm{m}$。</p>
+      <p><span class="figdesc">〔图：带有辅助线 $MN$ 及标注点的几何图形〕</span></p>
+      <p>因为坡度为 $\frac{3}{4}$，所以 $E$、$F$ 的高度为 $4 \times \frac{3}{4}=3\,\mathrm{m}$。</p>
+      <p>$EM$ 的实际长度为 $\sqrt{4^{2}+3^{2}}=5\,\mathrm{m}$。这个长度也是梯形 $ABFE$、梯形 $CDEF$、$\triangle ADE$、$\triangle BCF$（斜面）的高。</p>
+      <p>因此，屋顶的全面积为
+      $$\triangle ADE + \text{梯形}\,ABFE + \triangle BCF + \text{梯形}\,CDEF = 2 \times \left\{\frac{1}{2} AD \cdot ME + \frac{1}{2}(AB+EF) \cdot ME\right\} = 180\,\mathrm{m}^{2}$$
+      …(答)</p>
+      <p>$AE$ 的长度为 $\sqrt{4^{2}+4^{2}+3^{2}}=\sqrt{41}\,\mathrm{m}$。 …(答)</p>
+      <p>坡度为 $\dfrac{3}{4\sqrt{2}}=\dfrac{3}{8}\sqrt{2}$。 …(答)</p>
+      <p class="note">（注）关于投影图，请参照 1974 年理科第 3 问的（注）。</p>
+    </div>
+  </details>
+</section>
+
+<footer>
+  <p>译本范围：原书第 1 章 1.1 节「新制东京大学的发足（1949 年）」所收 1949–1950 年全部试题与解答。后续年份（1951 起）可按同格式续译追加。</p>
+  <p>翻译方式：原书扫描页逐页视觉识别 → 数学公式转写 LaTeX → 中文翻译；公式由 KaTeX 渲染。</p>
+</footer>
+
+</div>
+</body>
+</html>
