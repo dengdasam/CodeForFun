@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CodeForFun · 单文件 HTML 目录</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%233B5A6A'/><rect x='28' y='28' width='44' height='44' rx='6' fill='%23FFFFFF'/></svg>">
-<script defer src="https://cdn.jsdelivr.net/npm/lucide@1.71.0/dist/umd/lucide.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lucide@1.71.0/dist/umd/lucide.min.js" onerror="window.__lucideFailed=true"></script>
 <style>
 :root{
   --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
@@ -249,7 +249,7 @@ footer{flex:0 0 auto;background:var(--paper);border-top:1px solid var(--line);pa
 </div>
 
 <footer>
-<span>数据来源：GitHub API · dengdasam/CodeForFun · 图标：Lucide v1.71.0（ISC 许可，jsDelivr CDN）</span>
+<span>数据来源：GitHub API · dengdasam/CodeForFun · 图标：Lucide v1.71.0（ISC 许可，jsDelivr / unpkg CDN）</span>
 <span>主题跟随系统，可手动切换 · 单文件即开即用</span>
 </footer>
 
@@ -348,11 +348,33 @@ function fileEmoji(d){
   return "file-text";
 }
 function ico(name){ return `<i class="ico" data-lucide="${name}"></i>`; }
+let iconTimer = null;
 function ensureIcons(){
-  if(!window.lucide || !window.lucide.createIcons) return;
-  window.lucide.createIcons({attrs:{"stroke-width":1.5, width:14, height:14, "aria-hidden":"true"}});
+  if(window.lucide && window.lucide.createIcons){
+    window.lucide.createIcons({attrs:{"stroke-width":1.5, width:14, height:14, "aria-hidden":"true"}});
+    return;
+  }
+  if(iconTimer) return;
+  iconTimer = setInterval(function(){
+    if(window.lucide && window.lucide.createIcons){
+      clearInterval(iconTimer); iconTimer = null; ensureIcons();
+    }
+  }, 400);
+  setTimeout(function(){ if(iconTimer){ clearInterval(iconTimer); iconTimer = null; } }, 15000);
 }
-window.addEventListener("load", ensureIcons);
+function loadFallbackIcons(){
+  if(window.lucide || window.__lucideFallback) return;
+  window.__lucideFallback = true;
+  var s = document.createElement("script");
+  s.src = "https://unpkg.com/lucide@1.71.0/dist/umd/lucide.min.js";
+  s.onload = ensureIcons;
+  document.head.appendChild(s);
+}
+window.addEventListener("load", function(){
+  ensureIcons();
+  if(window.__lucideFailed) loadFallbackIcons();
+});
+setTimeout(loadFallbackIcons, 3000);
 function esc2(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function rel(iso){
   if(!iso) return "";
