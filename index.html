@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CodeForFun · 单文件 HTML 目录</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%233B5A6A'/><rect x='28' y='28' width='44' height='44' rx='6' fill='%23FFFFFF'/></svg>">
+<script defer src="https://cdn.jsdelivr.net/npm/lucide@1.71.0/dist/umd/lucide.min.js"></script>
 <style>
 :root{
   --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
@@ -114,6 +115,11 @@ select:focus{border-color:var(--accent)}
 .item .fi{flex:none;width:26px;height:26px;border:1px solid var(--line);border-radius:4px;
   background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:13px}
 .item.active .fi{background:var(--paper);border-color:var(--accent-line)}
+.ico{display:inline-flex;width:14px;height:14px;align-items:center;justify-content:center;flex:none;color:var(--ink2);vertical-align:-2px}
+.ic svg,.fi svg,.gi svg,.thumb .cap svg{width:14px;height:14px;color:var(--ink2);vertical-align:-2px}
+svg.lucide{stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.navi.on .ic .ico,.navi.on .ic svg,.item.active .fi .ico,.item.active .fi svg{color:var(--accent)}
+.grp .gi .ico,.grp .gi svg,.thumb .cap .ico,.thumb .cap svg{color:var(--ink3)}
 .item .meta{flex:1;min-width:0}
 .item .t{font-size:12.5px;font-weight:500;color:var(--ink);word-break:break-word}
 .item .f{font-size:11px;color:var(--ink3);margin-top:2px;word-break:break-all;font-variant-numeric:tabular-nums}
@@ -197,7 +203,7 @@ footer{flex:0 0 auto;background:var(--paper);border-top:1px solid var(--line);pa
 <div class="row"><span>最近更新</span><b id="sideUpd">–</b></div>
 </div>
 <div class="side-status">目录由 GitHub trees API 自动生成，新增 .html 会自动出现。点击卡片全屏预览。</div>
-<div class="side-foot">数据来源：dengdasam/CodeForFun<br>单文件 · 零依赖 · 即开即用</div>
+<div class="side-foot">数据来源：dengdasam/CodeForFun<br>图标由 Lucide CDN 提供，离线时留空位</div>
 </aside>
 
 <main class="content">
@@ -243,8 +249,8 @@ footer{flex:0 0 auto;background:var(--paper);border-top:1px solid var(--line);pa
 </div>
 
 <footer>
-<span>数据来源：GitHub API · dengdasam/CodeForFun · 主题跟随系统，可手动切换</span>
-<span>单文件 HTML · 零依赖 · 即开即用</span>
+<span>数据来源：GitHub API · dengdasam/CodeForFun · 图标：Lucide v1.71.0（ISC 许可，jsDelivr CDN）</span>
+<span>主题跟随系统，可手动切换 · 单文件即开即用</span>
 </footer>
 
 <script>
@@ -306,20 +312,20 @@ const TITLE_MAP = {
   "东京大学数学入试_1951-1954_中文译本.html":"东京大学数学入学考试 1951–1954 · 中文译本",
   "2025年省份与城市财政收入混排榜.html":"2025年省份与城市财政收入混排榜 · 99行 × 人口/GDP/财政"
 };
-const CAT_ICON = { "研究":"📊", "种植日历":"🌱", "组件":"🧩", "根目录":"📌", "数学":"📐" };
+const CAT_ICON = { "研究":"chart-no-axes-combined", "种植日历":"sprout", "组件":"blocks", "根目录":"folder", "数学":"sigma" };
 const CAT_LABEL = { "种植日历":"种植日历", "组件":"组件", "根目录":"根目录", "研究":"研究", "数学":"数学" };
 /* 卡片图标：按内容关键词 */
 const EMOJI_RULES = [
-  [/混排榜|省份与城市/, "📊"],
-  [/公积金|养老金|缴存|个贷/, "💰"],
-  [/辣椒|哈巴纳达|哈拉佩纽|种植|日历/, "🌱"],
-  [/旅居|北海|沿海|春晓|房价|买房|两居/, "🌊"],
-  [/竞品|城经|对标|拆解|比莱洛|投资法则/, "📈"],
-  [/人口/, "👥"],
-  [/宁波|落户|区县|定居|财政/, "🏙️"],
-  [/WMS|校验|告警|规范/, "🏭"],
-  [/输入框|组件/, "🧩"],
-  [/东京大学|入试|数学|试题/, "📐"]
+  [/混排榜|省份与城市/, "table-2"],
+  [/公积金|养老金|缴存|个贷/, "wallet"],
+  [/辣椒|哈巴纳达|哈拉佩纽|种植|日历/, "sprout"],
+  [/旅居|北海|沿海|春晓|房价|买房|两居/, "waves"],
+  [/竞品|城经|对标|拆解|比莱洛|投资法则/, "trending-up"],
+  [/人口/, "users"],
+  [/宁波|落户|区县|定居|财政/, "building-2"],
+  [/WMS|校验|告警|规范/, "factory"],
+  [/输入框|组件/, "component"],
+  [/东京大学|入试|数学|试题/, "sigma"]
 ];
 let DATA = [];
 let active = null;
@@ -339,8 +345,14 @@ function catOf(path){ return path.includes("/") ? path.split("/").slice(0,-1).jo
 function fileEmoji(d){
   const s = d.title + " " + d.name;
   for(const [re, ic] of EMOJI_RULES) if(re.test(s)) return ic;
-  return "·";
+  return "file-text";
 }
+function ico(name){ return `<i class="ico" data-lucide="${name}"></i>`; }
+function ensureIcons(){
+  if(!window.lucide || !window.lucide.createIcons) return;
+  window.lucide.createIcons({attrs:{"stroke-width":1.5, width:14, height:14, "aria-hidden":"true"}});
+}
+window.addEventListener("load", ensureIcons);
 function esc2(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
 function rel(iso){
   if(!iso) return "";
@@ -415,12 +427,13 @@ function renderCats(){
   DATA.forEach(d=>{ counts[d.cat] = (counts[d.cat]||0)+1; });
   const cats = ["all", ...Array.from(new Set(DATA.map(d=>d.cat)))];
   const label = c => c==="all" ? "全部" : (CAT_LABEL[c] || c);
-  const icon = c => c==="all" ? "·" : (CAT_ICON[c] || "·");
+  const icon = c => c==="all" ? "layout-grid" : (CAT_ICON[c] || "file-text");
   document.getElementById("cats").innerHTML = cats.map(c=>
     `<div class="navi ${catFilter===c?'on':''}" onclick="setCat('${esc2(c)}')">
-       <span class="ic">${icon(c)}</span><span class="nm">${label(c)}</span>
+       <span class="ic">${ico(icon(c))}</span><span class="nm">${label(c)}</span>
        <span class="n">${c==="all"?DATA.length:counts[c]}</span>
      </div>`).join("");
+  ensureIcons();
 }
 function setCat(c){ catFilter = c; renderCats(); render(); }
 function jumpCat(c){ setCat(c); document.getElementById("browse").scrollIntoView({behavior:"smooth"}); }
@@ -445,7 +458,7 @@ function visibleItems(){
 function itemHTML(d){
   return `
     <div class="item ${active===d.path?'active':''}" onclick="openFile('${enc(d.path)}')">
-      <div class="fi">${fileEmoji(d)}</div>
+      <div class="fi">${ico(fileEmoji(d))}</div>
       <div class="meta">
         <div class="t">${d.title}</div>
         <div class="f">${d.path}${d.size?` · ${(d.size/1024).toFixed(1)} KB`:""}${d.updated?` · ${rel(d.updated)}`:""}</div>
@@ -472,7 +485,7 @@ function render(){
     const byCat = {};
     items.forEach(d=>{ (byCat[d.cat] = byCat[d.cat]||[]).push(d); });
     for(const c of Object.keys(byCat)){
-      listHTML += `<div class="grp"><span class="gt"><span class="gi">${CAT_ICON[c]||"·"}</span>${CAT_LABEL[c]||c}</span>
+      listHTML += `<div class="grp"><span class="gt"><span class="gi">${ico(CAT_ICON[c]||"file-text")}</span>${CAT_LABEL[c]||c}</span>
         <span class="gn">${byCat[c].length} 张</span><span class="gl"></span></div>`;
       listHTML += byCat[c].map(d=>itemHTML(d)).join("");
     }
@@ -484,7 +497,7 @@ function render(){
     <div class="thumb ${active===d.path?'active':''}" onclick="openFile('${enc(d.path)}')">
       <iframe src="${pathEnc(d.path)}" loading="lazy" title="${esc2(d.title)}" tabindex="-1"></iframe>
       <div class="cap">
-        <div class="t">${fileEmoji(d)} ${d.title}</div>
+        <div class="t">${ico(fileEmoji(d))} ${d.title}</div>
         <div class="f">${d.path}${d.updated?` · ${rel(d.updated)}`:""}</div>
       </div>
     </div>`).join("");
@@ -492,6 +505,7 @@ function render(){
   listEl.innerHTML = listHTML;
   gridEl.innerHTML = gridHTML;
   document.getElementById("browse").className = "browse " + (view==="grid"?"view-grid":"view-list");
+  ensureIcons();
 }
 
 /* ===================== 预览（点击弹窗） ===================== */
