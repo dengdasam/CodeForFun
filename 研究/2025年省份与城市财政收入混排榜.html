@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2025年省份与城市财政收入混排榜 · 双栏文档站</title>
+<style>
+:root{
+  --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
+  --line:#E2E7EB; --line2:#EDF0F3; --code:#F5F7F9;
+  --accent:#3B5A6A; --accent-soft:#EAF0F3; --accent-line:#C9D6DE;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.layout{display:flex;align-items:flex-start;max-width:1400px;margin:0 auto;min-height:100vh}
+.sidebar{position:sticky;top:0;flex:0 0 238px;width:238px;height:100vh;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:26px 18px 22px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:26px}
+.brand .sq{width:22px;height:22px;border-radius:5px;background:var(--accent);flex:0 0 auto}
+.brand .t{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.brand .s{font-size:11px;color:var(--ink3)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--ink3);margin:0 0 9px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--ink2);font-size:12.5px;padding:7px 9px;border-radius:5px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.nav a span{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav a.on span{color:var(--accent)}
+.side-rule{height:1px;background:var(--line);margin:22px 0 18px}
+.side-block{margin-bottom:20px}
+.side-block .k{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
+.side-block .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:3px 0}
+.side-block .row b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-status{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:9px 11px;font-size:11.5px;color:var(--accent);line-height:1.6;margin-bottom:18px}
+.side-foot{margin-top:auto;font-size:11px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+.content{flex:1;min-width:0;max-width:1120px;padding:38px 40px 76px}
+.masthead{padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--accent);margin-bottom:11px}
+h1{font-family:var(--sans);font-size:29px;font-weight:600;letter-spacing:-.025em;line-height:1.3;margin:0 0 9px}
+.masthead .meta{color:var(--ink2);font-size:12.5px;margin:0}
+.notice{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:14px 17px;margin-bottom:24px;font-size:12.5px;color:var(--ink2);line-height:1.75}
+.notice b{color:var(--accent);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 15px 15px}
+.stat .n{font-family:var(--sans);font-size:26px;font-weight:600;line-height:1.2;letter-spacing:-.035em;color:var(--ink)}
+.stat .l{color:var(--ink2);font-size:11.5px;margin-top:4px}
+.sec{scroll-margin-top:76px;margin:36px 0 14px;display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sec .num{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.08em;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.sec h2{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0}
+.tag{font-size:11px;padding:2px 9px;border:1px solid var(--line);border-radius:5px;margin-left:auto;color:var(--ink2);background:var(--paper);white-space:nowrap}
+.callout{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 17px;font-size:12.5px;color:var(--ink2);margin-bottom:12px}
+.callout b{color:var(--accent)}
+.callout ul{margin:9px 0 0;padding-left:20px}
+.callout li{margin-bottom:5px}
+.toolbar{position:sticky;top:12px;z-index:6;display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:14px}
+.toolbar .lead{font-size:12.5px;color:var(--ink2)}
+.toolbar .lead b{font-size:15px;font-weight:600;color:var(--accent);margin:0 3px}
+.toolbar .spacer{flex:1}
+button{font:inherit;font-size:11.5px;letter-spacing:.01em;padding:5px 12px;border:1px solid var(--line);background:transparent;border-radius:5px;cursor:pointer;color:var(--ink2);transition:all .15s}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+input[type=search]{font:inherit;font-size:12px;padding:5px 10px;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);width:170px;outline:none}
+input[type=search]:focus{border-color:var(--accent)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:1020px}
+th,td{text-align:right;padding:8px 11px;border-bottom:1px solid var(--line2);vertical-align:middle;white-space:nowrap}
+th:nth-child(2),th:nth-child(3),th:nth-child(4),td:nth-child(2),td:nth-child(3),td:nth-child(4){text-align:left}
+th{font-size:11px;font-weight:600;letter-spacing:.03em;color:var(--ink2);background:#F1F5F7;position:sticky;top:64px;z-index:2;cursor:pointer;user-select:none;border-bottom:1px solid var(--line)}
+th:hover{color:var(--accent)}
+th.asc::after{content:" ↑";color:var(--accent)}
+th.desc::after{content:" ↓";color:var(--accent)}
+td{font-variant-numeric:tabular-nums}
+td b{font-weight:600;color:var(--ink)}
+tr.prov td{background:#F4F8FA}
+tr.prov td:first-child{border-left:2px solid var(--accent)}
+tr.muni td{background:#FBFDFE}
+tr.stop td{background:var(--accent-soft);border-top:1px solid var(--accent-line);font-weight:600}
+tbody tr:hover td{background:#EDF4F7}
+.mini th{position:static!important;cursor:default}
+.mini th:hover{color:var(--ink2)}
+.mini{min-width:520px}
+.badge{display:inline-block;font-size:10.5px;line-height:1.5;padding:1px 7px;border:1px solid var(--line);border-radius:4px;color:var(--ink2);background:var(--paper)}
+.badge.p{border-color:var(--accent-line);color:var(--accent);background:var(--accent-soft)}
+.badge.m{border-color:#B9CBD5;color:#3B5A6A}
+.stopmark{display:inline-block;margin-left:7px;font-size:10px;color:var(--accent);border:1px solid var(--accent-line);border-radius:4px;padding:0 6px}
+.up{color:#A0503F}.down{color:#3F6B5F}
+details{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0 18px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;font-size:13px;font-weight:500;padding:13px 0;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-block;width:17px;font-family:var(--mono);color:var(--ink3);font-size:14px}
+details[open] summary::before{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line2)}
+details ul{margin:12px 0 14px;padding-left:22px;color:var(--ink2);font-size:12.5px}
+details li{margin-bottom:6px}
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.8}
+.to-top{position:fixed;right:26px;bottom:26px;z-index:20;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--accent);font-size:11.5px;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s,border-color .15s,background .15s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);background:var(--accent-soft)}
+.to-top svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;width:100%;height:auto;flex:none;border-right:none;border-bottom:1px solid var(--line);padding:16px 18px}
+  .brand{margin-bottom:14px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav a{border-left:none;border-bottom:2px solid transparent;border-radius:4px}
+  .nav a.on{border-left:none;border-bottom-color:var(--accent)}
+  .side-rule,.side-block,.side-status,.side-foot{display:none}
+  .content{padding:26px 18px 60px;max-width:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec{scroll-margin-top:70px}
+  h1{font-size:25px}
+  .to-top{right:14px;bottom:14px}
+  th{top:0}
+}
+@media print{
+  body{background:#fff}.sidebar{display:none}.content{padding:0;max-width:none}
+  .toolbar,button,input,.to-top{display:none!important}
+  th{position:static}
+  .callout,.table-wrap,details{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+<div class="brand"><div class="sq"></div><div><div class="t">财政混排榜</div><div class="s">2025 年度 · 一般公共预算收入</div></div></div>
+<div class="nav-label">目录</div>
+<nav class="nav">
+<a href="#sec1" class="on"><span>01</span>口径与读法</a>
+<a href="#sec2"><span>02</span>完整混排榜</a>
+<a href="#sec3"><span>03</span>关键结论</a>
+<a href="#sec4"><span>04</span>数据来源</a>
+</nav>
+<div class="side-rule"></div>
+<div class="side-block">
+<div class="k">榜单概况</div>
+<div class="row"><span>总行数</span><b>99</b></div>
+<div class="row"><span>省 / 自治区</span><b>27</b></div>
+<div class="row"><span>地级市</span><b>68</b></div>
+<div class="row"><span>直辖市</span><b>4</b></div>
+<div class="row"><span>截止线</span><b>317.84 亿</b></div>
+</div>
+<div class="side-status">省份与城市存在包含关系，本榜只作位次对照，<b>不可加总</b>；直辖市归入城市组。</div>
+<div class="side-foot">数据来源：各省 / 市财政厅预算执行报告，经鸥维数据、聚汇数据 2025 年度榜单汇总。<br>生成日期：2026-11-10</div>
+</aside>
+
+<main class="content">
+
+<header class="masthead">
+<div class="eyebrow">财政 · 区域对比 · 2025</div>
+<h1>2025 年省份与城市财政收入混排榜</h1>
+<p class="meta">一般公共预算收入口径 &nbsp;·&nbsp; 省与城市统一降序 &nbsp;·&nbsp; 直辖市归城市组 &nbsp;·&nbsp; 排完 27 个省 / 自治区即停止</p>
+</header>
+
+<div class="notice"><b>先说最重要的一句：省份和城市不是互斥主体，不能加总。</b><br>
+省级数字是「省本级＋全省市县」的合计，已经包含了表内同省城市的收入（例如广东 13,938.94 亿含深圳 4,163.80 亿、广州 2,183.00 亿）。这张榜回答的是「谁的钱多、谁插在谁前面」，不是「全国有多少钱」。4 个直辖市按你的要求归入城市组，不再重复计入省份组，因此省份组为 27 个省 / 自治区。</div>
+
+<div class="stats">
+<div class="stat"><div class="n">99</div><div class="l">混排总行数</div></div>
+<div class="stat"><div class="n">27</div><div class="l">省 / 自治区</div></div>
+<div class="stat"><div class="n">68</div><div class="l">地级市</div></div>
+<div class="stat"><div class="n">317.84</div><div class="l">截止线（亿元 · 西藏）</div></div>
+<div class="stat"><div class="n">4,163.80</div><div class="l">最高城市（亿元 · 深圳）</div></div>
+</div>
+
+<div class="sec" id="sec1"><span class="num">01</span><h2>口径与读法</h2><span class="tag">4 条</span></div>
+<div class="callout">
+<b>收入口径</b>：地方一般公共预算收入（地方本级），不含政府性基金、不含上划中央、不含转移支付。宁波另有「财政总收入」口径含上划中央，不参与本榜。
+<ul>
+<li><b>截止规则</b>：按收入降序混排，一直排到最后一个省份 <b>西藏 317.84 亿元</b> 出现即收尾。巧的是下一个城市宿迁 316.56 亿元刚好落在线外，所以榜单自然停在西藏，没有截断任何城市。</li>
+<li><b>列的定义</b>：人均财政 = 财政收入 ÷ 常住人口；汲取率 = 财政收入 ÷ GDP。两者都是把「体量」换成「强度」的衍生指标，不是官方发布值。</li>
+<li><b>人口年份</b>：绝大多数为 2025 年末常住人口；带 <b>*</b> 的 5 个城市（南通、泉州、南昌、芜湖、宜宾）公开榜单最新为 2024 年，未做外推。鄂尔多斯 224.50 万人取自市统计公报官方值。</li>
+<li><b>同名冲突</b>：石家庄在两个汇总源里分别为 758.80 / 727.50 亿元，本榜统一采用与 GDP、人口同源的聚汇数据 758.80 亿元；其余个别城市两源差异在 1% 以内。</li>
+</ul>
+</div>
+
+<div class="sec" id="sec2"><span class="num">02</span><h2>完整混排榜</h2><span class="tag">99 行 · 可排序 / 筛选 / 搜索</span></div>
+<div class="toolbar">
+<span class="lead">显示 <b id="shown">99</b> / 99 行</span>
+<button type="button" data-f="all" class="on">全部</button>
+<button type="button" data-f="prov">仅省份</button>
+<button type="button" data-f="city">仅地级市</button>
+<button type="button" data-f="muni">仅直辖市</button>
+<span class="spacer"></span>
+<input type="search" id="q" placeholder="搜索名称或所属省份" aria-label="搜索">
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th data-k="rank">#</th><th data-k="kind">类型</th><th data-k="name">名称</th><th data-k="parent">所属</th>
+<th data-k="pop">人口 万人</th><th data-k="gdp">GDP 亿元</th><th data-k="fin">财政收入 亿元</th>
+<th data-k="yoy">同比</th><th data-k="percap">人均财政 元</th><th data-k="draw">汲取率</th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<div class="callout" style="margin-top:12px">点击表头可切换排序；省份行带浅色底与左侧主色线，直辖市行单独标记，最后一行西藏标注「截止线」。<b>数字均保留原榜单精度，衍生指标按四舍五入显示。</b></div>
+
+<div class="sec" id="sec3"><span class="num">03</span><h2>关键结论</h2><span class="tag">5 条</span></div>
+<div class="callout"><b>1 · 前 12 位里有 3 个是城市。</b><br>
+<div style="overflow-x:auto;margin-top:10px"><table class="mini">
+<thead><tr><th style="text-align:left">位次</th><th style="text-align:left">名称</th><th style="text-align:left">类型</th><th>财政收入</th><th>GDP</th></tr></thead>
+<tbody><tr><td style='text-align:left'>1</td><td style='text-align:left'><b>广东</b></td><td style='text-align:left'>省份</td><td>13,938.94</td><td>145,846.8</td></tr><tr><td style='text-align:left'>2</td><td style='text-align:left'><b>江苏</b></td><td style='text-align:left'>省份</td><td>10,246.00</td><td>142,351.5</td></tr><tr><td style='text-align:left'>3</td><td style='text-align:left'><b>浙江</b></td><td style='text-align:left'>省份</td><td>8,865.10</td><td>94,545.0</td></tr><tr><td style='text-align:left'>4</td><td style='text-align:left'><b>上海</b></td><td style='text-align:left'>直辖市</td><td>8,500.91</td><td>56,708.7</td></tr><tr><td style='text-align:left'>5</td><td style='text-align:left'><b>山东</b></td><td style='text-align:left'>省份</td><td>7,864.26</td><td>103,197.5</td></tr><tr><td style='text-align:left'>6</td><td style='text-align:left'><b>北京</b></td><td style='text-align:left'>直辖市</td><td>6,680.60</td><td>52,073.4</td></tr><tr><td style='text-align:left'>7</td><td style='text-align:left'><b>四川</b></td><td style='text-align:left'>省份</td><td>5,853.90</td><td>67,665.3</td></tr><tr><td style='text-align:left'>8</td><td style='text-align:left'><b>河南</b></td><td style='text-align:left'>省份</td><td>4,501.70</td><td>66,632.8</td></tr><tr><td style='text-align:left'>9</td><td style='text-align:left'><b>河北</b></td><td style='text-align:left'>省份</td><td>4,398.60</td><td>49,305.2</td></tr><tr><td style='text-align:left'>10</td><td style='text-align:left'><b>湖北</b></td><td style='text-align:left'>省份</td><td>4,210.55</td><td>62,660.9</td></tr><tr><td style='text-align:left'>11</td><td style='text-align:left'><b>深圳</b></td><td style='text-align:left'>城市</td><td>4,163.80</td><td>38,731.8</td></tr><tr><td style='text-align:left'>12</td><td style='text-align:left'><b>安徽</b></td><td style='text-align:left'>省份</td><td>4,157.00</td><td>52,989.5</td></tr></tbody></table></div>
+</div>
+<div class="callout"><b>2 · 头部三个省仍然压过所有城市。</b>广东、江苏、浙江分列 1–3 位，最低的浙江 8,865.10 亿仍高于最高城市上海 8,500.91 亿。但 <b>深圳以 4,163.80 亿元排总榜第 11 位</b>，插在湖北与安徽之间，前面只有 8 个省——一市之力超过其余 19 个省 / 自治区。</div>
+<div class="callout"><b>3 · 直辖市按城市算，位次依然极高。</b>上海第 4、北京第 6、重庆第 20、天津第 26。若按官方 31 省区市口径，它们本该占据 4 / 6 / 19 / 23 位；归入城市组后，省份榜的「腰部」整体前移。</div>
+<div class="callout"><b>4 · 汲取率最高的是资源型城市与直辖市，不是经济大省。</b><br><ul><li><b>上海</b>（直辖市）14.99% · 混排第 4 位</li><li><b>鄂尔多斯</b>（城市）13.12% · 混排第 46 位</li><li><b>北京</b>（直辖市）12.83% · 混排第 6 位</li><li><b>山西</b>（省份）12.62% · 混排第 16 位</li><li><b>新疆</b>（省份）12.41% · 混排第 22 位</li><li><b>天津</b>（直辖市）11.98% · 混排第 26 位</li></ul>鄂尔多斯 13.12% 是能源型税源集中，山西 12.62%、新疆 12.41% 同为资源型省份，上海、北京则来自高附加值服务业与总部经济；反过来人口大省明显偏低：<b>福建 6.19%、湖南 6.34%、广西 6.47%、湖北 6.72%</b>。榆林 7.50% 虽未进前六，也高于绝大多数省份。</div>
+<div class="callout"><b>5 · 人均财政的差距远小于总量差距。</b><br><ul><li><b>鄂尔多斯</b>（城市）35,768 元 · 混排第 46 位</li><li><b>上海</b>（直辖市）34,203 元 · 混排第 4 位</li><li><b>北京</b>（直辖市）30,645 元 · 混排第 6 位</li><li><b>深圳</b>（城市）22,817 元 · 混排第 11 位</li><li><b>杭州</b>（城市）21,206 元 · 混排第 21 位</li><li><b>珠海</b>（城市）19,429 元 · 混排第 71 位</li></ul>总量榜末尾的省份（西藏 8,498 元、青海 5,995 元、宁夏 7,385 元）人口极少，人均并不垫底；广西约 3,853 元、河南约 4,620 元这类人口大省反而更低。<b>看「有钱」用总量，看「负担」必须换人均。</b></div>
+
+<div class="sec" id="sec4"><span class="num">04</span><h2>数据来源与限制</h2></div>
+<details open><summary>原始榜单（全部为 2025 年度）</summary><ul>
+<li>财政收入：各省财政厅 / 市财政局 2025 年预算执行情况，经鸥维数据《全国各省 / 各地级市一般公共预算收入排行榜》、聚汇数据同名榜单汇总；广东、江苏、浙江、上海、广西等已与省级预算报告原文交叉核对。</li>
+<li>GDP：聚汇数据《全国各省 GDP 排行榜》《全国各地级市 GDP 排行榜》2025 年；31 省合计与国家统计局 2025 年 GDP 口径一致。</li>
+<li>常住人口：聚汇数据《全国各省常住人口排行榜》《全国各地级市常住人口排行榜》2025 年末；鄂尔多斯取市统计局 2025 年统计公报 224.50 万人。</li>
+<li>直辖市 GDP / 人口 / 财政均取省级口径（全市即全省级），不另做拆分。</li>
+</ul></details>
+<details><summary>已知限制</summary><ul>
+<li>省级与市级数据存在包含关系，榜内各行不可加总，也不代表全国地方财政收入总和。</li>
+<li>少数城市在两家汇总源里数值有差异（最明显是石家庄），本榜统一采用聚汇数据以保持与 GDP / 人口同源；同比增速也随源略有出入。</li>
+<li>5 个城市人口为 2024 年口径，已在表内以 * 标注；人均财政与汲取率因此为近似值。</li>
+<li>一般公共预算收入不含政府性基金（土地出让等），不能代表地方政府「全部可花的钱」；也不含中央转移支付，中西部省份的实际支出能力显著高于本榜位次。</li>
+<li>本榜为公开数据整理，不构成任何投资或落户建议。</li>
+</ul></details>
+
+<div class="foot">单文件零依赖 HTML · 双栏文档站主题 · 生成于 2026-11-10。<br>表中排序、筛选、搜索均为本地计算，可离线打开；打印时自动隐藏侧栏、工具条与回顶按钮。</div>
+
+</main>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到顶部" title="回到顶部" onclick="goTop()">
+<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10V2M6 2L2.5 5.5M6 2L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span>回到顶部</span>
+</button>
+
+<script>
+var DATA = [{"name": "广东", "kind": "省份", "parent": "—", "fin": 13938.94, "yoy": 2.99, "gdp": 145846.8, "pop": 12859.0, "popnote": "", "rank": 1, "percap": 10840.0, "draw": 9.56, "stop": false}, {"name": "江苏", "kind": "省份", "parent": "—", "fin": 10246.0, "yoy": 2.07, "gdp": 142351.5, "pop": 8518.0, "popnote": "", "rank": 2, "percap": 12029.0, "draw": 7.2, "stop": false}, {"name": "浙江", "kind": "省份", "parent": "—", "fin": 8865.1, "yoy": 1.81, "gdp": 94545.0, "pop": 6701.0, "popnote": "", "rank": 3, "percap": 13230.0, "draw": 9.38, "stop": false}, {"name": "上海", "kind": "直辖市", "parent": "直辖市", "fin": 8500.91, "yoy": 1.51, "gdp": 56708.71, "pop": 2485.41, "popnote": "", "rank": 4, "percap": 34203.0, "draw": 14.99, "stop": false}, {"name": "山东", "kind": "省份", "parent": "—", "fin": 7864.26, "yoy": 1.98, "gdp": 103197.5, "pop": 10043.0, "popnote": "", "rank": 5, "percap": 7831.0, "draw": 7.62, "stop": false}, {"name": "北京", "kind": "直辖市", "parent": "直辖市", "fin": 6680.6, "yoy": 4.83, "gdp": 52073.4, "pop": 2180.0, "popnote": "", "rank": 6, "percap": 30645.0, "draw": 12.83, "stop": false}, {"name": "四川", "kind": "省份", "parent": "—", "fin": 5853.9, "yoy": 3.87, "gdp": 67665.34, "pop": 8318.0, "popnote": "", "rank": 7, "percap": 7038.0, "draw": 8.65, "stop": false}, {"name": "河南", "kind": "省份", "parent": "—", "fin": 4501.7, "yoy": 2.48, "gdp": 66632.79, "pop": 9744.0, "popnote": "", "rank": 8, "percap": 4620.0, "draw": 6.76, "stop": false}, {"name": "河北", "kind": "省份", "parent": "—", "fin": 4398.6, "yoy": 2.04, "gdp": 49305.2, "pop": 7354.0, "popnote": "", "rank": 9, "percap": 5981.0, "draw": 8.92, "stop": false}, {"name": "湖北", "kind": "省份", "parent": "—", "fin": 4210.55, "yoy": 6.92, "gdp": 62660.9, "pop": 5811.0, "popnote": "", "rank": 10, "percap": 7246.0, "draw": 6.72, "stop": false}, {"name": "深圳", "kind": "城市", "parent": "广东", "fin": 4163.8, "yoy": 6.36, "gdp": 38731.8, "pop": 1824.85, "popnote": "", "rank": 11, "percap": 22817.0, "draw": 10.75, "stop": false}, {"name": "安徽", "kind": "省份", "parent": "—", "fin": 4157.0, "yoy": 2.85, "gdp": 52989.5, "pop": 6082.0, "popnote": "", "rank": 12, "percap": 6835.0, "draw": 7.84, "stop": false}, {"name": "福建", "kind": "省份", "parent": "—", "fin": 3723.35, "yoy": 2.99, "gdp": 60199.5, "pop": 4190.0, "popnote": "", "rank": 13, "percap": 8886.0, "draw": 6.19, "stop": false}, {"name": "湖南", "kind": "省份", "parent": "—", "fin": 3507.63, "yoy": 1.7, "gdp": 55308.65, "pop": 6492.0, "popnote": "", "rank": 14, "percap": 5403.0, "draw": 6.34, "stop": false}, {"name": "陕西", "kind": "省份", "parent": "—", "fin": 3289.44, "yoy": -3.05, "gdp": 36551.1, "pop": 3936.0, "popnote": "", "rank": 15, "percap": 8357.0, "draw": 9.0, "stop": false}, {"name": "山西", "kind": "省份", "parent": "—", "fin": 3218.6, "yoy": -9.12, "gdp": 25495.68, "pop": 3424.01, "popnote": "", "rank": 16, "percap": 9400.0, "draw": 12.62, "stop": false}, {"name": "江西", "kind": "省份", "parent": "—", "fin": 3079.2, "yoy": 0.41, "gdp": 36020.0, "pop": 4474.0, "popnote": "", "rank": 17, "percap": 6882.0, "draw": 8.55, "stop": false}, {"name": "内蒙古", "kind": "省份", "parent": "—", "fin": 3005.2, "yoy": -4.61, "gdp": 26710.34, "pop": 2374.0, "popnote": "", "rank": 18, "percap": 12659.0, "draw": 11.25, "stop": false}, {"name": "辽宁", "kind": "省份", "parent": "—", "fin": 2918.2, "yoy": 0.39, "gdp": 33182.9, "pop": 4131.0, "popnote": "", "rank": 19, "percap": 7064.0, "draw": 8.79, "stop": false}, {"name": "重庆", "kind": "直辖市", "parent": "直辖市", "fin": 2735.8, "yoy": 5.4, "gdp": 33757.93, "pop": 3187.26, "popnote": "", "rank": 20, "percap": 8584.0, "draw": 8.1, "stop": false}, {"name": "杭州", "kind": "城市", "parent": "浙江", "fin": 2693.2, "yoy": 2.0, "gdp": 23010.9, "pop": 1270.0, "popnote": "", "rank": 21, "percap": 21206.0, "draw": 11.7, "stop": false}, {"name": "新疆", "kind": "省份", "parent": "—", "fin": 2662.81, "yoy": 10.5, "gdp": 21462.14, "pop": 2639.0, "popnote": "", "rank": 22, "percap": 10090.0, "draw": 12.41, "stop": false}, {"name": "苏州", "kind": "城市", "parent": "江苏", "fin": 2490.23, "yoy": 1.27, "gdp": 27695.09, "pop": 1304.77, "popnote": "", "rank": 23, "percap": 19086.0, "draw": 8.99, "stop": false}, {"name": "云南", "kind": "省份", "parent": "—", "fin": 2243.33, "yoy": 2.26, "gdp": 32765.78, "pop": 4644.0, "popnote": "", "rank": 24, "percap": 4831.0, "draw": 6.85, "stop": false}, {"name": "贵州", "kind": "省份", "parent": "—", "fin": 2223.23, "yoy": 2.47, "gdp": 23562.17, "pop": 3857.0, "popnote": "", "rank": 25, "percap": 5764.0, "draw": 9.44, "stop": false}, {"name": "天津", "kind": "直辖市", "parent": "直辖市", "fin": 2221.7, "yoy": 4.12, "gdp": 18539.82, "pop": 1363.0, "popnote": "", "rank": 26, "percap": 16300.0, "draw": 11.98, "stop": false}, {"name": "广州", "kind": "城市", "parent": "广东", "fin": 2183.0, "yoy": 11.68, "gdp": 32039.46, "pop": 1910.1, "popnote": "", "rank": 27, "percap": 11429.0, "draw": 6.81, "stop": false}, {"name": "成都", "kind": "城市", "parent": "四川", "fin": 2000.7, "yoy": 2.63, "gdp": 24763.61, "pop": 2153.5, "popnote": "", "rank": 28, "percap": 9290.0, "draw": 8.08, "stop": false}, {"name": "广西", "kind": "省份", "parent": "—", "fin": 1922.05, "yoy": 4.61, "gdp": 29727.4, "pop": 4989.0, "popnote": "", "rank": 29, "percap": 3853.0, "draw": 6.47, "stop": false}, {"name": "宁波", "kind": "城市", "parent": "浙江", "fin": 1795.3, "yoy": 0.27, "gdp": 18715.7, "pop": 983.3, "popnote": "", "rank": 30, "percap": 18258.0, "draw": 9.59, "stop": false}, {"name": "武汉", "kind": "城市", "parent": "湖北", "fin": 1743.06, "yoy": 4.54, "gdp": 22147.35, "pop": 1386.19, "popnote": "", "rank": 31, "percap": 12574.0, "draw": 7.87, "stop": false}, {"name": "南京", "kind": "城市", "parent": "江苏", "fin": 1620.9, "yoy": 1.56, "gdp": 19428.78, "pop": 963.85, "popnote": "", "rank": 32, "percap": 16817.0, "draw": 8.34, "stop": false}, {"name": "黑龙江", "kind": "省份", "parent": "—", "fin": 1535.0, "yoy": 5.72, "gdp": 16878.0, "pop": 3001.0, "popnote": "", "rank": 33, "percap": 5115.0, "draw": 9.09, "stop": false}, {"name": "吉林", "kind": "省份", "parent": "—", "fin": 1350.0, "yoy": 13.31, "gdp": 14973.88, "pop": 2296.69, "popnote": "", "rank": 34, "percap": 5878.0, "draw": 9.02, "stop": false}, {"name": "青岛", "kind": "城市", "parent": "山东", "fin": 1340.7, "yoy": 0.1, "gdp": 17560.67, "pop": 1051.55, "popnote": "", "rank": 35, "percap": 12750.0, "draw": 7.63, "stop": false}, {"name": "长沙", "kind": "城市", "parent": "湖南", "fin": 1296.87, "yoy": 2.56, "gdp": 15737.82, "pop": 1072.14, "popnote": "", "rank": 36, "percap": 12096.0, "draw": 8.24, "stop": false}, {"name": "无锡", "kind": "城市", "parent": "江苏", "fin": 1225.0, "yoy": 1.23, "gdp": 16773.94, "pop": 753.74, "popnote": "", "rank": 37, "percap": 16252.0, "draw": 7.3, "stop": false}, {"name": "郑州", "kind": "城市", "parent": "河南", "fin": 1181.3, "yoy": 2.27, "gdp": 15244.6, "pop": 1313.8, "popnote": "", "rank": 38, "percap": 8991.0, "draw": 7.75, "stop": false}, {"name": "甘肃", "kind": "省份", "parent": "—", "fin": 1112.4, "yoy": 5.8, "gdp": 13697.5, "pop": 2443.0, "popnote": "", "rank": 39, "percap": 4553.0, "draw": 8.12, "stop": false}, {"name": "济南", "kind": "城市", "parent": "山东", "fin": 1093.35, "yoy": 0.95, "gdp": 14210.0, "pop": 961.6, "popnote": "", "rank": 40, "percap": 11370.0, "draw": 7.69, "stop": false}, {"name": "西安", "kind": "城市", "parent": "陕西", "fin": 979.4, "yoy": -2.29, "gdp": 13902.67, "pop": 1323.63, "popnote": "", "rank": 41, "percap": 7399.0, "draw": 7.04, "stop": false}, {"name": "合肥", "kind": "城市", "parent": "安徽", "fin": 977.3, "yoy": 2.33, "gdp": 14210.0, "pop": 1000.5, "popnote": "", "rank": 42, "percap": 9768.0, "draw": 6.88, "stop": false}, {"name": "厦门", "kind": "城市", "parent": "福建", "fin": 961.1, "yoy": 2.99, "gdp": 8980.37, "pop": 536.5, "popnote": "", "rank": 43, "percap": 17914.0, "draw": 10.7, "stop": false}, {"name": "海南", "kind": "省份", "parent": "—", "fin": 903.7, "yoy": 1.49, "gdp": 8108.85, "pop": 1055.0, "popnote": "", "rank": 44, "percap": 8566.0, "draw": 11.14, "stop": false}, {"name": "东莞", "kind": "城市", "parent": "广东", "fin": 891.82, "yoy": 12.97, "gdp": 12760.2, "pop": 1080.04, "popnote": "", "rank": 45, "percap": 8257.0, "draw": 6.99, "stop": false}, {"name": "鄂尔多斯", "kind": "城市", "parent": "内蒙古", "fin": 803.0, "yoy": -12.35, "gdp": 6122.21, "pop": 224.5, "popnote": "", "rank": 46, "percap": 35768.0, "draw": 13.12, "stop": false}, {"name": "佛山", "kind": "城市", "parent": "广东", "fin": 800.27, "yoy": 4.33, "gdp": 13157.35, "pop": 979.19, "popnote": "", "rank": 47, "percap": 8173.0, "draw": 6.08, "stop": false}, {"name": "沈阳", "kind": "城市", "parent": "辽宁", "fin": 794.2, "yoy": -3.8, "gdp": 9100.3, "pop": 927.6, "popnote": "", "rank": 48, "percap": 8562.0, "draw": 8.73, "stop": false}, {"name": "石家庄", "kind": "城市", "parent": "河北", "fin": 758.8, "yoy": 1.7, "gdp": 8651.7, "pop": 1124.69, "popnote": "", "rank": 49, "percap": 6747.0, "draw": 8.77, "stop": false}, {"name": "福州", "kind": "城市", "parent": "福建", "fin": 750.55, "yoy": 0.01, "gdp": 15112.32, "pop": 852.1, "popnote": "", "rank": 50, "percap": 8808.0, "draw": 4.97, "stop": false}, {"name": "大连", "kind": "城市", "parent": "辽宁", "fin": 749.4, "yoy": -3.25, "gdp": 10002.1, "pop": 755.7, "popnote": "", "rank": 51, "percap": 9917.0, "draw": 7.49, "stop": false}, {"name": "南通", "kind": "城市", "parent": "江苏", "fin": 730.04, "yoy": 4.16, "gdp": 12801.5, "pop": 775.0, "popnote": "*", "rank": 52, "percap": 9420.0, "draw": 5.7, "stop": false}, {"name": "常州", "kind": "城市", "parent": "江苏", "fin": 715.5, "yoy": 2.54, "gdp": 11158.71, "pop": 541.54, "popnote": "", "rank": 53, "percap": 13212.0, "draw": 6.41, "stop": false}, {"name": "烟台", "kind": "城市", "parent": "山东", "fin": 700.08, "yoy": 0.18, "gdp": 11350.98, "pop": 700.05, "popnote": "", "rank": 54, "percap": 10000.0, "draw": 6.17, "stop": false}, {"name": "嘉兴", "kind": "城市", "parent": "浙江", "fin": 652.4, "yoy": 2.14, "gdp": 7851.06, "pop": 561.3, "popnote": "", "rank": 55, "percap": 11623.0, "draw": 8.31, "stop": false}, {"name": "温州", "kind": "城市", "parent": "浙江", "fin": 647.03, "yoy": 2.28, "gdp": 10213.9, "pop": 990.2, "popnote": "", "rank": 56, "percap": 6534.0, "draw": 6.33, "stop": false}, {"name": "潍坊", "kind": "城市", "parent": "山东", "fin": 630.5, "yoy": 1.76, "gdp": 8587.36, "pop": 927.12, "popnote": "", "rank": 57, "percap": 6801.0, "draw": 7.34, "stop": false}, {"name": "绍兴", "kind": "城市", "parent": "浙江", "fin": 603.45, "yoy": 2.47, "gdp": 8932.13, "pop": 544.3, "popnote": "", "rank": 58, "percap": 11087.0, "draw": 6.76, "stop": false}, {"name": "泉州", "kind": "城市", "parent": "福建", "fin": 592.07, "yoy": 3.36, "gdp": 13778.34, "pop": 891.4, "popnote": "*", "rank": 59, "percap": 6642.0, "draw": 4.3, "stop": false}, {"name": "唐山", "kind": "城市", "parent": "河北", "fin": 588.2, "yoy": 1.76, "gdp": 10450.2, "pop": 771.25, "popnote": "", "rank": 60, "percap": 7627.0, "draw": 5.63, "stop": false}, {"name": "徐州", "kind": "城市", "parent": "江苏", "fin": 575.33, "yoy": 2.68, "gdp": 9957.22, "pop": 896.71, "popnote": "", "rank": 61, "percap": 6416.0, "draw": 5.78, "stop": false}, {"name": "昆明", "kind": "城市", "parent": "云南", "fin": 575.0, "yoy": 5.08, "gdp": 8637.45, "pop": 874.4, "popnote": "", "rank": 62, "percap": 6576.0, "draw": 6.66, "stop": false}, {"name": "榆林", "kind": "城市", "parent": "陕西", "fin": 562.52, "yoy": -9.11, "gdp": 7501.06, "pop": 360.13, "popnote": "", "rank": 63, "percap": 15620.0, "draw": 7.5, "stop": false}, {"name": "金华", "kind": "城市", "parent": "浙江", "fin": 555.63, "yoy": 3.51, "gdp": 7313.47, "pop": 726.9, "popnote": "", "rank": 64, "percap": 7644.0, "draw": 7.6, "stop": false}, {"name": "宁夏", "kind": "省份", "parent": "—", "fin": 540.57, "yoy": 4.64, "gdp": 5696.49, "pop": 732.0, "popnote": "", "rank": 65, "percap": 7385.0, "draw": 9.49, "stop": false}, {"name": "惠州", "kind": "城市", "parent": "广东", "fin": 538.68, "yoy": 13.14, "gdp": 6363.66, "pop": 619.3, "popnote": "", "rank": 66, "percap": 8698.0, "draw": 8.46, "stop": false}, {"name": "南昌", "kind": "城市", "parent": "江西", "fin": 537.77, "yoy": 2.21, "gdp": 8141.69, "pop": 667.04, "popnote": "*", "rank": 67, "percap": 8062.0, "draw": 6.61, "stop": false}, {"name": "台州", "kind": "城市", "parent": "浙江", "fin": 517.47, "yoy": 2.88, "gdp": 7005.87, "pop": 676.0, "popnote": "", "rank": 68, "percap": 7655.0, "draw": 7.39, "stop": false}, {"name": "盐城", "kind": "城市", "parent": "江苏", "fin": 515.74, "yoy": 3.94, "gdp": 8045.28, "pop": 661.1, "popnote": "", "rank": 69, "percap": 7801.0, "draw": 6.41, "stop": false}, {"name": "济宁", "kind": "城市", "parent": "山东", "fin": 502.7, "yoy": 1.29, "gdp": 6128.1, "pop": 812.93, "popnote": "", "rank": 70, "percap": 6184.0, "draw": 8.2, "stop": false}, {"name": "珠海", "kind": "城市", "parent": "广东", "fin": 494.1, "yoy": 3.99, "gdp": 4573.1, "pop": 254.31, "popnote": "", "rank": 71, "percap": 19429.0, "draw": 10.8, "stop": false}, {"name": "贵阳", "kind": "城市", "parent": "贵州", "fin": 490.76, "yoy": 3.96, "gdp": 6038.15, "pop": 666.89, "popnote": "", "rank": 72, "percap": 7359.0, "draw": 8.13, "stop": false}, {"name": "临沂", "kind": "城市", "parent": "山东", "fin": 482.6, "yoy": 3.01, "gdp": 6862.2, "pop": 1075.96, "popnote": "", "rank": 73, "percap": 4485.0, "draw": 7.03, "stop": false}, {"name": "泰州", "kind": "城市", "parent": "江苏", "fin": 475.49, "yoy": 4.95, "gdp": 7255.27, "pop": 445.1, "popnote": "", "rank": 74, "percap": 10683.0, "draw": 6.55, "stop": false}, {"name": "太原", "kind": "城市", "parent": "山西", "fin": 443.07, "yoy": 0.64, "gdp": 5382.45, "pop": 552.61, "popnote": "", "rank": 75, "percap": 8018.0, "draw": 8.23, "stop": false}, {"name": "芜湖", "kind": "城市", "parent": "安徽", "fin": 439.6, "yoy": 3.01, "gdp": 5402.69, "pop": 379.7, "popnote": "*", "rank": 76, "percap": 11578.0, "draw": 8.14, "stop": false}, {"name": "长春", "kind": "城市", "parent": "吉林", "fin": 424.17, "yoy": -0.77, "gdp": 8005.59, "pop": 910.5, "popnote": "", "rank": 77, "percap": 4659.0, "draw": 5.3, "stop": false}, {"name": "洛阳", "kind": "城市", "parent": "河南", "fin": 421.8, "yoy": 3.65, "gdp": 6164.52, "pop": 708.3, "popnote": "", "rank": 78, "percap": 5955.0, "draw": 6.84, "stop": false}, {"name": "淄博", "kind": "城市", "parent": "山东", "fin": 419.73, "yoy": 2.01, "gdp": 5088.89, "pop": 460.64, "popnote": "", "rank": 79, "percap": 9112.0, "draw": 8.25, "stop": false}, {"name": "湖州", "kind": "城市", "parent": "浙江", "fin": 389.5, "yoy": -5.16, "gdp": 4452.8, "pop": 347.2, "popnote": "", "rank": 80, "percap": 11218.0, "draw": 8.75, "stop": false}, {"name": "邯郸", "kind": "城市", "parent": "河北", "fin": 386.37, "yoy": 1.8, "gdp": 4920.1, "pop": 916.68, "popnote": "", "rank": 81, "percap": 4215.0, "draw": 7.85, "stop": false}, {"name": "南宁", "kind": "城市", "parent": "广西", "fin": 381.7, "yoy": 0.14, "gdp": 6212.46, "pop": 901.66, "popnote": "", "rank": 82, "percap": 4233.0, "draw": 6.14, "stop": false}, {"name": "中山", "kind": "城市", "parent": "广东", "fin": 380.01, "yoy": 10.95, "gdp": 4260.56, "pop": 457.23, "popnote": "", "rank": 83, "percap": 8311.0, "draw": 8.92, "stop": false}, {"name": "扬州", "kind": "城市", "parent": "江苏", "fin": 376.33, "yoy": 4.19, "gdp": 8056.75, "pop": 456.49, "popnote": "", "rank": 84, "percap": 8244.0, "draw": 4.67, "stop": false}, {"name": "哈尔滨", "kind": "城市", "parent": "黑龙江", "fin": 368.3, "yoy": 9.03, "gdp": 6188.5, "pop": 988.7, "popnote": "", "rank": 85, "percap": 3725.0, "draw": 5.95, "stop": false}, {"name": "遵义", "kind": "城市", "parent": "贵州", "fin": 358.0, "yoy": 2.94, "gdp": 5206.12, "pop": 646.69, "popnote": "", "rank": 86, "percap": 5536.0, "draw": 6.88, "stop": false}, {"name": "青海", "kind": "省份", "parent": "—", "fin": 354.9, "yoy": -4.2, "gdp": 4121.84, "pop": 592.0, "popnote": "", "rank": 87, "percap": 5995.0, "draw": 8.61, "stop": false}, {"name": "沧州", "kind": "城市", "parent": "河北", "fin": 353.2, "yoy": 1.85, "gdp": 4930.9, "pop": 717.96, "popnote": "", "rank": 88, "percap": 4919.0, "draw": 7.16, "stop": false}, {"name": "镇江", "kind": "城市", "parent": "江苏", "fin": 339.03, "yoy": 3.01, "gdp": 5736.78, "pop": 322.33, "popnote": "", "rank": 89, "percap": 10518.0, "draw": 5.91, "stop": false}, {"name": "淮安", "kind": "城市", "parent": "江苏", "fin": 335.3, "yoy": 3.0, "gdp": 5630.11, "pop": 449.34, "popnote": "", "rank": 90, "percap": 7462.0, "draw": 5.96, "stop": false}, {"name": "宜宾", "kind": "城市", "parent": "四川", "fin": 333.9, "yoy": 2.96, "gdp": 4134.73, "pop": 461.1, "popnote": "*", "rank": 91, "percap": 7241.0, "draw": 8.08, "stop": false}, {"name": "赣州", "kind": "城市", "parent": "江西", "fin": 333.9, "yoy": 1.91, "gdp": 5221.29, "pop": 895.62, "popnote": "", "rank": 92, "percap": 3728.0, "draw": 6.39, "stop": false}, {"name": "菏泽", "kind": "城市", "parent": "山东", "fin": 333.4, "yoy": 1.28, "gdp": 4937.4, "pop": 843.4, "popnote": "", "rank": 93, "percap": 3953.0, "draw": 6.75, "stop": false}, {"name": "保定", "kind": "城市", "parent": "河北", "fin": 327.1, "yoy": 1.84, "gdp": 5002.5, "pop": 1008.61, "popnote": "", "rank": 94, "percap": 3243.0, "draw": 6.54, "stop": false}, {"name": "宜昌", "kind": "城市", "parent": "湖北", "fin": 327.05, "yoy": 11.22, "gdp": 6464.42, "pop": 390.06, "popnote": "", "rank": 95, "percap": 8385.0, "draw": 5.06, "stop": false}, {"name": "江门", "kind": "城市", "parent": "广东", "fin": 324.85, "yoy": 17.02, "gdp": 4293.91, "pop": 482.85, "popnote": "", "rank": 96, "percap": 6728.0, "draw": 7.57, "stop": false}, {"name": "九江", "kind": "城市", "parent": "江西", "fin": 322.02, "yoy": -1.21, "gdp": 4246.51, "pop": 448.42, "popnote": "", "rank": 97, "percap": 7181.0, "draw": 7.58, "stop": false}, {"name": "滨州", "kind": "城市", "parent": "山东", "fin": 318.26, "yoy": 3.69, "gdp": 3558.17, "pop": 384.77, "popnote": "", "rank": 98, "percap": 8271.0, "draw": 8.94, "stop": false}, {"name": "西藏", "kind": "省份", "parent": "—", "fin": 317.84, "yoy": 14.67, "gdp": 3031.89, "pop": 374.0, "popnote": "", "rank": 99, "percap": 8498.0, "draw": 10.48, "stop": true}];
+var state = {key:'rank', dir:1, filter:'all', q:''};
+var COLS = ['rank','kind','name','parent','pop','gdp','fin','yoy','percap','draw'];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmt(v,n){return Number(v).toLocaleString('zh-CN',{minimumFractionDigits:n,maximumFractionDigits:n});}
+function badge(k){
+  if(k==='省份')return '<span class="badge p">省</span>';
+  if(k==='直辖市')return '<span class="badge m">直辖市</span>';
+  return '<span class="badge">市</span>';
+}
+function cls(k){return k==='省份'?'prov':(k==='直辖市'?'muni':'city');}
+function yoy(v){var c=v>=0?'up':'down';return '<span class="'+c+'">'+(v>=0?'+':'')+fmt(v,2)+'%</span>';}
+function rows(){
+  var out = DATA.filter(function(r){
+    if(state.filter==='prov'&&r.kind!=='省份')return false;
+    if(state.filter==='city'&&r.kind!=='城市')return false;
+    if(state.filter==='muni'&&r.kind!=='直辖市')return false;
+    if(state.q){
+      var s=(r.name+' '+r.parent).toLowerCase();
+      if(s.indexOf(state.q.toLowerCase())<0)return false;
+    }
+    return true;
+  });
+  var k=state.key, d=state.dir;
+  out.sort(function(a,b){
+    var x=a[k],y=b[k];
+    if(typeof x==='string')return x.localeCompare(y,'zh-CN')*d;
+    return (x-y)*d;
+  });
+  return out;
+}
+function render(){
+  var list=rows(), h='';
+  for(var i=0;i<list.length;i++){
+    var r=list[i];
+    h+='<tr class="'+cls(r.kind)+(r.stop?' stop':'')+'">'
+      +'<td>'+r.rank+'</td>'
+      +'<td>'+badge(r.kind)+'</td>'
+      +'<td><b>'+esc(r.name)+'</b>'+(r.stop?' <span class="stopmark">截止线</span>':'')+'</td>'
+      +'<td>'+esc(r.parent)+'</td>'
+      +'<td>'+fmt(r.pop,r.pop%1?2:0)+(r.popnote?'<span title="2024年口径">*</span>':'')+'</td>'
+      +'<td>'+fmt(r.gdp,1)+'</td>'
+      +'<td><b>'+fmt(r.fin,2)+'</b></td>'
+      +'<td>'+yoy(r.yoy)+'</td>'
+      +'<td>'+fmt(r.percap,0)+'</td>'
+      +'<td>'+fmt(r.draw,2)+'%</td>'
+      +'</tr>';
+  }
+  document.getElementById('tbody').innerHTML=h;
+  document.getElementById('shown').textContent=list.length;
+  document.querySelectorAll('th[data-k]').forEach(function(t){
+    t.classList.remove('asc','desc');
+    if(t.getAttribute('data-k')===state.key)t.classList.add(state.dir===1?'asc':'desc');
+  });
+}
+function setFilter(f){
+  state.filter=f;
+  document.querySelectorAll('[data-f]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-f')===f);});
+  render();
+}
+function initTable(){
+  document.querySelectorAll('th[data-k]').forEach(function(t){
+    t.addEventListener('click',function(){
+      var k=t.getAttribute('data-k');
+      if(state.key===k)state.dir=-state.dir;
+      else{state.key=k;state.dir=(k==='rank'||k==='kind'||k==='name'||k==='parent')?1:-1;}
+      render();
+    });
+  });
+  document.querySelectorAll('[data-f]').forEach(function(b){
+    b.addEventListener('click',function(){setFilter(b.getAttribute('data-f'));});
+  });
+  document.getElementById('q').addEventListener('input',function(e){state.q=e.target.value.trim();render();});
+  render();
+}
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  var links=document.querySelectorAll('.nav a');
+  links.forEach(function(a){a.classList.remove('on');});
+  if(links.length)links[0].classList.add('on');
+}
+function initTop(){
+  var btn=document.getElementById('toTop');
+  function sync(){if(window.scrollY>380)btn.classList.add('show');else btn.classList.remove('show');}
+  window.addEventListener('scroll',sync,{passive:true});sync();
+}
+function initNav(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=[].slice.call(document.querySelectorAll('.sec[id]'));
+  if(!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);});}
+    });
+  },{rootMargin:'-8% 0px -78% 0px',threshold:0});
+  secs.forEach(function(s){ob.observe(s);});
+}
+initTable();initNav();initTop();
+</script>
+</body>
+</html>
