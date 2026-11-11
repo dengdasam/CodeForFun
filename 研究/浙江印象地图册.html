@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>印象浙江 · 浙里醉美 绿富同兴 — 地图册</title>
+<style>
+:root{--bg:#F7F9FA;--paper:#FFFFFF;--ink:#22272B;--ink2:#5A666E;--ink3:#8A959C;
+--accent:#3B5A6A;--accent-soft:#EAF0F3;--line:#E2E7EB;--code:#F5F7F9;--radius:6px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+ font-size:14px;line-height:1.65}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:grid;grid-template-columns:238px minmax(0,1fr);gap:0;max-width:1400px;margin:0 auto}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);
+ background:var(--paper);padding:26px 18px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.mark{width:30px;height:30px;background:var(--accent);border-radius:5px;flex:none}
+.bname{font-size:14px;font-weight:600;letter-spacing:.02em}
+.bsub{font-size:11px;color:var(--ink3);margin-top:2px}
+.slabel{font-size:11px;color:var(--ink3);letter-spacing:.08em;margin:0 0 8px 10px}
+.nav a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:var(--radius);
+ color:var(--ink2);font-size:13px;border-left:2px solid transparent}
+.nav a:hover{background:var(--accent-soft);text-decoration:none}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav .no{font-variant-numeric:tabular-nums;font-size:11px;color:var(--ink3)}
+.nav a.on .no{color:var(--accent)}
+.side-box{margin-top:26px;border-top:1px solid var(--line);padding-top:18px;font-size:12px;color:var(--ink2)}
+.side-box h4{margin:0 0 10px;font-size:11px;color:var(--ink3);letter-spacing:.08em;font-weight:600}
+.kv{display:flex;justify-content:space-between;padding:3px 0}
+.kv b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.status{display:inline-block;padding:2px 8px;border:1px solid var(--line);border-radius:20px;
+ font-size:11px;color:var(--accent);background:var(--accent-soft)}
+.side-foot{margin-top:20px;font-size:11px;color:var(--ink3);line-height:1.7}
+main{padding:0 40px 80px;min-width:0}
+.wrap{max-width:960px;margin:0 auto}
+header{padding:56px 0 26px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.12em;color:var(--accent);margin:0 0 12px}
+h1{margin:0;font-size:30px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.sub{margin:10px 0 0;color:var(--ink2);font-size:14px}
+.notice{margin:22px 0 0;padding:14px 16px;background:var(--accent-soft);
+ border:1px solid var(--line);border-radius:var(--radius);font-size:12.5px;color:var(--ink2)}
+.notice b{color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0 8px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.stat .k{font-size:11px;color:var(--ink3)}
+.stat .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:4px}
+.stat .v.sm{font-size:15px;letter-spacing:-.02em;margin-top:8px}
+.toolbar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+ padding:12px 0;margin-top:20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.toolbar input{flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--line);
+ border-radius:var(--radius);background:var(--paper);color:var(--ink);font-size:13px;outline:none}
+.toolbar input:focus{border-color:var(--accent)}
+.toolbar .count{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.sec{scroll-margin-top:76px;padding-top:34px}
+.shead{display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:18px}
+.sno{font-size:22px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.shead h2{margin:0;font-size:18px;font-weight:600}
+.shead p{margin:2px 0 0;font-size:12px;color:var(--ink3)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.card[hidden]{display:none}
+.view{display:block;width:100%;padding:0;border:0;background:var(--code);cursor:zoom-in;overflow:hidden}
+.view img{display:block;width:100%;height:auto;transition:transform .18s}
+.view:hover img{transform:scale(1.015)}
+.meta{padding:12px 14px}
+.chead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.num{font-size:12px;color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums}
+.chead h3{margin:0;font-size:14px;font-weight:600;flex:1;min-width:0}
+.tag{font-size:10px;color:var(--ink3);border:1px solid var(--line);border-radius:20px;padding:1px 7px;white-space:nowrap}
+.cfoot{display:flex;gap:14px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);
+ font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.cfoot a{margin-left:auto}
+.notes{margin-top:44px;border-top:1px solid var(--line);padding-top:26px;font-size:13px;color:var(--ink2)}
+.notes h2{font-size:17px;color:var(--ink);margin:0 0 12px}
+.notes ul{padding-left:20px;margin:0 0 16px}
+.notes li{margin-bottom:6px}
+.path{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:11.5px;
+ background:var(--code);border:1px solid var(--line);border-radius:4px;padding:2px 6px;display:inline-block}
+.foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);font-size:11px;color:var(--ink3)}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(23,27,30,.96);display:none;
+ flex-direction:column;align-items:center;justify-content:center}
+.lightbox.show{display:flex}
+.lb-top{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;
+ align-items:center;padding:14px 20px;color:#E6EAEC;font-size:13px;gap:16px}
+.lb-top .lbt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-top a,.lb-top button{color:#E6EAEC;background:transparent;border:1px solid #4A565E;
+ border-radius:4px;padding:5px 11px;font-size:12px;cursor:pointer;text-decoration:none}
+.lb-top button:hover,.lb-top a:hover{border-color:#8FB2C4;text-decoration:none}
+.lb-img{max-width:94vw;max-height:78vh;object-fit:contain;background:#FFFFFF}
+.lb-nav{position:absolute;bottom:22px;display:flex;gap:12px;align-items:center;color:#E6EAEC;font-size:12px}
+.lb-nav button{background:transparent;border:1px solid #4A565E;color:#E6EAEC;border-radius:4px;
+ padding:6px 16px;font-size:13px;cursor:pointer}
+.lb-nav button:hover{border-color:#8FB2C4}
+.lb-nav #lbHint{opacity:.65;margin-left:6px}
+#toTop{position:fixed;right:22px;bottom:22px;z-index:20;background:var(--paper);
+ border:1px solid var(--line);border-radius:var(--radius);color:var(--accent);
+ padding:8px 12px;font-size:12px;cursor:pointer;visibility:hidden;opacity:0;transition:opacity .2s}
+#toTop.show{visibility:visible;opacity:1}
+@media (max-width:900px){
+ .layout{display:block}
+ .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:16px}
+ .brand{margin-bottom:14px}
+ .nav{display:flex;overflow-x:auto;gap:4px}
+ .nav a{white-space:nowrap;border-left:0;border-bottom:2px solid transparent}
+ .nav a.on{border-left:0;border-bottom-color:var(--accent)}
+ .side-box,.side-foot{display:none}
+ main{padding:0 18px 60px}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .grid{grid-template-columns:1fr}
+ h1{font-size:24px}
+}
+@media print{
+ .sidebar,.toolbar,#toTop,.lightbox{display:none!important}
+ .layout{display:block}
+ main{padding:0}
+ .card{break-inside:avoid}
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="mark"></div><div><div class="bname">印象浙江 · 地图册</div><div class="bsub">天地图·浙江 专题图集</div></div></div>
+  <div class="slabel">章节目录</div>
+  <nav class="nav"><a href="#sec1" data-sec="sec1"><span class="no">01</span><span class="nm">卷首 · 印象浙江</span></a>
+<a href="#sec2" data-sec="sec2"><span class="no">02</span><span class="nm">生态建设</span></a>
+<a href="#sec3" data-sec="sec3"><span class="no">03</span><span class="nm">经济转型</span></a>
+<a href="#sec4" data-sec="sec4"><span class="no">04</span><span class="nm">擘画蓝图</span></a>
+<a href="#sec5" data-sec="sec5"><span class="no">05</span><span class="nm">说明与来源</span></a></nav>
+  <div class="side-box"><h4>图册概况</h4>
+    <div class="kv"><span>图幅</span><b>35 幅</b></div>
+    <div class="kv"><span>章节</span><b>4 章</b></div>
+    <div class="kv"><span>单幅尺寸</span><b>约 3385×2338</b></div>
+    <div class="kv"><span>线上图片</span><b>13.0 MB</b></div>
+    <div class="kv"><span>整理日期</span><b>2026-11-11</b></div>
+  </div>
+  <div class="side-box"><h4>状态</h4><span class="status">公开 Pages · 来源天地图·浙江</span></div>
+  <div class="side-foot">来源：浙江省地理信息公共服务平台（天地图·浙江）<br>专题图集浏览页 #/browser<br>线上仅存 35 张缩略图，高清原图跳转来源站</div>
+</aside>
+<main><div class="wrap">
+<header>
+  <p class="eyebrow">浙江省地理信息公共服务平台 · 专题地图集</p>
+  <h1>印象浙江——浙里醉美 绿富同兴</h1>
+  <p class="sub">35 幅专题地图，按原书页序整理；点击任意图可放大翻阅，支持左右翻页与搜索。</p>
+  <div class="notice"><b>使用说明：</b>本页是浙江省地理信息公共服务平台（天地图·浙江）公开专题图集的整理索引，图名依据缩略图放大辨读，个别页可能与原书页序有一页偏差，<b>请以来源站原图为准</b>。章节划分依据 06 / 18 / 28 三幅扉页。线上只存缩略图，高清原图从来源站异步加载，加载失败时自动保留本地缩略图。<b>地图版权与审图责任归原发布单位</b>；本批页面未检到审图号，转载、宣传或任何公开使用请先向自然资源主管部门确认审图号与授权，且不得对地图内容做裁切、缩放或编辑后直接公开。</div>
+  <div class="stats">
+    <div class="stat"><div class="k">图幅</div><div class="v">35</div></div>
+    <div class="stat"><div class="k">章节</div><div class="v">4</div></div>
+    <div class="stat"><div class="k">单幅尺寸</div><div class="v sm">3385×2338</div></div>
+    <div class="stat"><div class="k">线上图片</div><div class="v">13.0 MB</div></div>
+    <div class="stat"><div class="k">原图存放</div><div class="v sm">来源站</div></div>
+  </div>
+</header>
+<div class="toolbar">
+  <input id="q" type="search" placeholder="搜索图名或页序，例如：森林 / 生态 / 07" aria-label="搜索图幅">
+  <span class="count" id="shown">显示 35 / 35 幅</span>
+</div>
+
+<section class="sec" id="sec1">
+  <div class="shead"><span class="sno">01</span>
+    <div><h2>卷首 · 印象浙江</h2><p>封面与总览 · 第 01–05 幅 · 共 5 幅</p></div>
+  </div>
+  <div class="grid">
+<article class="card" data-n="01" data-title="封面 · 印象浙江——浙里醉美 绿富同兴" data-sec="1">
+  <button class="view" type="button" data-idx="0" aria-label="查看第 01 幅原图">
+    <img src="浙江印象地图册/缩略图/01.png" alt="第 01 幅 封面 · 印象浙江——浙里醉美 绿富同兴" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">01</span><h3>封面 · 印象浙江——浙里醉美 绿富同兴</h3><span class="tag">整版影像</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>14.9 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/1.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="02" data-title="美丽生态（一）" data-sec="1">
+  <button class="view" type="button" data-idx="1" aria-label="查看第 02 幅原图">
+    <img src="浙江印象地图册/缩略图/02.png" alt="第 02 幅 美丽生态（一）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">02</span><h3>美丽生态（一）</h3></div>
+    <div class="cfoot"><span>3386×2339</span><span>5.3 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/2.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="03" data-title="美丽生态（二）" data-sec="1">
+  <button class="view" type="button" data-idx="2" aria-label="查看第 03 幅原图">
+    <img src="浙江印象地图册/缩略图/03.png" alt="第 03 幅 美丽生态（二）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">03</span><h3>美丽生态（二）</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.8 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/3.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="04" data-title="美丽经济" data-sec="1">
+  <button class="view" type="button" data-idx="3" aria-label="查看第 04 幅原图">
+    <img src="浙江印象地图册/缩略图/04.png" alt="第 04 幅 美丽经济" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">04</span><h3>美丽经济</h3><span class="tag">图名待核</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>3.2 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/4.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="05" data-title="美好生活" data-sec="1">
+  <button class="view" type="button" data-idx="4" aria-label="查看第 05 幅原图">
+    <img src="浙江印象地图册/缩略图/05.png" alt="第 05 幅 美好生活" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">05</span><h3>美好生活</h3><span class="tag">图名待核</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>1.9 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/5.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article></div>
+</section>
+<section class="sec" id="sec2">
+  <div class="shead"><span class="sno">02</span>
+    <div><h2>生态建设</h2><p>保护修复 绿意重生 · 第 06–17 幅 · 共 12 幅</p></div>
+  </div>
+  <div class="grid">
+<article class="card" data-n="06" data-title="生态建设——保护修复 绿意重生" data-sec="2">
+  <button class="view" type="button" data-idx="5" aria-label="查看第 06 幅原图">
+    <img src="浙江印象地图册/缩略图/06.png" alt="第 06 幅 生态建设——保护修复 绿意重生" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">06</span><h3>生态建设——保护修复 绿意重生</h3><span class="tag">章节扉页</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>13.6 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/6.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="07" data-title="“811”环境整治行动（一）" data-sec="2">
+  <button class="view" type="button" data-idx="6" aria-label="查看第 07 幅原图">
+    <img src="浙江印象地图册/缩略图/07.png" alt="第 07 幅 “811”环境整治行动（一）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">07</span><h3>“811”环境整治行动（一）</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.2 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/7.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="08" data-title="“811”环境整治行动（二）" data-sec="2">
+  <button class="view" type="button" data-idx="7" aria-label="查看第 08 幅原图">
+    <img src="浙江印象地图册/缩略图/08.png" alt="第 08 幅 “811”环境整治行动（二）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">08</span><h3>“811”环境整治行动（二）</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>4.5 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/8.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="09" data-title="森林浙江" data-sec="2">
+  <button class="view" type="button" data-idx="8" aria-label="查看第 09 幅原图">
+    <img src="浙江印象地图册/缩略图/09.png" alt="第 09 幅 森林浙江" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">09</span><h3>森林浙江</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>7.1 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/9.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="10" data-title="幸福河湖建设" data-sec="2">
+  <button class="view" type="button" data-idx="9" aria-label="查看第 10 幅原图">
+    <img src="浙江印象地图册/缩略图/10.png" alt="第 10 幅 幸福河湖建设" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">10</span><h3>幸福河湖建设</h3></div>
+    <div class="cfoot"><span>3393×2328</span><span>5.4 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/10.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="11" data-title="绿色矿山（一）" data-sec="2">
+  <button class="view" type="button" data-idx="10" aria-label="查看第 11 幅原图">
+    <img src="浙江印象地图册/缩略图/11.png" alt="第 11 幅 绿色矿山（一）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">11</span><h3>绿色矿山（一）</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>6.8 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/11.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="12" data-title="绿色矿山（二）" data-sec="2">
+  <button class="view" type="button" data-idx="11" aria-label="查看第 12 幅原图">
+    <img src="浙江印象地图册/缩略图/12.png" alt="第 12 幅 绿色矿山（二）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">12</span><h3>绿色矿山（二）</h3></div>
+    <div class="cfoot"><span>3393×2328</span><span>6.0 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/12.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="13" data-title="生物多样性保护" data-sec="2">
+  <button class="view" type="button" data-idx="12" aria-label="查看第 13 幅原图">
+    <img src="浙江印象地图册/缩略图/13.png" alt="第 13 幅 生物多样性保护" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">13</span><h3>生物多样性保护</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>6.1 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/13.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="14" data-title="蓝色海湾" data-sec="2">
+  <button class="view" type="button" data-idx="13" aria-label="查看第 14 幅原图">
+    <img src="浙江印象地图册/缩略图/14.png" alt="第 14 幅 蓝色海湾" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">14</span><h3>蓝色海湾</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.7 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/14.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="15" data-title="山水工程" data-sec="2">
+  <button class="view" type="button" data-idx="14" aria-label="查看第 15 幅原图">
+    <img src="浙江印象地图册/缩略图/15.png" alt="第 15 幅 山水工程" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">15</span><h3>山水工程</h3></div>
+    <div class="cfoot"><span>3354×2338</span><span>4.8 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/15.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="16" data-title="土地综合整治" data-sec="2">
+  <button class="view" type="button" data-idx="15" aria-label="查看第 16 幅原图">
+    <img src="浙江印象地图册/缩略图/16.png" alt="第 16 幅 土地综合整治" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">16</span><h3>土地综合整治</h3></div>
+    <div class="cfoot"><span>3354×2338</span><span>4.6 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/16.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="17" data-title="大花园建设" data-sec="2">
+  <button class="view" type="button" data-idx="16" aria-label="查看第 17 幅原图">
+    <img src="浙江印象地图册/缩略图/17.png" alt="第 17 幅 大花园建设" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">17</span><h3>大花园建设</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.8 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/17.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article></div>
+</section>
+<section class="sec" id="sec3">
+  <div class="shead"><span class="sno">03</span>
+    <div><h2>经济转型</h2><p>迭代蝶变 绿色赋能 · 第 18–27 幅 · 共 10 幅</p></div>
+  </div>
+  <div class="grid">
+<article class="card" data-n="18" data-title="经济转型——迭代蝶变 绿色赋能" data-sec="3">
+  <button class="view" type="button" data-idx="17" aria-label="查看第 18 幅原图">
+    <img src="浙江印象地图册/缩略图/18.png" alt="第 18 幅 经济转型——迭代蝶变 绿色赋能" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">18</span><h3>经济转型——迭代蝶变 绿色赋能</h3><span class="tag">章节扉页</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>13.4 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/18.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="19" data-title="生态旅游" data-sec="3">
+  <button class="view" type="button" data-idx="18" aria-label="查看第 19 幅原图">
+    <img src="浙江印象地图册/缩略图/19.png" alt="第 19 幅 生态旅游" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">19</span><h3>生态旅游</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>6.4 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/19.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="20" data-title="节能环保" data-sec="3">
+  <button class="view" type="button" data-idx="19" aria-label="查看第 20 幅原图">
+    <img src="浙江印象地图册/缩略图/20.png" alt="第 20 幅 节能环保" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">20</span><h3>节能环保</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>3.1 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/20.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="21" data-title="循环经济“991”行动" data-sec="3">
+  <button class="view" type="button" data-idx="20" aria-label="查看第 21 幅原图">
+    <img src="浙江印象地图册/缩略图/21.png" alt="第 21 幅 循环经济“991”行动" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">21</span><h3>循环经济“991”行动</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>4.3 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/21.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="22" data-title="科技创新" data-sec="3">
+  <button class="view" type="button" data-idx="21" aria-label="查看第 22 幅原图">
+    <img src="浙江印象地图册/缩略图/22.png" alt="第 22 幅 科技创新" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">22</span><h3>科技创新</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>12.1 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/22.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="23" data-title="生态产品价值实现（一）" data-sec="3">
+  <button class="view" type="button" data-idx="22" aria-label="查看第 23 幅原图">
+    <img src="浙江印象地图册/缩略图/23.png" alt="第 23 幅 生态产品价值实现（一）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">23</span><h3>生态产品价值实现（一）</h3></div>
+    <div class="cfoot"><span>3385×2322</span><span>3.5 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/23.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="24" data-title="整版影像（图名待核）" data-sec="3">
+  <button class="view" type="button" data-idx="23" aria-label="查看第 24 幅原图">
+    <img src="浙江印象地图册/缩略图/24.png" alt="第 24 幅 整版影像（图名待核）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">24</span><h3>整版影像（图名待核）</h3><span class="tag">图名待核</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>16.4 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/24.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="25" data-title="千万工程（一）" data-sec="3">
+  <button class="view" type="button" data-idx="24" aria-label="查看第 25 幅原图">
+    <img src="浙江印象地图册/缩略图/25.png" alt="第 25 幅 千万工程（一）" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">25</span><h3>千万工程（一）</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.0 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/25.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="26" data-title="山海协作" data-sec="3">
+  <button class="view" type="button" data-idx="25" aria-label="查看第 26 幅原图">
+    <img src="浙江印象地图册/缩略图/26.png" alt="第 26 幅 山海协作" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">26</span><h3>山海协作</h3></div>
+    <div class="cfoot"><span>3393×2328</span><span>3.3 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/26.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="27" data-title="城乡融合" data-sec="3">
+  <button class="view" type="button" data-idx="26" aria-label="查看第 27 幅原图">
+    <img src="浙江印象地图册/缩略图/27.png" alt="第 27 幅 城乡融合" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">27</span><h3>城乡融合</h3><span class="tag">图名待核</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>2.2 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/27.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article></div>
+</section>
+<section class="sec" id="sec4">
+  <div class="shead"><span class="sno">04</span>
+    <div><h2>擘画蓝图</h2><p>浙里梦想 图展未来 · 第 28–35 幅 · 共 8 幅</p></div>
+  </div>
+  <div class="grid">
+<article class="card" data-n="28" data-title="擘画蓝图——浙里梦想 图展未来" data-sec="4">
+  <button class="view" type="button" data-idx="27" aria-label="查看第 28 幅原图">
+    <img src="浙江印象地图册/缩略图/28.png" alt="第 28 幅 擘画蓝图——浙里梦想 图展未来" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">28</span><h3>擘画蓝图——浙里梦想 图展未来</h3><span class="tag">章节扉页</span></div>
+    <div class="cfoot"><span>3385×2338</span><span>14.1 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/28.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="29" data-title="国土空间总体格局" data-sec="4">
+  <button class="view" type="button" data-idx="28" aria-label="查看第 29 幅原图">
+    <img src="浙江印象地图册/缩略图/29.png" alt="第 29 幅 国土空间总体格局" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">29</span><h3>国土空间总体格局</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>2.5 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/29.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="30" data-title="重点生态功能区格局" data-sec="4">
+  <button class="view" type="button" data-idx="29" aria-label="查看第 30 幅原图">
+    <img src="浙江印象地图册/缩略图/30.png" alt="第 30 幅 重点生态功能区格局" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">30</span><h3>重点生态功能区格局</h3></div>
+    <div class="cfoot"><span>3393×2328</span><span>2.9 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/30.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="31" data-title="长三角生态绿色一体化" data-sec="4">
+  <button class="view" type="button" data-idx="30" aria-label="查看第 31 幅原图">
+    <img src="浙江印象地图册/缩略图/31.png" alt="第 31 幅 长三角生态绿色一体化" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">31</span><h3>长三角生态绿色一体化</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>3.2 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/31.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="32" data-title="陆海统筹" data-sec="4">
+  <button class="view" type="button" data-idx="31" aria-label="查看第 32 幅原图">
+    <img src="浙江印象地图册/缩略图/32.png" alt="第 32 幅 陆海统筹" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">32</span><h3>陆海统筹</h3></div>
+    <div class="cfoot"><span>3393×2328</span><span>3.9 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/32.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="33" data-title="市、县国土空间规划" data-sec="4">
+  <button class="view" type="button" data-idx="32" aria-label="查看第 33 幅原图">
+    <img src="浙江印象地图册/缩略图/33.png" alt="第 33 幅 市、县国土空间规划" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">33</span><h3>市、县国土空间规划</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>5.5 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/33.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="34" data-title="乡镇、村国土空间规划" data-sec="4">
+  <button class="view" type="button" data-idx="33" aria-label="查看第 34 幅原图">
+    <img src="浙江印象地图册/缩略图/34.png" alt="第 34 幅 乡镇、村国土空间规划" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">34</span><h3>乡镇、村国土空间规划</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>3.4 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/34.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article>
+<article class="card" data-n="35" data-title="“县城—中心镇—重点村”发展轴" data-sec="4">
+  <button class="view" type="button" data-idx="34" aria-label="查看第 35 幅原图">
+    <img src="浙江印象地图册/缩略图/35.png" alt="第 35 幅 “县城—中心镇—重点村”发展轴" loading="lazy">
+  </button>
+  <div class="meta">
+    <div class="chead"><span class="num">35</span><h3>“县城—中心镇—重点村”发展轴</h3></div>
+    <div class="cfoot"><span>3385×2338</span><span>1.7 MB</span>
+      <a href="https://zhejiang.tianditu.gov.cn/zrzy/images/image/35.png" target="_blank" rel="noopener">原图来源站</a></div>
+  </div>
+</article></div>
+</section>
+<section class="sec" id="sec5">
+  <div class="shead"><span class="sno">05</span><div><h2>说明与来源</h2><p>口径、合规与文件清单</p></div></div>
+  <div class="notes">
+    <h2>线上文件结构</h2>
+    <ul>
+      <li><span class="path">研究/浙江印象地图册.html</span> — 本页图册</li>
+      <li><span class="path">研究/浙江印象地图册/缩略图/01.png … 35.png</span> — 35 张预览图，共约 13 MB</li>
+      <li>高清原图（约 3385×2338、合计 213.9 MB）<b>未上传</b>，灯箱与「原图来源站」链接指向天地图原始地址</li>
+      <li>完整本地存档（含原图、PDF 便携册、目录 CSV、manifest.json）保留在本机，不随 Pages 发布</li>
+    </ul>
+    <h2>来源与合规</h2>
+    <ul>
+      <li>来源：浙江省地理信息公共服务平台（天地图·浙江）专题图集浏览页 <span class="path">https://zhejiang.tianditu.gov.cn/zrzy/#/browser</span></li>
+      <li>原始图片地址形如 <span class="path">/zrzy/images/image/N.png</span> 与 <span class="path">/zrzy/images/thumbnail/N.png</span>，均为站点公开静态资源。</li>
+      <li>下载方式：单会话、串行、每请求间隔 0.4 秒；未登录、未使用任何凭证、未调用私有接口。</li>
+      <li>本批页面未检到审图号或版权页文字；<b>公开使用前须向自然资源主管部门确认审图号与授权</b>。直接使用带审图号的标准地图需标注审图号，对地图做任何编辑（含放大、缩小、裁切）后公开使用需重新送审。</li>
+      <li>涉及国界、台湾、南海诸岛、藏南等表达一律以官方标准地图为准，不得自行绘制或改动。</li>
+    </ul>
+    <div class="foot">整理于 2026-11-11 · GitHub Pages 线上版 · 图片使用相对路径，需保持目录结构完整</div>
+  </div>
+</section>
+</div></main>
+</div>
+
+<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="原图查看">
+  <div class="lb-top">
+    <span class="lbt" id="lbTitle"></span>
+    <span style="display:flex;gap:8px">
+      <a id="lbOpen" href="#" target="_blank" rel="noopener">打开原图（来源站）</a>
+      <button type="button" id="lbClose">关闭 Esc</button>
+    </span>
+  </div>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <div class="lb-nav">
+    <button type="button" id="lbPrev">← 上一幅</button>
+    <span id="lbPos"></span>
+    <button type="button" id="lbNext">下一幅 →</button>
+    <span id="lbHint"></span>
+  </div>
+</div>
+<button id="toTop" type="button" aria-label="回到顶部" title="回到顶部">↑ 回到顶部</button>
+<script>
+const PAGES = [{"n": 1, "sec": 1, "title": "封面 · 印象浙江——浙里醉美 绿富同兴", "note": "整版影像", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/1.png", "thumb": "浙江印象地图册/缩略图/01.png", "w": 3385, "h": 2338, "bytes": 15668047, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/1.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/1.png"}, {"n": 2, "sec": 1, "title": "美丽生态（一）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/2.png", "thumb": "浙江印象地图册/缩略图/02.png", "w": 3386, "h": 2339, "bytes": 5578299, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/2.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/2.png"}, {"n": 3, "sec": 1, "title": "美丽生态（二）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/3.png", "thumb": "浙江印象地图册/缩略图/03.png", "w": 3385, "h": 2338, "bytes": 6102727, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/3.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/3.png"}, {"n": 4, "sec": 1, "title": "美丽经济", "note": "图名待核", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/4.png", "thumb": "浙江印象地图册/缩略图/04.png", "w": 3385, "h": 2338, "bytes": 3334645, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/4.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/4.png"}, {"n": 5, "sec": 1, "title": "美好生活", "note": "图名待核", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/5.png", "thumb": "浙江印象地图册/缩略图/05.png", "w": 3385, "h": 2338, "bytes": 1977190, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/5.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/5.png"}, {"n": 6, "sec": 2, "title": "生态建设——保护修复 绿意重生", "note": "章节扉页", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/6.png", "thumb": "浙江印象地图册/缩略图/06.png", "w": 3385, "h": 2338, "bytes": 14256963, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/6.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/6.png"}, {"n": 7, "sec": 2, "title": "“811”环境整治行动（一）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/7.png", "thumb": "浙江印象地图册/缩略图/07.png", "w": 3385, "h": 2338, "bytes": 5462524, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/7.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/7.png"}, {"n": 8, "sec": 2, "title": "“811”环境整治行动（二）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/8.png", "thumb": "浙江印象地图册/缩略图/08.png", "w": 3385, "h": 2338, "bytes": 4765911, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/8.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/8.png"}, {"n": 9, "sec": 2, "title": "森林浙江", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/9.png", "thumb": "浙江印象地图册/缩略图/09.png", "w": 3385, "h": 2338, "bytes": 7452498, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/9.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/9.png"}, {"n": 10, "sec": 2, "title": "幸福河湖建设", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/10.png", "thumb": "浙江印象地图册/缩略图/10.png", "w": 3393, "h": 2328, "bytes": 5632164, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/10.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/10.png"}, {"n": 11, "sec": 2, "title": "绿色矿山（一）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/11.png", "thumb": "浙江印象地图册/缩略图/11.png", "w": 3385, "h": 2338, "bytes": 7138967, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/11.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/11.png"}, {"n": 12, "sec": 2, "title": "绿色矿山（二）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/12.png", "thumb": "浙江印象地图册/缩略图/12.png", "w": 3393, "h": 2328, "bytes": 6294638, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/12.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/12.png"}, {"n": 13, "sec": 2, "title": "生物多样性保护", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/13.png", "thumb": "浙江印象地图册/缩略图/13.png", "w": 3385, "h": 2338, "bytes": 6422996, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/13.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/13.png"}, {"n": 14, "sec": 2, "title": "蓝色海湾", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/14.png", "thumb": "浙江印象地图册/缩略图/14.png", "w": 3385, "h": 2338, "bytes": 5945068, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/14.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/14.png"}, {"n": 15, "sec": 2, "title": "山水工程", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/15.png", "thumb": "浙江印象地图册/缩略图/15.png", "w": 3354, "h": 2338, "bytes": 5061706, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/15.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/15.png"}, {"n": 16, "sec": 2, "title": "土地综合整治", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/16.png", "thumb": "浙江印象地图册/缩略图/16.png", "w": 3354, "h": 2338, "bytes": 4785855, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/16.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/16.png"}, {"n": 17, "sec": 2, "title": "大花园建设", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/17.png", "thumb": "浙江印象地图册/缩略图/17.png", "w": 3385, "h": 2338, "bytes": 6119548, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/17.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/17.png"}, {"n": 18, "sec": 3, "title": "经济转型——迭代蝶变 绿色赋能", "note": "章节扉页", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/18.png", "thumb": "浙江印象地图册/缩略图/18.png", "w": 3385, "h": 2338, "bytes": 14075278, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/18.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/18.png"}, {"n": 19, "sec": 3, "title": "生态旅游", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/19.png", "thumb": "浙江印象地图册/缩略图/19.png", "w": 3385, "h": 2338, "bytes": 6763247, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/19.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/19.png"}, {"n": 20, "sec": 3, "title": "节能环保", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/20.png", "thumb": "浙江印象地图册/缩略图/20.png", "w": 3385, "h": 2338, "bytes": 3267099, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/20.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/20.png"}, {"n": 21, "sec": 3, "title": "循环经济“991”行动", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/21.png", "thumb": "浙江印象地图册/缩略图/21.png", "w": 3385, "h": 2338, "bytes": 4499595, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/21.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/21.png"}, {"n": 22, "sec": 3, "title": "科技创新", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/22.png", "thumb": "浙江印象地图册/缩略图/22.png", "w": 3385, "h": 2338, "bytes": 12689527, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/22.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/22.png"}, {"n": 23, "sec": 3, "title": "生态产品价值实现（一）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/23.png", "thumb": "浙江印象地图册/缩略图/23.png", "w": 3385, "h": 2322, "bytes": 3711796, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/23.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/23.png"}, {"n": 24, "sec": 3, "title": "整版影像（图名待核）", "note": "图名待核", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/24.png", "thumb": "浙江印象地图册/缩略图/24.png", "w": 3385, "h": 2338, "bytes": 17228670, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/24.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/24.png"}, {"n": 25, "sec": 3, "title": "千万工程（一）", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/25.png", "thumb": "浙江印象地图册/缩略图/25.png", "w": 3385, "h": 2338, "bytes": 5246934, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/25.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/25.png"}, {"n": 26, "sec": 3, "title": "山海协作", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/26.png", "thumb": "浙江印象地图册/缩略图/26.png", "w": 3393, "h": 2328, "bytes": 3430001, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/26.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/26.png"}, {"n": 27, "sec": 3, "title": "城乡融合", "note": "图名待核", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/27.png", "thumb": "浙江印象地图册/缩略图/27.png", "w": 3385, "h": 2338, "bytes": 2336566, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/27.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/27.png"}, {"n": 28, "sec": 4, "title": "擘画蓝图——浙里梦想 图展未来", "note": "章节扉页", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/28.png", "thumb": "浙江印象地图册/缩略图/28.png", "w": 3385, "h": 2338, "bytes": 14790371, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/28.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/28.png"}, {"n": 29, "sec": 4, "title": "国土空间总体格局", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/29.png", "thumb": "浙江印象地图册/缩略图/29.png", "w": 3385, "h": 2338, "bytes": 2596822, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/29.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/29.png"}, {"n": 30, "sec": 4, "title": "重点生态功能区格局", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/30.png", "thumb": "浙江印象地图册/缩略图/30.png", "w": 3393, "h": 2328, "bytes": 3077220, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/30.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/30.png"}, {"n": 31, "sec": 4, "title": "长三角生态绿色一体化", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/31.png", "thumb": "浙江印象地图册/缩略图/31.png", "w": 3385, "h": 2338, "bytes": 3364344, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/31.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/31.png"}, {"n": 32, "sec": 4, "title": "陆海统筹", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/32.png", "thumb": "浙江印象地图册/缩略图/32.png", "w": 3393, "h": 2328, "bytes": 4136866, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/32.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/32.png"}, {"n": 33, "sec": 4, "title": "市、县国土空间规划", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/33.png", "thumb": "浙江印象地图册/缩略图/33.png", "w": 3385, "h": 2338, "bytes": 5771419, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/33.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/33.png"}, {"n": 34, "sec": 4, "title": "乡镇、村国土空间规划", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/34.png", "thumb": "浙江印象地图册/缩略图/34.png", "w": 3385, "h": 2338, "bytes": 3515250, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/34.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/34.png"}, {"n": 35, "sec": 4, "title": "“县城—中心镇—重点村”发展轴", "note": "", "big": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/35.png", "thumb": "浙江印象地图册/缩略图/35.png", "w": 3385, "h": 2338, "bytes": 1811940, "src": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/35.png", "remote": "https://zhejiang.tianditu.gov.cn/zrzy/images/image/35.png"}];
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),
+      lbTitle=document.getElementById('lbTitle'),lbPos=document.getElementById('lbPos'),
+      lbOpen=document.getElementById('lbOpen');
+let cur=0;
+const lbHint=document.getElementById('lbHint');
+function renderPage(i){
+  cur=(i+PAGES.length)%PAGES.length;
+  const idx=cur, p=PAGES[cur];
+  lbImg.src=p.thumb; lbImg.alt=p.title;
+  lbTitle.textContent=String(p.n).padStart(2,'0')+' · '+p.title;
+  lbPos.textContent=(cur+1)+' / '+PAGES.length;
+  lbOpen.href=p.remote;
+  lbHint.textContent='正在从来源站加载高清原图…';
+  const hi=new Image();
+  hi.onload=()=>{ if(cur===idx){ lbImg.src=p.remote; lbHint.textContent='高清原图'; } };
+  hi.onerror=()=>{ if(cur===idx){ lbHint.textContent='来源站原图不可达，当前显示缩略图'; } };
+  hi.src=p.remote;
+}
+function openLightbox(i){renderPage(i);lb.classList.add('show');document.body.style.overflow='hidden';}
+function closeLightbox(){lb.classList.remove('show');lbImg.src='';document.body.style.overflow='';}
+document.querySelectorAll('.view').forEach(b=>b.addEventListener('click',()=>openLightbox(+b.dataset.idx)));
+document.getElementById('lbClose').onclick=closeLightbox;
+document.getElementById('lbPrev').onclick=()=>renderPage(cur-1);
+document.getElementById('lbNext').onclick=()=>renderPage(cur+1);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLightbox();});
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('show'))return;
+  if(e.key==='Escape')closeLightbox();
+  else if(e.key==='ArrowLeft')renderPage(cur-1);
+  else if(e.key==='ArrowRight')renderPage(cur+1);
+});
+const q=document.getElementById('q'),shown=document.getElementById('shown');
+q.addEventListener('input',()=>{
+  const s=q.value.trim().toLowerCase();let n=0;
+  document.querySelectorAll('.card').forEach(c=>{
+    const hit=!s||c.dataset.title.toLowerCase().includes(s)||c.dataset.n.includes(s);
+    c.hidden=!hit;if(hit)n++;
+  });
+  shown.textContent='显示 '+n+' / 35 幅';
+});
+const navLinks=[...document.querySelectorAll('.nav a')];
+function initNav(){
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id));
+    }});
+  },{rootMargin:'-80px 0px -70% 0px'});
+  document.querySelectorAll('.sec[id]').forEach(s=>obs.observe(s));
+}
+function goTop(){window.scrollTo({top:0,behavior:'smooth'});
+  navLinks.forEach((a,i)=>a.classList.toggle('on',i===0));}
+const toTopBtn=document.getElementById('toTop');
+toTopBtn.onclick=goTop;
+window.addEventListener('scroll',()=>toTopBtn.classList.toggle('show',window.scrollY>380),{passive:true});
+initNav();
+</script>
+</body>
+</html>
