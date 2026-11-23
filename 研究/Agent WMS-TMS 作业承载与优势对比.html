@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent WMS/TMS 作业承载与优势对比</title>
+<style>
+:root{
+  --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
+  --line:#E2E7EB; --line2:#EDF0F3; --code:#F5F7F9;
+  --accent:#3B5A6A; --accent-soft:#EAF0F3; --accent-line:#C9D6DE;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.layout{display:flex;align-items:flex-start;max-width:1320px;margin:0 auto;min-height:100vh}
+
+.sidebar{position:sticky;top:0;flex:0 0 238px;width:238px;height:100vh;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:26px 18px 22px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:26px}
+.brand .sq{width:22px;height:22px;border-radius:5px;background:var(--accent);flex:0 0 auto}
+.brand .t{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.brand .s{font-size:11px;color:var(--ink3)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--ink3);margin:0 0 9px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--ink2);font-size:12.5px;padding:7px 9px;border-radius:5px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.nav a span{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav a.on span{color:var(--accent)}
+.side-rule{height:1px;background:var(--line);margin:22px 0 18px}
+.side-block{margin-bottom:20px}
+.side-block .k{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
+.side-block .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:3px 0}
+.side-block .row b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-status{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:9px 11px;font-size:11.5px;color:var(--accent);line-height:1.6;margin-bottom:18px}
+.side-foot{margin-top:auto;font-size:11px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+
+.content{flex:1;min-width:0;max-width:960px;padding:38px 40px 76px}
+.masthead{padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--accent);margin-bottom:11px}
+h1{font-family:var(--sans);font-size:29px;font-weight:600;letter-spacing:-.025em;line-height:1.3;margin:0 0 9px}
+.masthead .meta{color:var(--ink2);font-size:12.5px;margin:0}
+
+.notice{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:14px 17px;margin-bottom:24px;font-size:12.5px;color:var(--ink2);line-height:1.75}
+.notice b{color:var(--accent);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 15px 15px}
+.stat .n{font-family:var(--sans);font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.035em;color:var(--ink)}
+.stat .l{color:var(--ink2);font-size:11.5px;margin-top:4px}
+
+.toolbar{position:sticky;top:12px;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:26px}
+.toolbar .lead{font-size:12.5px;color:var(--ink2)}
+.toolbar .lead b{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--accent);margin:0 3px}
+.toolbar .spacer{flex:1}
+
+.sec{scroll-margin-top:76px;margin:36px 0 14px;display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sec .num{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.08em;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.sec h2{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0}
+.tag{font-size:11px;padding:2px 9px;border:1px solid var(--line);border-radius:5px;margin-left:auto;color:var(--ink2);background:var(--paper);white-space:nowrap}
+
+.item{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 19px 17px;margin-bottom:10px;transition:background .15s,border-color .15s}
+.item.picked{background:#F8FAFB;border-color:var(--accent-line)}
+.item h3{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px}
+.item h3 .idx{font-size:11px;font-weight:600;color:var(--ink3);margin-right:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.item.picked h3 .idx{color:var(--accent)}
+.note{color:var(--ink3);font-size:11.5px;font-weight:400}
+.path{display:block;font-family:var(--mono);font-size:11.5px;line-height:1.6;background:var(--code);border:1px solid var(--line);border-radius:5px;padding:6px 10px;margin:7px 0;word-break:break-all;color:#4B555C}
+.why{color:var(--ink2);font-size:12.5px;margin:9px 0 12px}
+code{font-family:var(--mono);font-size:11.5px;background:var(--code);padding:1px 5px;border-radius:3px;color:#4B555C}
+.cmdrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding-top:11px;border-top:1px solid var(--line2)}
+.pick{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2);cursor:pointer;user-select:none;margin-right:auto}
+.pick input{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+button{font:inherit;font-size:11.5px;letter-spacing:.01em;padding:5px 12px;border:1px solid var(--line);background:transparent;border-radius:5px;cursor:pointer;color:var(--ink2);transition:all .15s}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.primary{border-color:var(--accent);color:var(--accent)}
+button.primary:hover:not(:disabled){background:var(--accent);color:#fff}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--ink2);background:#F7F9FA}
+tr:last-child td{border-bottom:none}
+td b{font-weight:600;color:var(--ink)}
+
+details{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0 18px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;font-size:13px;font-weight:500;padding:13px 0;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-block;width:17px;font-family:var(--mono);color:var(--ink3);font-size:14px}
+details[open] summary::before{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line2)}
+details ul{margin:12px 0 14px;padding-left:22px;color:var(--ink2);font-size:12.5px}
+details li{margin-bottom:6px}
+
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#4B555C;margin:0 0 14px}
+.callout{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 17px;font-size:12.5px;color:var(--ink2)}
+.callout b{color:var(--accent)}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.8}
+.foot code{font-size:11px}
+
+.to-top{position:fixed;right:26px;bottom:26px;z-index:20;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--accent);font-size:11.5px;letter-spacing:.01em;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s,border-color .15s,background .15s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);background:var(--accent-soft)}
+.to-top svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:900px){.to-top{right:14px;bottom:14px}}
+
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;width:100%;height:auto;flex:none;border-right:none;border-bottom:1px solid var(--line);padding:16px 18px}
+  .brand{margin-bottom:14px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav a{border-left:none;border-bottom:2px solid transparent;border-radius:4px}
+  .nav a.on{border-left:none;border-bottom-color:var(--accent)}
+  .side-rule,.side-block,.side-status,.side-foot{display:none}
+  .content{padding:26px 18px 60px;max-width:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec{scroll-margin-top:70px}
+  h1{font-size:25px}
+}
+@media print{
+  body{background:#fff}.sidebar{display:none}.content{padding:0;max-width:none}
+  .toolbar,button,.pick{display:none!important}
+  .item,details,.stat,.table-wrap{break-inside:avoid}
+}
+p{margin:0 0 14px;color:var(--ink)}
+ol,ul{margin:0 0 16px;padding-left:24px;color:var(--ink2)}
+li{margin-bottom:7px}
+h3.sub{font-size:14px;font-weight:600;color:var(--ink);margin:22px 0 10px}
+b,strong{font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand"><div class="sq"></div><div><div class="t">Agent WMS/TMS</div><div class="s">作业承载与优势对比 · v1.0</div></div></div>
+<div class="nav-label">目录</div>
+<nav class="nav">
+<a href="#sec1" class="on"><span>01</span>论证框架</a>
+<a href="#s1-1" style="padding-left:22px;font-size:12px;color:#63717A">对比基准：什么叫「承载作业」</a>
+<a href="#s1-2" style="padding-left:22px;font-size:12px;color:#63717A">作业承载的四个层级</a>
+<a href="#s1-3" style="padding-left:22px;font-size:12px;color:#63717A">传统供应链系统的三个能力边界</a>
+<a href="#s1-4" style="padding-left:22px;font-size:12px;color:#63717A">与传统「流程优化」的本质区别</a>
+<a href="#sec2"><span>02</span>全链路作业承载对比</a>
+<a href="#s2-1" style="padding-left:22px;font-size:12px;color:#63717A">需求预测与补货计划</a>
+<a href="#s2-2" style="padding-left:22px;font-size:12px;color:#63717A">采购到货与月台预约</a>
+<a href="#s2-3" style="padding-left:22px;font-size:12px;color:#63717A">收货与质检</a>
+<a href="#s2-4" style="padding-left:22px;font-size:12px;color:#63717A">上架与库位分配</a>
+<a href="#s2-5" style="padding-left:22px;font-size:12px;color:#63717A">库存管理与盘点</a>
+<a href="#s2-6" style="padding-left:22px;font-size:12px;color:#63717A">波次计划与拣货</a>
+<a href="#s2-7" style="padding-left:22px;font-size:12px;color:#63717A">复核打包与集货</a>
+<a href="#s2-8" style="padding-left:22px;font-size:12px;color:#63717A">发运与承运商选择</a>
+<a href="#s2-9" style="padding-left:22px;font-size:12px;color:#63717A">在途跟踪与异常处置</a>
+<a href="#s2-10" style="padding-left:22px;font-size:12px;color:#63717A">签收回单与费用结算</a>
+<a href="#s2-11" style="padding-left:22px;font-size:12px;color:#63717A">退货与逆向物流</a>
+<a href="#s2-12" style="padding-left:22px;font-size:12px;color:#63717A">跨环节异常自愈</a>
+<a href="#s2-13" style="padding-left:22px;font-size:12px;color:#63717A">十二环节承载水平总览</a>
+<a href="#sec3"><span>03</span>六个根本差异维度</a>
+<a href="#s3-1" style="padding-left:22px;font-size:12px;color:#63717A">从「记录作业」到「执行作业」</a>
+<a href="#s3-2" style="padding-left:22px;font-size:12px;color:#63717A">从「事后处置」到「事前干预」</a>
+<a href="#s3-3" style="padding-left:22px;font-size:12px;color:#63717A">从「规则固化」到「策略涌现」</a>
+<a href="#s3-4" style="padding-left:22px;font-size:12px;color:#63717A">从「跨系统对接」到「统一语义」</a>
+<a href="#s3-5" style="padding-left:22px;font-size:12px;color:#63717A">从「人找功能」到「事找人」</a>
+<a href="#s3-6" style="padding-left:22px;font-size:12px;color:#63717A">从「一次性操作」到「策略资产化」</a>
+<a href="#sec4"><span>04</span>量化收益对比</a>
+<a href="#s4-1" style="padding-left:22px;font-size:12px;color:#63717A">收益口径</a>
+<a href="#s4-2" style="padding-left:22px;font-size:12px;color:#63717A">四个典型场景测算</a>
+<a href="#s4-3" style="padding-left:22px;font-size:12px;color:#63717A">收益不成立的条件</a>
+<a href="#sec5"><span>05</span>代价、风险与不可替代项</a>
+<a href="#s5-1" style="padding-left:22px;font-size:12px;color:#63717A">引入 Agent 的新增成本</a>
+<a href="#s5-2" style="padding-left:22px;font-size:12px;color:#63717A">传统系统仍不可替代的部分</a>
+<a href="#s5-3" style="padding-left:22px;font-size:12px;color:#63717A">最大的三个失败模式</a>
+<a href="#sec6"><span>06</span>结论：优势的本质与迁移路径</a>
+</nav>
+<div class="side-rule"></div>
+<div class="side-block">
+<div class="k">文档概况</div>
+<div class="row"><span>作业环节</span><b>12 个</b></div>
+<div class="row"><span>差异维度</span><b>6 个</b></div>
+<div class="row"><span>承载层级</span><b>4 级</b></div>
+<div class="row"><span>场景测算</span><b>4 类</b></div>
+<div class="row"><span>优势表</span><b>12 张</b></div>
+</div>
+<div class="side-status">v1.0 · 价值论证文档：逐环节回答「Agent 接管什么作业、比传统 SCM 强在哪」，并给出量化口径与不成立条件。</div>
+<div class="side-foot">编制日期：2026-11-23<br>适用对象：产品、售前、业务评审<br>单文件 HTML · 零依赖</div>
+</aside>
+<main class="content">
+
+<header class="masthead"><div class="eyebrow">VALUE ARGUMENT · 供应链数字化</div>
+<h1>Agent WMS/TMS 作业承载与优势对比</h1>
+<p class="meta">2026-11-23 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 六章 / 12 作业环节 / 6 差异维度 / 约 14400 字</p></header>
+<div class="notice"><b>核心论点：Agent 的优势不在把人做的事做得更快，而在把「判断与决策」从人手里接管过来。</b><br>本文以作业环节为主线，逐项回答传统供应链系统怎样承载、Agent 接管哪些作业、优势具体落在哪里，并给出可核算的收益口径与不成立条件。</div>
+<div class="stats">
+<div class="stat"><div class="n">12</div><div class="l">作业环节</div></div>
+<div class="stat"><div class="n">6</div><div class="l">根本差异维度</div></div>
+<div class="stat"><div class="n">4</div><div class="l">承载层级</div></div>
+<div class="stat"><div class="n">4</div><div class="l">场景测算</div></div>
+<div class="stat"><div class="n">3</div><div class="l">失败模式</div></div>
+</div>
+<div class="sec" id="sec1"><span class="num">01</span><h2>论证框架</h2></div>
+<h3 id="s1-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">对比基准：什么叫「承载作业」</h3>
+<p>讨论 Agent 与传统供应链管理系统的差异，最容易犯的错是把「界面」当成「承载」——用自然语言下单叫 Agent 承载，点按钮下单叫传统系统承载。这个判据站不住：两者背后是同一套流程、同一套规则、同一个执行主体（人），只是输入方式不同。</p>
+<p>本文用一条更硬的判据：<strong>承载 = 谁完成「感知—判断—决策—执行—校验」这条链上的主要环节</strong>。谁承担了判断与决策，谁就是作业的真实承载者。按这条判据，传统 SCM 系统的定位非常清晰——它是<strong>记录与呈现工具</strong>：感知靠人工录入或扫码，判断靠人的经验，决策靠审批流，执行靠人操作，校验靠事后对账。系统只是把人做出的决定记下来。</p>
+<p>Agent 承载作业，则意味着这条链上的判断与决策环节由 Agent 完成：它自己感知异常、自己调取证据、自己选择处置方案、自己执行、自己校验结果，人只在红线被触碰时介入。这不是效率差异，是<strong>作业主体的替换</strong>。</p>
+<p>需要明确一个前提：本文对比的「传统供应链管理系统」，指以 WMS、TMS、ERP、SCM 计划模块为代表的、以单据和审批流为核心的执行与记录系统。不把 MES、APS、IoT 平台单独列出的采集与计划能力算作对比对象——那些是 Agent 依赖的数据源，不是本文讨论的承载主体。</p>
+<h3 id="s1-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">作业承载的四个层级</h3>
+<p>为了避免「是不是 Agent 承载」变成口水战，先把承载程度分级。本文统一使用 L0~L3 四级：</p>
+<div class="table-wrap"><table><tr><th>层级</th><th>名称</th><th>感知</th><th>判断与决策</th><th>执行</th><th>校验</th><th>人的角色</th></tr><tr><td>L0</td><td>工具级</td><td>人录入</td><td>人决定</td><td>人操作</td><td>人为</td><td>全程操作者</td></tr><tr><td>L1</td><td>辅助级</td><td>系统采集</td><td>人决定，系统给建议</td><td>人操作</td><td>人为</td><td>决策者</td></tr><tr><td>L2</td><td>执行级</td><td>系统采集</td><td>Agent 拟定，人确认</td><td>Agent 执行</td><td>Agent 校验</td><td>审批者</td></tr><tr><td>L3</td><td>自治级</td><td>Agent 感知</td><td>Agent 自主决定</td><td>Agent 执行</td><td>Agent 校验并自愈</td><td>约束设定者</td></tr></table></div>
+<p>传统供应链系统普遍停在 L0~L1：条码/RFID 解决了感知，BI 报表给建议，但判断和决策始终在人。市面上多数宣称「智能 WMS」的产品，本质是把 L1 做得更好——提示更准、报表更全，没有跨过 L2 的门槛。</p>
+<p>本文讨论的「Agent 承载」，主体是 L2，终局是 L3。L0→L1 的改进属于信息化，不构成本文所说的优势。</p>
+<h3 id="s1-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">传统供应链系统的三个能力边界</h3>
+<p>传统系统之所以只能停在 L1，不是因为功能做得不够多，而是有三个结构性边界：</p>
+<p><strong>边界一：单据是载体，动作必须先翻译成单据。</strong> 收货、上架、盘点、发运，都要先建单、再录入、再过账。系统处理的是「人写下来的业务」，不是「正在发生的业务」。物理动作与系统记录之间天然存在时差，这个时差正是盘点、对账、差异调查这些岗位存在的理由。</p>
+<p><strong>边界二：规则写死在代码里，改规则要发版。</strong> 越库直发的判定、承运商的选择、库位的分配，都是开发时固化的分支。业务条件一变（比如新增一种业务类别），就要提需求、开发、测试、上线。系统只能执行「被写进去的」判断，无法针对当下情境临场权衡。</p>
+<p><strong>边界三：系统边界即组织边界，跨域要人接缝。</strong> WMS 管仓内、TMS 管路上、ERP 管账，三者之间靠接口传字段。一个跨系统的决策（比如「这批货是走越库还是先入库存」）没有任何一个系统能独立做出，只能人跨系统查完再拍板。</p>
+<p>这三个边界不是 bug，是传统架构的设计前提。Agent 的优势，全部来自打破这三个前提。</p>
+<h3 id="s1-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">与传统「流程优化」的本质区别</h3>
+<p>需要把 Agent 承载与传统流程优化区分开，否则容易把 BPR（流程再造）的成果算到 Agent 头上：</p>
+<div class="table-wrap"><table><tr><th>对比项</th><th>传统流程优化</th><th>Agent 承载作业</th></tr><tr><td>优化对象</td><td>流程步骤的先后顺序与精简</td><td>作业的判断与决策权归属</td></tr><tr><td>手段</td><td>合并岗位、取消审批、表单电子化</td><td>把判断逻辑交给 Agent，人退到例外</td></tr><tr><td>结果</td><td>同一件事做得更快</td><td>同一件事不再需要人做</td></tr><tr><td>系统角色</td><td>流程的载体</td><td>作业的承担者</td></tr><tr><td>能力边界</td><td>受限于写定的流程</td><td>可按目标现场生成路径</td></tr></table></div>
+<p>一句话概括：<strong>流程优化是让人做得更快，Agent 承载是让这件事不再需要人做。</strong></p>
+<div class="sec" id="sec2"><span class="num">02</span><h2>全链路作业承载对比</h2></div>
+<p>本章按真实作业链路展开，从需求计划到逆向退货共 12 个环节。每个环节统一写四块：传统系统怎样承载、Agent 接管哪些作业、依赖的工具、逐维度优势对比。维度固定为六项：作业主体、响应时效、决策依据、异常处理、人力投入、可追溯性。</p>
+<p>所有对比均基于 L2（Agent 拟定、人确认）的常态形态，L3 自治形态单独标注。涉及雪花项目的环节，直接沿用现场字段与口径。</p>
+<h3 id="s2-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">需求预测与补货计划</h3>
+<p>传统供应链系统在这一环节承担的是「数据汇总 + 阈值告警」：把历史出库、安全库存、在途量汇总成报表，由计划员凭经验判断补什么、补多少。MRP/DRP 运算跑在 ERP 或计划模块里，输出的是建议采购量与建议调拨量，最终决策仍由人做出。系统无法解释「为什么这个 SKU 要补而那个不补」，因为它没有现场语境。</p>
+<p>Agent 承载后，这一环节从「报表 + 人判断」变成「Agent 持续研判 + 例外上报」。Agent 自己拉取历史出库、季节因子、促销计划、在途与产能约束，对每个 SKU×仓库组合生成补货建议并附置信度，低风险补货直接生成调拨指令，高风险或超出授权额度的才推给人。计划员从「逐条算」变成「只看异常」。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>计划员判断，系统算数</td><td>Agent 研判并生成方案，人审批例外</td></tr><tr><td>响应时效</td><td>按日/周跑批，T+1 起</td><td>事件触发，分钟级刷新</td></tr><tr><td>决策依据</td><td>历史均值 + 固定安全库存</td><td>多源信号 + 置信度 + 约束条件</td></tr><tr><td>异常处理</td><td>缺货发生后告警</td><td>预测断货前提前调拨</td></tr><tr><td>人力投入</td><td>计划员逐 SKU 核算</td><td>仅处理低置信度与超权限项</td></tr><tr><td>可追溯性</td><td>报表快照，无决策依据</td><td>每条建议附数据来源与推理链</td></tr></table></div>
+<p>依赖工具：<code>plan.replenishment.advise</code>（补货建议）、<code>inventory.transfer.create</code>（调拨单生成）。二者组合后，Agent 能对「预测—建议—执行—回写」全链负责。</p>
+<h3 id="s2-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">采购到货与月台预约</h3>
+<p>传统系统里，到货预告（ASN）由采购或供应商录入，月台预约靠电话/表格协调，仓库根据到货时间人工排班。系统记录的是「预计什么时候到」，实际到货顺序、车辆排队、卸货资源全靠现场调度临场决定。堵车、早到、晚到这类偏差，系统感知不到，也不参与处置。</p>
+<p>Agent 承载后，它持续接收供应商 ASN、车辆 GPS 与月台占用状态，自动重排到货窗口：发现某车将晚到 40 分钟，就把它后面的车前移，并通知对应卸货班组改派；发现月台冲突，直接在预约层面调解，不需要人逐个打电话。对重复性高的常规到货，Agent 可自动确认预约窗口，只对异常车辆发起人工协调。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>调度员电话协调，系统只记录</td><td>Agent 实时重排，人处理异常</td></tr><tr><td>响应时效</td><td>偏差发生后人工发现，小时级</td><td>车辆位置变化即触发，秒级</td></tr><tr><td>决策依据</td><td>预约表 + 调度员经验</td><td>GPS + 月台占用 + 班组负荷</td></tr><tr><td>异常处理</td><td>到货堵塞后临时救火</td><td>预测冲突并提前调窗</td></tr><tr><td>人力投入</td><td>专职调度持续跟车</td><td>仅异常车辆需介入</td></tr><tr><td>可追溯性</td><td>预约变更无留痕</td><td>每次重排附原因与通知记录</td></tr></table></div>
+<p>依赖工具：<code>dock.slot.rebook</code>（月台改约）、<code>asn.arrival.reconcile</code>（到货对齐）。这类作业属于 L2 中的低风险档，适合作为首批自治候选。</p>
+<h3 id="s2-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">收货与质检</h3>
+<p>传统系统的收货流程是「扫码—建收货单—质检录入—过账」。系统保证单据不丢，但判断全靠收货员：这批货数量对不对、质检要不要抽检、异常怎么记，都是人在现场定。质检结果出来后，还要人手动把状态从「待检」改成「合格」，库存才可用。</p>
+<p>Agent 承载后，收货作业从「人操作 + 系统记录」变成「Agent 核验 + 人复核异常」。Agent 对比 ASN、实物扫码、称重与视觉识别结果，自动判定数量差异是否在容差内；质检结果回传后自动更新批次状态并触发上架。对高频标准品，收货员只需要在差异超阈值时被叫来处理。</p>
+<p>这里有一个关键差异：传统系统把「收货完成」定义为「单据统计过账」，Agent 把「收货完成」定义为「物理事实已被系统确认」。前者允许账实存在时差，后者要求动作即事实。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>收货员逐项确认</td><td>Agent 多源核验，人复核异常</td></tr><tr><td>响应时效</td><td>扫码逐件，质检等待串行</td><td>并行核验，结果即时回写</td></tr><tr><td>决策依据</td><td>ASN + 人工点数</td><td>ASN + 称重 + 视觉 + 容差规则</td></tr><tr><td>异常处理</td><td>差异手工登记、事后追责</td><td>超容差即时拦截并留证</td></tr><tr><td>人力投入</td><td>每车 2~3 人全程</td><td>异常时才介入</td></tr><tr><td>可追溯性</td><td>单据 + 质检记录分离</td><td>动作、证据、过账三者绑定</td></tr></table></div>
+<p>依赖工具：<code>receipt.verify</code>（收货核验）、<code>quality.result.apply</code>（质检结果应用）。收货是库存事实的源头，这一环节的 Agent 化直接决定后续所有数据的可信度。</p>
+<h3 id="s2-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">上架与库位分配</h3>
+<p>传统系统里，上架库位由库位策略表按固定规则算出（比如同品类放同区），或由叉车工凭经验自选再补录。系统能生成上架任务，但不会考虑当下的拥堵、临期优先、订单热度等动态因素——因为它只查规则表，不看实时现场。</p>
+<p>Agent 承载后，库位分配变成一次多目标权衡：Agent 同时考虑库区剩余容量、动线距离、出库热度、批次效期、相近SKU隔离要求，以及当前叉车任务队列，给出「这批货放哪、为什么放这」的方案。对低风险常规品直接下发；对高价值或特殊存储品请求人确认。雪花项目中的越库直发判定就属于这类动态路由：<code>isShipUponPline=1</code> 的订单，Agent 结合产线关联库区与业务类别（<code>business_category=1</code>）决定直发还是暂存，而不是走固定分支。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>系统按规则算，人执行并补录</td><td>Agent 现场权衡，人审批特例</td></tr><tr><td>响应时效</td><td>规则表即时，但变更要发版</td><td>实时重算，分钟级</td></tr><tr><td>决策依据</td><td>固定库位策略</td><td>容量 + 动线 + 热度 + 效期 + 任务队列</td></tr><tr><td>异常处理</td><td>爆仓后人工移库</td><td>预测峰值提前预移库</td></tr><tr><td>人力投入</td><td>叉车工选位 + 主管调位</td><td>异常特例才介入</td></tr><tr><td>可追溯性</td><td>记录最终库位，不含理由</td><td>记录候选方案与选择依据</td></tr></table></div>
+<p>依赖工具：<code>putaway.assign</code>（库位分配）、<code>slot.preplan</code>（预移库）。上架是动态决策密度最高的仓储作业之一，也是 Agent 相较固定策略优势最明显的环节。</p>
+<h3 id="s2-5" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">库存管理与盘点</h3>
+<p>这是传统系统差距最大的环节。传统 WMS 把库存当作「单据过账后的余额」，盘点则是定期用人工清点去校验这个余额。差异出来了，生成一张差异表等来处理——查原因靠人翻流水，归因靠经验，处置靠审批流。整个链条是事后的、离散的、以天为周期的。</p>
+<p>Agent 承载后，库存从「余额」变成「持续对齐物理世界的事实流」。每次存取都实时更新事实，差异在发生的瞬间就被发现。Agent 自动拉取事件流水、定位可疑单据、给出归因与置信度：比如盘亏 12 箱，Agent 查到是昨晚出库未过账（单据状态=已发运未过账），给出「补过账」建议并附证据链；置信度高于阈值且风险在授权边界内的，直接补过账并自愈，人只收到知会；低于阈值的，推给人裁决。</p>
+<p>雪花项目正在做的盘点事务日志（<code>xhinv_count_order_log</code>）与差异归因，正是这套能力的数据地基。需要强调：Agent 在这里带来的不是「盘点更快」，而是<strong>「盘点这个职能逐步失去存在必要」</strong>——当每次动作都实时对齐，周期性盘点就从「发现差异的手段」降级为「监管抽查」。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>盘点员清点，主管审批差异</td><td>Agent 实时检测与归因，人管例外</td></tr><tr><td>响应时效</td><td>月度/周度盘点，天级发现</td><td>动作发生时即时发现，秒级</td></tr><tr><td>决策依据</td><td>盘点表 + 人工翻流水</td><td>事件流 + 证据链 + 置信度</td></tr><tr><td>异常处理</td><td>差异表待人查，归因靠经验</td><td>自动归因，低风险自愈</td></tr><tr><td>人力投入</td><td>整组人定期盘点 + 专人查差异</td><td>仅低置信度项需人工裁决</td></tr><tr><td>可追溯性</td><td>盘点结果与流水分离</td><td>差异、证据、处置三者绑定</td></tr></table></div>
+<p>依赖工具：<code>inventory.variance.detect</code>（差异检测）、<code>variance.rootcause</code>（归因）、<code>variance.autoheal</code>（低风险自愈）。这是 Agent 从「执行工具」跃迁到「自愈系统」的核心环节，也是最具差异化价值的场景。</p>
+<h3 id="s2-6" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">波次计划与拣货</h3>
+<p>传统系统的波次按固定规则生成（同库区、同承运商、同截单时间），拣货路径按预设算法算一次就下发。现场发生变化——某通道被堵、某货位实际无货、临时插单——系统感知不到，拣货员只能自己绕路或空跑后再补录。</p>
+<p>Agent 承载后，波次从「生成一次」变成「持续重排」。它实时接收拣货进度、空跑上报、通道占用与插单信息，动态调整波次组合与路径：某货位缺货，Agent 立即重新指派邻近替代货位并通知拣货员；高优先级订单插入，Agent 重排任务顺序而非让人手工改单。对 PDA 上的拣货动作，Agent 给的是「下一步去哪、为什么改路线」，而不是一张固定清单。</p>
+<p>这里要划一条边界：高频实时拣货动作仍由 PDA/语音主导，Agent 不承担「扫一件、走一步」的实时路径，而是承担波次编排、异常重排与空跑归因。这是风险门禁决定的——不能把关键作业路径放在可能延迟的链路上。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>系统按规则生成波次，人执行</td><td>Agent 持续重排，人执行并反馈</td></tr><tr><td>响应时效</td><td>波次生成后固定，变更要人工改</td><td>事件触发重排，分钟级</td></tr><tr><td>决策依据</td><td>库区/承运商/截单时间</td><td>进度 + 空跑 + 通道占用 + 插单</td></tr><tr><td>异常处理</td><td>空跑后补录，事后统计</td><td>即时改派替代货位并归因</td></tr><tr><td>人力投入</td><td>组长频繁改单协调</td><td>仅复杂冲突需人工决策</td></tr><tr><td>可追溯性</td><td>记录最终波次，不记重排原因</td><td>每次重排附触发事件与理由</td></tr></table></div>
+<p>依赖工具：<code>wave.optimize</code>（波次优化）、<code>pick.reroute</code>（拣货改派）。这是「流程从固化到涌现」的典型场景：同一批订单在不同现场状态下会生成不同路径，目标一致而过程各异。</p>
+<h3 id="s2-7" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">复核打包与集货</h3>
+<p>传统系统在复核环节主要做「扫码校验 + 称重比对」，包装材料选择与集货归并靠人工经验。系统知道订单该发什么，但不知道用什么箱、怎么拼托、哪一单可以并到同一集货位。</p>
+<p>Agent 承载后，它根据订单体积重、承运商计费规则、易碎与禁混要求，自动选择包装方案并规划集货位：把同方向、同承运商、体积匹配的订单归并到同一集货区，减少交接次数；发现某单超重或尺寸异常，自动改箱型并重算运费。打包与发运之间的协同由 Agent 完成，人只处理包装异常（如货物破损需换箱）。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>复核员选箱、人工集货</td><td>Agent 算包装与归并，人执行</td></tr><tr><td>响应时效</td><td>逐单判断</td><td>批量优化，秒级出方案</td></tr><tr><td>决策依据</td><td>订单明细 + 人工经验</td><td>体积重 + 计费规则 + 禁混约束</td></tr><tr><td>异常处理</td><td>超重后人工换箱</td><td>事前预测并给出替代箱型</td></tr><tr><td>人力投入</td><td>复核员全程决策</td><td>仅异常件需介入</td></tr><tr><td>可追溯性</td><td>记录包装结果</td><td>记录方案候选与选择依据</td></tr></table></div>
+<p>依赖工具：<code>pack.plan</code>（包装方案）、<code>consolidate.group</code>（集货归并）。此环节属低风险档，是扩面时性价比高的切入点。</p>
+<h3 id="s2-8" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">发运与承运商选择</h3>
+<p>传统 TMS 里，承运商选择多按预设规则（固定线路对应固定承运商）或人工询价，调度员打电话订车、对月台、发运后手工录车牌。系统记录的是「已经订了谁的车」，不参与「该订谁」的权衡。运费结算也要等回单回来才启动。</p>
+<p>Agent 承载后，承运商选择变成一次实时权衡：Agent 同时比较各承运商的报价、时效承诺、历史准点率、当前可调度运力、与本次货量的匹配度，给出排序与推荐理由，在授权额度内直接下单。月台与车辆到场时间由 Agent 与 WMS 侧协商确定，形成结构化交接契约（WMS 给「已备货+月台+交接时间」，TMS 回「承运商+车牌+到月台时间」），不再靠电话对齐。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>调度员询价并订车</td><td>Agent 比选并下单，人审批超限</td></tr><tr><td>响应时效</td><td>人工询价，小时级</td><td>实时比价，分钟级</td></tr><tr><td>决策依据</td><td>固定线路规则 + 经验</td><td>报价 + 准点率 + 运力 + 匹配度</td></tr><tr><td>异常处理</td><td>订不到车才临时改</td><td>预测运力不足提前改派</td></tr><tr><td>人力投入</td><td>调度员逐单跟</td><td>仅超限与纠纷需介入</td></tr><tr><td>可追溯性</td><td>记录最终承运商</td><td>记录候选报价与选择理由</td></tr></table></div>
+<p>依赖工具：<code>carrier.select</code>（承运商比选）、<code>shipment.dispatch</code>（发运下达）。这是跨 WMS/TMS 价值最明显的环节，也是多 Agent 协商的落点。</p>
+<h3 id="s2-9" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">在途跟踪与异常处置</h3>
+<p>传统系统靠 GPS 回传位置，异常靠司机上报或客户投诉才发现。系统做的是「显示车在哪」，不做「判断有没有问题、该怎么办」。延误了通知客户、货损了走理赔，都是事后动作。</p>
+<p>Agent 承载后，在途从「可查看」变成「可干预」：Agent 持续比对位置、预计到达时间与路网状况，预测延误并在发生前改派或通知收货方调整月台；温度、开门、偏航等信号异常时，自动触发取证（调取轨迹与传感记录）、判断风险等级、给出处置方案。低风险（如轻微延误）自动通知相关方，高风险（如冷链断链）推给人并预置理赔材料。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>司机上报，客服跟进</td><td>Agent 持续监测与干预，人管高危</td></tr><tr><td>响应时效</td><td>异常发生后上报，小时级</td><td>预测性发现，分钟级</td></tr><tr><td>决策依据</td><td>GPS 位置 + 司机口述</td><td>轨迹 + 路网 + 传感 + 历史准点率</td></tr><tr><td>异常处理</td><td>延误后通知客户</td><td>延误前改派或调整月台</td></tr><tr><td>人力投入</td><td>客服逐单查问</td><td>仅高危异常需人工处置</td></tr><tr><td>可追溯性</td><td>轨迹与处置记录分离</td><td>异常、证据、处置绑定</td></tr></table></div>
+<p>依赖工具：<code>transit.monitor</code>（在途监测）、<code>transit.exception.handle</code>（异常处置）。这是「预测性干预」价值最直接的环节，也是从被动响应转向主动调控的分水岭。</p>
+<h3 id="s2-10" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">签收回单与费用结算</h3>
+<p>传统系统里，签收靠司机拿回纸质回单或 APP 拍照上传，财务核对运单、回单、报价三类材料后开票结算。回单丢失、签收数量与发运数量不符、附加费用（等待费、偏远附加）争议，都要人工来回核对，结算周期普遍以周计。</p>
+<p>Agent 承载后，签收回单从「纸质凭证回收」变成「事实自动确认」：Agent 接收电子签收（定位 + 拍照 + 收货方确认）并与发运数据自动核对，差异即时标记；运费按事先约定的计费规则自动计算，附加费用需有轨迹与时间点佐证才被采纳。对常规运单，Agent 核对无误后直接生成结算单，财务只审核异常与争议单。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>司机交单，财务逐单核对</td><td>Agent 自动核对并生成结算，人审异常</td></tr><tr><td>响应时效</td><td>回单回收 + 周结，周级</td><td>签收即核，日内出账</td></tr><tr><td>决策依据</td><td>纸单 + 报价表</td><td>电子签收 + 轨迹 + 计费规则</td></tr><tr><td>异常处理</td><td>缺单后补，争议人工查</td><td>差异即时标记，证据随单</td></tr><tr><td>人力投入</td><td>财务逐单三单匹配</td><td>仅争议单需人工</td></tr><tr><td>可追溯性</td><td>回单与结算分离归档</td><td>签收、计费、结算同源</td></tr></table></div>
+<p>依赖工具：<code>delivery.confirm</code>（签收确认）、<code>freight.settle</code>（运费结算）。此环节直接缩短现金流周期，是容易量化收益的切口。</p>
+<h3 id="s2-11" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">退货与逆向物流</h3>
+<p>传统系统的退货流程是「申请—审批—收货—质检—退款」五步串行，每步都要人推动。系统记录状态流转，但不判断退货是否合理、货能不能二次销售、该退回哪个仓。退货存放往往缺乏时效管理，成为库存黑洞。</p>
+<p>Agent 承载后，退货从「串行审批」变成「并行研判」：Agent 同时核对订单历史、退货原因、商品状态与质检规则，自动判定可否二次销售、应回哪个仓、是否需报废；低风险退货（如未拆封、七日内）自动放行并生成逆向任务，高价值或疑似欺诈的推人工复核。Agent 持续跟踪逆向在途，超时未回仓自动催办。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>客服审批，仓库被动收货</td><td>Agent 研判并分派，人管欺诈</td></tr><tr><td>响应时效</td><td>五步串行，天级</td><td>并行研判，小时级</td></tr><tr><td>决策依据</td><td>退货单 + 审批人判断</td><td>订单史 + 质检规则 + 仓储状态</td></tr><tr><td>异常处理</td><td>退货堆积后清理</td><td>超时自动催办，趋势预警</td></tr><tr><td>人力投入</td><td>多岗位串联推进</td><td>仅高价值与疑似欺诈需介入</td></tr><tr><td>可追溯性</td><td>状态流转，缺决策依据</td><td>判定理由与证据随货</td></tr></table></div>
+<p>依赖工具：<code>return.assess</code>（退货研判）、<code>reverse.route</code>（逆向路由）。此环节凸显 Agent 对「非标准、多分支」流程的处理优势。</p>
+<h3 id="s2-12" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">跨环节异常自愈</h3>
+<p>前面 11 个环节的异常，在传统系统里是分散的：收货差异在收货模块、盘亏在库存模块、延误在 TMS、争议在结算，各自建单、各自处理。没有人负责「把跨环节的信号拼成一张图」，更没有人能在早期发现「这三件看似无关的异常其实是同一个根因」。</p>
+<p>Agent 承载作业后，异常被统一汇聚到一条事件流上。Agent 做三件传统系统做不到的事：<strong>关联</strong>——把收货差异、盘亏、签收不符关联到同一批货；<strong>归因</strong>——从事件时序中定位根因（如某次出库未过账）；<strong>自愈</strong>——在低风险边界内自动修复（补过账、改派、通知），只把需要人拍板的推给人，并附上完整证据链。</p>
+<p>这是 Agent 与传统系统最深的分水岭：传统系统是「发现问题—记录问题—等人处理」，Agent 是「发现问题—查清问题—处理问题—告知结果」。人从操作者变成例外审批者。</p>
+<div class="table-wrap"><table><tr><th>对比维度</th><th>传统 SCM 系统</th><th>Agent 承载</th></tr><tr><td>作业主体</td><td>各模块分散处理，人跨模块拼图</td><td>Agent 统一汇聚、关联、处置</td></tr><tr><td>响应时效</td><td>事后发现，天级</td><td>实时发现与自愈，分钟级</td></tr><tr><td>决策依据</td><td>单模块数据</td><td>全链路事件流 + 证据链</td></tr><tr><td>异常处理</td><td>建单待人处理</td><td>自动归因，低风险自愈</td></tr><tr><td>人力投入</td><td>专人跨系统排查</td><td>仅高风险与无置信度项</td></tr><tr><td>可追溯性</td><td>各模块记录割裂</td><td>全链路一证据链</td></tr></table></div>
+<p>依赖工具：<code>event.correlate</code>（事件关联）、<code>variance.autoheal</code>（自愈）。这是「自愈系统」的载体，也是 Agent 从工具变为劳动力的关键一跃。</p>
+<h3 id="s2-13" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">十二环节承载水平总览</h3>
+<p>把上述环节按当前可达的承载层级汇总，可以看出优势不是均匀分布的：</p>
+<div class="table-wrap"><table><tr><th>作业环节</th><th>传统承载层级</th><th>Agent 可达层级</th><th>提升幅度</th><th>数据来源就绪度</th></tr><tr><td>需求预测与补货</td><td>L1</td><td>L2</td><td>高</td><td>中</td></tr><tr><td>采购到货与预约</td><td>L1</td><td>L2~L3</td><td>高</td><td>高</td></tr><tr><td>收货与质检</td><td>L0~L1</td><td>L2</td><td>高</td><td>高</td></tr><tr><td>上架与库位分配</td><td>L1</td><td>L2</td><td>高</td><td>中</td></tr><tr><td>库存管理与盘点</td><td>L1</td><td>L2~L3</td><td>极高</td><td>高</td></tr><tr><td>波次计划与拣货</td><td>L1</td><td>L2</td><td>中</td><td>高</td></tr><tr><td>复核打包与集货</td><td>L0~L1</td><td>L2</td><td>中</td><td>中</td></tr><tr><td>发运与承运商选择</td><td>L1</td><td>L2</td><td>高</td><td>高</td></tr><tr><td>在途跟踪与异常</td><td>L1</td><td>L2~L3</td><td>高</td><td>中</td></tr><tr><td>签收回单与结算</td><td>L0~L1</td><td>L2</td><td>高</td><td>中</td></tr><tr><td>退货与逆向</td><td>L1</td><td>L2</td><td>中</td><td>低</td></tr><tr><td>跨环节异常自愈</td><td>无对应能力</td><td>L2~L3</td><td>极高</td><td>取决于事件流</td></tr></table></div>
+<p>结论很清楚：<strong>数据就绪度高的环节，Agent 优势兑现最快</strong>——收货、发运、库存盘点、到货预约应当优先；退货逆向与预测补货依赖更完整的历史数据，适合后置。跨环节自愈价值最高，但它是前面环节数据积累的结果，不能单独立项。</p>
+<div class="sec" id="sec3"><span class="num">03</span><h2>六个根本差异维度</h2></div>
+<p>逐环节对比容易陷入「每个环节快多少」的琐碎。抽掉表象，Agent 与传统供应链系统的差异集中在六个维度，这六个维度才是优势的来源。</p>
+<h3 id="s3-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「记录作业」到「执行作业」</h3>
+<p>传统系统是 System of Record——人做完事，系统记下来。Agent 是 System of Action——它直接做事，人只在必要时确认。这一条是总纲，后面五条都是它的展开。判断一个功能是不是真 Agent 化，只需要问：去掉人，这件事还能不能做完？传统系统不能，Agent 能。</p>
+<h3 id="s3-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「事后处置」到「事前干预」</h3>
+<p>传统系统的时间轴是向后的：缺货了补货、延误了通知、盘亏了查账。Agent 把时间轴整体前移：预测断货提前调拨、预测延误提前改派、预测爆仓提前移库。价值不在「处理得更快」，而在「问题没发生就被化解」。这一条在库存与运输两个领域收益最大。</p>
+<h3 id="s3-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「规则固化」到「策略涌现」</h3>
+<p>传统系统把判断写成代码里的分支，改一次要发版。Agent 把判断写成可读的策略，可按目标与现场状态现场生成路径。同一句「把这批货发走」，A 仓因月台紧张走越库直发，B 仓因质检未完成走暂存——结果都达成，过程不同。流程从常量变成因变量。</p>
+<h3 id="s3-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「跨系统对接」到「统一语义」</h3>
+<p>传统架构把现实切成 WMS/TMS/ERP，靠接口缝回去，于是有了字段映射、幂等键、回传确认、对账。Agent 理解的是业务语义本身：「这批货已备好、月台 3、14:00 交接」是一条事实，不需要先翻译成 WMS 的字段名再翻译给 TMS。接口成本不是被优化，而是被取消——前提是形成了统一的业务本体。</p>
+<h3 id="s3-5" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「人找功能」到「事找人」</h3>
+<p>传统系统要求人知道菜单在哪、字段填什么、流程怎么走；Agent 让人只说目标，系统自己拆解、调用、校验。这一条最容易被误认为「就是个聊天框」——其实关键不在输入方式，而在 Agent 承担了流程编排。如果只是把表单换成对话，那不算这条。</p>
+<h3 id="s3-6" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">从「一次性操作」到「策略资产化」</h3>
+<p>传统系统里，老员工的经验在人脑里，人一走就丢。Agent 的每一次纠偏都能沉淀成可复用策略：这次人工改了承运商，Agent 记录原因并更新下次的判断依据。系统越用越懂这个仓库。这是长期复利，也是传统系统结构上拿不到的优势。</p>
+<div class="sec" id="sec4"><span class="num">04</span><h2>量化收益对比</h2></div>
+<h3 id="s4-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">收益口径</h3>
+<p>为避免「降本增效」的口号化，本文只列可核算的口径，并明确收益归属。所有数值均为在 L2 常态下的行业典型区间，具体项目须以基线测算为准，不作为承诺值。</p>
+<div class="table-wrap"><table><tr><th>指标</th><th>传统系统基线</th><th>Agent 承载后</th><th>收益来源</th></tr><tr><td>异常发现时延</td><td>天级（盘点/上报周期）</td><td>分钟级</td><td>事件流实时检测</td></tr><tr><td>单据录入工时</td><td>每单 3~8 分钟</td><td>0（异常单除外）</td><td>Agent 生成与校验</td></tr><tr><td>盘点人力投入</td><td>整组周期性盘点</td><td>抽查为主</td><td>账实实时对齐</td></tr><tr><td>承运商比选周期</td><td>小时级询价</td><td>分钟级</td><td>实时多源比选</td></tr><tr><td>运费结算周期</td><td>周级</td><td>日内</td><td>签收即核</td></tr><tr><td>跨系统对账工作量</td><td>逐字段核对</td><td>语义统一后取消</td><td>接口消亡</td></tr><tr><td>人工接管率</td><td>100%（全流程人工）</td><td>10%~20%</td><td>仅例外推人</td></tr></table></div>
+<h3 id="s4-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">四个典型场景测算</h3>
+<p><strong>场景一：单仓日收货 200 车。</strong> 传统配置收货员 6 人（每车 2~3 人核验），日工时约 48 小时；Agent 核验后，人工仅处理超容差异常（按 5% 计，10 车），配置 2 人即可，日工时降至 16 小时。节约 32 小时/日，且核验一致性提升。</p>
+<p><strong>场景二：区域仓月度盘点。</strong> 传统配置 8 人盘 2 天，约 128 工时，且差异调查另需专人。Agent 实时检测后，月度盘点降级为风险抽样（高风险区每日盘、低风险区月度抽），人力降至约 40 工时/月，差异发现从 T+30 提前到 T+0。</p>
+<p><strong>场景三：日发运 300 单的承运商调度。</strong> 传统 3 名调度员全天询价订车；Agent 比选后仅需 1 人处理超限与纠纷，人力减 2 人/班。同时因比选维度更全（准点率、运力匹配），空驶与改派次数下降。</p>
+<p><strong>场景四：跨模块差异调查。</strong> 传统一次盘亏调查跨 WMS、TMS、ERP 三系统，专人耗时 2~4 小时；Agent 关联事件流后分钟级出归因与证据链，仅在低置信度时需要人复核。</p>
+<h3 id="s4-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">收益不成立的条件</h3>
+<p>必须诚实说明：以下三种情况下，上述收益不成立甚至为负——</p>
+<ol><li><strong>物理数据密度不足。</strong> 没有视觉识别、称重、RFID、位置信号的覆盖，Agent 的感知就是空中楼阁，只能退回人工录入，承载能力随之退回 L1。</li><li><strong>业务规则无法结构化。</strong> 如果判断依赖大量只可意会的人员经验、且无法被沉淀成可执行策略，Agent 给出的建议会持续低置信度，人工接管率不降反升。</li><li><strong>责任边界未定义。</strong> 没有明确的授权额度与风险分级，所有写操作都要人确认，Agent 退化为「自动填表的助手」，优势只剩录入环节。</li></ol>
+<div class="sec" id="sec5"><span class="num">05</span><h2>代价、风险与不可替代项</h2></div>
+<h3 id="s5-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">引入 Agent 的新增成本</h3>
+<p>优势不能以隐藏代价为代价。Agent 承载需要新增三类投入：物理采集设施（视觉、传感、RFID）的资本开支；业务本体与工具契约的建设成本（把隐性规则显性化，工作量常超预期）；以及证据链与审计存储长期留存带来的数据成本。这三项在传统系统里都不存在或规模很小。</p>
+<h3 id="s5-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">传统系统仍不可替代的部分</h3>
+<p>第一，<strong>高频实时作业的主路径</strong>——收货扫码、拣货走位这类每秒级动作，仍应由 PDA/语音承担，不能压在可能有延迟的决策链路上。第二，<strong>监管要求的正式凭证</strong>——发票、报关单、质检报告等法定单据不会消亡，只是从「业务载体」降级为「监管视图」。第三，<strong>高危与模糊决策的最终责任</strong>——涉及大额资产、人事、合规的判断，责任必须由人承担，Agent 只能给建议。</p>
+<h3 id="s5-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">最大的三个失败模式</h3>
+<p><strong>幻觉式自愈</strong>：让 Agent 在没有证据链支撑的情况下自动改库存。规避方式是把「证据」设为自愈的前置条件，无证据不自愈。</p>
+<p><strong>权限穿透</strong>：Agent 以服务账号越权操作，绕开操作人权限边界。规避方式是权限继承——Agent 权限严格等于操作人权限的子集。</p>
+<p><strong>责任真空</strong>：出错后无法定位到具体人。规避方式是全程留痕与人在回路——每个自主决策都要能追到授权人、策略版本与当时的现场数据。</p>
+<div class="sec" id="sec6"><span class="num">06</span><h2>结论：优势的本质与迁移路径</h2></div>
+<p>把十二个环节、六个维度、四类测算收束成一句话：<strong>Agent 相对传统供应链管理系统的优势，不在于把人做的事做得更快，而在于把「判断与决策」从人手里接管过来，并让流程围绕目标现场生成。</strong></p>
+<p>这个优势的兑现顺序与价值大小正好相反。价值最高的自愈与预测，恰恰最依赖数据地基；最容易兑现的录入与查询，反而价值有限。因此迁移路径应当是：</p>
+<div class="table-wrap"><table><tr><th>阶段</th><th>承载重点</th><th>环节</th><th>目标层级</th></tr><tr><td>第一步</td><td>事实流建设</td><td>收货、上架、盘点</td><td>L1 做扎实，埋证据链</td></tr><tr><td>第二步</td><td>辅助决策</td><td>补货、库位、承运商比选</td><td>L2 拟定，人确认</td></tr><tr><td>第三步</td><td>自治执行</td><td>到货预约、结算、异常处置</td><td>L2~L3 边界内自治</td></tr><tr><td>第四步</td><td>跨域自愈</td><td>全链路事件关联与自修复</td><td>L3 人做约束设定者</td></tr></table></div>
+<p>最后强调一次：Agent 承载的作业越多，传统 SCM 系统作为「独立操作平台」的必要性就越低。这不是要否定现有系统，而是说今天每一次功能设计，都应当问一句——这个功能是让人操作得更好，还是让 Agent 承载得更多？答案不同，十年后的位置完全不同。</p>
+<div class="foot">Agent WMS/TMS 作业承载与优势对比 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026-11-23</div>
+<script>
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  var links=document.querySelectorAll('.nav a');
+  links.forEach(function(a){a.classList.remove('on');});
+  if(links.length){links[0].classList.add('on');}
+}
+function initTop(){
+  var btn=document.getElementById('toTop');
+  function sync(){ if(window.scrollY>380){btn.classList.add('show');}else{btn.classList.remove('show');} }
+  window.addEventListener('scroll',sync,{passive:true});
+  sync();
+}
+function initNav(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=[].slice.call(document.querySelectorAll('.sec[id]'));
+  if(!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);}); }
+    });
+  },{rootMargin:'-8% 0px -78% 0px',threshold:0});
+  secs.forEach(function(s){ob.observe(s);});
+}
+initNav();
+initTop();
+</script>
+</body>
+</html>
