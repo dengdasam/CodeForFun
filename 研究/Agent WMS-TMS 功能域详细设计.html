@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent WMS/TMS 产品设计方案</title>
+<style>
+:root{
+  --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
+  --line:#E2E7EB; --line2:#EDF0F3; --code:#F5F7F9;
+  --accent:#3B5A6A; --accent-soft:#EAF0F3; --accent-line:#C9D6DE;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.layout{display:flex;align-items:flex-start;max-width:1320px;margin:0 auto;min-height:100vh}
+
+.sidebar{position:sticky;top:0;flex:0 0 238px;width:238px;height:100vh;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:26px 18px 22px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:26px}
+.brand .sq{width:22px;height:22px;border-radius:5px;background:var(--accent);flex:0 0 auto}
+.brand .t{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.brand .s{font-size:11px;color:var(--ink3)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--ink3);margin:0 0 9px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--ink2);font-size:12.5px;padding:7px 9px;border-radius:5px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.nav a span{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav a.on span{color:var(--accent)}
+.side-rule{height:1px;background:var(--line);margin:22px 0 18px}
+.side-block{margin-bottom:20px}
+.side-block .k{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
+.side-block .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:3px 0}
+.side-block .row b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-status{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:9px 11px;font-size:11.5px;color:var(--accent);line-height:1.6;margin-bottom:18px}
+.side-foot{margin-top:auto;font-size:11px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+
+.content{flex:1;min-width:0;max-width:960px;padding:38px 40px 76px}
+.masthead{padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--accent);margin-bottom:11px}
+h1{font-family:var(--sans);font-size:29px;font-weight:600;letter-spacing:-.025em;line-height:1.3;margin:0 0 9px}
+.masthead .meta{color:var(--ink2);font-size:12.5px;margin:0}
+
+.notice{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:14px 17px;margin-bottom:24px;font-size:12.5px;color:var(--ink2);line-height:1.75}
+.notice b{color:var(--accent);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 15px 15px}
+.stat .n{font-family:var(--sans);font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.035em;color:var(--ink)}
+.stat .l{color:var(--ink2);font-size:11.5px;margin-top:4px}
+
+.toolbar{position:sticky;top:12px;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:26px}
+.toolbar .lead{font-size:12.5px;color:var(--ink2)}
+.toolbar .lead b{font-family:var(--sans);font-size:15px;font-weight:600;color:var(--accent);margin:0 3px}
+.toolbar .spacer{flex:1}
+
+.sec{scroll-margin-top:76px;margin:36px 0 14px;display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sec .num{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.08em;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.sec h2{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0}
+.tag{font-size:11px;padding:2px 9px;border:1px solid var(--line);border-radius:5px;margin-left:auto;color:var(--ink2);background:var(--paper);white-space:nowrap}
+
+.item{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 19px 17px;margin-bottom:10px;transition:background .15s,border-color .15s}
+.item.picked{background:#F8FAFB;border-color:var(--accent-line)}
+.item h3{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px}
+.item h3 .idx{font-size:11px;font-weight:600;color:var(--ink3);margin-right:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.item.picked h3 .idx{color:var(--accent)}
+.note{color:var(--ink3);font-size:11.5px;font-weight:400}
+.path{display:block;font-family:var(--mono);font-size:11.5px;line-height:1.6;background:var(--code);border:1px solid var(--line);border-radius:5px;padding:6px 10px;margin:7px 0;word-break:break-all;color:#4B555C}
+.why{color:var(--ink2);font-size:12.5px;margin:9px 0 12px}
+code{font-family:var(--mono);font-size:11.5px;background:var(--code);padding:1px 5px;border-radius:3px;color:#4B555C}
+.cmdrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding-top:11px;border-top:1px solid var(--line2)}
+.pick{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2);cursor:pointer;user-select:none;margin-right:auto}
+.pick input{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+button{font:inherit;font-size:11.5px;letter-spacing:.01em;padding:5px 12px;border:1px solid var(--line);background:transparent;border-radius:5px;cursor:pointer;color:var(--ink2);transition:all .15s}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.primary{border-color:var(--accent);color:var(--accent)}
+button.primary:hover:not(:disabled){background:var(--accent);color:#fff}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--ink2);background:#F7F9FA}
+tr:last-child td{border-bottom:none}
+td b{font-weight:600;color:var(--ink)}
+
+details{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0 18px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;font-size:13px;font-weight:500;padding:13px 0;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-block;width:17px;font-family:var(--mono);color:var(--ink3);font-size:14px}
+details[open] summary::before{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line2)}
+details ul{margin:12px 0 14px;padding-left:22px;color:var(--ink2);font-size:12.5px}
+details li{margin-bottom:6px}
+
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#4B555C;margin:0 0 14px}
+.callout{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 17px;font-size:12.5px;color:var(--ink2)}
+.callout b{color:var(--accent)}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.8}
+.foot code{font-size:11px}
+
+.to-top{position:fixed;right:26px;bottom:26px;z-index:20;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--accent);font-size:11.5px;letter-spacing:.01em;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s,border-color .15s,background .15s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);background:var(--accent-soft)}
+.to-top svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:900px){.to-top{right:14px;bottom:14px}}
+
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;width:100%;height:auto;flex:none;border-right:none;border-bottom:1px solid var(--line);padding:16px 18px}
+  .brand{margin-bottom:14px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav a{border-left:none;border-bottom:2px solid transparent;border-radius:4px}
+  .nav a.on{border-left:none;border-bottom-color:var(--accent)}
+  .side-rule,.side-block,.side-status,.side-foot{display:none}
+  .content{padding:26px 18px 60px;max-width:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec{scroll-margin-top:70px}
+  h1{font-size:25px}
+}
+@media print{
+  body{background:#fff}.sidebar{display:none}.content{padding:0;max-width:none}
+  .toolbar,button,.pick{display:none!important}
+  .item,details,.stat,.table-wrap{break-inside:avoid}
+}
+p{margin:0 0 14px;color:var(--ink)}
+ol,ul{margin:0 0 16px;padding-left:24px;color:var(--ink2)}
+li{margin-bottom:7px}
+h3.sub{font-size:14px;font-weight:600;color:var(--ink);margin:22px 0 10px}
+b,strong{font-weight:600;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand"><div class="sq"></div><div><div class="t">Agent WMS/TMS</div><div class="s">功能域详细设计 · v1.0</div></div></div>
+<div class="nav-label">目录</div>
+<nav class="nav">
+<a href="#sec1" class="on"><span>01</span>设计约定</a>
+<a href="#s1-1" style="padding-left:22px;font-size:12px;color:#63717A">适用范围与阅读方式</a>
+<a href="#s1-2" style="padding-left:22px;font-size:12px;color:#63717A">成熟度与风险分级</a>
+<a href="#s1-3" style="padding-left:22px;font-size:12px;color:#63717A">Tool 契约通用规范</a>
+<a href="#s1-4" style="padding-left:22px;font-size:12px;color:#63717A">统一数据口径</a>
+<a href="#sec2"><span>02</span>WMS 功能域详细设计</a>
+<a href="#s2-1" style="padding-left:22px;font-size:12px;color:#63717A">基础主数据</a>
+<a href="#s2-2" style="padding-left:22px;font-size:12px;color:#63717A">入库管理</a>
+<a href="#s2-3" style="padding-left:22px;font-size:12px;color:#63717A">出库管理</a>
+<a href="#s2-4" style="padding-left:22px;font-size:12px;color:#63717A">库存管理</a>
+<a href="#s2-5" style="padding-left:22px;font-size:12px;color:#63717A">库内作业</a>
+<a href="#s2-6" style="padding-left:22px;font-size:12px;color:#63717A">包装与辅料</a>
+<a href="#s2-7" style="padding-left:22px;font-size:12px;color:#63717A">退货与逆向</a>
+<a href="#s2-8" style="padding-left:22px;font-size:12px;color:#63717A">报表与查询</a>
+<a href="#s2-9" style="padding-left:22px;font-size:12px;color:#63717A">接口与集成</a>
+<a href="#s2-10" style="padding-left:22px;font-size:12px;color:#63717A">系统与权限</a>
+<a href="#sec3"><span>03</span>TMS 功能域详细设计</a>
+<a href="#s3-1" style="padding-left:22px;font-size:12px;color:#63717A">运输订单</a>
+<a href="#s3-2" style="padding-left:22px;font-size:12px;color:#63717A">运力与承运商</a>
+<a href="#s3-3" style="padding-left:22px;font-size:12px;color:#63717A">运输计划与调度</a>
+<a href="#s3-4" style="padding-left:22px;font-size:12px;color:#63717A">装车与发运</a>
+<a href="#s3-5" style="padding-left:22px;font-size:12px;color:#63717A">在途跟踪</a>
+<a href="#s3-6" style="padding-left:22px;font-size:12px;color:#63717A">签收与回单</a>
+<a href="#s3-7" style="padding-left:22px;font-size:12px;color:#63717A">费用与结算</a>
+<a href="#s3-8" style="padding-left:22px;font-size:12px;color:#63717A">异常处理</a>
+<a href="#s3-9" style="padding-left:22px;font-size:12px;color:#63717A">报表与分析</a>
+<a href="#sec4"><span>04</span>跨域协同链路设计</a>
+<a href="#s4-1" style="padding-left:22px;font-size:12px;color:#63717A">主链路：出库到签收</a>
+<a href="#s4-2" style="padding-left:22px;font-size:12px;color:#63717A">异常闭环链路</a>
+<a href="#s4-3" style="padding-left:22px;font-size:12px;color:#63717A">工具编排示例</a>
+<a href="#sec5"><span>05</span>落地优先级与依赖</a>
+<a href="#s5-1" style="padding-left:22px;font-size:12px;color:#63717A">域优先级矩阵</a>
+<a href="#s5-2" style="padding-left:22px;font-size:12px;color:#63717A">前置数据条件</a>
+<a href="#s5-3" style="padding-left:22px;font-size:12px;color:#63717A">与四期路线的映射</a>
+<a href="#sec6"><span>06</span>验收要点</a>
+<a href="#s6-1" style="padding-left:22px;font-size:12px;color:#63717A">单域验收清单模板</a>
+<a href="#s6-2" style="padding-left:22px;font-size:12px;color:#63717A">通用验收项</a>
+<a href="#s6-3" style="padding-left:22px;font-size:12px;color:#63717A">终局对齐检查</a>
+</nav>
+<div class="side-rule"></div>
+<div class="side-block">
+<div class="k">文档概况</div>
+<div class="row"><span>功能域</span><b>19 个</b></div>
+<div class="row"><span>WMS / TMS</span><b>10 / 9</b></div>
+<div class="row"><span>Tool 契约示例</span><b>27 个</b></div>
+<div class="row"><span>跨域链路</span><b>3 条</b></div>
+<div class="row"><span>风险门禁</span><b>3 级</b></div>
+</div>
+<div class="side-status">v1.0 · 《Agent WMS/TMS 产品设计方案》配套细化文档。每域按功能点、操作矩阵、工具契约、依赖、门禁、终局形态六段展开。</div>
+<div class="side-foot">编制日期：2026-11-23<br>适用对象：产品、研发、业务评审<br>单文件 HTML · 零依赖</div>
+</aside>
+<main class="content">
+<header class="masthead"><div class="eyebrow">FUNCTIONAL DESIGN · 供应链数字化</div>
+<h1>Agent WMS/TMS 功能域详细设计</h1>
+<p class="meta">2026-11-23 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 六章 / 19 功能域 / 约 44000 字</p></header>
+<div class="notice"><b>文档定位：总方案回答"产品是什么、往哪里去"，本文回答"每个功能域具体做什么、Agent 怎么做、工具怎么定义"。</b><br>每个功能域按同一结构展开——功能点清单、Agent 操作矩阵、Tool 契约、数据与规则依赖、风险门禁、终局形态。前五项用于落地，最后一项用于校准投入方向，与总方案「三个消亡」主线对齐。</div>
+<div class="stats">
+<div class="stat"><div class="n">19</div><div class="l">功能域</div></div>
+<div class="stat"><div class="n">10+9</div><div class="l">WMS / TMS</div></div>
+<div class="stat"><div class="n">27</div><div class="l">Tool 契约示例</div></div>
+<div class="stat"><div class="n">3</div><div class="l">跨域链路</div></div>
+<div class="stat"><div class="n">3</div><div class="l">门禁级别</div></div>
+</div>
+<p>本文是《Agent WMS/TMS 产品设计方案》的配套细化文档。总方案回答"产品是什么、往哪里去"，本文回答"每个功能域具体做什么、Agent 怎么做、工具怎么定义"。两份文档的分工是：总方案定边界与方向，本文定实现契约。</p>
+<div class="sec" id="sec1"><span class="num">01</span><h2>设计约定</h2></div>
+<h3 id="s1-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">适用范围与阅读方式</h3>
+<p>本文覆盖 WMS 10 个功能域、TMS 9 个功能域，共 19 个域。每个域按同一结构展开：功能点清单、Agent 操作矩阵、Tool 契约、数据与规则依赖、风险门禁、终局形态。前五项用于落地，最后一项用于校准投入方向——与总方案第四章"三个消亡"对齐，避免在当前项目里做终局注定要消失的精装修。</p>
+<p>功能点清单描述"系统今天有什么"；Agent 操作矩阵描述"智能层叠加什么"；Tool 契约是二者的接口；依赖表说明前置条件；门禁表定义安全边界；终局形态说明该域在长期演进中的去向。</p>
+<h3 id="s1-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">成熟度与风险分级</h3>
+<p>成熟度沿用 L0~L4 五级：L0 实时作业不 Agent 化，L1 只读问答，L2 带确认执行，L3 主动处置，L4 多 Agent 协同。风险分三级：只读（read-only）、一般写（write-normal）、高危（write-high）。风险级别决定门禁强度，与成熟度无关——一个 L2 操作可能是高危，一个 L3 操作可能只是只读巡检。</p>
+<h3 id="s1-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">Tool 契约通用规范</h3>
+<p>每个 Tool 契约必须包含五个强制字段：名称（域.动作.对象）、风险级别、入参、出参、补偿路径。涉及写操作必须额外声明幂等键。所有数值以字符串传输，保留五位小数；所有枚举用大写下划线；未知入参一律忽略而非报错；超过 64KB 的出参截断并在响应中留痕。</p>
+<p>数据中台返回的任何数字必须由 Tool 提供，不得由模型生成。Agent 回答中的每个数量、单号、时间都要能回溯到具体数据源，无法溯源的信息必须标注"未查到"，不允许推测填充。</p>
+<h3 id="s1-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">统一数据口径</h3>
+<p>跨全部功能域复用以下口径：数量统一保留五位小数；时间统一用带时区的 ISO 8601；组织、仓库、货主构成权限三元组；库存事实以"库位加物料"为粒度，一期不拆批次、不拆物资状态；业务状态翻译统一走 LOV 编码，不在 Agent 侧硬编码中文枚举。</p>
+</div>
+<div class="sec" id="sec2"><span class="num">02</span><h2>WMS 功能域详细设计</h2></div>
+<h3 id="s2-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">基础主数据</h3>
+<p>定位：所有作业规则的源头。Agent 在这里的价值不是"帮人填表"，而是把散落在多张配置表里的规则变成可问答、可校验的知识。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>物料主数据</td><td>物料编码、名称、规格、大类、含瓶/净水标记</td><td>wmdm_goods</td><td>read-only</td></tr><tr><td>货主与仓库</td><td>货主档案、仓库档案、组织归属</td><td>wmdm_owner / wmdm_warehouse</td><td>read-only</td></tr><tr><td>库区与库位</td><td>库区划分、库位类型、库位状态、容量</td><td>wmdm_zone / wmdm_location</td><td>read-only</td></tr><tr><td>产线档案</td><td>产线编码、关联库区、产能</td><td>xhmdm_product_line</td><td>read-only</td></tr><tr><td>规则配置</td><td>上架策略、波次策略、盘点策略、越库判定规则</td><td>wms_rule_config</td><td>write-normal</td></tr><tr><td>LOV 字典</td><td>业务类别、单据状态、批次状态等枚举翻译</td><td>sys_lov</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>配置问答</td><td>人问"下线即走库位状态是什么"</td><td>L1</td><td>无</td><td>答案加来源字段</td></tr><tr><td>冲突检查</td><td>新建规则时自动触发</td><td>L2</td><td>人确认是否采纳建议</td><td>冲突项清单与修改建议</td></tr><tr><td>变更预览</td><td>人说"把 A 区上架策略改成就近"</td><td>L2</td><td>出预览、人确认后提交</td><td>变更前后对照与影响范围</td></tr><tr><td>配置漂移巡检</td><td>定时巡检</td><td>L3</td><td>人决定是否回滚</td><td>异常配置与最近修改人</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.mdm.queryConfig</code></p>
+<pre>{
+  "name": "wms.mdm.queryConfig",
+  "risk": "read-only",
+  "description": "按实体与编码查询主数据配置及关联规则",
+  "input": {
+    "entity": { "type": "enum", "values": ["GOODS","OWNER","WAREHOUSE","ZONE","LOCATION","PRODUCT_LINE","RULE","LOV"], "required": true },
+    "code": { "type": "string", "required": false },
+    "orgScope": { "type": "object", "required": true, "desc": "组织/仓库/货主权限三元组" }
+  },
+  "output": {
+    "items": "[实体字段明细，含编码、名称、状态、关联关系]",
+    "sourceTable": "实际查询的物理表",
+    "lovTranslation": "枚举字段的中文翻译"
+  },
+  "compensation": "-"
+}</pre>
+<p><code>wms.mdm.ruleChange</code></p>
+<pre>{
+  "name": "wms.mdm.ruleChange",
+  "risk": "write-normal",
+  "description": "预览并提交规则配置变更",
+  "idempotencyKey": "规则编码 + 目标值 + 操作人 + 日期",
+  "input": {
+    "ruleCode": { "type": "string", "required": true },
+    "targetValue": { "type": "string", "required": true },
+    "scope": { "type": "object", "required": true, "desc": "生效范围：组织/仓库/货主/库区" },
+    "previewOnly": { "type": "boolean", "default": true }
+  },
+  "output": {
+    "diff": "变更前后对照",
+    "affectedDomains": "受影响的作业域清单",
+    "conflicts": "与现有规则的冲突项",
+    "changeTicket": "previewOnly=false 时返回变更单号"
+  },
+  "compensation": "未生效可直接撤销；已生效生成反向变更单，保留原值快照"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>组织权限三元组</td><td>权限中心</td><td>所有查询的过滤条件</td><td>越权风险，查询必须拒绝</td></tr><tr><td>LOV 编码表</td><td>sys_lov</td><td>枚举字段翻译</td><td>状态显示为原始码，Agent 需标注未翻译</td></tr><tr><td>规则版本快照</td><td>wms_rule_config_hist</td><td>变更回滚</td><td>无法回滚，高危变更应禁止提交</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>查询配置</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>规则预览</td><td>read-only</td><td>无，但不产生业务后果</td><td>-</td></tr><tr><td>规则提交</td><td>write-normal</td><td>变更预览 + 单人确认</td><td>反向变更单回滚</td></tr></table></div>
+<p><strong>终局形态</strong>：主数据域不会消亡，但会从"配置表"变成"业务本体的一部分"。终局里它不再是给人维护的后台页面，而是 Agent 理解业务语义的词典——物料、库位、产线的定义被写进本体，规则从配置项变成可被 Agent 推理的策略。当前该域的表格维护界面是负资产，字段语义与关系是资产。</p>
+<h3 id="s2-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">入库管理</h3>
+<p>定位：从到货预告到上架完成的全链路。Agent 的价值集中在"到货前预知、到货中编排、异常时预警"，扫码收货这类实时动作保持 L0。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>ASN 到货预告</td><td>到货通知接收、明细核对、到货窗口</td><td>winv_asn_order</td><td>read-only</td></tr><tr><td>收货登记</td><td>按 ASN 生成收货单、数量确认</td><td>winv_receipt_order</td><td>write-normal</td></tr><tr><td>质检联动</td><td>质检任务下发、结果回写、合格判定</td><td>wms_quality_task</td><td>write-normal</td></tr><tr><td>上架分配</td><td>库位策略计算、上架任务生成</td><td>wms_putaway_task</td><td>write-normal</td></tr><tr><td>入库单接口</td><td>与 ERP 的入库回传、单边账处理</td><td>wms_interface_log</td><td>write-high</td></tr><tr><td>到货异常</td><td>数量不符、无预告到货、批号缺失</td><td>winv_asn_order / wms_exception</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>到货预告解读</td><td>人问"今天有哪些到货"</td><td>L1</td><td>无</td><td>ASN 清单与异常提示</td></tr><tr><td>收货单生成</td><td>人确认到货后</td><td>L2</td><td>出预览、人确认提交</td><td>收货单号与明细</td></tr><tr><td>库位分配建议</td><td>收货单生成时自动</td><td>L2</td><td>可改库位</td><td>库位清单与分配理由</td></tr><tr><td>到货异常预警</td><td>ASN 到货窗口前 4 小时</td><td>L3</td><td>人决定处置方式</td><td>异常类型与证据</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.receipt.create</code></p>
+<pre>{
+  "name": "wms.receipt.create",
+  "risk": "write-normal",
+  "description": "基于 ASN 创建收货单并生成上架建议",
+  "idempotencyKey": "ASN号 + 仓库 + 操作人",
+  "input": {
+    "asnNo": { "type": "string", "required": true },
+    "warehouseCode": { "type": "string", "required": true },
+    "locationStrategy": { "type": "enum", "values": ["AUTO","MANUAL"], "default": "AUTO" },
+    "remark": { "type": "string", "required": false }
+  },
+  "output": {
+    "receiptNo": "收货单号",
+    "lines": "[物料/批号/数量/库位建议]",
+    "warnings": "[质检未完成或库位冲突的明细]"
+  },
+  "compensation": "未过账可作废；已过账走库存调整单，不直接删单"
+}</pre>
+<p><code>wms.putaway.assign</code></p>
+<pre>{
+  "name": "wms.putaway.assign",
+  "risk": "write-normal",
+  "description": "按上架策略分配库位并下发上架任务",
+  "idempotencyKey": "收货单号 + 行号 + 库位 + 操作人",
+  "input": {
+    "receiptNo": { "type": "string", "required": true },
+    "lineNo": { "type": "integer", "required": true },
+    "strategy": { "type": "enum", "values": ["NEAREST","FIFO","ZONE_BALANCE","SHIP_UPON_PLINE"], "default": "NEAREST" },
+    "targetZone": { "type": "string", "required": false }
+  },
+  "output": {
+    "taskNo": "上架任务号",
+    "locations": "[库位/数量/分配理由]",
+    "constraints": "[库位状态或容量限制]"
+  },
+  "compensation": "任务未执行可撤销；已执行生成移库任务逆转"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>ASN 明细</td><td>winv_asn_order_line</td><td>收货数量基线</td><td>无法判数量差异，须转人工收货</td></tr><tr><td>库位状态</td><td>wmdm_location</td><td>上架过滤条件</td><td>可能分配到待检/冻结库位，必须阻断</td></tr><tr><td>产线关联库区</td><td>xhmdm_product_line</td><td>下线即走策略</td><td>越库直发路径判定失效</td></tr><tr><td>ERP 到货预测</td><td>接口</td><td>提前预警</td><td>只能事后响应，失去预测价值</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成收货单</td><td>write-normal</td><td>预览 + 单人确认</td><td>作废未过账单</td></tr><tr><td>下发上架任务</td><td>write-normal</td><td>预览 + 单人确认，库位冲突需人工指定</td><td>撤销未执行任务</td></tr><tr><td>入库过账</td><td>write-high</td><td>双人复核</td><td>库存调整单冲销，留痕不可删</td></tr></table></div>
+<p><strong>终局形态</strong>：收货单与上架单会消亡，物理动作本身（RFID 通道、视觉识别、称重）直接产生库存事实。ASN 退化为到货预告信号，不再作为收货的必要条件。到货异常预警保留并升级为实时异常检测——这是资产方向。当前优化"收货单填写体验"属于装修，应停止投入。</p>
+<h3 id="s2-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">出库管理</h3>
+<p>定位：从订单到发运交接。Agent 的价值在订单聚合、路径优化与发运协同，拣货复核等高频动作保持 L0。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>销售/调拨订单</td><td>订单接收、明细、优先级</td><td>winv_outbound_order</td><td>read-only</td></tr><tr><td>波次管理</td><td>订单聚合、波次生成与释放</td><td>wms_wave_order</td><td>write-normal</td></tr><tr><td>拣货管理</td><td>拣货任务生成、路径、复核</td><td>wms_pick_task</td><td>write-normal</td></tr><tr><td>装车与交接</td><td>月台分配、装车确认、交接单</td><td>wms_load_task</td><td>write-normal</td></tr><tr><td>发运同步</td><td>出库单回传 ERP/TMS</td><td>wms_interface_log</td><td>write-high</td></tr><tr><td>下线即走判定</td><td>产线完工直发判定与库位流转</td><td>winv_outbound_order / xhmdm_product_line</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>订单聚合建议</td><td>订单池定时扫描</td><td>L2</td><td>人确认波次</td><td>波次清单与聚合理由</td></tr><tr><td>拣货路径优化</td><td>波次释放时</td><td>L2</td><td>一线可忽略建议</td><td>路径顺序与预计时长</td></tr><tr><td>越库直发判定</td><td>产线完工信号触发</td><td>L2</td><td>高危订单人工复核</td><td>判定结果与依据字段</td></tr><tr><td>发运交接</td><td>装车完成时</td><td>L2</td><td>司机/仓管确认</td><td>交接单与差异提示</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.wave.build</code></p>
+<pre>{
+  "name": "wms.wave.build",
+  "risk": "write-normal",
+  "description": "按订单特征聚合波次并给出拣货路径建议",
+  "idempotencyKey": "订单号集合 + 仓库 + 生成日期",
+  "input": {
+    "orderNos": { "type": "array", "items": "string", "required": true },
+    "strategy": { "type": "enum", "values": ["SAME_ZONE","SAME_CARRIER","URGENT_FIRST"], "default": "SAME_ZONE" },
+    "maxLines": { "type": "integer", "default": 200 }
+  },
+  "output": {
+    "waveNo": "波次号",
+    "orders": "[订单/行数/优先级]",
+    "pickPath": "[库区顺序/预计米数/预计时长]",
+    "warnings": "[缺货或批次不足订单]"
+  },
+  "compensation": "未释放波次可直接删除；已释放生成回收任务"
+}</pre>
+<p><code>wms.ship.judge</code></p>
+<pre>{
+  "name": "wms.ship.judge",
+  "risk": "write-normal",
+  "description": "判定订单是否走下线即走（越库直发）",
+  "idempotencyKey": "订单号 + 判定版本 + 操作人",
+  "input": {
+    "orderNo": { "type": "string", "required": true },
+    "productionLine": { "type": "string", "required": true, "desc": "映射到 ATTRIBUTE11" },
+    "goodsReadyCheckType": { "type": "string", "required": true, "desc": "映射到 business_category，1=非货好入厂" },
+    "attribute6": { "type": "enum", "values": ["1","0"], "desc": "1=含瓶，0=净水" }
+  },
+  "output": {
+    "isShipUponPline": "1=下线即走，0=非下线即走",
+    "targetLocationType": "下线即走库位",
+    "locationStatus": "待检",
+    "evidence": "[规则编码/产线关联库区/判定时间]"
+  },
+  "compensation": "未发运可撤销判定回到常规流程；已发运走异常单"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>订单明细与优先级</td><td>winv_outbound_order_line</td><td>波次聚合</td><td>无法聚合，退化为单订单拣货</td></tr><tr><td>产线关联库区</td><td>xhmdm_product_line</td><td>越库判定</td><td>只能走常规入库后出库</td></tr><tr><td>库位状态</td><td>wmdm_location</td><td>下线即走库位过滤</td><td>误用冻结库位，必须阻断</td></tr><tr><td>库存现有量</td><td>inv_count_fact</td><td>缺货预警</td><td>波次释放后才发现缺货</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成波次</td><td>write-normal</td><td>预览 + 单人确认</td><td>删除未释放波次</td></tr><tr><td>越库直发判定</td><td>write-normal</td><td>出证据链 + 单人确认</td><td>撤销判定转常规流程</td></tr><tr><td>出库过账</td><td>write-high</td><td>双人复核</td><td>库存调整单冲销</td></tr></table></div>
+<p><strong>终局形态</strong>：订单、波次、拣货单在终局里全部消失——物理拣选动作被视觉与传感直接捕获，多个订单由 Agent 按目标实时组合，不再有"波次"这个中间结构。越库直发判定不会消失，但会从规则判断升级为实时路径决策。当前做"波次策略精细化"是装修，做"判定规则可解释、证据可追溯"是资产。</p>
+<h3 id="s2-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">库存管理</h3>
+<p>定位：库存事实的权威来源。Agent 的价值是查询、预警与调整建议，绝对不能在模型里生成库存数字。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>库存现有量</td><td>按库位加物料的库存事实</td><td>inv_count_fact</td><td>read-only</td></tr><tr><td>批次与状态</td><td>批次、生产日期、批次状态（待检/合格/冻结）</td><td>wms_batch_stock</td><td>read-only</td></tr><tr><td>冻结与解冻</td><td>库存冻结、解冻、冻结原因</td><td>wms_stock_freeze</td><td>write-normal</td></tr><tr><td>库存调整</td><td>调整单生成、原因、审批</td><td>wms_stock_adjust</td><td>write-high</td></tr><tr><td>呆滞与超限</td><td>库龄分析、安全库存上下限</td><td>inv_count_fact / wms_stock_threshold</td><td>read-only</td></tr><tr><td>库存快照</td><td>日终快照、历史轨迹</td><td>wms_stock_snapshot</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>自然语音查库存</td><td>人问"A 区纯生还有多少"</td><td>L1</td><td>无</td><td>数字 + 来源库位 + 查询时间</td></tr><tr><td>呆滞预警</td><td>每日定时</td><td>L3</td><td>人决定处置</td><td>呆滞清单与建议动作</td></tr><tr><td>冻结建议</td><td>质检异常触发</td><td>L2</td><td>人确认后冻结</td><td>冻结范围与原因</td></tr><tr><td>调整单生成</td><td>盘点差异确认后</td><td>L2</td><td>双人复核</td><td>调整单与证据链</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.inventory.query</code></p>
+<pre>{
+  "name": "wms.inventory.query",
+  "risk": "read-only",
+  "description": "按权限范围查询库存事实，返回可溯源数字",
+  "input": {
+    "goodsCode": { "type": "string", "required": false },
+    "locationCode": { "type": "string", "required": false },
+    "batchNo": { "type": "string", "required": false },
+    "orgScope": { "type": "object", "required": true }
+  },
+  "output": {
+    "lines": "[库位/物料/数量/批次状态/更新时间]",
+    "totalQty": "汇总数量，五位小数",
+    "source": "inv_count_fact + 快照时间",
+    "traceable": "每条记录可点回源单据"
+  },
+  "compensation": "-"
+}</pre>
+<p><code>wms.stock.adjust</code></p>
+<pre>{
+  "name": "wms.stock.adjust",
+  "risk": "write-high",
+  "description": "基于差异事实生成库存调整单",
+  "idempotencyKey": "差异单号 + 库位 + 物料 + 操作人",
+  "input": {
+    "diffNo": { "type": "string", "required": true },
+    "locationCode": { "type": "string", "required": true },
+    "goodsCode": { "type": "string", "required": true },
+    "adjustQty": { "type": "string", "required": true, "desc": "可为负，五位小数" },
+    "reasonCode": { "type": "string", "required": true }
+  },
+  "output": {
+    "adjustNo": "调整单号",
+    "evidence": "[盘点单/流水/归因结论]",
+    "approvalChain": "双人复核记录"
+  },
+  "compensation": "未过账可作废；已过账生成反向调整单，原单一律不删"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>库存事实主键</td><td>inv_count_fact</td><td>查询与调整基线</td><td>数字无权威来源，禁止生成答案</td></tr><tr><td>批次状态</td><td>wms_batch_stock</td><td>冻结/可用判定</td><td>可能误用冻结库存</td></tr><tr><td>差异归因结论</td><td>盘点事务报表</td><td>调整单证据</td><td>调整无依据，必须双人复核</td></tr><tr><td>安全库存阈值</td><td>wms_stock_threshold</td><td>预警触发</td><td>无预警，退化为人工巡库</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>查询库存</td><td>read-only</td><td>无，必须附来源与时间</td><td>-</td></tr><tr><td>冻结库存</td><td>write-normal</td><td>预览 + 单人确认</td><td>解冻单逆转</td></tr><tr><td>库存调整</td><td>write-high</td><td>证据链 + 双人复核</td><td>反向调整单，永不删单</td></tr></table></div>
+<p><strong>终局形态</strong>：库存"管理"这个概念会消亡——当每个物理动作实时变成事实，库存表只是数字孪生的当前状态视图，不再需要人工调整与盘点对齐。库存查询与异常检测保留并强化，是少数在终局里价值更高的能力。当前投入应集中在事实流质量与证据链，而不是调整单审批流程优化。</p>
+<h3 id="s2-5" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">库内作业</h3>
+<p>定位：移库、盘点、拆组垛、翻包、下线即走等复杂作业。这是 WMS 侧 Agent 价值最高的域——跨多源数据归因、动态路径决策、证据链整合。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>移库与转储</td><td>库位间移动、整托转移</td><td>wms_move_task</td><td>write-normal</td></tr><tr><td>盘点管理</td><td>盘点计划、盘点行、差异、事务日志</td><td>xhinv_count_order / xhinv_count_order_log</td><td>write-normal</td></tr><tr><td>拆组垛</td><td>按箱替换、按箱移除、组合拆分</td><td>wms_pack_task</td><td>write-normal</td></tr><tr><td>翻包与翻包入库</td><td>包装转换、重新入库</td><td>wms_repack_order</td><td>write-normal</td></tr><tr><td>下线即走</td><td>越库直发判定与库位流转</td><td>winv_outbound_order</td><td>write-normal</td></tr><tr><td>作业任务编排</td><td>多任务排序、资源冲突消解</td><td>wms_task_queue</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>盘点差异归因</td><td>盘点提交后自动</td><td>L3</td><td>人采纳或修正结论</td><td>归因结论 + 证据链</td></tr><tr><td>动态抽样</td><td>盘点计划生成时</td><td>L2</td><td>人确认抽样范围</td><td>抽样库位与风险依据</td></tr><tr><td>拆组垛策略建议</td><td>作业下发前</td><td>L2</td><td>人确认策略</td><td>替换/移除方案与影响</td></tr><tr><td>越库路径决策</td><td>产线完工信号</td><td>L3</td><td>高危订单人工把关</td><td>路径 + 库位 + 理由</td></tr><tr><td>多任务编排</td><td>任务队列积压时</td><td>L3</td><td>人可重排优先级</td><td>执行顺序与资源占用</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.count.attribute</code></p>
+<pre>{
+  "name": "wms.count.attribute",
+  "risk": "read-only",
+  "description": "盘点差异归因，拉取流水与证据生成结论",
+  "idempotencyKey": "盘点单号 + 盘点行号 + 归因版本",
+  "input": {
+    "countNo": { "type": "string", "required": true },
+    "lineId": { "type": "string", "required": true },
+    "lookbackDays": { "type": "integer", "default": 7 }
+  },
+  "output": {
+    "conclusion": "归因结论与置信度",
+    "evidence": "[出入库流水/单据号/时间点/操作人]",
+    "candidates": "[其他可能原因与排除依据]",
+    "suggestedAction": "[补过账/生成调整单/标记已知损耗]"
+  },
+  "compensation": "-"
+}</pre>
+<p><code>wms.task.orchestrate</code></p>
+<pre>{
+  "name": "wms.task.orchestrate",
+  "risk": "write-normal",
+  "description": "按目标与资源约束编排库内作业任务",
+  "idempotencyKey": "任务集合 + 编排版本 + 操作人",
+  "input": {
+    "goal": { "type": "string", "required": true, "desc": "如清空 A 区待检库位" },
+    "taskTypes": { "type": "array", "items": "string" },
+    "constraints": { "type": "object", "desc": "人员/设备/时间窗/优先级" }
+  },
+  "output": {
+    "sequence": "[任务号/顺序/执行人/预计时长]",
+    "conflicts": "[资源冲突项与消解方式]",
+    "goalCheck": "编排后是否达成目标的推演结论"
+  },
+  "compensation": "未下发任务可整体撤销；已执行任务按单逆转"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>盘点事务日志</td><td>xhinv_count_order_log</td><td>归因证据主来源</td><td>只能给结论不能给证据，禁止自动采纳</td></tr><tr><td>库存事实快照</td><td>inv_count_fact</td><td>差异计算基线</td><td>差异口径不一致</td></tr><tr><td>出入库流水</td><td>wms_stock_flow</td><td>时间线重建</td><td>归因退化为猜测，必须标注置信度低</td></tr><tr><td>库位状态</td><td>wmdm_location</td><td>下线即走库位过滤</td><td>待检库位误用，必须阻断</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>差异归因</td><td>read-only</td><td>无，但须附证据与置信度</td><td>-</td></tr><tr><td>动态抽样</td><td>write-normal</td><td>预览 + 单人确认</td><td>重新生成抽样计划</td></tr><tr><td>拆组垛策略</td><td>write-normal</td><td>预览 + 单人确认</td><td>未执行可撤销</td></tr><tr><td>库存过账调整</td><td>write-high</td><td>归因证据 + 双人复核</td><td>反向调整单</td></tr></table></div>
+<p><strong>终局形态</strong>：盘点职能本身会消亡——实时事实流让账实永远同步，不再需要周期性盘点来"发现"差异。差异归因不会消亡，而是升级为毫秒级实时异常检测与自愈。拆组垛、翻包这些物理作业的"单据"会消失，但作业决策（怎么拆、怎么包）反而更依赖 Agent。当前最值得投入的是盘点事务日志的语义化与证据链完整性——它正是终局自愈系统的数据地基。</p>
+<h3 id="s2-6" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">包装与辅料</h3>
+<p>定位：周转包装物、托盘、辅料的管理。Agent 的价值在台账核对与领用回收建议，减少包装物在仓库间"消失"。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>周转包装物</td><td>箱、筐、笼车档案与流转</td><td>wms_package_asset</td><td>read-only</td></tr><tr><td>托盘管理</td><td>托盘编码、状态、所属、位置</td><td>wms_pallet</td><td>read-only</td></tr><tr><td>领用与回收</td><td>领用单、回收单、超期未还</td><td>wms_package_flow</td><td>write-normal</td></tr><tr><td>台账核对</td><td>实物数与台账数比对、差异清单</td><td>wms_package_asset / wms_package_flow</td><td>read-only</td></tr><tr><td>损耗与报废</td><td>损坏判定、报废审批</td><td>wms_package_scrap</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>包装物台账问答</td><td>人问"上周领了多少周转箱"</td><td>L1</td><td>无</td><td>数字 + 来源单据</td></tr><tr><td>回收提醒</td><td>超期未还自动触发</td><td>L3</td><td>人决定是否催办</td><td>超期清单与责任方</td></tr><tr><td>领用建议</td><td>出库作业下发时</td><td>L2</td><td>人确认</td><td>领用数量与包装类型</td></tr><tr><td>台账异常识别</td><td>每日对账</td><td>L3</td><td>人核实</td><td>差异项与可能去向</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.package.query</code></p>
+<pre>{
+  "name": "wms.package.query",
+  "risk": "read-only",
+  "description": "查询包装物/托盘的当前位置、状态与流转记录",
+  "input": {
+    "assetType": { "type": "enum", "values": ["PACKAGE","PALLET","AUXILIARY"] },
+    "assetCode": { "type": "string", "required": false },
+    "holder": { "type": "string", "required": false },
+    "orgScope": { "type": "object", "required": true }
+  },
+  "output": {
+    "items": "[编码/类型/状态/当前位置/持有人]",
+    "flow": "[最近流转记录与时间点]",
+    "overdue": "超期未还天数"
+  },
+  "compensation": "-"
+}</pre>
+<p><code>wms.package.recover</code></p>
+<pre>{
+  "name": "wms.package.recover",
+  "risk": "write-normal",
+  "description": "生成包装物回收任务并指定责任方",
+  "idempotencyKey": "包装物编码 + 责任方 + 生成日期",
+  "input": {
+    "assetCodes": { "type": "array", "items": "string", "required": true },
+    "responsible": { "type": "string", "required": true },
+    "deadline": { "type": "date", "required": true }
+  },
+  "output": {
+    "taskNos": "[回收任务号]",
+    "overdueHistory": "该责任方历史超期情况",
+    "notifyTargets": "通知对象清单"
+  },
+  "compensation": "未执行任务可撤销；已回收则关闭任务"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>包装物流转流水</td><td>wms_package_flow</td><td>位置追踪</td><td>无法定位，只能人工盘点</td></tr><tr><td>超期阈值</td><td>wms_package_rule</td><td>回收提醒</td><td>无提醒，退化为季度清账</td></tr><tr><td>责任方归属</td><td>wms_package_asset</td><td>催办对象</td><td>无法确定催办人</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>查询台账</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>生成回收任务</td><td>write-normal</td><td>预览 + 单人确认</td><td>撤销未执行任务</td></tr><tr><td>报废审批</td><td>write-normal</td><td>预览 + 双人确认</td><td>撤销报废单</td></tr></table></div>
+<p><strong>终局形态</strong>：包装物台账会消亡——每个包装物自带 RFID 或视觉标识，位置与状态实时可知，不再需要"领用/回收"这种单据来证明责任转移。但包装物调度决策（哪个包装去哪条线）会长期存在，是 Agent 的优化场景。当前做"台账核对自动化"是资产方向，做"领用单填报体验"是装修。</p>
+<h3 id="s2-7" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">退货与逆向</h3>
+<p>定位：客户退货、供应商退货与质检联动。Agent 的价值在异常退货识别和处置路径建议。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>退货申请</td><td>客户/供应商退货申请、原因</td><td>wms_return_order</td><td>read-only</td></tr><tr><td>退货收货</td><td>退货实物接收、数量核对</td><td>wms_return_receipt</td><td>write-normal</td></tr><tr><td>退货质检</td><td>质检任务、合格判定、处置建议</td><td>wms_quality_task</td><td>write-normal</td></tr><tr><td>退货入库</td><td>合格品回库、不合格品隔离</td><td>wms_stock_flow</td><td>write-high</td></tr><tr><td>异常退货</td><td>无申请退货、数量不符、错退</td><td>wms_exception</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>退货单生成</td><td>退货申请确认后</td><td>L2</td><td>人确认提交</td><td>退货单号与明细</td></tr><tr><td>质检任务下发</td><td>退货收货完成</td><td>L2</td><td>无（自动）</td><td>质检任务与优先级</td></tr><tr><td>异常退货识别</td><td>收货比对时</td><td>L3</td><td>人决定处置</td><td>异常类型与证据</td></tr><tr><td>处置路径建议</td><td>质检结果回写后</td><td>L3</td><td>人选择路径</td><td>入库/隔离/报废建议与理由</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.return.create</code></p>
+<pre>{
+  "name": "wms.return.create",
+  "risk": "write-normal",
+  "description": "基于退货申请生成退货单并下发质检任务",
+  "idempotencyKey": "退货申请号 + 仓库 + 操作人",
+  "input": {
+    "applyNo": { "type": "string", "required": true },
+    "warehouseCode": { "type": "string", "required": true },
+    "expectedQty": { "type": "string", "required": true },
+    "qualityCheck": { "type": "boolean", "default": true }
+  },
+  "output": {
+    "returnNo": "退货单号",
+    "taskNo": "质检任务号",
+    "warnings": "[无申请/数量不符/错退风险]"
+  },
+  "compensation": "未收货可作废；已收货走逆向调整"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>退货申请</td><td>wms_return_order</td><td>数量基线</td><td>无申请退货须人工介入</td></tr><tr><td>质检规则</td><td>wms_quality_rule</td><td>处置路径判定</td><td>只能给建议不能自动执行</td></tr><tr><td>原出库记录</td><td>winv_outbound_order</td><td>错退识别</td><td>异常识别能力下降</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成退货单</td><td>write-normal</td><td>预览 + 单人确认</td><td>作废未收货单</td></tr><tr><td>退货入库</td><td>write-high</td><td>质检结果 + 双人复核</td><td>逆向调整单</td></tr></table></div>
+<p><strong>终局形态</strong>：退货单会消亡，逆向物流的物理动作直接成为事实流；但"这件退回来还能不能卖"的判定会长期存在，且是 Agent 的高价值场景——它需要综合质检图像、历史批次、保质期与渠道政策。当前应投入判定规则的语义化，而不是退货单表单优化。</p>
+<h3 id="s2-8" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">报表与查询</h3>
+<p>定位：所有数据消费的出口。这是 Agent 落地最快、风险最低的域——L1 为主，先建立信任。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>库存报表</td><td>库存现有量、库龄、收发存</td><td>inv_count_fact / wms_stock_flow</td><td>read-only</td></tr><tr><td>出入库报表</td><td>收货、上架、拣货、发运统计</td><td>wms_stock_flow</td><td>read-only</td></tr><tr><td>盘点报表</td><td>盘点汇总、差异明细、事务跟踪</td><td>xhinv_count_order_log</td><td>read-only</td></tr><tr><td>自定义查询</td><td>条件组合、字段选择、导出</td><td>全域</td><td>read-only</td></tr><tr><td>报表权限</td><td>组织/仓库/货主三级数据隔离</td><td>权限中心</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>自然语言取数</td><td>人问"上周 A 区盘亏多少"</td><td>L1</td><td>无</td><td>数字 + 口径 + 来源</td></tr><tr><td>报表生成</td><td>人描述需要的报表</td><td>L1</td><td>无</td><td>报表文件与字段说明</td></tr><tr><td>数据异常解读</td><td>报表生成后自动</td><td>L2</td><td>人判断是否采信</td><td>异常点 + 可能原因</td></tr><tr><td>报表口径问答</td><td>人问"净数差异怎么算"</td><td>L1</td><td>无</td><td>口径定义与来源文档</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.report.query</code></p>
+<pre>{
+  "name": "wms.report.query",
+  "risk": "read-only",
+  "description": "按自然语言解析后的结构化条件取数，返回带口径的数据",
+  "input": {
+    "reportCode": { "type": "string", "required": true },
+    "filters": { "type": "object", "required": true, "desc": "维度过滤条件" },
+    "metrics": { "type": "array", "items": "string", "required": true },
+    "orgScope": { "type": "object", "required": true }
+  },
+  "output": {
+    "rows": "[按维度+指标组织的数据行]",
+    "metricDefs": "[每个指标的计算口径]",
+    "source": "来源表与截止时间",
+    "truncated": "是否超过 64KB 被截断"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>指标口径字典</td><td>wms_metric_def</td><td>指标定义与计算</td><td>口径不一致，禁止给数字</td></tr><tr><td>权限三元组</td><td>权限中心</td><td>数据隔离</td><td>必须拒绝查询</td></tr><tr><td>LOV 翻译</td><td>sys_lov</td><td>枚举字段可读化</td><td>显示原始码并标注</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>任意报表查询</td><td>read-only</td><td>权限过滤，无确认</td><td>-</td></tr><tr><td>报表导出</td><td>read-only</td><td>敏感字段脱敏</td><td>-</td></tr></table></div>
+<p><strong>终局形态</strong>：报表不会消亡，但从"人配置后查看"变成"Agent 按需生成并解读"。界面形态从报表设计器退化为治理面板——人不再自己做表，而是审查 Agent 给的数字和口径。当前投入重点是指标口径字典的语义化，它是终局可信问答的前提。</p>
+<h3 id="s2-9" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">接口与集成</h3>
+<p>定位：ERP/MES/OCMS 等系统的对接。这是 WMS 侧另一个 Agent 价值最高的域——接口失败靠人盯、单边账靠人查，恰好是 Agent 的强项。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>接口注册</td><td>接口编码、方向、报文格式、映射</td><td>wms_interface_def</td><td>read-only</td></tr><tr><td>调用日志</td><td>请求/响应、耗时、错误码</td><td>wms_interface_log</td><td>read-only</td></tr><tr><td>失败重试</td><td>幂等重试、退避策略、死信队列</td><td>wms_interface_retry</td><td>write-normal</td></tr><tr><td>单边账对账</td><td>双方单据比对、差异定位</td><td>wms_interface_reconcile</td><td>write-normal</td></tr><tr><td>回传确认</td><td>入库/出库/盘点回传状态</td><td>wms_interface_log</td><td>write-high</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>接口健康巡检</td><td>每 15 分钟</td><td>L3</td><td>无（只读）</td><td>异常接口与影响范围</td></tr><tr><td>失败原因定位</td><td>巡检发现异常</td><td>L3</td><td>人决定是否重试</td><td>错误码解读 + 上下文</td></tr><tr><td>幂等重试</td><td>确认为可重试错误</td><td>L2</td><td>人确认</td><td>重试结果与幂等键</td></tr><tr><td>单边账归因</td><td>每日对账</td><td>L3</td><td>人决定处置</td><td>差异单据与可能原因</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.interface.inspect</code></p>
+<pre>{
+  "name": "wms.interface.inspect",
+  "risk": "read-only",
+  "description": "接口健康巡检与失败原因定位",
+  "input": {
+    "interfaceCode": { "type": "string", "required": false },
+    "window": { "type": "string", "default": "15m" },
+    "errorCode": { "type": "string", "required": false }
+  },
+  "output": {
+    "health": "[接口/成功率/平均耗时/最近失败]",
+    "failures": "[请求ID/错误码/错误解读/影响单据]",
+    "retryable": "是否属于允许重试的错误类型"
+  },
+  "compensation": "-"
+}</pre>
+<p><code>wms.interface.retry</code></p>
+<pre>{
+  "name": "wms.interface.retry",
+  "risk": "write-normal",
+  "description": "以原幂等键重放失败请求",
+  "idempotencyKey": "原请求ID + 重试次数 + 操作人",
+  "input": {
+    "requestId": { "type": "string", "required": true },
+    "maxAttempts": { "type": "integer", "default": 3 },
+    "backoffSeconds": { "type": "integer", "default": 60 }
+  },
+  "output": {
+    "result": "成功/仍失败/进入死信",
+    "attempts": "[每次重试的时间与响应]",
+    "idempotencyGuard": "幂等键命中情况"
+  },
+  "compensation": "重试失败进入死信队列，人工介入；不得绕过幂等键重复提交"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>接口错误码字典</td><td>wms_error_code_registry</td><td>错误解读</td><td>只能显示原始码</td></tr><tr><td>幂等记录</td><td>wms_idempotency_log</td><td>防重复提交</td><td>必须禁止自动重试</td></tr><tr><td>报文映射</td><td>wms_interface_def</td><td>语义对齐</td><td>单边账无法归因</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>巡检与定位</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>幂等重试</td><td>write-normal</td><td>预览 + 单人确认</td><td>进入死信队列</td></tr><tr><td>回传强制确认</td><td>write-high</td><td>双人复核</td><td>反向回传单据，留痕</td></tr></table></div>
+<p><strong>终局形态</strong>：接口域在终局里会整体消亡——统一运营本体让系统之间不再"对接"。但过渡期内它是投入产出比最高的域之一：把字段映射升级为本体定义、把错误码升级为语义化异常、把重试策略沉淀为可复用策略——这三件事都在为终局铺路。当前写《接口对接规范》是正确的资产投入，但要持续往"业务本体定义"方向升级，别停在报文格式层面。</p>
+<h3 id="s2-10" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">系统与权限</h3>
+<p>定位：用户、角色、审批流与操作日志。Agent 在这里必须严格继承操作人权限，不得有独立越权通道。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>用户与角色</td><td>账号、角色、组织归属</td><td>sys_user / sys_role</td><td>read-only</td></tr><tr><td>功能权限</td><td>角色与功能点的授权关系</td><td>sys_role_permission</td><td>read-only</td></tr><tr><td>数据权限</td><td>组织/仓库/货主三级数据隔离</td><td>sys_data_scope</td><td>read-only</td></tr><tr><td>审批流</td><td>流程定义、状态、审批记录</td><td>sys_workflow</td><td>read-only</td></tr><tr><td>操作日志</td><td>谁在何时做了什么、前后值</td><td>sys_audit_log</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>权限咨询</td><td>人问"我能不能作废这张单"</td><td>L1</td><td>无</td><td>判定结果与依据规则</td></tr><tr><td>流程状态查询</td><td>人问"这单卡在哪"</td><td>L1</td><td>无</td><td>当前节点与处理人</td></tr><tr><td>操作溯源</td><td>差异追责时</td><td>L1</td><td>无</td><td>操作链与时间线</td></tr><tr><td>越权拦截</td><td>每次 Tool 调用前</td><td>L0 硬约束</td><td>无</td><td>直接拒绝，不进预览</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>wms.auth.check</code></p>
+<pre>{
+  "name": "wms.auth.check",
+  "risk": "read-only",
+  "description": "校验操作人对目标工具与数据范围的权限，是所有写操作的前置门禁",
+  "input": {
+    "userId": { "type": "string", "required": true },
+    "toolName": { "type": "string", "required": true },
+    "orgScope": { "type": "object", "required": true }
+  },
+  "output": {
+    "allowed": "布尔值",
+    "reason": "允许或拒绝的规则依据",
+    "riskLevel": "该工具的风险级别",
+    "requiresDualApproval": "是否需要双人复核"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>权限三元组</td><td>sys_data_scope</td><td>数据隔离</td><td>必须默认拒绝</td></tr><tr><td>角色权限映射</td><td>sys_role_permission</td><td>功能授权</td><td>必须默认拒绝</td></tr><tr><td>审计日志</td><td>sys_audit_log</td><td>责任回溯</td><td>高危操作应禁止执行</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>权限校验</td><td>read-only</td><td>每次调用强制执行，失败直接拒绝</td><td>无，不可绕过</td></tr><tr><td>权限配置变更</td><td>write-high</td><td>双人复核 + 变更留痕</td><td>反向授权单</td></tr></table></div>
+<p><strong>终局形态</strong>：权限系统的形态会从"角色能点什么"变成"Agent 可自主到什么边界"——权限对象从人扩展到数字劳动力，授权从一次性配置变成持续的信任证明。但"责任必须可回溯到具体的人"这一条永远不变，它是终局里"信任"这个不可替代要素的制度载体。</p>
+</div>
+<div class="sec" id="sec3"><span class="num">03</span><h2>TMS 功能域详细设计</h2></div>
+<h3 id="s3-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">运输订单</h3>
+<p>定位：运单创建、订单拆分合并与指令下发。Agent 的价值在由出库单自动生成运单与智能拆合单。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>运单创建</td><td>由出库单生成运单、基础信息</td><td>tms_waybill</td><td>write-normal</td></tr><tr><td>订单拆分</td><td>按重量/体积/线路拆单</td><td>tms_waybill_split</td><td>write-normal</td></tr><tr><td>订单合并</td><td>同方向订单合车</td><td>tms_waybill_merge</td><td>write-normal</td></tr><tr><td>运输指令</td><td>下发给承运商/司机</td><td>tms_dispatch_order</td><td>write-normal</td></tr><tr><td>订单状态</td><td>创建、已派、在途、签收</td><td>tms_waybill</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>运单自动生成</td><td>出库发运确认后</td><td>L2</td><td>出预览、人确认</td><td>运单号与明细</td></tr><tr><td>智能拆单</td><td>超重超体积时</td><td>L2</td><td>人确认拆分方案</td><td>拆分结果与理由</td></tr><tr><td>合单建议</td><td>同方向订单池扫描</td><td>L2</td><td>调度确认</td><td>合车方案与节省估算</td></tr><tr><td>指令下发</td><td>承运商确定后</td><td>L2</td><td>人确认</td><td>指令编号与接收方</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.waybill.create</code></p>
+<pre>{
+  "name": "tms.waybill.create",
+  "risk": "write-normal",
+  "description": "由出库单生成运单，自动计算体积重量",
+  "idempotencyKey": "出库单号 + 仓库 + 操作人",
+  "input": {
+    "outboundNo": { "type": "string", "required": true },
+    "goodsType": { "type": "enum", "values": ["NORMAL","COLD","HAZARD"] },
+    "splitPolicy": { "type": "enum", "values": ["AUTO","MANUAL"], "default": "AUTO" }
+  },
+  "output": {
+    "waybillNo": "运单号",
+    "volume": "体积，五位小数",
+    "weight": "重量，五位小数",
+    "splitSuggestion": "超限时给出拆分方案"
+  },
+  "compensation": "未派车可作废；已派车走撤单流程"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>出库单明细</td><td>winv_outbound_order</td><td>运单基线</td><td>无法生成运单</td></tr><tr><td>物料体积重量</td><td>wmdm_goods</td><td>计费与配载</td><td>需人工测量</td></tr><tr><td>拆合单规则</td><td>tms_rule_config</td><td>自动决策依据</td><td>退化为人工判断</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成运单</td><td>write-normal</td><td>预览 + 单人确认</td><td>作废未派运单</td></tr><tr><td>拆合单</td><td>write-normal</td><td>预览 + 调度确认</td><td>撤销未下发指令</td></tr><tr><td>指令下发</td><td>write-normal</td><td>预览 + 单人确认</td><td>撤回指令</td></tr></table></div>
+<p><strong>终局形态</strong>：运单会消亡——运输需求由业务目标直接驱动，不需要"运单"这个中间载体。但"这票货怎么运"的决策会长期存在，且会与库存决策合并成统一的供应链决策。当前做"运单自动生成的准确率"是资产，做"运单表单字段优化"是装修。</p>
+<h3 id="s3-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">运力与承运商</h3>
+<p>定位：承运商档案、运力池与合同运价。Agent 的价值在综合履约记录做推荐，而不是只比报价。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>承运商档案</td><td>资质、线路、车型、服务范围</td><td>tms_carrier</td><td>read-only</td></tr><tr><td>运力池</td><td>可用车辆司机、当前占用</td><td>tms_capacity_pool</td><td>read-only</td></tr><tr><td>合同运价</td><td>线路报价、阶梯价、附加费</td><td>tms_rate_contract</td><td>read-only</td></tr><tr><td>履约记录</td><td>准时率、货损率、历史评分</td><td>tms_performance</td><td>read-only</td></tr><tr><td>运力预警</td><td>运力缺口、价格异常</td><td>tms_capacity_pool</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>承运商推荐</td><td>运单生成时</td><td>L2</td><td>调度确认</td><td>排名 + 推荐理由 + 数据依据</td></tr><tr><td>运价比较</td><td>人问"这条线谁便宜"</td><td>L1</td><td>无</td><td>报价对比与附加费说明</td></tr><tr><td>运力缺口预警</td><td>每日排车前</td><td>L3</td><td>人决定措施</td><td>缺口线路与建议</td></tr><tr><td>资质到期提醒</td><td>定期扫描</td><td>L3</td><td>人跟进</td><td>到期承运商清单</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.carrier.select</code></p>
+<pre>{
+  "name": "tms.carrier.select",
+  "risk": "read-only",
+  "description": "按线路、时效、成本与履约记录推荐承运商",
+  "input": {
+    "origin": { "type": "string", "required": true },
+    "destination": { "type": "string", "required": true },
+    "goodsType": { "type": "enum", "values": ["NORMAL","COLD","HAZARD"] },
+    "expectedDate": { "type": "date", "required": true },
+    "weight": { "type": "number", "unit": "kg", "required": true }
+  },
+  "output": {
+    "ranked": "[承运商/报价/预计到达/历史准时率/推荐理由]",
+    "dataSource": "TMS 运价表 + 近 90 天履约记录",
+    "riskNotes": "资质或货损风险提示"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>合同运价</td><td>tms_rate_contract</td><td>成本核算</td><td>只能用历史价估算</td></tr><tr><td>履约记录</td><td>tms_performance</td><td>推荐排序</td><td>只能按报价排，价值大幅下降</td></tr><tr><td>资质有效期</td><td>tms_carrier</td><td>风险过滤</td><td>必须人工核验资质</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>推荐与比价</td><td>read-only</td><td>无，须给出数据来源</td><td>-</td></tr><tr><td>运价修改</td><td>write-high</td><td>双人复核</td><td>版本回滚</td></tr></table></div>
+<p><strong>终局形态</strong>：承运商档案与运价表会消亡，取而代之的是开放的运力市场与实时报价。Agent 会代表企业在市场上自动竞价与签约。但"履约信任"会长期存在——承运商的历史表现是 Agent 决策的核心依据。当前投入履约数据质量是资产，投入运价表维护界面是装修。</p>
+<h3 id="s3-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">运输计划与调度</h3>
+<p>定位：线路规划、配载、车辆司机安排与月台预约。这是 TMS 侧最复杂的决策域。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>线路规划</td><td>路径选择、途经点、时效估算</td><td>tms_route_plan</td><td>read-only</td></tr><tr><td>配载计算</td><td>体积重量配载、装载率</td><td>tms_load_plan</td><td>read-only</td></tr><tr><td>车辆安排</td><td>车型匹配、司机排班</td><td>tms_dispatch_order</td><td>write-normal</td></tr><tr><td>月台预约</td><td>月台资源、时间窗</td><td>wms_dock_schedule</td><td>write-normal</td></tr><tr><td>计划调整</td><td>临时改派、加单、取消</td><td>tms_dispatch_order</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>智能配载</td><td>运单池扫描时</td><td>L2</td><td>调度确认</td><td>装载方案与装载率</td></tr><tr><td>路线优化</td><td>派车前</td><td>L2</td><td>司机可反馈修正</td><td>路线与预计到达</td></tr><tr><td>自动叫车</td><td>运力缺口出现</td><td>L2</td><td>人确认</td><td>叫车方案与成本</td></tr><tr><td>月台预约协同</td><td>出库与运输交接时</td><td>L4</td><td>关键节点人工把关</td><td>双方确认的时间窗</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.dispatch.plan</code></p>
+<pre>{
+  "name": "tms.dispatch.plan",
+  "risk": "write-normal",
+  "description": "生成配载与派车方案，含月台时间窗协商",
+  "idempotencyKey": "运单集合 + 方案版本 + 调度人",
+  "input": {
+    "waybillNos": { "type": "array", "items": "string", "required": true },
+    "origin": { "type": "string", "required": true },
+    "expectedArrival": { "type": "date", "required": true },
+    "constraints": { "type": "object", "desc": "车型/司机工时/月台可用窗口" }
+  },
+  "output": {
+    "planNo": "调度方案号",
+    "loads": "[车辆/司机/运单/装载率]",
+    "dockWindow": "月台时间窗",
+    "tradeoffs": "[时效与成本的取舍说明]"
+  },
+  "compensation": "未派车可整体撤销；已派车走改派流程"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>月台可用窗口</td><td>wms_dock_schedule</td><td>交接协同</td><td>车辆到场等待</td></tr><tr><td>司机工时规则</td><td>tms_driver_rule</td><td>合规约束</td><td>存在疲劳驾驶风险</td></tr><tr><td>线路历史时效</td><td>tms_performance</td><td>到达预测</td><td>只能按地图估算</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成调度方案</td><td>write-normal</td><td>预览 + 调度确认</td><td>撤销未下发方案</td></tr><tr><td>临时改派</td><td>write-normal</td><td>预览 + 双人确认</td><td>回退原派车方案</td></tr></table></div>
+<p><strong>终局形态</strong>：调度会从"中心化计划"变成"多 Agent 协商"——车辆 Agent、仓库 Agent、承运商 Agent 就时间与价格自动协商，中心只设红线。当前写死在代码里的调度规则应逐步抽成可协商的策略，这是面向终局的关键动作。</p>
+<h3 id="s3-4" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">装车与发运</h3>
+<p>定位：月台管理、装车确认与发运交接。Agent 的价值在进度跟踪与交接单生成。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>月台管理</td><td>月台状态、占用、排队</td><td>wms_dock_schedule</td><td>read-only</td></tr><tr><td>装车确认</td><td>装车明细、数量确认</td><td>tms_load_confirm</td><td>write-normal</td></tr><tr><td>发运交接</td><td>交接单、司机确认、差异</td><td>tms_handover</td><td>write-normal</td></tr><tr><td>封签与铅封</td><td>封签号、拍照留证</td><td>tms_seal_record</td><td>write-normal</td></tr><tr><td>发运异常</td><td>少装、错装、拒装</td><td>tms_exception</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>装车进度跟踪</td><td>装车开始后</td><td>L2</td><td>无（汇报）</td><td>完成率与卡点</td></tr><tr><td>交接单生成</td><td>装车确认后</td><td>L2</td><td>司机/仓管确认</td><td>交接单与差异项</td></tr><tr><td>发运异常提示</td><td>数量比对时</td><td>L3</td><td>人决定处置</td><td>异常类型与证据</td></tr><tr><td>月台冲突预警</td><td>预约冲突时</td><td>L3</td><td>调度调整</td><td>冲突项与建议</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.handover.create</code></p>
+<pre>{
+  "name": "tms.handover.create",
+  "risk": "write-normal",
+  "description": "生成发运交接单并核对装车差异",
+  "idempotencyKey": "运单号 + 车牌 + 装车完成时间",
+  "input": {
+    "waybillNo": { "type": "string", "required": true },
+    "vehicleNo": { "type": "string", "required": true },
+    "loadedQty": { "type": "string", "required": true, "desc": "五位小数" },
+    "sealNo": { "type": "string", "required": false }
+  },
+  "output": {
+    "handoverNo": "交接单号",
+    "diffQty": "与运单的差异，可为负",
+    "evidence": "[装车照片/称重记录/时间戳]",
+    "warnings": "[少装/错装/封签缺失]"
+  },
+  "compensation": "未离场可更正；已离场走异常单"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>运单明细</td><td>tms_waybill</td><td>差异基线</td><td>无法判少装错装</td></tr><tr><td>称重记录</td><td>tms_weigh_record</td><td>实物证据</td><td>只能靠人工点数</td></tr><tr><td>月台状态</td><td>wms_dock_schedule</td><td>冲突检测</td><td>车辆到场等待</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>生成交接单</td><td>write-normal</td><td>双方确认</td><td>未离场可更正</td></tr><tr><td>发运过账</td><td>write-high</td><td>双人复核</td><td>异常单处理，不删单</td></tr></table></div>
+<p><strong>终局形态</strong>：交接单会消亡——装车动作本身被视觉与称重捕获，双方无需签字确认。但"责任在何时从仓库转移到承运商"这个语义边界会长期存在，它是终局里责任链的关键节点。当前应把交接动作语义化，而不是优化交接单填写。</p>
+<h3 id="s3-5" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">在途跟踪</h3>
+<p>定位：轨迹、时效与异常预警。TMS 侧 Agent 价值最高的域之一——把多源信息收敛成一句可执行的判断。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>GPS 轨迹</td><td>位置、速度、停留</td><td>tms_gps_track</td><td>read-only</td></tr><tr><td>承运商状态</td><td>承运商系统回传的状态</td><td>tms_carrier_status</td><td>read-only</td></tr><tr><td>司机反馈</td><td>文字/语音上报</td><td>tms_driver_feedback</td><td>read-only</td></tr><tr><td>到达预测</td><td>ETA 计算、时效偏差</td><td>tms_eta_model</td><td>read-only</td></tr><tr><td>异常预警</td><td>延误、偏航、长时间停留</td><td>tms_exception</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>在途问答</td><td>人问"宁波那车到哪了"</td><td>L1</td><td>无</td><td>位置 + ETA + 数据来源</td></tr><tr><td>到达时间预测</td><td>定时重算</td><td>L3</td><td>无（汇报）</td><td>ETA + 置信度 + 依据</td></tr><tr><td>延误预警</td><td>偏差超阈值</td><td>L3</td><td>人决定是否干预</td><td>预警 + 原因归因 + 建议</td></tr><tr><td>主动通知</td><td>关键节点或异常</td><td>L3</td><td>人可配置规则</td><td>通知对象与内容</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.eta.predict</code></p>
+<pre>{
+  "name": "tms.eta.predict",
+  "risk": "read-only",
+  "description": "综合轨迹、路况与历史履约预测到达时间",
+  "input": {
+    "waybillNo": { "type": "string", "required": true },
+    "destination": { "type": "string", "required": true },
+    "lookbackDays": { "type": "integer", "default": 90 }
+  },
+  "output": {
+    "eta": "预计到达时间，ISO 8601",
+    "confidence": "置信度",
+    "factors": "[当前位置/剩余里程/历史时效/路况]",
+    "delayReason": "若预计延误，给出归因与证据"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>GPS 轨迹</td><td>tms_gps_track</td><td>位置与停留判断</td><td>只能靠人工反馈</td></tr><tr><td>历史履约</td><td>tms_performance</td><td>时效基线</td><td>预测置信度大幅下降</td></tr><tr><td>承运商状态</td><td>tms_carrier_status</td><td>交叉验证</td><td>单一数据源，须标注局限</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>查询与预测</td><td>read-only</td><td>无，须给置信度</td><td>-</td></tr><tr><td>延误预警</td><td>write-normal</td><td>无（通知类）</td><td>可撤回通知</td></tr><tr><td>主动改派</td><td>write-normal</td><td>预览 + 调度确认</td><td>回退原派车</td></tr></table></div>
+<p><strong>终局形态</strong>：在途跟踪不会消亡，反而会成为终局的核心感知能力之一——物理世界的事实流让位置与状态实时可知。变化在于：它从"给人看的地图页面"变成"给 Agent 决策的输入信号"。当前投入轨迹数据质量与语义化异常，是明确的资产方向。</p>
+<h3 id="s3-6" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">签收与回单</h3>
+<p>定位：电子签收、回单回收与签收异常。Agent 的价值在催收与异常识别，把"回单迟迟不回"从人肉跟进变成自动闭环。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>电子签收</td><td>签收确认、时间、签收人</td><td>tms_sign_record</td><td>write-normal</td></tr><tr><td>回单回收</td><td>纸质回单扫描、归档</td><td>tms_receipt_file</td><td>write-normal</td></tr><tr><td>签收异常</td><td>拒收、少收、代签、异常备注</td><td>tms_exception</td><td>write-normal</td></tr><tr><td>回单催收</td><td>超期未回、催收记录</td><td>tms_receipt_dunning</td><td>write-normal</td></tr><tr><td>签收 analytics</td><td>准时签收率、异常分布</td><td>tms_sign_record</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>签收状态问答</td><td>人问"这单签了吗"</td><td>L1</td><td>无</td><td>签收时间 + 签收人 + 来源</td></tr><tr><td>回单催收</td><td>超期未回自动</td><td>L3</td><td>人确认催收对象</td><td>催收清单与联系方式</td></tr><tr><td>异常签收识别</td><td>签收信息回传时</td><td>L3</td><td>人核实</td><td>异常类型与证据</td></tr><tr><td>回单归档</td><td>扫描完成后</td><td>L2</td><td>无（自动）</td><td>归档记录与索引</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.receipt.dun</code></p>
+<pre>{
+  "name": "tms.receipt.dun",
+  "risk": "write-normal",
+  "description": "识别超期未回回单并生成催收任务",
+  "idempotencyKey": "运单号 + 催收批次 + 操作人",
+  "input": {
+    "waybillNos": { "type": "array", "items": "string", "required": false },
+    "overdueDays": { "type": "integer", "default": 3 },
+    "channel": { "type": "enum", "values": ["SYSTEM","SMS","MANUAL"], "default": "SYSTEM" }
+  },
+  "output": {
+    "targets": "[运单/承运商/司机/超期天数]",
+    "notices": "[已生成通知对象]",
+    "history": "该对象历史催收次数"
+  },
+  "compensation": "未发送通知可撤销；已发送留痕不撤回"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>签收时间</td><td>tms_sign_record</td><td>催收起算点</td><td>无法判超期</td></tr><tr><td>回单超期规则</td><td>tms_rule_config</td><td>阈值</td><td>需人工设阈值</td></tr><tr><td>承运商联系人</td><td>tms_carrier</td><td>催收对象</td><td>需人工查找</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>查询签收</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>生成催收</td><td>write-normal</td><td>预览 + 单人确认</td><td>撤销未发送通知</td></tr><tr><td>代签确认</td><td>write-normal</td><td>双人复核</td><td>撤销代签标记并留痕</td></tr></table></div>
+<p><strong>终局形态</strong>：纸质回单会消亡，电子签收由收货方的数字身份直接确认，不再有"催收"这个职能。但签收这个语义事件会长期存在——它是责任转移与费用结算的触发点。当前把签收动作结构化、可溯源，是面向终局的正确投入。</p>
+<h3 id="s3-7" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">费用与结算</h3>
+<p>定位：运费计算、对账与发票。Agent 的价值在核算与差异归因，但修改运价属于高危操作。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>运费计算</td><td>按线路/重量/附加费计算</td><td>tms_freight_calc</td><td>read-only</td></tr><tr><td>运费对账</td><td>承运商账单与系统核算比对</td><td>tms_reconcile</td><td>read-only</td></tr><tr><td>差异归因</td><td>差异项定位与原因判断</td><td>tms_reconcile_detail</td><td>read-only</td></tr><tr><td>结算单生成</td><td>结算单、审批、付款申请</td><td>tms_settlement</td><td>write-high</td></tr><tr><td>发票管理</td><td>发票接收、校验、归档</td><td>tms_invoice</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>运费问答</td><td>人问"这票运费多少"</td><td>L1</td><td>无</td><td>金额 + 计算明细</td></tr><tr><td>对账差异归因</td><td>账单导入后</td><td>L3</td><td>人采纳结论</td><td>差异项 + 证据 + 原因</td></tr><tr><td>结算单生成</td><td>对账确认后</td><td>L2</td><td>双人复核</td><td>结算单与审批链</td></tr><tr><td>发票异常识别</td><td>发票校验时</td><td>L3</td><td>人核实</td><td>异常项与规则依据</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.freight.reconcile</code></p>
+<pre>{
+  "name": "tms.freight.reconcile",
+  "risk": "read-only",
+  "description": "运费对账差异归因，输出可核验的差异明细",
+  "input": {
+    "carrierCode": { "type": "string", "required": true },
+    "period": { "type": "string", "required": true, "desc": "如 2026-11" },
+    "tolerance": { "type": "string", "default": "0.00001" }
+  },
+  "output": {
+    "diffs": "[运单/系统金额/账单金额/差额/可能原因]",
+    "evidence": "[运价条款/称重记录/附加费凭证]",
+    "summary": "差异总额，五位小数"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>运价合同</td><td>tms_rate_contract</td><td>核算基线</td><td>只能按账单付款，失去审核能力</td></tr><tr><td>称重与体积记录</td><td>tms_weigh_record</td><td>计费依据</td><td>差异无法归因</td></tr><tr><td>对账容差规则</td><td>tms_rule_config</td><td>差异过滤</td><td>小额差异泛滥</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>核算与对账</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>结算单生成</td><td>write-high</td><td>证据链 + 双人复核</td><td>红冲结算单，留痕</td></tr><tr><td>运价修改</td><td>write-high</td><td>双人复核 + 版本管理</td><td>版本回滚</td></tr></table></div>
+<p><strong>终局形态</strong>：运费账单与结算单会消亡——每次运输由实时计价与自动结算完成，不再有月度对账。但"计价规则"会长期存在，且会从合同文本变成 Agent 可执行的策略。当前把运价条款结构化是资产，做对账界面优化是装修。</p>
+<h3 id="s3-8" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">异常处理</h3>
+<p>定位：货损、丢失、滞留、拒收的发现与处置。TMS 侧 Agent 价值最高的域——取证、初判、材料整理原本跨多系统。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>异常登记</td><td>类型、时间、位置、描述</td><td>tms_exception</td><td>write-normal</td></tr><tr><td>异常取证</td><td>照片、轨迹、签收记录、证人</td><td>tms_exception_evidence</td><td>read-only</td></tr><tr><td>责任初判</td><td>依据规则给出责任方建议</td><td>tms_exception_judge</td><td>read-only</td></tr><tr><td>索赔管理</td><td>索赔材料、金额、进度</td><td>tms_claim</td><td>write-normal</td></tr><tr><td>异常闭环</td><td>处置结果、复盘、策略沉淀</td><td>tms_exception</td><td>write-normal</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>异常发现</td><td>多源信号交叉检测</td><td>L3</td><td>无（发现即报）</td><td>异常事件 + 置信度</td></tr><tr><td>自动取证</td><td>异常确认时</td><td>L3</td><td>无</td><td>证据包与来源清单</td></tr><tr><td>责任初判</td><td>证据齐备后</td><td>L3</td><td>人做最终判定</td><td>责任方建议 + 依据条款</td></tr><tr><td>索赔材料整理</td><td>责任判定后</td><td>L2</td><td>人确认提交</td><td>索赔材料包</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.exception.investigate</code></p>
+<pre>{
+  "name": "tms.exception.investigate",
+  "risk": "read-only",
+  "description": "异常事件取证与责任初判，输出完整证据链",
+  "idempotencyKey": "异常单号 + 取证版本",
+  "input": {
+    "exceptionNo": { "type": "string", "required": true },
+    "includeSources": { "type": "array", "items": "string", "default": ["GPS","SIGN","WEIGH","CARRIER_REPORT"] }
+  },
+  "output": {
+    "evidence": "[来源/时间点/内容/可信度]",
+    "judgement": "责任方建议与置信度",
+    "basis": "[引用条款/规则编码]",
+    "missingEvidence": "仍缺失的证据项"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>GPS 与签收记录</td><td>tms_gps_track / tms_sign_record</td><td>事实时间线</td><td>初判置信度下降</td></tr><tr><td>责任判定规则</td><td>tms_liability_rule</td><td>依据条款</td><td>只能给现象不能定责</td></tr><tr><td>合同责任条款</td><td>tms_rate_contract</td><td>索赔依据</td><td>索赔材料不完整</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>发现与取证</td><td>read-only</td><td>无</td><td>-</td></tr><tr><td>责任初判</td><td>read-only</td><td>必须附置信度与缺失项</td><td>-</td></tr><tr><td>最终定责</td><td>write-normal</td><td>人工判定，Agent 不得自动定责</td><td>复核重判</td></tr><tr><td>索赔提交</td><td>write-normal</td><td>预览 + 双人确认</td><td>撤回未受理索赔</td></tr></table></div>
+<p><strong>终局形态</strong>：异常处理不会消亡，而是会大幅前移——从"事后索赔"变成"事前预防 + 事中干预"。责任判定会长期保留人工最终权，因为它是信任与法律责任的交点。当前把取证链结构化、规则可解释，是明确的资产投入。</p>
+<h3 id="s3-9" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">报表与分析</h3>
+<p>定位：运输时效、成本与承运商绩效分析。与 WMS 报表域同理，是 L1 起步、风险最低的切入口。</p>
+<p><strong>功能点清单</strong></p>
+<div class="table-wrap"><table><tr><th>功能点</th><th>说明</th><th>数据来源</th><th>风险级别</th></tr><tr><td>时效分析</td><td>准时率、运输时长分布</td><td>tms_sign_record / tms_eta_model</td><td>read-only</td></tr><tr><td>成本分析</td><td>线路成本、单位成本</td><td>tms_settlement</td><td>read-only</td></tr><tr><td>承运商绩效</td><td>准时率、货损率、评分</td><td>tms_performance</td><td>read-only</td></tr><tr><td>异常分析</td><td>异常类型分布、趋势</td><td>tms_exception</td><td>read-only</td></tr><tr><td>自定义分析</td><td>维度组合、趋势解读</td><td>全域</td><td>read-only</td></tr></table></div>
+<p><strong>Agent 操作矩阵</strong></p>
+<div class="table-wrap"><table><tr><th>Agent 操作</th><th>触发方式</th><th>成熟度</th><th>人在回路</th><th>输出</th></tr><tr><td>自然语言分析</td><td>人问"哪条线成本涨了"</td><td>L1</td><td>无</td><td>结论 + 数据依据</td></tr><tr><td>绩效排名</td><td>人请求或定时</td><td>L1</td><td>无</td><td>排名表 + 口径</td></tr><tr><td>趋势解读</td><td>报表生成后</td><td>L2</td><td>人判断</td><td>异常趋势 + 可能原因</td></tr><tr><td>规则效果回溯</td><td>策略变更后</td><td>L3</td><td>人采纳</td><td>变更前后对比</td></tr></table></div>
+<p><strong>Tool 契约</strong></p>
+<p><code>tms.analytics.query</code></p>
+<pre>{
+  "name": "tms.analytics.query",
+  "risk": "read-only",
+  "description": "按维度与指标查询运输分析数据，返回口径与来源",
+  "input": {
+    "metric": { "type": "enum", "values": ["ONTIME_RATE","COST_PER_KG","DAMAGE_RATE","EXCEPTION_COUNT"] },
+    "dimensions": { "type": "array", "items": "string" },
+    "period": { "type": "string", "required": true },
+    "orgScope": { "type": "object", "required": true }
+  },
+  "output": {
+    "rows": "[维度/指标值/同比]",
+    "metricDef": "指标计算口径",
+    "source": "来源表与截止时间"
+  },
+  "compensation": "-"
+}</pre>
+<p><strong>数据与规则依赖</strong></p>
+<div class="table-wrap"><table><tr><th>依赖项</th><th>来源</th><th>用途</th><th>缺失影响</th></tr><tr><td>指标口径字典</td><td>tms_metric_def</td><td>分析口径一致</td><td>禁止输出数字</td></tr><tr><td>权限三元组</td><td>权限中心</td><td>数据隔离</td><td>必须拒绝查询</td></tr><tr><td>绩效基线</td><td>tms_performance</td><td>对比依据</td><td>只能给绝对值不能给趋势</td></tr></table></div>
+<p><strong>风险门禁</strong></p>
+<div class="table-wrap"><table><tr><th>操作</th><th>风险级别</th><th>门禁要求</th><th>补偿路径</th></tr><tr><td>任意分析查询</td><td>read-only</td><td>权限过滤，无确认</td><td>-</td></tr><tr><td>数据导出</td><td>read-only</td><td>敏感字段脱敏</td><td>-</td></tr></table></div>
+<p><strong>终局形态</strong>：报表与分析会从"人做表"变成"Agent 主动解读并推送"。终局里它不是独立域，而是嵌入每个决策环节的反馈信号——调度 Agent 自己看成本趋势并调整策略，不需要人先做一张分析表。当前建设指标口径字典与数据血缘，是通向终局的地基。</p>
+</div>
+<div class="sec" id="sec4"><span class="num">04</span><h2>跨域协同链路设计</h2></div>
+<p>单个域的工具封装完成后，真正的价值出现在跨域编排。本章给出三条关键链路，它们也是 L4 多 Agent 协同的落地形态。</p>
+<h3 id="s4-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">主链路：出库到签收</h3>
+<p>链路环节为：出库单确认 → 运单生成 → 承运商选择与调度 → 月台预约协商 → 装车交接 → 在途跟踪 → 签收确认 → 回单归档。</p>
+<p>WMS Agent 与 TMS Agent 之间必须交换结构化交接契约，不允许各自维护一份状态：</p>
+<pre>{
+  "handoffFromWms": {
+    "outboundNo": "出库单号",
+    "goodsReady": "已备货状态与数量",
+    "dock": "月台编号",
+    "readyTime": "可交接时间，ISO 8601",
+    "sealNo": "封签号",
+    "evidenceRefs": "[称重/照片/复核记录]"
+  },
+  "handoffToTms": {
+    "waybillNo": "运单号",
+    "carrier": "承运商与车牌",
+    "driver": "司机与联系方式",
+    "arrivalAtDock": "预计到达月台时间",
+    "acceptance": "交接确认状态"
+  },
+  "arbitration": "当双方时间窗不一致时，以出库方 readyTime 为基线，由调度 Agent 提出改派方案，禁止任一方自行妥协"
+}</pre>
+<h3 id="s4-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">异常闭环链路</h3>
+<p>链路环节为：异常发现（WMS 盘点差异 / TMS 在途异常） → 证据聚合 → 归因 → 分级处置 → 结果回写 → 策略沉淀。</p>
+<p>关键设计是"策略沉淀"：每次人工纠偏都要转成可复用规则，写到策略库，下次同类异常由 Agent 直接给出建议。这是"决策资产化"的落地形态，也是系统越用越懂这个仓库的唯一途径。</p>
+<p>异常分级处置规则：只读异常（如轻微时效偏差）Agent 自主记录并汇报；一般异常（如数量差异）出建议待人决策；高危异常（如库存过账错误、货损定责）强制人工处置，Agent 只负责取证。</p>
+<h3 id="s4-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">工具编排示例</h3>
+<p>以"把今天发往宁波方向的订单安排出库发运"为例，编排层按以下顺序调用工具：</p>
+<div class="table-wrap"><table><tr><th>步骤</th><th>调用工具</th><th>所属域</th><th>风险级别</th><th>输出</th></tr><tr><td>1</td><td>wms.inventory.query</td><td>WMS 库存</td><td>read-only</td><td>可用库存与库位</td></tr><tr><td>2</td><td>wms.wave.build</td><td>WMS 出库</td><td>write-normal</td><td>波次与拣货路径</td></tr><tr><td>3</td><td>tms.carrier.select</td><td>TMS 运力</td><td>read-only</td><td>承运商排名</td></tr><tr><td>4</td><td>tms.dispatch.plan</td><td>TMS 调度</td><td>write-normal</td><td>配载与月台窗口</td></tr><tr><td>5</td><td>wms.handover.confirm</td><td>WMS 出库</td><td>write-normal</td><td>交接确认</td></tr><tr><td>6</td><td>tms.eta.predict</td><td>TMS 在途</td><td>read-only</td><td>ETA 与置信度</td></tr></table></div>
+<p>任一步失败时的处理原则：写操作失败走补偿路径，不重试无幂等键的操作；只读失败降级为标注"数据不可用"并继续，不编造结果。</p>
+</div>
+<div class="sec" id="sec5"><span class="num">05</span><h2>落地优先级与依赖</h2></div>
+<h3 id="s5-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">域优先级矩阵</h3>
+<p>优先级按"Agent 价值密度 × 数据就绪度"排序，而非按业务重要性排序：</p>
+<div class="table-wrap"><table><tr><th>优先级</th><th>功能域</th><th>理由</th></tr><tr><td>P0</td><td>报表与查询（WMS/TMS）、基础主数据、在途跟踪</td><td>只读、数据相对齐备、可快速建立信任</td></tr><tr><td>P0</td><td>接口与集成、异常处理（TMS）</td><td>跨源归因价值最高，证据链数据已部分具备</td></tr><tr><td>P1</td><td>入库管理、出库管理、库存管理、运力与承运商、运输订单</td><td>写操作但流程稳定，可在确认门禁下安全落地</td></tr><tr><td>P1</td><td>库内作业（差异归因与动态抽样部分）</td><td>价值高但依赖盘点事务日志语义化</td></tr><tr><td>P2</td><td>调度、装车发运、签收、费用结算、包装辅料、退货逆向</td><td>依赖前序数据质量与跨域契约成熟</td></tr><tr><td>P3</td><td>系统与权限（Agent 部分）</td><td>权限对象是制度问题，需先厘清责任边界</td></tr></table></div>
+<h3 id="s5-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">前置数据条件</h3>
+<p>每个域的 Agent 化都有硬性前置条件，不满足时不该启动：</p>
+<div class="table-wrap"><table><tr><th>前置条件</th><th>影响的域</th><th>不达标后果</th></tr><tr><td>指标口径字典完整</td><td>全部报表域</td><td>数字不可信，禁止上线</td></tr><tr><td>盘点事务日志语义化</td><td>库内作业、库存管理</td><td>归因无证据，只能给猜测</td></tr><tr><td>接口错误码登记完整</td><td>接口与集成</td><td>无法判断可重试性</td></tr><tr><td>库存事实主键统一</td><td>库存、入库、出库</td><td>数量口径冲突</td></tr><tr><td>承运商履约数据积累 90 天</td><td>运力、调度</td><td>推荐退化为比价</td></tr><tr><td>权限三元组与审计日志完备</td><td>全部写操作</td><td>高危操作禁止开放</td></tr></table></div>
+<h3 id="s5-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">与四期路线的映射</h3>
+<p>一期（只读助手）覆盖 P0 中的报表、主数据、在途查询；二期（辅助执行）覆盖 P1 的入库、出库、运力、运输订单；三期（主动 Agent）覆盖接口巡检、异常归因、盘点差异归因；四期（多 Agent 协同）覆盖调度、装车、签收的跨域编排。P2 中的费用结算与包装辅料视数据成熟度决定是否提前。</p>
+</div>
+<div class="sec" id="sec6"><span class="num">06</span><h2>验收要点</h2></div>
+<h3 id="s6-1" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">单域验收清单模板</h3>
+<p>每个功能域交付前必须逐项通过以下检查：</p>
+<div class="table-wrap"><table><tr><th>检查项</th><th>验收标准</th></tr><tr><td>功能点清单</td><td>覆盖该域全部在产功能，无遗漏核心功能</td></tr><tr><td>工具契约</td><td>每个写操作都有幂等键与补偿路径，风险级别已标注</td></tr><tr><td>数据来源</td><td>每个输出字段可追溯到具体表与字段</td></tr><tr><td>权限过滤</td><td>越权调用被拒绝，且不进入预览环节</td></tr><tr><td>门禁执行</td><td>高危操作必须双人复核，无法绕过</td></tr><tr><td>数字可信</td><td>所有数字来自工具返回，模型不生成数字</td></tr><tr><td>终局标注</td><td>已写明该域终局形态，投入方向与之一致</td></tr></table></div>
+<h3 id="s6-2" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">通用验收项</h3>
+<p>跨全部域的硬约束：中文 Windows 环境下工具输出必须显式设置 UTF-8，避免 GBK 乱码；所有数量五位小数、可为负；时间带时区；超过 64KB 出参截断留痕；未知入参忽略；业务错误不计入可用性监控分母；429 是唯一允许的限流 4xx；幂等记录保留不少于 90 天。</p>
+<h3 id="s6-3" style="margin-top:26px;padding-top:14px;border-top:1px solid #E2E7EB">终局对齐检查</h3>
+<p>每域验收时追加一问：本域本轮投入是"让旧结构跑得更好"，还是"让旧结构不再必要"？前者记为装修，后者记为资产。一个迭代周期内，资产类投入占比应不低于三成，否则说明设计偏离了总方案的终局方向。</p>
+</div>
+<div class="foot">Agent WMS/TMS 功能域详细设计 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026-11-23</div>
+</main>
+<script>
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  var links=document.querySelectorAll('.nav a');
+  links.forEach(function(a){a.classList.remove('on');});
+  if(links.length){links[0].classList.add('on');}
+}
+function initTop(){
+  var btn=document.getElementById('toTop');
+  function sync(){ if(window.scrollY>380){btn.classList.add('show');}else{btn.classList.remove('show');} }
+  window.addEventListener('scroll',sync,{passive:true});
+  sync();
+}
+function initNav(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=[].slice.call(document.querySelectorAll('.sec[id]'));
+  if(!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);}); }
+    });
+  },{rootMargin:'-8% 0px -78% 0px',threshold:0});
+  secs.forEach(function(s){ob.observe(s);});
+}
+initNav();
+initTop();
+</script>
+</body>
+</html>
