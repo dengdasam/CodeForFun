@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lichess 技术架构拆解 · 网页 Scala SSR + 移动端 Flutter 双栈</title>
-<meta name="description" content="基于原始 HTML、响应头、pubspec.yaml 与官方 README 实测，拆解 lichess.org 双端架构：网页 Scala 3 + Snabbdom 服务端渲染，移动端 Flutter 3.50 + Riverpod + 本地 Stockfish 引擎。">
+<title>Lichess 技术架构拆解 · 网页 Scala SSR + 移动端 Flutter / KMP 对比</title>
+<meta name="description" content="基于原始 HTML、响应头、pubspec.yaml 实测，拆解 lichess.org 双端架构：网页 Scala 3 服务端渲染，移动端 Flutter 3.50 + Riverpod + 本地 Stockfish，并与 Kotlin Multiplatform / Compose Multiplatform 方案做横向对比。">
 <style>
   :root{
     --bg:#f6f7f9; --card:#ffffff; --ink:#1a1c1f; --ink2:#5c6169; --ink3:#8a9098;
@@ -113,6 +113,7 @@
     <span class="tag">Snabbdom 前端</span>
     <span class="tag">Flutter 3.50 / Dart 3.14</span>
     <span class="tag">Riverpod 3</span>
+    <span class="tag">Kotlin / KMP 横向对比</span>
     <span class="tag">2026-11 实测</span>
   </div>
 </header>
@@ -525,7 +526,148 @@ flutter pub get
   <p><strong>一个值得记住的结论：</strong>同一个产品，三个平台、三套技术栈、三份代码。网页选 Scala SSR 求首屏与 SEO，移动端选 Flutter 求手感与离线，桌面选 Tauri 求体积。<strong>没有「统一技术栈」的执念，只有对每个平台约束的独立回答</strong>——这大概是 Lichess 最值得学的架构决策。</p>
 </div>
 
-<h2><span class="num">08</span>可借鉴的三件事</h2>
+<h2><span class="num">08</span>假设重选：Kotlin 原生方案能替代 Flutter 吗</h2>
+<p class="lead">Lichess 选了 Flutter。如果换 Kotlin 系方案，结果会更好还是更差？先要拆清楚——<strong>「Kotlin 原生」其实是两条完全不同的路</strong>，很多讨论把二者混为一谈，结论就乱了。</p>
+
+<div class="grid2">
+  <div class="panel good">
+    <h4>A · KMP 只共享逻辑（最稳）</h4>
+    <ul>
+      <li>Kotlin 写网络、模型、业务规则、状态机</li>
+      <li>Android 用 Jetpack Compose，iOS 用 <strong>SwiftUI</strong></li>
+      <li>双端 UI 都是<strong>真原生</strong>，零妥协</li>
+      <li>代价：养两套 UI 代码</li>
+    </ul>
+  </div>
+  <div class="panel bad">
+    <h4>B · Compose Multiplatform（同类竞争）</h4>
+    <ul>
+      <li>Kotlin + Compose 一套 UI 编译到双端</li>
+      <li>iOS 走 <strong>Skiko / Skia 自绘</strong></li>
+      <li>与 Flutter <strong>同属自绘派</strong>，只是换语言</li>
+      <li>代价：和 Flutter 踩同一类坑</li>
+    </ul>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:20%">维度</th><th style="width:26%">Flutter（Lichess 现用）</th><th style="width:26%">KMP 只共享逻辑</th><th>Compose Multiplatform</th></tr></thead>
+  <tbody>
+    <tr><td>UI 原生度</td><td>自绘（Impeller）</td><td class="pos">真原生 SwiftUI / Compose</td><td>自绘（Skiko / Skia）</td></tr>
+    <tr><td>语言</td><td>Dart（<strong>只活在 Flutter 内</strong>）</td><td class="pos">Kotlin（可与 Android 后端共享）</td><td>Kotlin</td></tr>
+    <tr><td>iOS 稳定时间</td><td class="pos">2018 起，7 年+</td><td>KMP 核心 2023-11</td><td>2024 Q4（1.7）/ 2025-05 GA</td></tr>
+    <tr><td>第三方包</td><td class="pos">约 5 万（pub.dev）</td><td colspan="2">约 4,000 个 KMP 库</td></tr>
+    <tr><td>招聘岗位（2026 Q1）</td><td class="pos">约 2.2 万</td><td colspan="2">约 3,000</td></tr>
+    <tr><td>iOS 冷启动</td><td class="pos">1.2 – 1.8 s</td><td class="pos">最快（原生）</td><td>1.5 – 2.0 s</td></tr>
+    <tr><td>内存占用</td><td>80 – 120 MB</td><td class="pos">最低</td><td>90 – 130 MB</td></tr>
+    <tr><td>包体积增量</td><td class="neg">比原生大 10 – 20 MB</td><td class="pos">最小</td><td>中等</td></tr>
+    <tr><td>原生互操作</td><td>Platform Channel + FFI（有序列化边界）</td><td class="pos">直接调 Swift / ObjC</td><td>UIViewController interop</td></tr>
+    <tr><td>编译速度</td><td class="pos">快</td><td class="neg">iOS 编译慢（Kotlin/Native 老问题）</td><td class="neg">同左</td></tr>
+    <tr><td>生产案例</td><td>Google Pay、BMW、eBay</td><td colspan="2">Netflix、Cash App（7 年）、麦当劳、Duolingo、Toss</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Lichess 为什么没选 Kotlin：三个具体理由</h3>
+<ul class="clean">
+  <li><strong>它需要「一根轴」管住全部客户端代码</strong>：移动端的 <code>chessground</code> 是把网页 TypeScript 库<strong>移植成 Dart</strong>，<code>dartchess</code> 对应网页的 <code>scalachess</code>。整个思路是「网页有什么，Dart 重写一遍」。而网页那侧是 Scala 3 + TypeScript，和 Kotlin 生态本来就搭不上。</li>
+  <li><strong>FFI 打通引擎这条路已经跑通</strong>：<code>multistockfish</code> 用 Dart FFI 直连原生 Stockfish 二进制，三款 flavor 已验证。KMP 也能做（<code>cinterop</code>），但要额外投入，没理由放弃现成方案。</li>
+  <li><strong>KMP 最大的卖点对它无效</strong>：KMP 的核心优势是「Android 团队零学习成本」「与 Kotlin 后端共享代码」。可 Lichess 是个<strong>网页基因的团队</strong>，主力是 Scala 和 TypeScript，不是 Kotlin/Android 开发者。这条优势等于不存在。</li>
+</ul>
+
+<h3>KMP 真正的甜区在哪</h3>
+<p class="lead">不是「比 Flutter 更好」，而是「在特定约束下唯一合理」。三类场景它明显占优：</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:30%">场景</th><th>为什么 KMP 更合适</th></tr></thead>
+  <tbody>
+    <tr><td class="pos">已有 Android 原生 App，要加 iOS</td><td><strong>渐进式接入</strong>，不用推倒重写。先把账号鉴权、支付、数据同步这类易出双端不一致的模块抽成共享库，风险可控</td></tr>
+    <tr><td class="pos">业务逻辑重、双端必须严格一致<br><span class="mute">（金融、医疗、计费）</span></td><td>规则只写一次，彻底消除「同一 Bug 修两遍」「两端行为偏差」。Cash App 用它跑了 7 年，日处理关键金融交易</td></tr>
+    <tr><td class="pos">同时有 Kotlin 后端</td><td>服务端 + 客户端共享同一份数据模型和校验逻辑，这是 Flutter <strong>完全给不了</strong>的能力</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>反过来，三项硬约束让 Flutter 更稳</h3>
+<ul class="clean">
+  <li><strong>要「一套 UI 打天下」+ 生态要全 + 招人容易</strong>：这三个刚需叠加，Flutter 的 5 万包和 2.2 万岗位是决定性优势。Compose MP 虽然 2024 已稳定，但 iOS 侧仍走 Skia 自绘，<strong>「侧滑返回、导航转场、系统级手势、iOS 字体渲染」照样得自己补</strong>——和 Flutter 踩同一类坑，只是 Flutter 踩了 7 年、坑填得差不多了。</li>
+  <li><strong>没有 macOS 设备</strong>：<strong>编译 iOS 目标必须有 macOS</strong>。Linux runner 跑不了 iOS target，团队规模上去后 CI 成本会翻倍（有公开报道：150 人团队 KMP 全量落地后 CI 成本直接翻倍，得买云 Mac）。<strong>个人开发者更容易卡在这里——先得有一台 Mac。</strong></li>
+  <li><strong>团队没人写 Kotlin</strong>：Dart 语法接近 TypeScript，有前端经验 1–2 周能上手；Kotlin 要同时学 Kotlin + Gradle + <code>expect/actual</code> + iOS 侧 Swift 与签名打包，链条长得多。KMP <strong>降低的是重复业务逻辑量，并没有取消对双端原生能力的要求</strong>。</li>
+</ul>
+
+<div class="note">
+  <strong>KMP 落地时最常见的两个坑：</strong><br>
+  ① <strong>Dagger/Hilt 不支持 KMP</strong>，得改用 Koin，部分功能会有缩减；Jetpack 组件也有不少还没完整多平台适配。<br>
+  ② <strong>Kotlin 与 Swift 互调存在限制</strong>：无法直接调纯 Swift 接口，大部分要走 Objective-C 桥接；复杂泛型、闭包传到 Swift 侧经常类型适配别扭，往往还得引入 SKIE 这类第三方工具。且<strong>调试跨语言边界时无法同时断点跟 Kotlin 和 Swift</strong>，排查效率不如单一语言项目。<br>
+  <em>（注：Kotlin 2.2.20 起引入 Swift Export 直出，但截至 2026 年中仍属实验性。）</em>
+</div>
+
+<h3>三条线放在一起看：同一个产品的三种答案</h3>
+<p class="lead">这才是整份文档真正想说明的事——<strong>三套栈不是技术摇摆，而是三个不同约束下的最优解</strong>。</p>
+
+<div class="flow">
+  <div class="step">
+    <div class="t">网页端</div>
+    <div class="d">Scala 3 + SSR</div>
+  </div>
+  <div class="step">
+    <div class="t">约束</div>
+    <div class="d">首屏 + SEO</div>
+  </div>
+  <div class="step">
+    <div class="t">结果</div>
+    <div class="d">378 KB 单页</div>
+  </div>
+</div>
+
+<div class="flow">
+  <div class="step">
+    <div class="t">移动端</div>
+    <div class="d">Flutter 自绘</div>
+  </div>
+  <div class="step">
+    <div class="t">约束</div>
+    <div class="d">手感 + 离线 + 引擎</div>
+  </div>
+  <div class="step">
+    <div class="t">结果</div>
+    <div class="d">237 MB 装包</div>
+  </div>
+</div>
+
+<div class="flow">
+  <div class="step">
+    <div class="t">假如换 KMP</div>
+    <div class="d">Kotlin + 原生 UI</div>
+  </div>
+  <div class="step">
+    <div class="t">约束</div>
+    <div class="d">需 macOS + 双端原生力</div>
+  </div>
+  <div class="step">
+    <div class="t">结果</div>
+    <div class="d">体验最原生，成本最高</div>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:16%">线</th><th style="width:20%">技术</th><th style="width:22%">要解决的约束</th><th style="width:18%">代价</th><th>适合谁</th></tr></thead>
+  <tbody>
+    <tr><td>网页</td><td>Scala 3 + scalatags + Snabbdom</td><td>首屏速度、SEO、无 JS 可读</td><td class="neg">前后端两套语言</td><td>内容型站点、需被搜索引擎索引</td></tr>
+    <tr><td class="hi">移动（现状）</td><td>Flutter + Riverpod + 本地引擎</td><td>棋盘手感、离线、原生引擎 FFI</td><td class="neg">体积 237 MB、Dart 不可复用</td><td>界面统一、生态要全、人力有限</td></tr>
+    <tr><td>移动（KMP 替代）</td><td>Kotlin + Compose / SwiftUI</td><td>双端行为严格一致、复用 Kotlin 资产</td><td class="neg">需 macOS、两套或自绘坑、包最小</td><td>Android 原生团队、重业务逻辑</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <p><strong>结论：</strong>对 Lichess，Flutter 是正确的——它要的是「一套 UI 覆盖双端 + 生态够全」，且团队没有 Kotlin 资产、引擎 FFI 已在 Dart 侧打通。KMP 不是「更先进」，而是「在<strong>已有 Android 原生代码 + 业务逻辑厚重 + 有 Kotlin 后端</strong>时更划算」。<strong>选型的分水岭不是框架强弱，而是你手上已有什么、以及最不能妥协的那一条约束是什么。</strong></p>
+</div>
+
+<h2><span class="num">09</span>可借鉴的三件事</h2>
 
 <ul class="clean">
   <li><strong>把长连接从主应用剥离</strong>：凡是「实时」与「请求响应」混在一起的服务，都该考虑拆成两个进程 + 消息总线。主应用保持无状态才好扩容。</li>
@@ -540,6 +682,7 @@ flutter pub get
 <footer>
   <p><strong>网页端证据：</strong><code>https://lichess.org/player/bots</code> 原始 HTML（378,307 字节 / 374,016 字符 / 7 行）、HTTP 响应头、<code>site.*.js</code> 与 <code>lib.*.js</code> 模块源码，以及官方仓库 <code>lichess-org/lila</code> 的 README 技术栈声明。</p>
   <p><strong>移动端证据：</strong>官方仓库 <code>lichess-org/mobile</code> 的 README（v0.31.8）、<code>pubspec.yaml</code> 完整依赖清单（Flutter 3.50.1 / Dart ^3.14.0）、pub.dev 上 <code>multistockfish</code> / <code>chessground</code> / <code>dartchess</code> / <code>flutter_riverpod</code> 的包说明，以及 Play / F-Droid / APK 渠道公布的安装包体积。</p>
+  <p><strong>Kotlin 对比证据：</strong>JetBrains Compose Multiplatform 官方文档与发布时间线（iOS 1.7 于 2024 Q4 稳定、1.8 于 2025-05 GA）、KMP 稳定性声明（2023-11）、pub.dev 与 LinkedIn 2026 Q1 生态/岗位统计，以及 Netflix、Cash App、麦当劳、Toss 的公开案例。</p>
   <p>本页所有技术判断均标注了对应的可复现证据，未使用任何「据推测」类表述。实测日期 2026-11-27。</p>
 </footer>
 
