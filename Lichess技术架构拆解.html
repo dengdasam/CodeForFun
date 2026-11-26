@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lichess 技术架构拆解 · Scala + Snabbdom 的自研路线</title>
-<meta name="description" content="基于原始 HTML、响应头与官方 README 实测，拆解 lichess.org 的技术栈：Scala 3 + Liplay 后端、scalatags 服务端渲染、Snabbdom 前端、独立 WebSocket 服务器。">
+<title>Lichess 技术架构拆解 · 网页 Scala SSR + 移动端 Flutter 双栈</title>
+<meta name="description" content="基于原始 HTML、响应头、pubspec.yaml 与官方 README 实测，拆解 lichess.org 双端架构：网页 Scala 3 + Snabbdom 服务端渲染，移动端 Flutter 3.50 + Riverpod + 本地 Stockfish 引擎。">
 <style>
   :root{
     --bg:#f6f7f9; --card:#ffffff; --ink:#1a1c1f; --ink2:#5c6169; --ink3:#8a9098;
@@ -104,19 +104,21 @@
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">技术架构拆解 · 实测复核</div>
+  <div class="eyebrow">技术架构拆解 · 网页 + 移动端实测复核</div>
   <h1>Lichess 技术架构拆解</h1>
-  <p class="sub">Scala 3 + Snabbdom 的自研路线。基于对 <code>lichess.org/player/bots</code> 原始 HTML、HTTP 响应头与官方 README 的交叉验证，逐条给出证据而不是凭印象判断。</p>
+  <p class="sub">网页 Scala SSR，移动端 Flutter，两套代码库。基于对 <code>lichess.org/player/bots</code> 原始 HTML、HTTP 响应头、<code>mobile</code> 仓库 <code>pubspec.yaml</code> 与官方 README 的交叉验证，逐条给出证据而不是凭印象判断。</p>
   <div class="meta">
     <span class="tag">Scala 3 / Liplay</span>
     <span class="tag">scalatags 服务端渲染</span>
     <span class="tag">Snabbdom 前端</span>
+    <span class="tag">Flutter 3.50 / Dart 3.14</span>
+    <span class="tag">Riverpod 3</span>
     <span class="tag">2026-11 实测</span>
   </div>
 </header>
 
 <div class="verdict">
-  <p><strong>一句话结论：</strong>Lichess 走的是 <strong>服务端渲染 + 轻量虚拟 DOM</strong> 的路线，和当下主流的 React/Vue 单页应用完全相反。后端 Scala 3 直接拼出完整 HTML（2245 个 bot 条目全在原始响应里），前端 Snabbdom 只负责局部交互。代价是前后端两套语言，收益是首屏快、SEO 友好、无 JS 也能看。</p>
+  <p><strong>一句话结论：</strong>Lichess 最反直觉的地方不是技术选型，而是<strong>同产品三套栈、三份代码</strong>。网页走 <strong>Scala 服务端渲染 + 轻量虚拟 DOM</strong>（2245 个 bot 条目全在原始响应里），移动端走 <strong>Flutter 自绘 + Riverpod 状态管理 + 本地三款 Stockfish</strong>（安装包 237 MB）。没有追求统一技术栈，只有对每个平台约束的独立回答。</p>
 </div>
 
 <h2><span class="num">01</span>技术栈全景</h2>
@@ -327,7 +329,203 @@ grep -c 'bots__list__entry' bots.html
   </div>
 </div>
 
-<h2><span class="num">07</span>可借鉴的三件事</h2>
+<h2><span class="num">07</span>移动端：与网页完全不同的技术栈</h2>
+<p class="lead">这是最容易被忽略的一点——Lichess 的 App <strong>不是网页套壳，也不是 React Native</strong>，而是用 Flutter 从零重写的第二版客户端。</p>
+
+<div class="cards">
+  <div class="card">
+    <div class="k">移动端框架</div>
+    <div class="v">Flutter</div>
+    <div class="n">Dart 语言，v3.50.1</div>
+  </div>
+  <div class="card">
+    <div class="k">安装包体积</div>
+    <div class="v">~237<small>MB</small></div>
+    <div class="n">0.31.8 完整包，含引擎</div>
+  </div>
+  <div class="card">
+    <div class="k">引擎</div>
+    <div class="v">3<small>款</small></div>
+    <div class="n">Stockfish 19 ×2 + Fairy</div>
+  </div>
+  <div class="card">
+    <div class="k">平台</div>
+    <div class="v">Android / iOS</div>
+    <div class="n">无 macOS / Windows / Linux</div>
+  </div>
+</div>
+
+<div class="note">
+  <strong>先讲一段历史：</strong>Lichess 的老版 App 已于 <strong>2026 年 3 月从各应用商店下架</strong>，现在的 <code>org.lichess.mobileV2</code> 是全新重写的第二版。所以网上很多关于「Lichess 手机端」的旧描述（基于老版）已经失效。
+</div>
+
+<h3>核心运行环境</h3>
+<div class="tw">
+<table>
+  <thead><tr><th style="width:24%">项目</th><th style="width:30%">版本 / 取值</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>Dart SDK 约束</td><td><code>^3.14.0</code></td><td>pubspec 中 <code>environment.sdk</code></td></tr>
+    <tr><td>Flutter 版本</td><td class="pos"><code>3.50.1</code></td><td>注释明确「每次 Flutter stable 发版都同步更新」</td></tr>
+    <tr><td>应用版本</td><td><code>0.31.8+003108</code></td><td>构建号与版本号分离，语义化版本</td></tr>
+    <tr><td>Android 最低版本</td><td>SDK <strong>26</strong>（Android 8.0）</td><td>compiled 目标更高</td></tr>
+    <tr><td>iOS 最低版本</td><td>iOS <strong>16.0</strong></td><td>另支持 M1 及以上 Mac（Catalyst）</td></tr>
+    <tr><td>应用 ID</td><td><code>org.lichess.mobileV2</code></td><td>V2 后缀区分老版</td></tr>
+    <tr><td>许可</td><td>GPL-3.0-or-later</td><td>注意与网页端 AGPL-3.0 <strong>不同</strong></td></tr>
+    <tr><td>分发渠道</td><td>Play Store / App Store / F-Droid</td><td>三者并行，F-Droid 版本无 Google 依赖</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>为什么选 Flutter，而不是复用网页代码</h3>
+<ul class="clean">
+  <li><strong>棋盘手感是硬需求</strong>：拖拽走子、premove（预走）、低延迟音效，这些在 WebView 里做体验很差。Flutter 直接自绘，延迟可控。</li>
+  <li><strong>引擎要跑在本地进程</strong>：Stockfish 是原生二进制，需要 FFI 桥接。Flutter 的 <code>dart:ffi</code> 可以直连，WebView 里做不到。</li>
+  <li><strong>离线能力</strong>：本地开局库、离线谜题、12 档人机对战，都需要真实的本地存储与文件系统权限。</li>
+  <li><strong>代价也很明显</strong>：<strong>网页端和 App 是两套完全独立的代码库</strong>（Scala+TS vs Dart），功能同步要靠人工对齐，无法共享组件。</li>
+</ul>
+
+<h3>状态管理：Riverpod 3</h3>
+<p class="lead">移动端的架构选择与网页端也完全不同——网页端靠服务端渲染，几乎不需要前端状态管理；移动端是纯客户端应用，状态管理成了核心。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:26%">依赖</th><th style="width:20%">版本</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td class="pos"><code>flutter_riverpod</code></td><td>3.5.0</td><td>响应式缓存 + 数据绑定，处理异步状态</td></tr>
+    <tr><td><code>freezed_annotation</code></td><td>3.1.0</td><td>不可变数据类 + 密封类代码生成</td></tr>
+    <tr><td><code>json_serializable</code></td><td>6.15.2</td><td>JSON 序列化代码生成</td></tr>
+    <tr><td><code>fast_immutable_collections</code></td><td>12.0.0</td><td>不可变集合，配合 Riverpod 做变更检测</td></tr>
+    <tr><td><code>build_runner</code></td><td>2.17.1</td><td>驱动上述三个代码生成器（dev 依赖）</td></tr>
+    <tr><td><code>deep_pick</code></td><td>1.3.0</td><td>从嵌套 JSON 安全取值</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lead">这套组合是 Flutter 社区当下的主流方案：<strong>Riverpod 管状态 + freezed 造不可变模型 + code-gen 消除样板代码</strong>。开发时三件套并行跑：</p>
+
+<pre><span class="c"># 依赖安装 → 代码生成监听 → 静态分析监听</span>
+flutter pub get
+<span class="g">dart run build_runner watch</span>   <span class="c"># 改一行 model 自动重新生成 .g.dart / .freezed.dart</span>
+<span class="g">flutter analyze --watch</span>       <span class="c"># 实时 lint</span></pre>
+
+<h3>棋盘与棋规：把网页的资产复用到 Dart</h3>
+<p class="lead">这是整个移动端最聪明的一点——两个纯 UI/规则库被移植成了 Dart 包，让 Flutter 客户端能直接吃下网页端的积累。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:22%">包</th><th style="width:16%">版本</th><th>定位</th></tr></thead>
+  <tbody>
+    <tr><td class="pos"><code>chessground</code></td><td>11.1.0</td><td>「为 lichess.org 开发的棋盘 UI，<strong>内部不含棋规</strong>，所以可用于各种变体」。原本是网页的 TypeScript 库，这里是 Dart 移植版</td></tr>
+    <tr><td class="pos"><code>dartchess</code></td><td>0.15.0</td><td>棋规实现：走法生成、FEN 读写、PGN 读写，支持变体。对应网页端的 <code>scalachess</code> 角色</td></tr>
+    <tr><td><code>auto_size_text</code></td><td>3.0.0</td><td>文字自适应缩放，防止长用户名撑破布局</td></tr>
+    <tr><td><code>flutter_layout_grid</code></td><td>2.0.8</td><td>CSS Grid 式布局，贴近网页设计稿</td></tr>
+    <tr><td><code>popover</code> / <code>flutter_slidable</code></td><td>0.5.1 / 5.2.0</td><td>弹出菜单、列表滑动操作</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <strong>命名哲学值得学：</strong><code>chessground</code> 只画棋盘不管规则，<code>dartchess</code> 只管规则不管画面。两个包<strong>零耦合</strong>，所以换皮肤换规则互不影响。这与网页端把 <code>scalachess</code> 抽成独立子模块是同一个思路——只是这次跨了语言。
+</div>
+
+<h3>引擎：三款 Stockfish 打进 App</h3>
+<p class="lead">移动端的引擎方案比网页端复杂得多。网页端靠服务端集群算力，移动端必须自带。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:26%">Flavor</th><th style="width:18%">NNUE 权重</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td class="pos"><code>light</code>（默认）</td><td><strong>内嵌约 1 MB</strong></td><td>Stockfish 19 + 精简网络，<strong>无需下载即可用</strong>，适合移动场景</td></tr>
+    <tr><td><code>latestNoNNUE</code></td><td>需自行下载 <code>.nnue</code></td><td>完整强度版，启动评估前必须先有网络文件</td></tr>
+    <tr><td><code>variant</code></td><td>Fairy-Stockfish</td><td>国际象棋<strong>变体</strong>引擎（Crazyhouse 等 8 种变体）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<ul class="clean">
+  <li><strong>每种 Flavor 同时只能有一个实例</strong>：<code>create()</code> 在同类引擎未 dispose 时会抛 <code>StateError</code>。但<strong>不同 Flavor 可以并行</strong>——所以能一边跑 NNUE 分析、一边跑 Fairy 变体对手。</li>
+  <li><strong>每个引擎占两个原生线程</strong>（一个跑引擎、一个读输出），<strong>不占用 Dart isolate</strong>，因此引擎运行中仍可热重载。</li>
+  <li><strong>通信走 UCI 文本协议</strong>：<code>stockfish.stdin = 'go movetime 3000'</code>，输出通过 <code>Stream&lt;String&gt;</code> 推送。这和桌面端皮卡鱼象棋的做法完全一致——<strong>引擎独立进程 + 文本协议</strong>是被反复验证的正确设计。</li>
+  <li>另有 <code>lc0</code>（Leela Chess Zero，注明 "no GPU"）作为第二条引擎路线，以及 <code>flutter_onnxruntime</code> 支持 <strong>Maia</strong>（模仿人类失误风格）神经网络的人机对战。</li>
+</ul>
+
+<h3>完整技术栈速览</h3>
+<p class="lead">除了核心架构，还有一批「让 Flutter 看起来像原生」的关键依赖。</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th style="width:22%">领域</th><th style="width:34%">依赖</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>网络</td><td><code>http</code> 1.6.0 / <code>web_socket_channel</code> 3.0.3 / <code>connectivity_plus</code> 7.3.2</td><td>REST + WebSocket 实时对局 + 网络状态监听</td></tr>
+    <tr><td>原生 HTTP 优化</td><td class="pos"><code>cronet_http</code> 1.10.1 / <code>cupertino_http</code> 3.1.1</td><td>Android 用 Cronet、iOS 用 NSURLSession，替代 Dart 自带 HTTP，<strong>省电且 TLS 更快</strong></td></tr>
+    <tr><td>本地存储</td><td><code>sqflite</code> 2.4.5 / <code>shared_preferences</code> / <code>flutter_secure_storage</code> 11.2.0</td><td>SQLite 存棋谱 / 键值配置 / <strong>令牌走 Keychain、Keystore</strong></td></tr>
+    <tr><td>登录</td><td><code>flutter_appauth</code> 13.0.0</td><td>OAuth 2.0 / OIDC 标准流程，适配 Lichess OAuth</td></tr>
+    <tr><td>推送</td><td><code>firebase_messaging</code> 17.0.1 + <code>flutter_local_notifications</code> 23.0.3</td><td>FCM + 本地通知；F-Droid 版改走 UnifiedPush</td></tr>
+    <tr><td>崩溃上报</td><td><code>firebase_crashlytics</code> 6.0.1</td><td>线上异常收集</td></tr>
+    <tr><td>图表</td><td><code>fl_chart</code> 1.3.0</td><td>等级分曲线等统计图</td></tr>
+    <tr><td>动效 / 视觉</td><td><code>liquid_glass_widgets</code> 1.16.1 / <code>dynamic_system_colors</code> 1.9.0</td><td>iOS 液态玻璃风格；Android 12+ <strong>取系统壁纸主色</strong>（Material You）</td></tr>
+    <tr><td>可访问性</td><td><code>flutter_displaymode</code> 0.7.0 / <code>wakelock_plus</code> 1.8.2</td><td>高刷新率适配；对局中保持屏幕常亮</td></tr>
+    <tr><td>系统集成</td><td><code>home_widget</code> 0.10.0 / <code>quick_actions</code> 1.1.1 / <code>app_links</code> 7.2.2</td><td>桌面小组件 / 长按快捷菜单 / 深度链接</td></tr>
+    <tr><td>国际化</td><td><code>flutter_localizations</code> + <code>.arb</code> 文件</td><td>55 种语言；翻译由 Crowdin 生成，<strong>不可手改</strong></td></tr>
+    <tr><td>图标</td><td><code>material_symbols_icons</code> 4.2960.0 + 4 套自制字体</td><td>LichessIcons / SocialIcons / ChessSansPiratf / PuzzleIcons</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>离线能力：哪些能玩，哪些不能</h3>
+<div class="tw">
+<table>
+  <thead><tr><th style="width:44%">功能</th><th style="width:16%">离线可用</th><th>依赖</th></tr></thead>
+  <tbody>
+    <tr><td>人机对战（12 档难度 + Maia）</td><td class="pos">✅ 可以</td><td>本地 Stockfish / ONNX 模型</td></tr>
+    <tr><td>谜题（已缓存的批次）</td><td class="pos">✅ 可以</td><td><code>assets/positions.json</code> + 本地库</td></tr>
+    <tr><td>棋盘编辑器 / 坐标学习 / 面对面模式 / 棋钟</td><td class="pos">✅ 可以</td><td>纯本地功能</td></tr>
+    <tr><td>本地 Stockfish 复盘分析</td><td class="pos">✅ 可以</td><td><code>multistockfish</code> 的 <code>light</code> flavor</td></tr>
+    <tr><td>排位对局 / 锦标赛 / 直播 / 服务器分析</td><td class="neg">❌ 不行</td><td>需联网</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>内置资产：为什么装包要 200 MB+</h3>
+<pre>assets/
+├── <span class="b">chess_openings.db</span>        <span class="c">← 开局库（SQLite，离线查开局）</span>
+├── <span class="b">maia/</span> + images/maia/    <span class="c">← Maia 神经网络模型</span>
+├── <span class="b">positions.json</span>          <span class="c">← 谜题局面数据</span>
+├── <span class="b">endgames.json</span>           <span class="c">← 残局练习</span>
+├── <span class="b">practice.json</span>            <span class="c">← 练习关卡</span>
+├── images/learn/pieces/    <span class="c">← 教学用棋子图</span>
+├── board-thumbnails/       <span class="c">← 棋盘主题缩略图</span>
+├── sounds/{futuristic,lisp,nes,piano,standard}/  <span class="c">← 5 套音效风格</span>
+└── fonts/ (4 个自定义字体)</pre>
+
+<div class="note">
+  <strong>体积对比很有说服力：</strong>网页端整个 HTML 只有 378 KB，移动端安装包 <strong>237 MB</strong>——差 600 倍。原因就是这些离线资产：开局库、Maia 模型、三款引擎二进制、5 套音效、数十套棋盘主题图。<strong>「离线优先」的代价全是体积。</strong>
+</div>
+
+<h3>与网页端、桌面端的横向对比</h3>
+<div class="tw">
+<table>
+  <thead><tr><th style="width:18%">维度</th><th style="width:28%">网页端</th><th style="width:26%">移动端 V2</th><th>皮卡鱼（桌面）</th></tr></thead>
+  <tbody>
+    <tr><td>语言</td><td>Scala 3 + TypeScript</td><td class="pos">Dart（单一语言）</td><td>Rust + TypeScript</td></tr>
+    <tr><td>UI 框架</td><td>scalatags SSR + Snabbdom</td><td class="pos">Flutter（自绘）</td><td>Vue 3 + WebView2</td></tr>
+    <tr><td>渲染</td><td>服务端出 HTML</td><td>Skia/Impeller 自绘</td><td>浏览器内核</td></tr>
+    <tr><td>状态管理</td><td>几乎不需要（SSR）</td><td class="pos">Riverpod 3（核心）</td><td>Pinia</td></tr>
+    <tr><td>引擎</td><td>服务端集群 fishnet</td><td class="pos">本地 Stockfish 19 ×3</td><td>本地 Pikafish（UCI）</td></tr>
+    <tr><td>引擎通信</td><td>HTTP API</td><td>UCI 文本协议</td><td>UCI 文本协议</td></tr>
+    <tr><td>体积</td><td class="pos">378 KB（单页）</td><td class="neg">237 MB</td><td>21.5 MB（+58 MB 引擎）</td></tr>
+    <tr><td>离线可用</td><td class="neg">否</td><td class="pos">部分（人机/谜题）</td><td class="pos">完全</td></tr>
+    <tr><td>代码复用</td><td colspan="2" class="neg">两套代码库，零复用</td><td>—</td></tr>
+    <tr><td>许可</td><td>AGPL-3.0</td><td>GPL-3.0-or-later</td><td>专有 + 开源引擎</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <p><strong>一个值得记住的结论：</strong>同一个产品，三个平台、三套技术栈、三份代码。网页选 Scala SSR 求首屏与 SEO，移动端选 Flutter 求手感与离线，桌面选 Tauri 求体积。<strong>没有「统一技术栈」的执念，只有对每个平台约束的独立回答</strong>——这大概是 Lichess 最值得学的架构决策。</p>
+</div>
+
+<h2><span class="num">08</span>可借鉴的三件事</h2>
 
 <ul class="clean">
   <li><strong>把长连接从主应用剥离</strong>：凡是「实时」与「请求响应」混在一起的服务，都该考虑拆成两个进程 + 消息总线。主应用保持无状态才好扩容。</li>
@@ -340,8 +538,9 @@ grep -c 'bots__list__entry' bots.html
 </div>
 
 <footer>
-  <p>证据来源：<code>https://lichess.org/player/bots</code> 原始 HTML（378,307 字节 / 374,016 字符 / 7 行）、HTTP 响应头、<code>site.*.js</code> 与 <code>lib.*.js</code> 模块源码，以及官方仓库 <code>lichess-org/lila</code> 的 README 技术栈声明。实测日期 2026-11-27。</p>
-  <p>本页所有技术判断均标注了对应的可复现证据，未使用任何「据推测」类表述。</p>
+  <p><strong>网页端证据：</strong><code>https://lichess.org/player/bots</code> 原始 HTML（378,307 字节 / 374,016 字符 / 7 行）、HTTP 响应头、<code>site.*.js</code> 与 <code>lib.*.js</code> 模块源码，以及官方仓库 <code>lichess-org/lila</code> 的 README 技术栈声明。</p>
+  <p><strong>移动端证据：</strong>官方仓库 <code>lichess-org/mobile</code> 的 README（v0.31.8）、<code>pubspec.yaml</code> 完整依赖清单（Flutter 3.50.1 / Dart ^3.14.0）、pub.dev 上 <code>multistockfish</code> / <code>chessground</code> / <code>dartchess</code> / <code>flutter_riverpod</code> 的包说明，以及 Play / F-Droid / APK 渠道公布的安装包体积。</p>
+  <p>本页所有技术判断均标注了对应的可复现证据，未使用任何「据推测」类表述。实测日期 2026-11-27。</p>
 </footer>
 
 </div>
