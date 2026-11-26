@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>强校验配置化的更好设计 · 可落地版</title>
+<style>
+:root{
+  --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
+  --line:#E2E7EB; --line2:#EDF0F3; --code:#F5F7F9;
+  --accent:#3B5A6A; --accent-soft:#EAF0F3; --accent-line:#C9D6DE;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.layout{display:flex;align-items:flex-start;max-width:1320px;margin:0 auto;min-height:100vh}
+
+.sidebar{position:sticky;top:0;flex:0 0 238px;width:238px;height:100vh;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:26px 18px 22px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:26px}
+.brand .sq{width:22px;height:22px;border-radius:5px;background:var(--accent);flex:0 0 auto}
+.brand .t{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.brand .s{font-size:11px;color:var(--ink3)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--ink3);margin:0 0 9px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--ink2);font-size:12.5px;padding:6px 9px;border-radius:5px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.nav a span{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav a.on span{color:var(--accent)}
+.side-rule{height:1px;background:var(--line);margin:22px 0 18px}
+.side-block{margin-bottom:20px}
+.side-block .k{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
+.side-block .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:3px 0}
+.side-block .row b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-status{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:9px 11px;font-size:11.5px;color:var(--accent);line-height:1.6;margin-bottom:18px}
+.side-foot{margin-top:auto;font-size:11px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+
+.content{flex:1;min-width:0;max-width:960px;padding:38px 40px 76px}
+.masthead{padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--accent);margin-bottom:11px}
+h1{font-family:var(--sans);font-size:29px;font-weight:600;letter-spacing:-.025em;line-height:1.3;margin:0 0 9px}
+.masthead .meta{color:var(--ink2);font-size:12.5px;margin:0}
+
+.notice{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:14px 17px;margin-bottom:24px;font-size:12.5px;color:var(--ink2);line-height:1.75}
+.notice b{color:var(--accent);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 15px 15px}
+.stat .n{font-family:var(--sans);font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.035em;color:var(--ink)}
+.stat .l{color:var(--ink2);font-size:11.5px;margin-top:4px}
+
+.sec{scroll-margin-top:76px;margin:36px 0 14px;display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sec .num{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.08em;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.sec h2{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0}
+.tag{font-size:11px;padding:2px 9px;border:1px solid var(--line);border-radius:5px;margin-left:auto;color:var(--ink2);background:var(--paper);white-space:nowrap}
+
+.item{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 19px 17px;margin-bottom:10px}
+.item h3{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px}
+.item h3 .idx{font-size:11px;font-weight:600;color:var(--ink3);margin-right:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.note{color:var(--ink3);font-size:11.5px;font-weight:400}
+.why{color:var(--ink2);font-size:12.5px;margin:9px 0 0}
+code{font-family:var(--mono);font-size:11.5px;background:var(--code);padding:1px 5px;border-radius:3px;color:#4B555C}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper);margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--ink2);background:#F7F9FA}
+tr:last-child td{border-bottom:none}
+td b{font-weight:600;color:var(--ink)}
+
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#4B555C;margin:0 0 14px}
+.callout{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 17px;font-size:12.5px;color:var(--ink2);margin-bottom:12px}
+.callout b{color:var(--accent)}
+.lead{font-size:13px;color:var(--ink2);margin:0 0 14px}
+.lead b{color:var(--accent);font-weight:600}
+.sub{font-size:13px;font-weight:600;color:var(--ink);margin:22px 0 9px}
+ol,ul{margin:8px 0 14px;padding-left:22px;color:var(--ink2);font-size:12.5px}
+li{margin-bottom:6px}
+
+.flow{display:flex;align-items:stretch;gap:0;margin:6px 0 18px;border:1px solid var(--line);border-radius:6px;background:var(--paper);overflow:hidden}
+.flow .cell{flex:1;padding:13px 14px;font-size:11.5px;color:var(--ink2);border-right:1px solid var(--line2);line-height:1.6}
+.flow .cell:last-child{border-right:none}
+.flow .cell .k{display:block;font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--ink3);margin-bottom:5px}
+.flow .cell b{color:var(--accent);font-weight:600}
+.flow.old .cell{background:#FCFDFD}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.8}
+.foot code{font-size:11px}
+
+.to-top{position:fixed;right:26px;bottom:26px;z-index:20;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--accent);font-size:11.5px;letter-spacing:.01em;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s,border-color .15s,background .15s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);background:var(--accent-soft)}
+.to-top svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:900px){.to-top{right:14px;bottom:14px}}
+
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;width:100%;height:auto;flex:none;border-right:none;border-bottom:1px solid var(--line);padding:16px 18px}
+  .brand{margin-bottom:14px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav a{border-left:none;border-bottom:2px solid transparent;border-radius:4px}
+  .nav a.on{border-left:none;border-bottom-color:var(--accent)}
+  .side-rule,.side-block,.side-status,.side-foot{display:none}
+  .content{padding:26px 18px 60px;max-width:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec{scroll-margin-top:70px}
+  h1{font-size:25px}
+}
+@media print{
+  body{background:#fff}.sidebar{display:none}.content{padding:0;max-width:none}
+  .item,.table-wrap,.stat,.flow{break-inside:avoid}
+  .to-top{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+<div class="brand"><div class="sq"></div><div><div class="t">配置治理 · 02</div><div class="s">雪花 WMS · 可落地版</div></div></div>
+<div class="nav-label">目录</div>
+<nav class="nav">
+<a href="#sec1" class="on"><span>01</span>问题诊断：三个缺口</a>
+<a href="#sec2"><span>02</span>设计总纲：四原则</a>
+<a href="#sec3"><span>03</span>架构：解释器→编译器</a>
+<a href="#sec4"><span>04</span>规则模型与契约语法</a>
+<a href="#sec5"><span>05</span>WMS 强校验规则库</a>
+<a href="#sec6"><span>06</span>DMN 决策表实例</a>
+<a href="#sec7"><span>07</span>三道防线与影子发布</a>
+<a href="#sec8"><span>08</span>性质测试与 CI 门禁</a>
+<a href="#sec9"><span>09</span>错误码与可观测</a>
+<a href="#sec10"><span>10</span>落地路线与排期</a>
+<a href="#sec11"><span>11</span>风险清单与 FAQ</a>
+<a href="#sec12"><span>12</span>终极形态：不可表示</a>
+<a href="#sec13"><span>13</span>结论</a>
+</nav>
+<div class="side-rule"></div>
+<div class="side-block">
+<div class="k">方案对比</div>
+<div class="row"><span>上一版</span><b>可配置解释器</b></div>
+<div class="row"><span>更好版</span><b>编译期契约</b></div>
+<div class="row"><span>运行期开关</span><b>0</b></div>
+<div class="row"><span>终局</span><b>校验器消失</b></div>
+</div>
+<div class="side-status">定位：承接《配置化架构设计》，回答"怎样让强校验根本配不掉"，并给出终极形态。</div>
+<div class="side-foot">适用：雪花 WMS 入出库升级<br>示例字段沿用下线即走 / 盘点 / 翻包场景</div>
+</aside>
+
+<main class="content">
+
+<header class="masthead">
+<div class="eyebrow">配置治理系列 · 可落地版 + 终局推演 · 雪花 WMS</div>
+<h1>强校验配置化的更好设计</h1>
+<p class="meta">契约即校验 · 编译即强制 · 边界即唯一 · 事件即版本 · 终局：校验器消失 &nbsp;·&nbsp; 2026-11-26</p>
+</header>
+
+<div class="notice"><b>本文解决什么。</b>上一版回答"校验能不能配置化"；本文回答"怎样让强校验根本配不掉"，并在最后一章给出<b>再深一层的终局</b>——让非法状态根本无法构造，校验器随之消失。前 11 章是可直接落地的工程方案：契约目录、规则语法、10 条 WMS 规则、DMN 决策表、影子发布、CI 门禁、错误码资源表、排期与风险清单。</div>
+
+<div class="stats">
+<div class="stat"><div class="n">4</div><div class="l">设计原则</div></div>
+<div class="stat"><div class="n">10</div><div class="l">WMS 规则实例</div></div>
+<div class="stat"><div class="n">3</div><div class="l">强制力防线</div></div>
+<div class="stat"><div class="n">4</div><div class="l">落地阶段</div></div>
+</div>
+
+<div class="sec" id="sec1"><span class="num">01</span><h2>问题诊断：上一版的三个缺口</h2><span class="tag">为什么升级</span></div>
+<p class="lead">上一版（JSON Schema + 条件 DSL + 提示资源表 + 三端生成 + 三级管控）方向正确，但仍是<b>运行时配置驱动</b>，存在三个结构性缺口。</p>
+
+<div class="item">
+<h3><span class="idx">01</span>DSL 会腐化成第二套代码</h3>
+<div class="why"><b>表现：</b><code>x-condition</code> 从一条简单条件起步，逐步长出嵌套判断、自定义函数、例外清单。<br><b>根因：</b>DSL 本质上是一门语言，只要图灵完备度够用，业务就会不断往里塞逻辑。<br><b>后果：</b>几年后它就是当初想消灭的硬编码，只是从 <code>.java</code> 挪到了 <code>.json</code>，而且没有 IDE 支持、没有单测、没有重构工具。</div>
+</div>
+<div class="item">
+<h3><span class="idx">02</span>三端生成本身成为新的维护面</h3>
+<div class="why"><b>表现：</b>前端、后端、数据库各生成一份校验器，生成器要测、语义要对齐、版本要同步。<br><b>根因：</b>复杂度没有消失，只是从"三份手写代码"转移成"一个生成器 + 三份产物 + 对齐测试"。<br><b>后果：</b>新增一类校验要改生成器；生成器出 bug 三端同时中招；排查问题要多看一层生成逻辑。</div>
+</div>
+<div class="item">
+<h3><span class="idx">03</span>强校验分级靠人，不靠机制</h3>
+<div class="why"><b>表现：</b>"不可变规则禁止配置化""强校验双人审批"是流程约束，不是技术约束。<br><b>根因：</b>运行时只要存在 <code>enabled: true/false</code>，就永远存在被配掉的可能。<br><b>后果：</b>一次紧急上线、一次值班图省事，就能绕过审批。脏数据进系统后无法回溯是哪次配置改动导致的。</div>
+</div>
+<div class="callout"><b>升级方向：</b>把"强校验是否存在"从运行期挪到构建期。运行期不再有开关可配，只有参数可调——这是整套设计的分水岭。</div>
+
+<div class="sec" id="sec2"><span class="num">02</span><h2>设计总纲：四原则</h2><span class="tag">逐条展开</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:20%">原则</th><th style="width:40%">具体做法</th><th>解决什么</th></tr></thead>
+<tbody>
+<tr><td><b>契约即校验</b></td><td>规则内嵌在 Schema / DDL 注释 / Proto 选项中，与字段同处一处、同 PR 提交、同版本发布</td><td>规则与字段模型漂移；DSL 另起炉灶</td></tr>
+<tr><td><b>编译即强制</b></td><td>强校验在构建期物化为校验器产物；产物中没有 <code>enabled</code>；要改必须改源码走 CI</td><td>强校验被热关；三端生成器的维护负担</td></tr>
+<tr><td><b>边界即唯一</b></td><td>只在服务端 API 边界权威执行一次；前端从 OpenAPI 生成"体验提示"（不可信）；DB 保留最终硬约束</td><td>三端语义不一致；绕过前端直调接口</td></tr>
+<tr><td><b>事件即版本</b></td><td>规则绑定业务事件（如"出库单创建"）版本；历史单据按发生当时的规则版本解释</td><td>新规则误判老数据；规则演进无追溯</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>边界划分：</b>强校验的<b>存在性</b>（是否存在、是否阻断）属于源码；强校验的<b>参数</b>（阈值、重试次数）可配置但带安全域；<b>提示文案</b>完全配置化、秒级热更新。三者走三条不同通道，互不越界。</div>
+
+<div class="sec" id="sec3"><span class="num">03</span><h2>架构对照：从解释器到编译器</h2><span class="tag">链路变化</span></div>
+<p class="lead">同一条规则（下线即走时产线必填）在两套设计里的生命周期完全不同：</p>
+<div class="flow old">
+<div class="cell"><span class="k">上一版 · 运行期</span>配置库写入 <b>enabled:true</b></div>
+<div class="cell"><span class="k">分发</span>下发到前端/后端引擎</div>
+<div class="cell"><span class="k">执行</span>运行时<b>解释 DSL</b></div>
+<div class="cell"><span class="k">风险</span>改配置即可<b>关掉强校验</b></div>
+</div>
+<div class="flow">
+<div class="cell"><span class="k">更好版 · 构建期</span>契约仓库<b>提交源码</b></div>
+<div class="cell"><span class="k">门禁</span>CI 性质测试 + 评审</div>
+<div class="cell"><span class="k">执行</span>生成<b>不可热改产物</b></div>
+<div class="cell"><span class="k">结果</span>要关必须<b>发版 + 留痕</b></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:20%">环节</th><th style="width:38%">上一版</th><th>更好设计</th></tr></thead>
+<tbody>
+<tr><td><b>规则存放</b></td><td>集中配置库（可在线编辑）</td><td>Git 契约仓库，与 DDL / API 定义同仓同 PR</td></tr>
+<tr><td><b>规则表达</b></td><td>JSON Schema + <code>x-condition</code> DSL</td><td>Schema 管结构 + DMN 决策表管业务联动（业务可读、命中可解释）</td></tr>
+<tr><td><b>执行方式</b></td><td>运行时解释配置</td><td>构建期生成校验器，运行时只执行编译产物</td></tr>
+<tr><td><b>变更路径</b></td><td>配置发布 + 灰度 + 审批</td><td>代码提交 + CI 门禁 + 版本发布（天然不可热改）</td></tr>
+<tr><td><b>前端一致性</b></td><td>三端各生成一份校验器</td><td>前端从 OpenAPI 生成体验提示（不信任），权威只在边界</td></tr>
+<tr><td><b>强校验安全</b></td><td>开关锁定 + 双人审批</td><td>无开关；参数只开放带安全域的阈值</td></tr>
+<tr><td><b>回滚</b></td><td>改回配置值</td><td>预置回滚包，切换产物版本，30 分钟内可完成</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec4"><span class="num">04</span><h2>规则模型与契约语法</h2><span class="tag">可执行定义</span></div>
+<p class="lead">契约仓库按业务域分层，每个场景四类文件：字段契约、规则决策表、错误码资源、生成产物。</p>
+
+<div class="sub">4.1 目录结构</div>
+<pre>contracts/
+  wms/
+    outbound/
+      ship-upon-pline.schema.json     # 字段契约（L1：类型/必填/范围）
+      ship-upon-pline.dmn              # 业务决策表（L2/L4：条件联动/状态机）
+      ship-upon-pline.errors.yaml      # 错误码与提示资源
+    inventory/
+      count-order.schema.json
+      count-order.dmn
+    repack/
+      box-repack.schema.json
+  shared/
+    error-codes.yaml                    # 全局错误码字典
+    security-domains.yaml               # 参数安全域（硬编码边界）
+  generated/                            # 构建产物，禁止手工编辑
+    java/  ts/  sql/</pre>
+
+<div class="sub">4.2 规则声明语法（核心）</div>
+<pre>rule: WMS.OUT.PRODLINE_REQUIRED
+enforcement: STRICT            # 编译期常量：STRICT / NORMAL / ADVISORY
+when:                          # 触发条件（只读数据，不写逻辑）
+  field: isShipUponPline
+  op: eq
+  value: 1
+require: productionLine        # 必须非空的字段
+params:                        # 唯一可配置部分，且必须在安全域内
+  retry: { default: 3, min: 1, max: 5 }
+code: WMS.OUT.PRODLINE_REQUIRED@v2
+event: outbound.order.create   # 规则绑定的业务事件
+version: 2                     # 规则版本，写入单据快照
+owner: 仓储产品组               # 规则责任人</pre>
+<div class="callout"><b>为什么 <code>enforcement</code> 是编译期常量：</b>它不进配置中心、不进数据库、不开放 API。要修改它必须提 PR，CI 会检查 STRICT 规则的变更是否附带性质测试与影子发布报告。</div>
+
+<div class="sub">4.3 参数安全域（硬编码边界）</div>
+<pre># shared/security-domains.yaml —— 本身受代码评审保护，不热更新
+qty.max:            { min: 1, max: 10000 }      # 单笔数量上限
+batch.count.max:    { min: 1, max: 200 }        # 单箱批次数上限
+rule.retry:         { min: 1, max: 5 }          # 校验重试次数
+rule.timeout.ms:    { min: 50, max: 2000 }      # 单条规则超时</pre>
+<div class="callout"><b>机制：</b>配置中心写入参数时先查安全域，越界直接拒绝并告警。安全域是代码的一部分，改它要走 CI。这样"调阈值"自由，但"调到 0 或无限大"不可能。</div>
+
+<div class="sec" id="sec5"><span class="num">05</span><h2>WMS 强校验规则库（10 条实例）</h2><span class="tag">真实场景</span></div>
+<p class="lead">以雪花 WMS 入出库升级项目现有字段为例，把散落在代码里的强校验整理成规则清单。<code>S</code>=STRICT（不可配掉），<code>N</code>=NORMAL（可配参数）。</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:6%">#</th><th style="width:24%">场景</th><th style="width:30%">规则条件 → 结果</th><th style="width:12%">错误码</th><th style="width:7%">级别</th><th>版本</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>下线即走-产线必填</b></td><td><code>isShipUponPline=1</code> 且 <code>productionLine</code> 为空 → 阻断</td><td><code>OUT.PRODLINE_REQ</code></td><td><b>S</b></td><td>v2</td></tr>
+<tr><td>2</td><td><b>下线即走-库位类型</b></td><td>下线即走单入库库位类型 ≠「下线即走库位」→ 阻断</td><td><code>OUT.LOCTYPE_MISMATCH</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>3</td><td><b>下线即走-库位状态</b></td><td>下线即走库位状态必须为「待检」（不是冻结）→ 否则阻断</td><td><code>OUT.LOCSTATUS_INVALID</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>4</td><td><b>含瓶标记联动</b></td><td><code>attribute6=1</code>（含瓶）时 <code>batchNo</code> 必填 → 阻断</td><td><code>INV.BATCH_REQ</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>5</td><td><b>盘点数量上限</b></td><td>实盘数 &gt; 配置上限（安全域内）→ 警告并要求二次确认</td><td><code>INV.QTY_EXCEED</code></td><td>N</td><td>v2</td></tr>
+<tr><td>6</td><td><b>批次状态越库回传</b></td><td>批次状态 ≠ 合格 时禁止回传 OC → 阻断</td><td><code>INV.BATCHSTATUS_BLOCK</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>7</td><td><b>翻包箱码唯一性</b></td><td>新箱码已存在 → 阻断（查库校验，走 L3 模板）</td><td><code>RPK.BOX_DUP</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>8</td><td><b>拆组垛数量守恒</b></td><td>拆后明细数量之和 ≠ 原垛数量 → 阻断</td><td><code>DSY.QTY_MISMATCH</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>9</td><td><b>已过账单据作废</b></td><td>单据状态=已过账 时禁止作废（状态机校验）→ 阻断</td><td><code>DOC.POSTED_NOVOID</code></td><td><b>S</b></td><td>v1</td></tr>
+<tr><td>10</td><td><b>库位编码格式</b></td><td>不符合 <code>^K[0-9]{4}$</code> → 提示（前端体验校验，后端仍需重放）</td><td><code>LOC.CODE_FORMAT</code></td><td>N</td><td>v1</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>整理原则：</b>先不要一次性把 10 条都迁移。第 1、2、7、8 条是库存安全底线，优先；第 5、10 条是体验类，最后做。每条规则迁移时补齐：契约声明、性质测试、错误码资源、影子发布报告——四件不齐不验收。</div>
+
+<div class="sec" id="sec6"><span class="num">06</span><h2>DMN 决策表：替代膨胀的 DSL</h2><span class="tag">业务可读</span></div>
+<p class="lead">下线即走的联动规则用决策表表达。业务人员能直接读表，命中哪一行一眼可见——这是 DSL 做不到的可解释性。</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:6%">序</th><th style="width:22%">isShipUponPline</th><th style="width:16%">attribute6</th><th style="width:24%">库位类型</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>1</td><td>1（含瓶）</td><td>下线即走库位</td><td><b>通过</b>，要求 <code>productionLine</code> + <code>batchNo</code></td></tr>
+<tr><td>2</td><td>1</td><td>0（净水）</td><td>下线即走库位</td><td><b>通过</b>，要求 <code>productionLine</code>，不要求批号</td></tr>
+<tr><td>3</td><td>1</td><td>—</td><td>其他库位</td><td><b>阻断</b> <code>OUT.LOCTYPE_MISMATCH</code></td></tr>
+<tr><td>4</td><td>1</td><td>—</td><td>—</td><td><b>阻断</b> <code>OUT.PRODLINE_REQ</code>（产线为空时）</td></tr>
+<tr><td>5</td><td>0</td><td>—</td><td>—</td><td>走普通出库规则集，不适用本表</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>规则命中可解释：</b>校验失败时返回的不只是错误码，还有 <code>decision: table#3</code>（命中第 3 行）。排查"为什么被拦"不用猜条件组合。决策表按序匹配、命中即停，规则冲突在表内可见。</div>
+
+<div class="sec" id="sec7"><span class="num">07</span><h2>三道防线与影子发布</h2><span class="tag">强制力保真</span></div>
+<div class="item">
+<h3><span class="idx">01</span>编译期：没有开关可配</h3>
+<div class="why">STRICT 规则的契约声明中没有 <code>enabled</code> 字段，生成产物中也不存在。关闭它的唯一途径是改源码、过 CI、发版本，提交记录与审批链天然留痕。阈值参数走配置中心，但必须落在安全域内。</div>
+</div>
+<div class="item">
+<h3><span class="idx">02</span>运行期：边界权威 + 影子发布</h3>
+<div class="why">服务端 API 边界执行编译产物，带超时（50~2000ms 安全域）与查询行数配额，防止复杂规则拖垮接口。<b>新规则上线前必须走影子模式</b>：新旧规则并行，新规则只记录不拦截，采集一个完整业务周期后按算法判定是否放行。</div>
+</div>
+<div class="item">
+<h3><span class="idx">03</span>存储期：数据库硬约束兜底</h3>
+<div class="why"><code>NOT NULL</code>、<code>UNIQUE</code>、外键、<code>CHECK</code> 不受任何配置影响。即便绕过边界校验（内部脚本、批量导入、数据修复），数据库仍拦得住。这是"强校验"真正的地基。</div>
+</div>
+<div class="sub">7.1 影子发布判定算法</div>
+<ol>
+<li>新规则以 <code>shadow</code> 模式部署，双跑 <b>≥ 7 个自然日</b>（覆盖一个完整盘点/出库周期）。</li>
+<li>逐单计算四类结果：<code>both-pass</code>、<code>both-reject</code>、<code>new-only-reject</code>（新增拦截）、<code>old-only-reject</code>（新规则漏拦）。</li>
+<li>门禁：<code>new-only-reject / total &gt; 0.5%</code> 或 <code>old-only-reject &gt; 0</code> → <b>阻断发布</b>，差异单据人工复核。</li>
+<li>通过后切换 enforcer 版本；保留 <b>30 天回滚窗口</b>，预置回滚包。</li>
+<li>上线后继续监控 7 天，命中率突变为 0 或飙升 3 倍触发告警。</li>
+</ol>
+<div class="callout"><b>为什么比双人审批更硬：</b>审批只证明"有人同意过"，影子发布证明"在这套真实数据上没出事"。前者是流程证据，后者是数据证据。</div>
+
+<div class="sec" id="sec8"><span class="num">08</span><h2>性质测试与 CI 门禁</h2><span class="tag">规则正确性</span></div>
+<p class="lead">配置化最大的隐性成本是"规则本身写错了"。把规则写成可验证的性质，让 CI 穷举边界，而不是靠几条手写单测。</p>
+<div class="sub">8.1 性质测试示例</div>
+<pre>// Rule as Property：对任意单据，该性质必须成立
+[Property]
+public void ShipUponPline_RequiresProductionLine(OutboundOrder order)
+{
+    Assume.That(order.IsShipUponPline == 1);
+    order.ProductionLine = null;                 // 生成器随机构造其余字段
+    var result = validator.Validate(order, version: 2);
+    Assert.That(result.Errors, Has.Some.Matches&lt;ValidationError&gt;(
+        e =&gt; e.Code == "WMS.OUT.PRODLINE_REQUIRED@v2"
+          &amp;&amp; e.Severity == Severity.Block));
+}</pre>
+<div class="sub">8.2 CI 门禁流水线</div>
+<ol>
+<li><b>Schema 校验：</b>契约文件语法合法、字段与 DDL 一致（自动比对列名/类型）。</li>
+<li><b>性质测试：</b>每条 STRICT 规则至少 1 条性质，生成器跑 ≥ 1000 组随机数据。</li>
+<li><b>决策表完备性：</b>检查条件组合是否有空洞（无规则命中）与冲突（多行同时命中）。</li>
+<li><b>安全域校验：</b>规则引用的参数必须声明在 <code>security-domains.yaml</code> 内。</li>
+<li><b>错误码归属：</b>每个 <code>code</code> 必须在资源表中有定义，禁止裸字符串。</li>
+<li><b>变更门禁：</b>STRICT 规则的 <code>enforcement</code> / <code>when</code> 变更，必须附影子发布报告，否则 CI 失败。</li>
+</ol>
+<div class="callout"><b>实测收益口径：</b>不引用行业"提升 X%"的数字，建议用项目自身基线测量四个指标：规则变更平均交付时长、表单相关缺陷逃逸率、强校验绕过次数、零命中规则数。迁移前后各测一个完整迭代即可得出结论。</div>
+
+<div class="sec" id="sec9"><span class="num">09</span><h2>错误码与可观测契约</h2><span class="tag">提示热更新</span></div>
+<p class="lead">上一版的提示资源表解决"改文案不发版"；升级后它同时成为规则的观测入口和生命周期管理载体。</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">字段</th><th>说明与示例</th></tr></thead>
+<tbody>
+<tr><td><b>code</b></td><td>全局唯一、带语义版本：<code>WMS.OUT.PRODLINE_REQUIRED@v2</code>，与规则版本联动，避免同码不同义</td></tr>
+<tr><td><b>severity</b></td><td><code>block</code> / <code>warn</code> / <code>info</code>；STRICT 规则只能是 <code>block</code>，CI 强制检查</td></tr>
+<tr><td><b>i18n</b></td><td>中文"下线即走时产线不能为空"、英文 "Production line is required"，支持 <code>{field}</code> 变量插值</td></tr>
+<tr><td><b>channel.pda</b></td><td>短文案 ≤ 20 字，适配 PDA 小屏</td></tr>
+<tr><td><b>channel.pc</b></td><td>完整文案 + 处理建议，适配 PC 端</td></tr>
+<tr><td><b>owner</b></td><td>规则责任人，零命中清理时自动通知</td></tr>
+<tr><td><b>metrics</b></td><td>命中率、拦截率、人工覆盖次数，按天打点；高频误报自动告警</td></tr>
+</tbody>
+</table>
+</div>
+<pre># 规则产物只存错误码，不存文案
+{ "field": "productionLine", "rule": "requiredWhen",
+  "when": { "var": "isShipUponPline", "eq": 1 },
+  "code": "WMS.OUT.PRODLINE_REQUIRED@v2",
+  "decision": "ship-upon-pline.dmn#4" }
+
+# 资源表独立热更新
+WMS.OUT.PRODLINE_REQUIRED@v2:
+  zh: "下线即走时产线不能为空"
+  en: "Production line is required"
+  pda: "产线必填"
+  severity: block
+  owner: 仓储产品组</pre>
+<div class="callout"><b>不可越界的线：</b>文案热更新可以秒级生效；"是否拦截"永远不热更新。这条边界要写进平台约定，并在 CI 中检查——资源表只能含 <code>zh/en/pda/severity/owner</code> 等展示字段，不得含 <code>enabled</code> 或 <code>when</code>。</div>
+
+<div class="sec" id="sec10"><span class="num">10</span><h2>落地路线与排期</h2><span class="tag">四阶段</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:7%">阶段</th><th style="width:26%">交付物</th><th style="width:22%">验收标准</th><th style="width:18%">参与角色</th><th>风险</th></tr></thead>
+<tbody>
+<tr><td><b>1 契约仓库</b></td><td><code>contracts/</code> 目录骨架；先迁移下线即走相关的 3 条规则</td><td>3 条规则与 DDL 字段自动比对一致；CI 跑通 Schema 校验</td><td>架构 + 仓储产品</td><td>低</td></tr>
+<tr><td><b>2 边界权威</b></td><td>服务端校验器接入编译产物；前端改体验提示</td><td>绕过前端直调接口仍被拦截；三端返回同一错误码</td><td>后端 + 前端</td><td>中</td></tr>
+<tr><td><b>3 错误码可观测</b></td><td>全局错误码资源表 + 命中打点看板 + 孤儿码清理机制</td><td>改一句提示无需发版；能看到每条规则的命中率</td><td>全员 + 运维</td><td>低</td></tr>
+<tr><td><b>4 影子发布</b></td><td>性质测试套件；双跑看板；回滚包</td><td>一条 STRICT 规则完整跑通影子→放行→监控；回滚演练成功</td><td>测试 + 架构</td><td>中高</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>与上一版顺序的区别：</b>上一版从"提示资源表"起步（见效快）；升级版从"契约仓库"起步（地基正）。若提示收拢已做完，可直接从第 2 阶段切入，但第 1 阶段迟早要补——否则规则与字段永远对不齐。建议两条线并行：提示收拢作为快赢，契约仓库同期开工。</div>
+
+<div class="sec" id="sec11"><span class="num">11</span><h2>风险清单与 FAQ</h2><span class="tag">落地障碍</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:24%">风险</th><th style="width:34%">表现</th><th>缓解</th></tr></thead>
+<tbody>
+<tr><td><b>决策表膨胀</b></td><td>条件组合爆炸，表变得不可读</td><td>拆成多个子决策表（按场景分表），命中即短路；单表不超过 20 行</td></tr>
+<tr><td><b>契约与代码双写</b></td><td>有人绕过契约在业务代码里补校验</td><td>CI 静态扫描：禁止在业务层出现硬编码提示与校验分支；发现即失败</td></tr>
+<tr><td><b>影子期误判</b></td><td>新规则误拦正常业务未被发现</td><td>差异单据强制人工复核；新增拦截率超阈值自动阻断；保留回滚包</td></tr>
+<tr><td><b>性能退化</b></td><td>复杂规则拖慢接口 P99</td><td>编译产物 + 超时/行数配额；上线前压测，P99 超基线 20% 阻断</td></tr>
+<tr><td><b>老数据误判</b></td><td>新规则套到历史单据上</td><td>事件版本绑定，单据快照记录规则版本；按版本解释历史数据</td></tr>
+<tr><td><b>团队习惯阻力</b></td><td>开发者觉得"改配置更快"</td><td>明确三通道：文案随时改、参数审批改、强校验发版改；用 CI 固化</td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:40%">常见问题</th><th>回答</th></tr></thead>
+<tbody>
+<tr><td><b>改一句提示真的不用发版？</b></td><td>是。文案在资源表热更新，秒级生效；但拦截行为不变——这是刻意设计的边界。</td></tr>
+<tr><td><b>强校验能不能临时关掉？</b></td><td>不能热关。只能切换产物版本（回滚包预置，30 分钟内可完成），且自动留痕。这正是设计目标。</td></tr>
+<tr><td><b>和现有低代码平台冲突吗？</b></td><td>不冲突。契约是低代码平台底层的规则层，UI 仍可用低代码搭建；只是强校验不再由页面配置决定。</td></tr>
+<tr><td><b>DSL 还要不要？</b></td><td>一般校验（ADVISORY）可保留轻量 DSL；STRICT 规则一律走 DMN + 编译产物，不允许写 DSL。</td></tr>
+<tr><td><b>需要一次性全量迁移吗？</b></td><td>不需要。按第 5 节优先级从 STRICT 规则开始，逐条迁移、逐条影子验证；存量代码与契约并存直到替换完成。</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec12"><span class="num">12</span><h2>终极形态：让非法状态不可表示</h2><span class="tag">再深一层</span></div>
+<p class="lead">前 11 章再强，仍然有一个共同的隐含前提：<b>先让数据进内存，再跑一遍校验决定拦不拦</b>。终局是取消这个前提——用类型系统把业务规则写进数据结构本身，让"下线即走但产线为空"这类状态<b>根本构造不出来</b>。这时校验器不是被关掉，而是<b>没有存在的必要</b>。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:14%">层级</th><th style="width:26%">做法</th><th style="width:24%">非法数据在哪被挡</th><th style="width:18%">校验器数量</th><th>能否被配掉</th></tr></thead>
+<tbody>
+<tr><td><b>L0 硬编码</b></td><td>三端各自写 if</td><td>运行期</td><td>3 份</td><td>能，且会漏改</td></tr>
+<tr><td><b>L1 配置化</b></td><td>规则中心 + DSL 解释</td><td>运行期</td><td>1 份解释器</td><td>能，改配置即可</td></tr>
+<tr><td><b>L2 编译期契约</b></td><td>契约源码 + CI 物化</td><td>构建期</td><td>0 运行时开关</td><td>不能，要走发版</td></tr>
+<tr><td><b>L3 类型化不可表示</b></td><td>类型系统 + 解析边界</td><td><b>编译期 / 构造时</b></td><td><b>0 校验器</b></td><td><b>不存在可配的东西</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>一句话分水岭：</b>L0~L2 是"数据可以是非法的，但我们检查它"；L3 是"非法数据在类型层面没有合法构造路径"。前者叫 <b>validate</b>，后者叫 <b>parse</b>。</div>
+
+<div class="sub">12.1 Parse, don't validate：不变量从检查项变成构造前提</div>
+<pre>// 传统：任何 Order 都可能非法，每个函数都得先校验一遍
+function ship(order: RawOrder) {
+  if (order.isShipUponPline === 1 &amp;&amp; !order.productionLine) throw ...
+  if (order.locationType !== "SHIP_THROUGH") throw ...
+  // 真正业务只有一行，校验占了半屏
+}
+
+// 终局：解析成功后得到的类型本身就携带不变量
+type OutboundOrder =
+  | { kind: "normal";         location: NormalLocation }
+  | { kind: "shipUponPline";  productionLine: NonEmptyString;
+      location: ShipThroughLocation };   // 错误组合没有对应分支
+
+function parseOrder(raw: RawOrder): Result&lt;OutboundOrder, ParseError&gt; {
+  // 唯一一次校验发生在系统边界，且返回的是新类型
+}
+
+function ship(order: OutboundOrder) {
+  // 这里不可能拿到非法状态——想传错都编译不过
+}</pre>
+
+<div class="sub">12.2 三个实现手段</div>
+<div class="item">
+<h3><span class="idx">01</span>智能构造器（Smart Constructor）</h3>
+<div class="why">构造函数私有，只暴露 <code>Parse(raw) → Result&lt;T, Error&gt;</code>。外部拿不到"未经验证的 T"，只能通过解析入口。类型一旦构造成功，全链路都不再校验。C# 用 <code>record</code> + 私有构造 + <code>static Parse</code>；TS 用 <code>brand type</code> 防止裸字符串冒充。</div>
+</div>
+<div class="item">
+<h3><span class="idx">02</span>判别联合 / 代数数据类型</h3>
+<div class="why">把业务变体枚举进类型：<code>normal</code> 与 <code>shipUponPline</code> 是两个独立分支，各自携带自己才有的字段。想构造"下线即走但没产线"的对象，TypeScript 直接编译报错。这就是把第 5 节的 DMN 决策表<b>编译进了类型系统</b>——表里的非法组合没有对应的类型分支。</div>
+</div>
+<div class="item">
+<h3><span class="idx">03</span>数据库约束做最后兜底</h3>
+<div class="why">类型只管应用内，绕过应用直连库仍可能写脏数据。库位类型/状态用枚举 CHECK，箱码用 UNIQUE，数量守恒用事务内断言。类型与约束表达的是<b>同一份不变量</b>，由同一份契约生成——不是重复校验代码，是重复表达。</div>
+</div>
+
+<div class="sub">12.3 哪些能消掉校验器，哪些不能</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:30%">场景</th><th style="width:18%">能否类型化</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><b>字段联动</b>（产线必填）</td><td><b>能</b></td><td>判别联合让非法组合无对应类型分支，编译期挡住</td></tr>
+<tr><td><b>状态机流转</b>（已过账禁作废）</td><td><b>能</b></td><td>命令类型只接受特定状态的单据，作废方法对已过账单据不存在</td></tr>
+<tr><td><b>枚举合法性</b>（库位状态）</td><td><b>能</b></td><td>用封闭枚举替代字符串，非法值无法表示</td></tr>
+<tr><td><b>数量守恒</b>（拆组垛）</td><td>部分</td><td>可在解析时计算并构造带证明的值，但依赖输入完整性</td></tr>
+<tr><td><b>查库唯一性</b>（箱码重复）</td><td><b>不能</b></td><td>外部世界状态，类型系统看不到数据库——只能做"带副作用的解析"</td></tr>
+<tr><td><b>外部输入</b>（PDA / 接口报文）</td><td><b>不能</b></td><td>永远需要解析边界，把不可信数据转成类型化值</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout"><b>关键边界：</b>类型化消灭的是<b>系统内部</b>的重复校验，不是消灭校验本身。系统边界（报文、PDA、数据库、外部系统）永远要有解析层——只是这层从"散落各处的 if"收敛成"一处 Parse"，且一次解析全链路受益。</div>
+
+<div class="sub">12.4 代价与适用边界（诚实说）</div>
+<ul>
+<li><b>改造成本：</b>存量代码从"裸 DTO + if"改成类型化模型，工作量不小。建议只在新模块（新单据、新接口）采用，老模块维持第 2 阶段的契约编译。</li>
+<li><b>表达力上限：</b>跨库状态、时序、权限上下文无法完全类型化，这部分仍要靠边界权威执行 + DB 约束。</li>
+<li><b>跨语言难题：</b>前后端语言不同，类型无法直接共享。做法是共享<b>契约</b>（Schema / DMN），各端从契约生成自己的类型——回到第 4 章的契约仓库，只是生成目标从"校验器"变成"类型定义"。</li>
+<li><b>团队门槛：</b>需要开发者习惯"让非法状态无法表示"的建模方式，比写 if 门槛高。收益是长期维护成本骤降，适合核心域，不适合一次性脚本。</li>
+</ul>
+
+<div class="sub">12.5 与前 11 章的关系：不是替代，是收敛</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:24%">层次</th><th style="width:34%">解决什么</th><th>在架构中的位置</th></tr></thead>
+<tbody>
+<tr><td><b>L1 配置化</b></td><td>易变的体验类校验、提示文案</td><td>配置中心，热更新</td></tr>
+<tr><td><b>L2 编译期契约</b></td><td>STRICT 规则、跨库查库、状态机</td><td>契约仓库 + 构建期物化</td></tr>
+<tr><td><b>L3 类型化</b></td><td>核心单据的内部不变量</td><td>领域模型 + 解析边界</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout">三者叠加才最强：<b>外部输入在解析边界转成类型化值 → 内部用类型保证不变量 → 边界权威执行剩余规则 → 存储用 DB 约束兜底</b>。校验器数量从 3 份 → 1 份 → 0 份，不是靠"配得更聪明"，是靠"把规则挪到更早、更硬的地方"。</div>
+
+<div class="sec" id="sec13"><span class="num">13</span><h2>结论</h2></div>
+<div class="callout" style="border-color:var(--accent-line)"><b>更好的设计一句话：</b>不是把校验做得"更会配置"，而是把强校验做成<b>不可热改的契约编译产物</b>——契约即校验、编译即强制、边界即唯一、事件即版本。<br><br>如果再问一次"还有更好的吗"，答案是终局那一步：<b>让非法状态无法构造，让校验器彻底消失</b>。L1 解决一致性，L2 解决强制力，L3 解决存在性——三层不是三选一，而是按场景逐层收敛。<br><br>四件齐备才算工程闭环：① 契约仓库统一规则与字段；② 编译期物化、运行期无开关；③ 边界权威执行 + DB 硬约束；④ 影子发布 + 性质测试 + 错误码可观测。缺任何一件，都会在不同程度上退回硬编码或退回不可控。</div>
+
+<div class="foot">口径说明：本文为《配置化架构设计》（JSON Schema + DSL + 提示资源化 + 三端生成 + 三级管控）的升级版，不替代原方案，而是回答"强校验怎样从可配置走向不可配掉"。示例字段沿用雪花 WMS 下线即走场景（<code>isShipUponPline</code> / <code>productionLine</code> / <code>attribute6</code>）及盘点、翻包、拆组垛规则。收益口径建议以项目自身基线测量，不引用未经验证的行业数字。<br>本页为本地单文件 HTML，零依赖，可离线查阅与打印。</div>
+
+</main>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到顶部" title="回到顶部" onclick="goTop()">
+<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10V2M6 2L2.5 5.5M6 2L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span>回到顶部</span>
+</button>
+
+<script>
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  var links=document.querySelectorAll('.nav a');
+  links.forEach(function(a){a.classList.remove('on');});
+  if(links.length){links[0].classList.add('on');}
+}
+function initTop(){
+  var btn=document.getElementById('toTop');
+  function sync(){ if(window.scrollY>380){btn.classList.add('show');}else{btn.classList.remove('show');} }
+  window.addEventListener('scroll',sync,{passive:true});
+  sync();
+}
+function initNav(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=[].slice.call(document.querySelectorAll('.sec[id]'));
+  if(!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);}); }
+    });
+  },{rootMargin:'-8% 0px -78% 0px',threshold:0});
+  secs.forEach(function(s){ob.observe(s);});
+}
+initNav();
+initTop();
+</script>
+</body>
+</html>
