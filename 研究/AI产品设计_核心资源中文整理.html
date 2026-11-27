@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 时代的产品设计：核心资源中文整理</title>
+<style>
+:root{
+  --bg:#F7F9FA; --paper:#FFFFFF; --ink:#22272B; --ink2:#66727B; --ink3:#94A0A8;
+  --line:#E2E7EB; --line2:#EDF0F3; --code:#F5F7F9;
+  --accent:#3B5A6A; --accent-soft:#EAF0F3; --accent-line:#C9D6DE;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.layout{display:flex;align-items:flex-start;max-width:1320px;margin:0 auto;min-height:100vh}
+
+.sidebar{position:sticky;top:0;flex:0 0 238px;width:238px;height:100vh;overflow-y:auto;background:var(--paper);border-right:1px solid var(--line);padding:26px 18px 22px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:26px}
+.brand .sq{width:22px;height:22px;border-radius:5px;background:var(--accent);flex:0 0 auto}
+.brand .t{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.brand .s{font-size:11px;color:var(--ink3)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--ink3);margin:0 0 9px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:baseline;gap:9px;text-decoration:none;color:var(--ink2);font-size:12.5px;padding:7px 9px;border-radius:5px;border-left:2px solid transparent;transition:background .15s,color .15s,border-color .15s}
+.nav a span{font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.nav a:hover{background:var(--accent-soft);color:var(--accent)}
+.nav a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.nav a.on span{color:var(--accent)}
+.side-rule{height:1px;background:var(--line);margin:22px 0 18px}
+.side-block{margin-bottom:20px}
+.side-block .k{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--ink3);margin-bottom:8px}
+.side-block .row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);padding:3px 0}
+.side-block .row b{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-status{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:9px 11px;font-size:11.5px;color:var(--accent);line-height:1.6;margin-bottom:18px}
+.side-foot{margin-top:auto;font-size:11px;color:var(--ink3);line-height:1.7;border-top:1px solid var(--line);padding-top:14px}
+
+.content{flex:1;min-width:0;max-width:960px;padding:38px 40px 76px}
+.masthead{padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--accent);margin-bottom:11px}
+h1{font-family:var(--sans);font-size:29px;font-weight:600;letter-spacing:-.025em;line-height:1.3;margin:0 0 9px}
+.masthead .meta{color:var(--ink2);font-size:12.5px;margin:0}
+
+.notice{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:14px 17px;margin-bottom:24px;font-size:12.5px;color:var(--ink2);line-height:1.75}
+.notice b{color:var(--accent);font-weight:600}
+
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:26px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 15px 15px}
+.stat .n{font-family:var(--sans);font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.035em;color:var(--ink)}
+.stat .l{color:var(--ink2);font-size:11.5px;margin-top:4px}
+
+.sec{scroll-margin-top:76px;margin:36px 0 14px;display:flex;align-items:center;gap:11px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.sec .num{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.08em;flex:0 0 auto;font-variant-numeric:tabular-nums}
+.sec h2{font-family:var(--sans);font-size:17px;font-weight:600;letter-spacing:-.015em;margin:0}
+.tag{font-size:11px;padding:2px 9px;border:1px solid var(--line);border-radius:5px;margin-left:auto;color:var(--ink2);background:var(--paper);white-space:nowrap}
+
+.item{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:16px 19px 17px;margin-bottom:10px;transition:background .15s,border-color .15s}
+.item.picked{background:#F8FAFB;border-color:var(--accent-line)}
+.item h3{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:-.01em;margin:0 0 9px}
+.item h3 .idx{font-size:11px;font-weight:600;color:var(--ink3);margin-right:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.item.picked h3 .idx{color:var(--accent)}
+.note{color:var(--ink3);font-size:11.5px;font-weight:400}
+.path{display:block;font-family:var(--mono);font-size:11.5px;line-height:1.6;background:var(--code);border:1px solid var(--line);border-radius:5px;padding:6px 10px;margin:7px 0;word-break:break-all;color:#4B555C}
+.why{color:var(--ink2);font-size:12.5px;margin:9px 0 12px}
+code{font-family:var(--mono);font-size:11.5px;background:var(--code);padding:1px 5px;border-radius:3px;color:#4B555C}
+.content a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-line);transition:border-color .15s,background .15s}
+.content a:hover{border-bottom-color:var(--accent);background:var(--accent-soft)}
+.content a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.cmdrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding-top:11px;border-top:1px solid var(--line2)}
+.pick{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2);cursor:pointer;user-select:none;margin-right:auto}
+.pick input{accent-color:var(--accent);width:14px;height:14px;cursor:pointer}
+button{font:inherit;font-size:11.5px;letter-spacing:.01em;padding:5px 12px;border:1px solid var(--line);background:transparent;border-radius:5px;cursor:pointer;color:var(--ink2);transition:all .15s}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button.primary{border-color:var(--accent);color:var(--accent)}
+button.primary:hover:not(:disabled){background:var(--accent);color:#fff}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--ink2);background:#F7F9FA}
+tr:last-child td{border-bottom:none}
+td b{font-weight:600;color:var(--ink)}
+
+details{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0 18px;margin-bottom:8px}
+summary{list-style:none;cursor:pointer;font-size:13px;font-weight:500;padding:13px 0;color:var(--ink)}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";display:inline-block;width:17px;font-family:var(--mono);color:var(--ink3);font-size:14px}
+details[open] summary::before{content:"−"}
+details[open] summary{border-bottom:1px solid var(--line2)}
+details ul{margin:12px 0 14px;padding-left:22px;color:var(--ink2);font-size:12.5px}
+details li{margin-bottom:6px}
+
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:15px 17px;overflow-x:auto;font-family:var(--mono);font-size:11.5px;line-height:1.75;color:#4B555C;margin:0 0 14px}
+.callout{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 17px;font-size:12.5px;color:var(--ink2)}
+.callout b{color:var(--accent)}
+
+.foot{margin-top:42px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px;line-height:1.8}
+.foot code{font-size:11px}
+
+.to-top{position:fixed;right:26px;bottom:26px;z-index:20;display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--accent);font-size:11.5px;letter-spacing:.01em;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s,transform .18s,visibility .18s,border-color .15s,background .15s}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{border-color:var(--accent);background:var(--accent-soft)}
+.to-top svg{width:12px;height:12px;display:block;flex:0 0 auto}
+.to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:900px){.to-top{right:14px;bottom:14px}}
+
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:static;width:100%;height:auto;flex:none;border-right:none;border-bottom:1px solid var(--line);padding:16px 18px}
+  .brand{margin-bottom:14px}
+  .nav{flex-direction:row;flex-wrap:wrap;gap:4px}
+  .nav a{border-left:none;border-bottom:2px solid transparent;border-radius:4px}
+  .nav a.on{border-left:none;border-bottom-color:var(--accent)}
+  .side-rule,.side-block,.side-status,.side-foot{display:none}
+  .content{padding:26px 18px 60px;max-width:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec{scroll-margin-top:70px}
+  h1{font-size:25px}
+}
+@media print{
+  body{background:#fff}.sidebar{display:none}.content{padding:0;max-width:none}
+  .toolbar,button,.pick{display:none!important}
+  .item,details,.stat,.table-wrap{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<aside class="sidebar">
+<div class="brand"><div class="sq"></div><div><div class="t">AI 产品设计 · 精选</div><div class="s">核心资源 · 中文整理</div></div></div>
+<div class="nav-label">目录</div>
+<nav class="nav">
+<a href="#sec1" class="on"><span>01</span>资源选择逻辑</a>
+<a href="#sec2"><span>02</span>Building Effective Agents</a>
+<a href="#sec3"><span>03</span>Demystifying evals</a>
+<a href="#sec4"><span>04</span>12-Factor Agents</a>
+<a href="#sec5"><span>05</span>awesome-ai-pm</a>
+<a href="#sec6"><span>06</span>三者如何串成闭环</a>
+<a href="#sec7"><span>07</span>与你的框架对齐</a>
+<a href="#sec8"><span>08</span>术语速查表</a>
+<a href="#sec9"><span>09</span>关键原文金句</a>
+<a href="#sec10"><span>10</span>落地检查清单</a>
+<a href="#sec11"><span>11</span>阅读地图</a>
+<a href="#sec12"><span>12</span>问题查询索引</a>
+<a href="#sec13"><span>13</span>五种模式代码骨架</a>
+<a href="#sec14"><span>14</span>评测设计示例</a>
+<a href="#sec15"><span>15</span>12-Factor 落地要点</a>
+<a href="#sec16"><span>16</span>业务场景映射</a>
+<a href="#sec17"><span>17</span>关键数字速览</a>
+<a href="#sec18"><span>18</span>AI 产品设计落地理念</a>
+<a href="#sec19"><span>19</span>产品设计示例详解</a>
+</nav>
+<div class="side-rule"></div>
+<div class="side-block">
+<div class="k">概况</div>
+<div class="row"><span>核心资源</span><b>3</b></div>
+<div class="row"><span>Workflow 模式</span><b>5</b></div>
+<div class="row"><span>工程原则</span><b>12</b></div>
+<div class="row"><span>评测路线</span><b>8 步</b></div>
+<div class="row"><span>解读章节</span><b>19</b></div>
+</div>
+<div class="side-status">原文均免费公开 · 本页为中文整理与解读，不替代原文</div>
+<div class="side-foot">来源：<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Anthropic Engineering</a>（2024-12 / 2026-01）<br><a href="https://github.com/humanlayer/12-factor-agents" target="_blank" rel="noopener">12-factor-agents</a>（18.8k stars）<br><a href="https://github.com/isumitsoni/awesome-ai-pm" target="_blank" rel="noopener">awesome-ai-pm</a>（更新于 2026-03-17）</div>
+</aside>
+
+<main class="content">
+
+<header class="masthead">
+<div class="eyebrow">精选资源 · 中文整理</div>
+<h1>AI 时代的产品设计：核心资源中文整理</h1>
+<p class="meta">2026-11-27 &nbsp;·&nbsp; 原则 / 评测 / 工程约束 &nbsp;·&nbsp; 附一张资源清单</p>
+</header>
+
+<div class="notice"><b>这几份资源刚好构成一条完整链路。</b><br>Anthropic 两篇分别回答「该建什么」和「怎么验证」；<a href="https://github.com/humanlayer/12-factor-agents" target="_blank" rel="noopener">12-Factor Agents</a> 回答「怎么在生产里活下来」；awesome-ai-pm 是一张导航图，负责省掉自己筛选的时间。前三者定判断标准，最后一张清单补工具与课程。</div>
+
+<div class="stats">
+<div class="stat"><div class="n">3</div><div class="l">核心资源</div></div>
+<div class="stat"><div class="n">5</div><div class="l">Workflow 模式</div></div>
+<div class="stat"><div class="n">12</div><div class="l">工程原则</div></div>
+<div class="stat"><div class="n">8</div><div class="l">评测路线步骤</div></div>
+<div class="stat"><div class="n">9</div><div class="l">清单分类</div></div>
+</div>
+
+<div class="callout" style="margin-bottom:24px"><b>资源直达（原文均免费）</b><br>
+<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents ↗</a> &nbsp;·&nbsp;
+<a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Demystifying evals ↗</a> &nbsp;·&nbsp;
+<a href="https://github.com/humanlayer/12-factor-agents" target="_blank" rel="noopener">12-Factor Agents ↗</a> &nbsp;·&nbsp;
+<a href="https://github.com/isumitsoni/awesome-ai-pm" target="_blank" rel="noopener">awesome-ai-pm ↗</a></div>
+
+<div class="sec" id="sec1"><span class="num">01</span><h2>资源选择逻辑</h2><span class="tag">互补关系</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:27%">资源</th><th style="width:32%">解决什么问题</th><th>不可替代性</th></tr></thead>
+<tbody>
+<tr><td><b><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a></b><br><span class="note">Anthropic · 2024-12</span></td><td>什么该用 workflow、什么该用 agent；五种可组合模式与三条工程原则</td><td>权威、免费、反框架崇拜。给出「先简单后复杂」的判断顺序，避免一上来就造自主 Agent</td></tr>
+<tr><td><b><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Demystifying evals for AI agents</a></b><br><span class="note">Anthropic · 2026-01</span></td><td>怎么定义「好」、怎么把失败变成回归测试、怎么避免被分数骗</td><td>把评测从「事后检查」抬成「驱动开发的核心组件」；术语、grader、陷阱、路线图一套齐全</td></tr>
+<tr><td><b>12-Factor Agents</b><br><span class="note">humanlayer · 18.8k stars</span></td><td>生产级 Agent 的 12 条工程约束：状态、控制流、工具、错误、恢复</td><td>补上 Anthropic 两篇最缺的一层——落到代码与运维结构上的可操作约束</td></tr>
+<tr><td><b>awesome-ai-pm</b><br><span class="note">isumitsoni · 2026-03</span></td><td>工具、评测框架、课程、社区、成本模型一次性串起来</td><td>由实践 PM 筛选，质量门槛是「会不会推荐给只有 30 分钟的资深 PM」，省掉自行筛选成本</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>能力矩阵：谁覆盖什么，谁留下空白</h3>
+<div class="why">把这些资源按「设计 → 验证 → 工程 → 发现」四个环节拆开看，会发现它们几乎不重叠，这也解释了为什么是这几份而不是随便凑数。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">环节</th><th style="width:26%">Building Effective Agents</th><th style="width:26%">Demystifying evals</th><th>12-Factor + awesome-ai-pm</th></tr></thead>
+<tbody>
+<tr><td><b>形态判断</b></td><td><b>主战场</b>：workflow 五种模式、workflow vs agent 分界</td><td>补充：按 agent 类型决定评测设计</td><td>12-Factor 反驳「循环即 agent」，主张大部分是软件</td></tr>
+<tr><td><b>质量定义</b></td><td>只说「用全面评估优化」，不展开</td><td><b>主战场</b>：术语、grader、pass@k/pass^k、饱和</td><td>awesome-ai-pm 把质量做成发布闸门（<a href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener">promptfoo</a> 等）</td></tr>
+<tr><td><b>工程实现</b></td><td>三条原则 + ACI 工具设计，偏概念</td><td>harness 隔离、transcript、状态污染</td><td><b>主战场</b>：12 条约束覆盖状态、控制流、错误、恢复</td></tr>
+<tr><td><b>工具与成本</b></td><td>MCP 定位为工具生态接口</td><td>列出 6 类评测框架</td><td><b>主战场</b>：网关、定价、缓存、token 经济学</td></tr>
+<tr><td><b>留下的空白</b></td><td>不谈评测细节、不谈持久化状态</td><td>不谈代码结构、不谈成本</td><td>清单偏导航，不给判断标准——由前两篇补</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sec" id="sec2"><span class="num">02</span><h2><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents：先判断该不该建</a></h2><span class="tag">Anthropic</span></div>
+
+<div class="callout" style="margin-bottom:12px"><b>全文主论点：</b>与数十个行业团队合作后的发现是——最成功的实现没有用复杂框架或专用库，而是用了<b>简单、可组合的模式</b>。只有能明确改善结果时，才增加复杂度。</div>
+
+<div class="item picked">
+<h3><span class="idx">01</span>Workflow 与 Agent 的分界线</h3>
+<div class="why">两者都属 agentic systems，但控制权的归属不同。这个区分决定了你后面所有设计工作的性质。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:18%">维度</th><th style="width:41%">Workflow（工作流）</th><th>Agent（智能体）</th></tr></thead>
+<tbody>
+<tr><td><b>控制方式</b></td><td>LLM 与工具由预定义代码路径编排</td><td>LLM 动态决定自身流程与工具使用</td></tr>
+<tr><td><b>任务路径</b></td><td>开发者写定</td><td>运行时生成，自主掌控完成方式</td></tr>
+<tr><td><b>优势</b></td><td>可预测、一致，适合定义清晰的任务</td><td>灵活，模型驱动决策，可规模化</td></tr>
+<tr><td><b>代价</b></td><td>灵活性差</td><td>延迟与成本高，错误会累积</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">02</span>五种 Workflow 模式</h3>
+<div class="why">这些模式不是规定性的，可以自由组合。原文建议先用单次 LLM 调用（加检索与示例）跑通，再逐步加层。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:20%">模式</th><th style="width:45%">机制</th><th>何时用</th></tr></thead>
+<tbody>
+<tr><td><b>Prompt Chaining</b><br>提示链</td><td>固定顺序拆步，每次调用处理上一次输出；中间可加程序化校验（gate）</td><td>任务能干净拆成固定子任务；以延迟换准确率</td></tr>
+<tr><td><b>Routing</b><br>路由</td><td>先分类再导向专门化后续任务，避免为某类输入优化而损害其他类</td><td>任务类别明显，且分类可由 LLM 或传统模型准确完成</td></tr>
+<tr><td><b>Parallelization</b><br>并行化</td><td>切分（子任务并行）与投票（同一任务多次运行取多样输出）</td><td>子任务可并行提速，或需多视角提高置信度</td></tr>
+<tr><td><b>Orchestrator-Workers</b><br>编排者-工作者</td><td>中央 LLM 动态拆解、分派给 worker、综合结果</td><td>无法预知需要哪些子任务（如改代码涉及多少文件）</td></tr>
+<tr><td><b>Evaluator-Optimizer</b><br>评估者-优化者</td><td>一个生成、一个评估反馈，循环迭代</td><td>存在明确评估标准，且迭代细化能带来可衡量收益</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">03</span>Agent 循环与适用边界</h3>
+<div class="why">实现本质通常只是「LLM 在循环里依据环境反馈使用工具」——从环境拿到 ground truth（工具结果、代码执行结果），在检查点或阻塞处暂停等待人类反馈，完成任务即终止，并设置最大迭代次数等停止条件。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">判断</th><th>要点</th></tr></thead>
+<tbody>
+<tr><td><b>适用</b></td><td>开放式问题、步骤数无法预测、无法硬编码固定路径；需要多轮运行，且对模型决策有一定信任</td></tr>
+<tr><td><b>风险</b></td><td>成本更高、错误会累积，应在沙箱中充分测试并设置护栏</td></tr>
+<tr><td><b>两个高价值场景</b></td><td><b>客户支持</b>（对话+行动、成功标准清晰、可按成功解决计费）；<b>编码 Agent</b>（自动化测试可验证方案，但人工审查仍不可替代）</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<details><summary>三条核心工程原则，以及「为工具做提示词工程」</summary>
+<ul>
+<li><b>保持简单</b>：agent 设计力求简洁；<b>优先透明</b>：显式展示规划步骤；<b>精心打磨 ACI（Agent-Computer Interface）</b>：靠充分的工具文档与测试。</li>
+<li><b>框架建议</b>：先用 LLM API 直接实现（很多模式只需几行代码）；若用框架，务必理解底层代码——「对底层机制的误判是客户错误的常见来源」。</li>
+<li><b>工具定义要与主提示词同等投入</b>：同一动作有多种表达（写 diff、重写整文件；代码放 markdown 或 JSON），软件工程里只是形式差异，对 LLM 难度却不同。</li>
+<li><b>格式三原则</b>：给模型足够 token 先思考；格式贴近模型在互联网文本中自然见过的形态；避免精确统计上千行代码、字符串转义这类「格式开销」。</li>
+<li><b>防错设计（Poka-yoke）</b>：构建 SWE-bench agent 时，优化工具所花时间多于优化整体提示词；把相对路径改成强制绝对路径后，模型使用无误。</li>
+</ul>
+</details>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>所有模式的地基：增强型 LLM（Augmented LLM）</h3>
+<div class="why">上面五种 workflow 与 agent 都建立在同一前提上：每次 LLM 调用都已经叠加了检索、工具和记忆。当前模型能自己生成搜索词、选择工具、决定保留哪些信息——这是「agentic」真正的能力来源。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:20%">增强能力</th><th style="width:40%">模型能自己做的事</th><th>落地要点</th></tr></thead>
+<tbody>
+<tr><td><b>检索</b></td><td>生成搜索词、判断是否需要查资料</td><td>按用例定制召回范围，而非接一个万能知识库</td></tr>
+<tr><td><b>工具</b></td><td>选择调用哪个工具、填参数</td><td>接口要清晰、文档良好；MCP 是接入第三方工具生态的一条路径</td></tr>
+<tr><td><b>记忆</b></td><td>决定哪些信息保留到下一步</td><td>与 12-Factor 的「拥有上下文窗口」直接对应</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">→</span>决策树：什么情况下才往上加复杂度</h3>
+<pre>1. 能不能用一次 LLM 调用解决？
+   └─ 能 → 先做这一次调用，加入检索与上下文示例，多数应用到此为止
+2. 这个任务换来的准确率提升，值不值额外的延迟与成本？
+   └─ 不值 → 停在这一层
+3. 任务路径能否预定义？
+   └─ 能且要求稳定 → 选 Workflow（五种模式按需组合）
+   └─ 不能、步骤数无法预测 → 才考虑 Agent
+4. 上 Agent 前先确认：
+   ├─ 有清晰的成功标准（可验证）
+   ├─ 有反馈闭环（能拿到环境 ground truth）
+   ├─ 有检查点/停止条件（最大迭代数、人工确认）
+   └─ 已在沙箱中充分测试并设置护栏</pre>
+<div class="why">原文反复强调：模式不是规定性的，可以组合；上生产时不要犹豫<b>减少抽象层、回归基础组件</b>。最成功的团队往往是用最简单方案、靠全面评估迭代出来的。</div>
+</div>
+
+<div class="sec" id="sec3"><span class="num">03</span><h2><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Demystifying evals：评测即需求，不是事后检查</a></h2><span class="tag">Anthropic</span></div>
+
+<div class="callout" style="margin-bottom:12px"><b>核心主张：</b>评测的价值会随 agent 生命周期复利增长，但成本前置、收益后置，因此最容易被低估和推迟。没有评测的团队困在「修好一个失败又制造另一个」的反应式循环里，分不清真实回归与噪声。</div>
+
+<div class="item picked">
+<h3><span class="idx">01</span>术语表：评测的九个组件</h3>
+<div class="why">先把语言统一，再谈方法论。尤其是 outcome 与 transcript 的区分——「agent 说已订好」不算，数据库里真有订单才算。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">术语</th><th>定义</th></tr></thead>
+<tbody>
+<tr><td><b>task</b></td><td>单个测试，含明确输入与成功标准</td></tr>
+<tr><td><b>trial</b></td><td>对同一 task 的一次尝试；因输出随机，需跑多次取一致结果</td></tr>
+<tr><td><b>grader</b></td><td>对某方面表现打分的逻辑；一个 task 可有多个 grader，每个含多个 assertion</td></tr>
+<tr><td><b>transcript</b></td><td>一次 trial 的完整记录：输出、工具调用、推理、中间结果</td></tr>
+<tr><td><b>outcome</b></td><td>trial 结束时环境的最终状态，而非 agent 的自述</td></tr>
+<tr><td><b>evaluation harness</b></td><td>端到端跑评测的基础设施：给指令与工具、并发跑、记录步骤、评分、聚合</td></tr>
+<tr><td><b>agent harness</b></td><td>让模型「成为 agent」的系统；评 agent 其实是评 <b>harness + 模型</b>的组合</td></tr>
+<tr><td><b>evaluation suite</b></td><td>一组 task，通常共享一个宽泛目标（如客服 suite 含退款、取消、升级）</td></tr>
+<tr><td><b>evaluation</b></td><td>给 AI 一个输入，用评分逻辑衡量输出是否成功；这里聚焦可自动化、无需真实用户的评测</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">02</span>三类 Grader：为任务选对的，而非只用一种</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:20%">类型</th><th style="width:40%">方法</th><th>优劣</th></tr></thead>
+<tbody>
+<tr><td><b>Code-based</b><br>代码评分</td><td>字符串匹配、二元测试（fail-to-pass / pass-to-pass）、静态分析、outcome 验证、工具调用验证、transcript 分析</td><td>快、便宜、客观、可复现；但对合法变体脆弱，难评主观任务</td></tr>
+<tr><td><b>Model-based</b><br>模型评分</td><td>rubric 打分、自然语言断言、成对比较、参考答案对比、多 judge 共识</td><td>灵活、能捕捉细微差别；但非确定性、更贵，需与人工校准</td></tr>
+<tr><td><b>Human</b><br>人工评分</td><td>专家评审、众包、抽样检查、A/B、标注者一致性</td><td>金标准质量；但贵、慢，主要用于校准模型评分器</td></tr>
+</tbody>
+</table>
+</div>
+<div class="why" style="margin-top:12px"><b>Capability vs Regression：</b>能力评测问「能做好什么」，期望通过率<b>低</b>（留出爬坡空间）；回归评测问「还保得住原来能做的吗」，期望通过率<b>接近 100%</b>。高通过率的能力评测可以「毕业」为持续运行的回归 suite。<br><b>非确定性：</b><code>pass@k</code> 是 k 次中至少一次成功的概率（随 k 上升）；<code>pass^k</code> 是 k 次全部成功的概率（随 k 下降）。单次 75% 跑 3 次全过 ≈ 42%。面向用户的 agent 应看 <code>pass^k</code>。</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">03</span>从 0 到 1 的 8 步路线（三阶段）</h3>
+<div class="why"><b>阶段 A · 收集任务：</b>Step 0 尽早开始（20–50 个来自真实失败的简单任务就够）→ Step 1 从已在手工测的东西开始（bug tracker、支持队列）→ Step 2 写无歧义任务 + 参考解（两个专家独立判断须得出相同 pass/fail；<code>0% pass@100</code> 通常是任务坏了）→ Step 3 构建均衡问题集（既测「该发生」也测「不该发生」，避免单边优化）。</div>
+<div class="why"><b>阶段 B · 设计 harness 与 grader：</b>Step 4 每次 trial 从干净环境开始，避免共享状态造成相关性失败或靠 git history 虚高成绩 → Step 5 优先确定性 grader，<b>不要规定过细的步骤/工具调用顺序</b>（「评它产出了什么，而不是它走了哪条路」），多组件任务给部分分，LLM judge 分维度独立打分并允许返回 Unknown。</div>
+<div class="why"><b>阶段 C · 长期维护：</b>Step 6 <b>读 transcript</b>（不读就不知道 grader 是否在工作，失败要「显得公平」）→ Step 7 监控 capability eval 饱和（100% 只追回归、不再提供改进信号）。</div>
+</div>
+
+<details><summary>六种评测方法的分工：瑞士奶酪模型</summary>
+<ul>
+<li><b>Automated evals（离线）</b>：迭代快、可每 commit 跑；但与真实使用不符时产生虚假信心，需持续维护防漂移。</li>
+<li><b>Production monitoring（在线）</b>：揭示规模化真实行为；但反应式、信号噪声大。</li>
+<li><b>A/B testing（在线）</b>：衡量真实用户结果；但慢、只测已部署改动、不知「为什么」变。</li>
+<li><b>User feedback（在线）</b>：暴露未预料问题；但稀疏、自选择、偏向严重问题。</li>
+<li><b>Manual transcript review</b>：建立失败模式直觉；但耗时、覆盖不一致。</li>
+<li><b>Systematic human studies</b>：多评分者金标准；但贵且慢，用于校准 LLM grader。</li>
+<li><b>结论</b>：没有任何单层能拦住所有问题。最有效的团队 = 自动化评测做快速迭代 + 生产监控做 ground truth + 定期人工复核做校准。</li>
+</ul>
+</details>
+
+<details><summary>最容易踩的坑（节选）</summary>
+<ul>
+<li><b>CORE-Bench 的反面教材</b>：Opus 4.5 起初仅 42%——严格评分把 <code>96.12</code> 判错（期望 <code>96.124991…</code>）、任务规格含糊、随机性任务无法精确复现。修 bug + 放宽 scaffold 后升至 95%。</li>
+<li><b>METR</b>：任务要求优化到某阈值，评分却要求「超过」该阈值——遵守指令的模型反而被罚。</li>
+<li><b>Opus 4.5 在 τ2-bench 订机票</b>：发现政策漏洞，按评测算失败，但对用户是更优解——静态评测上限与创造性解法之间的张力。</li>
+<li>迟迟不建评测；任务不可解；单边评测；只测路径不测产物；无部分分；grader 可被绕过；LLM judge 未校准；trial 共享状态；不读 transcript；对饱和分数照单全收。</li>
+</ul>
+</details>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>按 agent 类型设计评测</h3>
+<div class="why">基本功不变，但 grader 组合随 agent 类型而变。四类典型 agent 的评测重心：</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:19%">类型</th><th style="width:34%">独特挑战</th><th style="width:38%">推荐 grader 组合</th><th>代表基准</th></tr></thead>
+<tbody>
+<tr><td><b>编码 Agent</b></td><td>代码可自动化测试验证，但功能正确不等于符合系统需求</td><td>确定性单测 + LLM rubric 评代码质量；可选静态分析、state check、tool calls</td><td>SWE-bench Verified（一年内 40%→&gt;80%）、Terminal-Bench</td></tr>
+<tr><td><b>对话 Agent</b></td><td>交互质量本身就是被评对象，成功是多维的</td><td>以 model-based 为主：工单是否解决 + 轮数约束 + 语气 rubric，需第二个 LLM 模拟用户</td><td>τ-Bench、τ²-Bench</td></tr>
+<tr><td><b>研究 Agent</b></td><td>「是否全面」专家有分歧；ground truth 随内容变化；输出越长越易错</td><td>groundedness（论断有来源）+ coverage（关键事实齐全）+ source quality（来源权威）</td><td>BrowseComp</td></tr>
+<tr><td><b>Computer use</b></td><td>通过截图/点击/键盘操作 GUI；DOM 快但耗 token，截图慢但省 token</td><td>URL + 页面状态检查 + 后端状态验证（确认订单真下了，而非只看到确认页）</td><td>WebArena、OSWorld</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<details><summary>评测框架选型：六个候选，快速选一个契合工作流的</summary>
+<ul>
+<li><b><a href="https://github.com/laude-institute/harbor" target="_blank" rel="noopener">Harbor</a></b>：容器化环境跑 agent，支持云端规模试验，标准化 task/grader 格式；Terminal-Bench 2.0 经其 registry 分发。</li>
+<li><b><a href="https://www.braintrust.dev/" target="_blank" rel="noopener">Braintrust</a></b>：离线评测 + 生产可观测 + 实验追踪；<code>autoevals</code> 含事实性、相关性等预置打分器。</li>
+<li><b><a href="https://www.langchain.com/langsmith" target="_blank" rel="noopener">LangSmith</a></b>：追踪、离线/在线评测、数据集管理，深度集成 LangChain。</li>
+<li><b>Langfuse</b>：自托管开源替代，适合有数据驻留要求的团队。</li>
+<li><b><a href="https://arize.com/" target="_blank" rel="noopener">Arize</a></b>：Phoenix（开源追踪/调试/评测）+ AX（SaaS 扩展规模、优化与监控）。</li>
+<li><b>作者的提醒</b>：框架好坏取决于你喂给它的 task 与 grader 质量——把精力投在题目本身，而不是挑框架。</li>
+</ul>
+</details>
+
+<div class="sec" id="sec4"><span class="num">04</span><h2><a href="https://github.com/humanlayer/12-factor-agents" target="_blank" rel="noopener">12-Factor Agents：生产级的工程约束</a></h2><span class="tag">18.8k stars</span></div>
+
+<div class="callout" style="margin-bottom:12px"><b>总纲问题：</b>「有哪些原则，能让我们构建真正好到可以交到生产客户手里的 LLM 软件？」作者的答案：<b>好 agent 主要由软件构成</b>，不是「给你一个 prompt、一袋工具，循环直到达成目标」。落地路径是把小颗粒度、模块化的 agent 概念<b>渐进嵌入已有产品</b>，而不是绿地重写。</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:5%">#</th><th style="width:34%">原则</th><th>核心含义（中文整理）</th></tr></thead>
+<tbody>
+<tr><td>01</td><td><b>Natural Language to Tool Calls</b><br>自然语言转工具调用</td><td>最小原子操作：自然语言输入转成结构化 JSON；整个系统可视为「自然语言 → 结构化输出」管道</td></tr>
+<tr><td>02</td><td><b>Own your prompts</b><br>拥有自己的提示词</td><td>不用框架黑盒模板；prompt 像代码一样存在自己仓库，可版本化、diff、review、测试</td></tr>
+<tr><td>03</td><td><b>Own your context window</b><br>拥有自己的上下文窗口</td><td>上下文构造权归你；不被 <code>role: user/assistant</code> 限制，可用 XML、Markdown 等任意结构组织事件与状态</td></tr>
+<tr><td>04</td><td><b>Tools are just structured outputs</b><br>工具即结构化输出</td><td>工具调用本质就是模型输出的一段 JSON；拿到后执行的是普通代码，无需绑定框架抽象</td></tr>
+<tr><td>05</td><td><b>Unify execution state and business state</b><br>统一执行状态与业务状态</td><td>执行状态（第几步、等什么）不要藏在框架私有对象里，应与业务数据同处一处，便于观测、恢复、调试</td></tr>
+<tr><td>06</td><td><b>Launch/Pause/Resume with simple APIs</b><br>简单 API 启停恢复</td><td>必须支持启动 / 暂停 / 恢复，暂停可跨越几分钟到几天，等待人工审批或外部事件</td></tr>
+<tr><td>07</td><td><b>Contact humans with tool calls</b><br>用工具调用联系人类</td><td>人介入时建模成一种工具调用（如 <code>request_human_input</code>），而非特殊分支逻辑；人机交互也走统一状态机</td></tr>
+<tr><td>08</td><td><b>Own your control flow</b><br>拥有自己的控制流</td><td>循环、分支、重试、串并行、子 agent 编排由你的代码决定，不把决策权完全交给 LLM 自由循环</td></tr>
+<tr><td>09</td><td><b>Compact Errors into Context Window</b><br>把错误压缩回上下文</td><td>错误要压缩成简短结构化信息回灌，让模型自我修复；同时设重试上限，防死循环与上下文爆炸</td></tr>
+<tr><td>10</td><td><b>Small, Focused Agents</b><br>小而专注的 Agent</td><td>不造全能巨型 agent；拆成目标单一的小步骤，各自有明确工具集与上下文边界</td></tr>
+<tr><td>11</td><td><b>Trigger from anywhere, meet users where they are</b><br>随处触发，就地服务</td><td>不只从聊天框唤起；可被 cron、webhook、Slack、邮件、CI 任意事件触发，结果投递到用户所在处</td></tr>
+<tr><td>12</td><td><b>Make your agent a stateless reducer</b><br>无状态 reducer</td><td>写成纯函数式 <code>(state, event) → newState / nextStep</code>；不依赖内存隐式状态，从而可重放、可测试、可水平扩展</td></tr>
+</tbody>
+</table>
+</div>
+
+<details><summary>框架的 7 步失败循环（原文最尖锐的一段）</summary>
+<ul>
+<li>① 决定做一个 agent → ② 产品设计、UX 映射、确定问题 → ③ 想快，抓一个 <code>$FRAMEWORK</code> 开干 → ④ 做到 <b>70–80% 质量线</b> → ⑤ 意识到 80% 对面向客户的功能根本不够 → ⑥ 要突破必须逆向工程框架的 prompt、流程、内部机制 → ⑦ <b>推倒重来</b>。</li>
+<li>根因：框架提供的抽象层级，与生产级所需的控制粒度不匹配；抽象一旦错误，代价是重写。</li>
+<li>元原则：即使 LLM 继续指数级变强，可靠性、可扩展性、可维护性仍来自工程技法，不来自模型能力。</li>
+<li>附录第 13 条：Pre-fetch all the context you might need——提前取好可能需要的上下文，减少运行时工具往返的成本与延迟。</li>
+</ul>
+</details>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>基线循环：理解 12 条原则的前提</h3>
+<div class="why">作者说「agent 就是这个循环」。12 条原则本质上是在回答：这个循环里的每一步，哪些权必须握在你自己手里。</div>
+<pre>initial_event = {"message": "..."}
+context = [initial_event]
+
+while True:
+    # 1. LLM 决定下一步，输出结构化 JSON（即 tool calling）
+    next_step = await llm.determine_next_step(context)
+    context.append(next_step)
+
+    # 2. 判定完成
+    if next_step.intent == "done":
+        return next_step.final_answer
+
+    # 3. 确定性代码执行工具调用
+    result = await execute_step(next_step)
+
+    # 4. 结果追加到上下文，进入下一轮
+    context.append(result)</pre>
+<div class="why">软件本身是一张有向图（DAG）。Agent 的许诺是「扔掉 DAG」——只给 LLM 图的边，让它实时决定节点，从而写更少代码、能自恢复。但作者明确判定：这条路在实际生产中<b>并不成立</b>，这正是 12 条原则存在的理由。</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">→</span>你的产品要自己掌控的六样东西</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">掌控对象</th><th style="width:12%">对应 Factor</th><th>为什么要自己拿</th></tr></thead>
+<tbody>
+<tr><td><b>Prompt</b></td><td>02</td><td>可版本化、diff、review、测试，不被框架黑盒遮蔽</td></tr>
+<tr><td><b>上下文窗口</b></td><td>03 / 04 / 09</td><td>它是核心工程资产；错误要压缩回灌，否则上下文膨胀</td></tr>
+<tr><td><b>控制流</b></td><td>08 / 10</td><td>循环、分支、重试由代码决定；LLM 只在恰当的几个点做判断</td></tr>
+<tr><td><b>执行状态</b></td><td>05 / 06 / 12</td><td>与业务数据同源，可暂停数天、可从中断处重放、可水平扩展</td></tr>
+<tr><td><b>人机交互</b></td><td>07</td><td>把人建模成工具调用，统一进状态机，可记录、重放、审计</td></tr>
+<tr><td><b>触发与投递</b></td><td>11</td><td>cron / webhook / Slack / 邮件 / CI 任意触发，结果送到用户所在处</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="sec" id="sec5"><span class="num">05</span><h2><a href="https://github.com/isumitsoni/awesome-ai-pm" target="_blank" rel="noopener">awesome-ai-pm：一张清单串起工具、课程、社区</a></h2><span class="tag">9 类</span></div>
+
+<div class="item picked">
+<h3><span class="idx">01</span>定位：由实践 PM 筛选，而非爬虫汇总</h3>
+<div class="why">维护者 Sumit Soni 自述「not everything — just the signal」，质量门槛是「会不会推荐给只有 30 分钟的资深 PM」；不收没上过的课程、无实质价值的自我推广。最后更新 2026-03-17。它同时把 12-factor-agents 收进「Building AI Products」，与你的选择一致。</div>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:25%">分类</th><th style="width:38%">代表性条目</th><th>对你的价值</th></tr></thead>
+<tbody>
+<tr><td><b>AI PM Foundations</b></td><td>Product Compass 的「什么是 AI PM」「学习路线图」「RAG Chatbot 指南」「AI 产品战略」</td><td>角色与战略层的入门骨架</td></tr>
+<tr><td><b>Vibe Coding & Agentic Tools</b></td><td>Claude Code / Codex / Gemini CLI；v0 / Bolt.new；Cursor；OpenHands 69k、Aider 42k、vibe-kanban 23k、fastmcp 23.7k；pm-skills 7.3k</td><td>原型与执行工具；PM 专用 skill 库</td></tr>
+<tr><td><b>Prompt Libraries</b></td><td>pm-prompts（8 类 53 条）、pm-skills 技能市场</td><td>真实 PM 工作流的结构化提示</td></tr>
+<tr><td><b>Evals & AI Quality</b></td><td>Anthropic 官方 evals 指南；<a href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener">promptfoo</a> 16k、<a href="https://github.com/confident-ai/deepeval" target="_blank" rel="noopener">deepeval</a> 14k、<a href="https://github.com/langfuse/langfuse" target="_blank" rel="noopener">langfuse</a> 23.3k、opik 18.3k、ragas 13k、guardrails 6.5k、giskard 5.1k</td><td>把评测变成发布闸门；与第 03 章直接衔接</td></tr>
+<tr><td><b>Building AI Products</b></td><td>Vibe Coding vs Vibe Engineering、PM's Guide to RAG、awesome-llm-apps、<b>12-factor-agents 18.8k</b></td><td>架构判断：RAG/微调、模型选择、流式/批量、记忆架构</td></tr>
+<tr><td><b>LLM Economics</b></td><td><a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener">litellm</a> 39.3k、<a href="https://github.com/Portkey-AI/gateway" target="_blank" rel="noopener">Portkey</a> 10.9k、三家定价页</td><td>成本与延迟是产品决策；输出 token 贵 3–5 倍；prompt caching 可省 80–90%</td></tr>
+<tr><td><b>Learning Resources</b></td><td>microsoft/generative-ai-for-beginners 108k、openai-cookbook 72k、claude-cookbooks 35k、fast.ai、Maven 两门课</td><td>按角色挑课，不系统刷</td></tr>
+<tr><td><b>Newsletters & Communities</b></td><td>The Product Compass、Unwind AI、Lenny's Newsletter</td><td>持续跟踪的高信噪比来源</td></tr>
+<tr><td><b>Open Source PM Tools</b></td><td>purepaste（清除 LLM 腔）、awesome-llm-apps</td><td>可直接用或 fork 的工具</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout" style="margin-top:12px"><b>用法提醒：</b>清单是导航，不是教程。它最有价值的部分是「Evals & AI Quality」和「LLM Economics」——正好补上你做企业级方案时最容易被忽略的两块：质量闸门与成本模型。</div>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>PM 该自己拍板的四个架构决策</h3>
+<div class="why">清单作者把这些列为「PM 拥有的决策」——不需要懂实现细节，但必须能权衡：</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">决策</th><th>考虑什么</th></tr></thead>
+<tbody>
+<tr><td><b>RAG vs 微调</b></td><td>动态/私有数据用 RAG；一致语气/风格用微调</td></tr>
+<tr><td><b>模型选择</b></td><td>成本 / 延迟 / 能力三角，不要默认选最大模型</td></tr>
+<tr><td><b>流式 vs 批量</b></td><td>先定用户体验，再定工程方案</td></tr>
+<tr><td><b>记忆架构</b></td><td>会话级 / 持久级 / 无记忆，取决于你的信任模型</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">→</span>LLM 经济学：PM 必须建立的心智模型</h3>
+<div class="why"><b>成本与延迟是产品决策。</b>输入 token 便宜，输出 token 贵 3–5 倍——按这个事实设计提示词。<code>prompt caching</code> 在系统提示词长且复用时可省 80–90% 成本。分层策略：Haiku/Flash 跑高频低风险任务，Sonnet/Pro 做核心推理，Opus/Ultra 做一次性复杂分析。</div>
+<span class="path">参考：Anthropic pricing · OpenAI pricing · Google pricing</span>
+</div>
+
+<div class="sec" id="sec6"><span class="num">06</span><h2>三者如何串成一条闭环</h2><span class="tag">学习路径</span></div>
+<pre>① Building Effective Agents  →  判断「该不该建、建哪一层」
+   单次调用 → 检索/示例 → 五种 workflow → 才考虑 agent
+   ↓ 产出：架构形态 + 护栏清单
+
+② Demystifying evals         →  把判断写成可验证的测试
+   20–50 个真实失败任务 → 无歧义成功标准 → 组合 grader
+   ↓ 产出：回归 suite + 能力 suite + pass^k 指标
+
+③ 12-Factor Agents           →  把测试过的形态固化成工程约束
+   拥有 prompt/上下文/控制流 → 状态与业务同源 → 可暂停重放
+   ↓ 产出：生产级运行时结构
+
+④ awesome-ai-pm              →  按需补工具与课程
+   eval 框架 / 网关 / 可观测 / 定价 / 社区
+   ↓ 回到 ②：新工具进 suite，继续迭代</pre>
+
+<div class="why">这条闭环和你做雪花 WMS 验证的思路同构：<b>规则先固化 → 用真实单据/边界样本验证 → 通过后影子发布 → 回收失败样本再补规则</b>。这几份资源分别对应了「规则形态」「验证方法」「运行时固化」三个位置。</div>
+
+<div class="sec" id="sec7"><span class="num">07</span><h2>与你的框架对齐</h2><span class="tag">三条已明确</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">你的原则</th><th style="width:34%">对应资源</th><th>关键一句</th></tr></thead>
+<tbody>
+<tr><td><b>目标可验证</b></td><td>Building Effective Agents（附录：成功标准清晰）<br>Demystifying evals（Step 2）</td><td>「两个专家独立判断会得出相同 pass/fail」；grader 检查的一切都应能从任务描述中明确</td></tr>
+<tr><td><b>评测即需求</b></td><td>Demystifying evals（Eval-driven development）</td><td>先写评测定义计划能力；定义 eval task 是检验产品需求是否足够具体的最好方式</td></tr>
+<tr><td><b>护栏即地基</b></td><td>Building Effective Agents（沙箱 + 停止条件）<br>12-Factor Agents（Factor 8 / 9 / 12）</td><td>控制流由代码掌握、错误压缩回灌、状态可重放；「模型变强不会让工程约束消失」</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>和你已有设计的直接映射</h3>
+<div class="why">
+<b>强校验固化</b> ↔ Factor 2/3/4：prompt、上下文、工具都是自己仓库里可版本化的数据结构；对应你用 JSON Schema 做单一数据源、编译期物化、STRICT 不可热改。<br>
+<b>幂等键</b> ↔ Factor 5/12：执行状态与业务状态同源、无状态 reducer 可重放；对应你「解析即构造 + 后端权威重放」的防漂移设计。<br>
+<b>影子发布</b> ↔ 六种评测方法里的 A/B + production monitoring：自动化评测做发布闸门，线上监控做 ground truth，影子流量先验证再放量。
+</div>
+</div>
+
+<div class="sec" id="sec8"><span class="num">08</span><h2>术语速查表</h2><span class="tag">跨资源</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">术语</th><th style="width:22%">中文</th><th>一句话释义</th></tr></thead>
+<tbody>
+<tr><td><b>Agentic system</b></td><td>智能体系统</td><td>Workflow 与 Agent 的合称：前者按预定义路径，后者由模型动态决定路径</td></tr>
+<tr><td><b>Workflow</b></td><td>工作流</td><td>LLM 与工具由代码编排，路径固定、可预测</td></tr>
+<tr><td><b>Agent</b></td><td>智能体</td><td>LLM 在循环中依环境反馈自主决定下一步与工具使用</td></tr>
+<tr><td><b>Agent Loop</b></td><td>智能体循环</td><td>决定下一步 → 执行工具 → 结果回灌 → 重复直到完成</td></tr>
+<tr><td><b>Augmented LLM</b></td><td>增强型 LLM</td><td>叠加了检索、工具、记忆能力的单次 LLM 调用，是所有模式的地基</td></tr>
+<tr><td><b>ACI</b></td><td>智能体-计算机接口</td><td>工具定义、文档、参数设计——对 agent 相当于 API 对人的重要性</td></tr>
+<tr><td><b>MCP</b></td><td>模型上下文协议</td><td>连接第三方工具生态的开放协议；12-Factor 明确不讨论它</td></tr>
+<tr><td><b>Gate</b></td><td>程序化校验点</td><td>提示链中间插入的检查，确保流程没有偏离</td></tr>
+<tr><td><b>Task / Trial</b></td><td>任务 / 尝试</td><td>单个测试用例 / 对该用例的一次运行（因随机性需跑多次）</td></tr>
+<tr><td><b>Grader</b></td><td>评分器</td><td>对 agent 表现打分的逻辑，一个 task 可有多个、每个含多个断言</td></tr>
+<tr><td><b>Transcript</b></td><td>运行轨迹</td><td>一次 trial 的完整记录：输出、工具调用、推理、中间结果</td></tr>
+<tr><td><b>Outcome</b></td><td>最终状态</td><td>trial 结束时环境的真实状态，区别于 agent 的自述</td></tr>
+<tr><td><b>Harness</b></td><td>运行脚手架</td><td>eval harness = 评测基础设施；agent harness = 让模型成为 agent 的系统</td></tr>
+<tr><td><b>pass@k / pass^k</b></td><td>任一次成功 / 全部成功</td><td>前者随 k 上升，后者随 k 下降；面向用户的 agent 看后者</td></tr>
+<tr><td><b>Eval saturation</b></td><td>评测饱和</td><td>通过率逼近 100%，只能追回归、不再提供改进信号</td></tr>
+<tr><td><b>Stateless reducer</b></td><td>无状态归约器</td><td><code>(state, event) → newState</code> 的纯函数式 agent 结构，可重放可扩展</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec9"><span class="num">09</span><h2>关键原文金句</h2><span class="tag">英中对照</span></div>
+<div class="item">
+<h3><span class="idx">01</span>关于简单</h3>
+<div class="why"><i>"The most successful implementations... use simple, composable patterns rather than complex frameworks."</i><br>最成功的实现用简单、可组合的模式，而不是复杂框架。</div>
+</div>
+<div class="item">
+<h3><span class="idx">02</span>关于评测与需求</h3>
+<div class="why"><i>"Defining an eval task is one of the best ways to check whether a product requirement is specific enough."</i><br>定义一个评测任务，是检验产品需求是否足够具体的最好方式之一。</div>
+</div>
+<div class="item">
+<h3><span class="idx">03</span>关于评产物而非路径</h3>
+<div class="why"><i>"Evaluate what it produced, not the path it took."</i><br>评它产出了什么，而不是它走了哪条路。</div>
+</div>
+<div class="item">
+<h3><span class="idx">04</span>关于读轨迹</h3>
+<div class="why"><i>"Read the transcripts! If you don't read transcripts, you don't know whether your grader is working."</i><br>读运行轨迹！不读就不知道评分器是否在工作。</div>
+</div>
+<div class="item">
+<h3><span class="idx">05</span>关于 agent 的本质</h3>
+<div class="why"><i>"Agents, at least the good ones, are comprised of mostly just software."</i><br>好的 agent 主要由软件构成——不是「给个 prompt 和一袋工具，循环到达成目标」。</div>
+</div>
+<div class="item">
+<h3><span class="idx">06</span>关于工程约束的持久性</h3>
+<div class="why"><i>"Even if LLMs continue to get exponentially more powerful, there will be core engineering techniques that make LLM-powered software more reliable, more scalable, and easier to maintain."</i><br>即使模型继续指数级变强，让软件更可靠、可扩展、易维护的核心工程技法依然存在。</div>
+</div>
+
+<div class="sec" id="sec10"><span class="num">10</span><h2>落地检查清单</h2><span class="tag">可勾选</span></div>
+<div class="item">
+<h3><span class="idx">A</span>形态判断阶段</h3>
+<div class="why">
+□ 已尝试用单次 LLM 调用 + 检索/示例解决，确认不够才加层<br>
+□ 明确记录「用延迟与成本换表现」的取舍判断<br>
+□ 任务路径是否可预定义已判定（workflow 还是 agent）<br>
+□ 上 agent 前有清晰成功标准、反馈闭环、停止条件与护栏
+</div>
+</div>
+<div class="item">
+<h3><span class="idx">B</span>评测建设阶段</h3>
+<div class="why">
+□ 已收集 20–50 个来自真实失败的任务，按用户影响排序<br>
+□ 每个任务有参考解，两个专家独立判断能得出相同 pass/fail<br>
+□ 问题集同时覆盖「该发生」与「不该发生」<br>
+□ 每次 trial 从干净环境开始，无共享状态污染<br>
+□ Grader 优先确定性，LLM judge 已与人工校准并允许 Unknown<br>
+□ 多组件任务有部分分；失败要「显得公平」<br>
+□ 已建立读 transcript 的固定节奏；已监控 capability eval 饱和
+</div>
+</div>
+<div class="item">
+<h3><span class="idx">C</span>工程固化阶段</h3>
+<div class="why">
+□ Prompt 在自有仓库，可版本化、diff、review、测试<br>
+□ 上下文窗口由自己构造，错误信息压缩回灌且有重试上限<br>
+□ 控制流由代码决定，LLM 只在恰当的点做判断<br>
+□ 执行状态与业务状态同源，支持启停恢复与从中断处重放<br>
+□ 人类介入建模为工具调用，走统一状态机<br>
+□ Agent 写成无状态 reducer，可重放、可水平扩展
+</div>
+</div>
+<div class="item">
+<h3><span class="idx">D</span>运营与治理阶段</h3>
+<div class="why">
+□ 自动化评测作为发布闸门，每次 agent 改动与模型升级都跑<br>
+□ 生产监控接住合成评测漏掉的失败；A/B 验证重大改动<br>
+□ 每周抽样读 transcript；用户反馈持续分诊<br>
+□ PM 自己拍板了 RAG/微调、模型选择、流式/批量、记忆架构<br>
+□ 建立了成本与延迟追踪；长系统提示词启用 prompt caching<br>
+□ 评测 suite 有明确 owner，像维护单测一样日常维护
+</div>
+</div>
+
+<div class="sec" id="sec11"><span class="num">11</span><h2>阅读地图</h2><span class="tag">按时间投入</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:18%">投入</th><th style="width:34%">读什么</th><th>能得到什么</th></tr></thead>
+<tbody>
+<tr><td><b>30 分钟</b><br>速览</td><td>本页第 01、06、07 章 + 第 09 章金句</td><td>建立整体判断：该不该建、怎么验证、怎么固化，以及与强校验/幂等/影子发布的对应关系</td></tr>
+<tr><td><b>2 小时</b><br>精读主线</td><td>Building Effective Agents 全文 + Demystifying evals 的「从 0 到 1 八步」</td><td>能独立画出自己业务的 workflow 图，并能写出第一版无歧义评测任务</td></tr>
+<tr><td><b>半天</b><br>工程落地</td><td>12-Factor Agents 的 12 篇 <code>content/factor-0X-*.md</code> + 本文第 04、15 章</td><td>拿到一份可执行的工程约束清单，能把现有 agent 重构成可控状态机</td></tr>
+<tr><td><b>按需</b><br>工具补齐</td><td>awesome-ai-pm 的 Evals & Quality、LLM Economics 两节</td><td>选型评测框架、网关、可观测工具，建立成本心智模型</td></tr>
+</tbody>
+</table>
+</div>
+<div class="why" style="margin-top:12px">建议顺序：<b>先判断（02）→ 再验证（03）→ 后固化（04）</b>。不要倒过来先读 12-Factor 的工程约束——在没有形态判断和评测标准时，12 条原则只是漂亮的基本原则。</div>
+
+<div class="sec" id="sec12"><span class="num">12</span><h2>问题查询索引</h2><span class="tag">按问题反查</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:38%">你遇到的问题</th><th style="width:22%">去哪份找</th><th>看什么</th></tr></thead>
+<tbody>
+<tr><td>该用 workflow 还是 agent？</td><td>Building Effective Agents</td><td>概念区分 + 五种模式 + 本文第 02 章决策树</td></tr>
+<tr><td>模型会自己选工具，能信吗？</td><td>Building Effective Agents</td><td>ACI 三原则 + 防错设计（绝对路径案例）</td></tr>
+<tr><td>怎么定义「好」？怎么验收？</td><td>Demystifying evals</td><td>术语表 + 三类 grader + Step 2 无歧义任务</td></tr>
+<tr><td>分数涨了但用户没感觉？</td><td>Demystifying evals</td><td>评测饱和 + 读 transcript + 六种方法瑞士奶酪</td></tr>
+<tr><td>同样的任务跑十次结果不一样？</td><td>Demystifying evals</td><td>pass@k / pass^k 的非确定性处理</td></tr>
+<tr><td>Agent 跑到一半要人工审批怎么办？</td><td>12-Factor Agents</td><td>Factor 06 启停恢复 + Factor 07 把人建模成工具</td></tr>
+<tr><td>上下文越跑越长、反复重试？</td><td>12-Factor Agents</td><td>Factor 09 错误压缩 + 重试上限</td></tr>
+<tr><td>状态存在框架里，重启就丢？</td><td>12-Factor Agents</td><td>Factor 05 状态同源 + Factor 12 无状态 reducer</td></tr>
+<tr><td>框架做到 80% 就卡住？</td><td>12-Factor Agents</td><td>框架的 7 步失败循环（第 04 章折叠区）</td></tr>
+<tr><td>RAG 还是微调？选哪个模型？</td><td>awesome-ai-pm</td><td>PM 该拍板的四个架构决策 + LLM 经济学</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec13"><span class="num">13</span><h2>五种模式代码骨架</h2><span class="tag">伪代码</span></div>
+<div class="why">把五种 workflow 模式写成最小伪代码，方便对照自己的业务流程选型。注意：控制流都写在代码里，LLM 只负责节点内的判断——这正是 12-Factor 的 Factor 08。</div>
+<pre># 1. Prompt Chaining 提示链：固定顺序 + 中间校验
+outline  = llm("写大纲", input)
+assert validate(outline)              # gate：不通过就停/重试
+draft    = llm("按大纲写正文", outline)
+translated = llm("翻译", draft)
+
+# 2. Routing 路由：先分类，再分流到专用提示词/工具
+category = llm("分类", input, choices=["退款","技术支持","一般"])
+result   = ROUTERS[category](input)   # 每类独立的提示词与工具集
+
+# 3. Parallelization 并行化：切分 或 投票
+parts = split(input)                  # 切分：各子任务并行
+results = parallel([llm(p) for p in parts])
+votes = [llm("审查漏洞", input) for _ in range(3)]   # 投票：多次独立运行
+final = majority(votes)
+
+# 4. Orchestrator-Workers 编排者-工作者：子任务由模型动态决定
+plan = llm("拆解任务并分派", input)   # 子任务不是预先写死的
+results = parallel([execute(t) for t in plan.tasks])
+return llm("综合结果", results)
+
+# 5. Evaluator-Optimizer 评估者-优化者：生成→评分→迭代
+answer = llm("生成", input)
+for i in range(MAX_ITER):             # 停止条件必备
+    verdict = llm("按 rubric 评分", answer)
+    if verdict.passed: break
+    answer = llm("按反馈改写", {"answer":answer,"feedback":verdict})
+return answer</pre>
+<div class="callout"><b>关键区别：</b>模式 4 与模式 3 的差异在于子任务是否预先定义；模式 5 的前提是<b>存在明确的评估标准</b>且迭代能带来可衡量收益——没有 rubric 就不要硬上评估者-优化者。</div>
+
+<div class="sec" id="sec14"><span class="num">14</span><h2>评测设计示例</h2><span class="tag">好任务 vs 坏任务</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">维度</th><th style="width:39%">坏任务（制造噪声）</th><th>好任务（可验证）</th></tr></thead>
+<tbody>
+<tr><td><b>规格明确性</b></td><td>「写个脚本处理订单」但测试假定某个未说明的路径</td><td>「读取 <code>/data/orders.csv</code>，输出按金额降序的前 10 行 JSON」</td></tr>
+<tr><td><b>可判定性</b></td><td>「回答要专业一点」——两个专家判断不一致</td><td>「引用必须来自给定文档，且每个论断标注来源段落」</td></tr>
+<tr><td><b>可解性</b></td><td>0% pass@100 却归因于模型弱</td><td>配参考解，先证明任务可解、grader 配置正确</td></tr>
+<tr><td><b>方向均衡</b></td><td>只测「该搜索时是否搜索」→ agent 什么都搜</td><td>同时测「该搜」（查天气）与「不该搜」（谁创立 Apple）</td></tr>
+<tr><td><b>部分分</b></td><td>识别出问题但退款失败 = 完全失败</td><td>识别问题+验证客户+退款失败 得 2/3 分，明显区别于一开始就失败</td></tr>
+<tr><td><b>路径自由度</b></td><td>强制特定工具调用顺序，惩罚合法新解法</td><td>评最终 outcome，只在确有必要时检查 transcript</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="item" style="margin-top:12px">
+<h3><span class="idx">→</span>Grader 组合配置示例（编码 Agent）</h3>
+<span class="path">来源：Demystifying evals 原文示例结构</span>
+<pre>task: fix_checkout_bug
+graders:
+  deterministic_tests:                # 代码评分：fail-to-pass + pass-to-pass
+    fail_to_pass: [test_checkout_total]
+    pass_to_pass: [test_cart, test_payment]
+  static_analysis:                    # 代码评分：lint / type / 安全
+    rules: [no-unused-vars, no-sql-concat]
+  state_check:                        # outcome 验证：数据库真实状态
+    query: "SELECT status FROM orders WHERE id=42"
+    expect: "paid"
+  tool_calls:                         # transcript 分析：工具使用合规
+    forbidden: [drop_table, direct_db_write]
+  llm_rubric:                         # 模型评分：代码质量（分维度独立 judge）
+    dimensions: [readability, minimal_change, test_coverage]
+  tracked_metrics:                    # 成本与效率基线
+    max_tokens: 8000
+    max_turns: 12</pre>
+<div class="why">实务建议：真实使用中通常只靠<b>单测验正确性 + LLM rubric 评代码质量</b>，其余按需加。不要一上来就堆满所有 grader。</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">→</span>非确定性怎么看：pass@k 与 pass^k 的数值对照</h3>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:22%">单次成功率 p</th><th style="width:26%">k=1</th><th style="width:26%">pass@3（至少一次成功）</th><th>pass^3（三次全成功）</th></tr></thead>
+<tbody>
+<tr><td><b>75%</b></td><td>75%</td><td>1 − 0.25³ ≈ <b>98.4%</b></td><td>0.75³ ≈ <b>42.2%</b></td></tr>
+<tr><td><b>90%</b></td><td>90%</td><td>1 − 0.1³ ≈ <b>99.9%</b></td><td>0.9³ ≈ <b>72.9%</b></td></tr>
+<tr><td><b>50%</b></td><td>50%</td><td>1 − 0.5³ ≈ <b>87.5%</b></td><td>0.5³ ≈ <b>12.5%</b></td></tr>
+</tbody>
+</table>
+</div>
+<div class="why" style="margin-top:10px">同样是「单次 50%」，pass@3 看起来有 87.5% 很好看，pass^3 却只有 12.5%。<b>面向用户的 agent 要看 pass^k</b>——用户期待的是每次都可靠，不是「多试几次总有一次对」。</div>
+</div>
+
+<div class="sec" id="sec15"><span class="num">15</span><h2>12-Factor 逐条落地要点</h2><span class="tag">检查 + 反模式</span></div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:5%">#</th><th style="width:30%">落地动作</th><th>反模式（要避免的）</th></tr></thead>
+<tbody>
+<tr><td>01</td><td>定义「自然语言 → 结构化 JSON」的最小原子调用</td><td>让模型直接输出自由文本，再由代码猜意思</td></tr>
+<tr><td>02</td><td>prompt 放自有仓库，可 diff / review / 测试</td><td>用框架黑盒模板，改一个词都要逆向工程</td></tr>
+<tr><td>03</td><td>用 XML/Markdown 自定义结构组织事件与状态</td><td>被 <code>user/assistant</code> 消息数组绑死，状态塞不进上下文</td></tr>
+<tr><td>04</td><td>工具 = 结构化输出 + 普通代码执行</td><td>依赖框架工具抽象，换框架就要重写全部工具</td></tr>
+<tr><td>05</td><td>执行状态与业务数据同表/同事件流</td><td>状态存在框架内存对象里，进程重启即丢</td></tr>
+<tr><td>06</td><td>提供启动/暂停/恢复 API，支持跨天等待</td><td>把长时间审批实现成轮询阻塞，占满连接</td></tr>
+<tr><td>07</td><td><code>request_human_input</code> 建模成工具调用</td><td>人工审批写成散落的 if-else 分支，无法审计</td></tr>
+<tr><td>08</td><td>循环、分支、重试、编排全部由代码控制</td><td>把控制流完全交给 LLM 自由循环，无法设停止条件</td></tr>
+<tr><td>09</td><td>错误压缩成结构化摘要回灌，设重试上限</td><td>把完整错误堆栈塞回上下文，越跑越长直到溢出</td></tr>
+<tr><td>10</td><td>拆成目标单一、工具集明确的小 agent</td><td>造一个万能巨型 agent，上下文与权限都失控</td></tr>
+<tr><td>11</td><td>支持 cron/webhook/邮件/CI 触发，结果投递到用户处</td><td>只能从聊天框唤起，嵌不进真实业务流程</td></tr>
+<tr><td>12</td><td><code>(state, event) → newState</code> 纯函数 reducer</td><td>依赖内存隐式状态，无法重放、无法水平扩展</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec16"><span class="num">16</span><h2>业务场景映射</h2><span class="tag">以 WMS 为例</span></div>
+<div class="why">把这些资源的原则映射到你正在做的雪花 WMS 入出库升级场景。这不是原文内容，而是本页基于你的项目背景做的迁移推演，供对照参考。</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:24%">业务场景</th><th style="width:26%">对应模式 / 原则</th><th>落地要点</th></tr></thead>
+<tbody>
+<tr><td><b>入库增加校验入口</b></td><td>Prompt Chaining + Gate（模式 1）</td><td>每个校验步骤后插程序化 gate，不通过就阻断；对应你「解析即构造、非法状态不可表示」的强校验思路</td></tr>
+<tr><td><b>下线即走判定</b></td><td>Routing（模式 2）</td><td><code>isShipUponPline</code> 取值分流到不同校验链；分类规则固化在代码而非 prompt 里，与 Factor 08 一致</td></tr>
+<tr><td><b>盘点差异复核</b></td><td>Evaluator-Optimizer（模式 5）</td><td>前提是存在明确 rubric（差异阈值、容差规则），否则不要上评估者循环</td></tr>
+<tr><td><b>多单据并行校验</b></td><td>Parallelization（模式 3）</td><td>子任务切分并行；但共享库存状态必须隔离，避免 trial 间污染（对应 Step 4）</td></tr>
+<tr><td><b>库位/子库映射取值</b></td><td>Outcome 验证</td><td>接收号里的子库库位来自映射表——评最终落库真实值（outcome），不评 agent 自述</td></tr>
+<tr><td><b>异常人工审批</b></td><td>Factor 06 + 07</td><td>审批可跨天暂停恢复；把「请求人工确认」建模成工具调用，统一进状态机可审计</td></tr>
+<tr><td><b>影子发布</b></td><td>自动评测 + 生产监控 + A/B</td><td>影子期先跑自动化评测做闸门，生产监控取 ground truth，A/B 验证后再放量</td></tr>
+<tr><td><b>幂等键防重复</b></td><td>Factor 05 + 12</td><td>执行状态与业务状态同源、无状态 reducer 可重放——与「后端权威重放」同一套思路</td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout" style="margin-top:12px"><b>一句话迁移原则：</b>业务规则越明确，越应该用代码和 workflow 固化；只有确实无法硬编码路径的环节，才交给模型判断——这与 Anthropic「先简单后复杂」和 12-Factor「好 agent 主要由软件构成」完全一致。</div>
+
+<div class="sec" id="sec17"><span class="num">17</span><h2>关键数字速览</h2><span class="tag">一屏记住</span></div>
+<div class="stats" style="margin-bottom:14px">
+<div class="stat"><div class="n">5</div><div class="l">Workflow 模式</div></div>
+<div class="stat"><div class="n">12</div><div class="l">Agent 工程原则</div></div>
+<div class="stat"><div class="n">8</div><div class="l">评测起步步骤</div></div>
+<div class="stat"><div class="n">20–50</div><div class="l">起步任务数</div></div>
+<div class="stat"><div class="n">18.8k</div><div class="l">12-Factor stars</div></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:38%">数字</th><th>含义</th></tr></thead>
+<tbody>
+<tr><td><b>20–50 个真实失败任务</b></td><td>评测起步不需要完美 suite，这些就够；越晚建越要从线上反推成功标准</td></tr>
+<tr><td><b>0% pass@100</b></td><td>通常说明任务本身坏了（路径、隐含前提、grader 配置），不是模型不行</td></tr>
+<tr><td><b>70–80% 质量线</b></td><td>框架通常做到这里就卡住；对面向客户的功能远远不够</td></tr>
+<tr><td><b>40% → &gt;80%</b></td><td>SWE-bench Verified 一年内进步幅度（有评测才看得见）</td></tr>
+<tr><td><b>42% → 95%</b></td><td>CORE-Bench 修评分 bug + 放宽 scaffold 后的变化——分数可能是评测的错</td></tr>
+<tr><td><b>输出 token 贵 3–5 倍</b></td><td>相对输入 token；据此设计提示词与模型分层</td></tr>
+<tr><td><b>80–90% 成本节省</b></td><td>长且复用的系统提示词启用 prompt caching 的效果</td></tr>
+<tr><td><b>108k / 72k / 35k</b></td><td>generative-ai-for-beginners / openai-cookbook / claude-cookbooks 的 star 量级</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sec" id="sec18"><span class="num">18</span><h2>AI 产品设计落地理念</h2><span class="tag">从原则到判断</span></div>
+<div class="why">这些资源讲的是工程与评测，但落地时真正决定成败的是产品判断。以下八条理念是从原文结论中提炼、面向产品设计决策的「翻译层」——不是原文照搬，而是把工程约束翻译成 PM 每天要做的选择题。</div>
+
+<div class="item">
+<h3><span class="idx">01</span>先问「该不该用 AI」，再问「怎么用 AI」</h3>
+<div class="why">最成功的实现往往没用 agent。设计起点应是：这个任务用确定性代码能不能解决？能，就不用 AI；需要模糊匹配/语义理解/开放生成时才引入模型。<b>AI 不是升级选项，是成本项</b>——它带来延迟、不确定性和运维复杂度，必须换回明确价值。</div>
+</div>
+<div class="item">
+<h3><span class="idx">02</span>把「不确定性」设计成产品特性，而不是隐藏的 bug</h3>
+<div class="why">传统产品追求「同样输入同样输出」，AI 产品必须接受输出波动。设计时要回答三件事：<b>怎么让用户知道模型在犹豫</b>（置信度/来源标注）、<b>怎么让用户纠正</b>（可编辑/可重试/可反馈）、<b>怎么在失败时优雅降级</b>（转人工/返回保守结果）。把不确定性暴露在交互层，而不是埋在后端祈祷它不发生。</div>
+</div>
+<div class="item">
+<h3><span class="idx">03</span>评测即需求：写不出评测，就是需求没想清楚</h3>
+<div class="why">「回答要专业」「要理解用户意图」都不是需求——两个专家读这句话会得出不同的 pass/fail。把需求写成「95% 的输出在 rubric 上 ≥4/5」「引用必须标注来源段落」时，需求才真正定义完成。<b>写评测任务的过程，就是消除规格歧义的过程。</b></div>
+</div>
+<div class="item">
+<h3><span class="idx">04</span>评结果，不评过程</h3>
+<div class="why">不要规定 agent 必须走哪条路、先调哪个工具——那会让测试变脆、惩罚合法的新解法，还会让模型学会「按步骤演给你看」。定义清楚最终状态（outcome）和必要的护栏约束，把路径自由留给模型。<b>你管边界，它管路径。</b></div>
+</div>
+<div class="item">
+<h3><span class="idx">05</span>渐进式授权：从「建议」到「代办」</h3>
+<div class="why">用户对 AI 的信任是靠一次次正确累积的。产品设计上应设计权限阶梯：<b>只读建议 → 用户确认后执行 → 低风险自动执行 → 高风险仍需确认</b>。12-Factor 的「把人建模成工具调用」正是为此——审批不是特殊分支，而是状态机里的一个正常节点，可记录、可重放、可审计。</div>
+</div>
+<div class="item">
+<h3><span class="idx">06</span>失败要「显得公平」</h3>
+<div class="why">评测里的失败必须让人一看就知道错在哪、为什么错。如果失败看起来莫名其妙，要么是任务规格含糊，要么是 grader 误杀了合法解。<b>读 transcript 是产品经理的核心技能</b>——不看运行轨迹，你分不清「模型错了」和「你的评测错了」，也就无法真正改进产品。</div>
+</div>
+<div class="item">
+<h3><span class="idx">07</span>成本与延迟是产品决策，不是技术细节</h3>
+<div class="why">选大模型还是小模型、流式还是批量、要不要缓存——这些直接决定用户体验和毛利。PM 要建立心智模型：输入 token 便宜、输出贵 3–5 倍；高频低风险任务用小模型；长系统提示词启用缓存。<b>把成本预算写进 PRD，就像写性能指标一样。</b></div>
+</div>
+<div class="item">
+<h3><span class="idx">08</span>评测体系是活资产，要有 owner</h3>
+<div class="why">产品会变、模型会换、用户行为会漂移，评测套件必须像单元测试一样日常维护。最有效的组织模式：<b>专职团队管基础设施，领域专家与 PM 贡献任务</b>——让最贴近需求的人定义成功，而不是让算法团队替业务方拍板什么叫「好」。</div>
+</div>
+
+<div class="sec" id="sec19"><span class="num">19</span><h2>产品设计示例详解</h2><span class="tag">三个完整案例</span></div>
+<div class="why">以下三个示例从「需求 → 形态判断 → 交互设计 → 评测设计 → 工程约束」五个维度完整拆解，分别代表 workflow 型、RAG 型、agent 型三类最常见的 AI 产品。示例为教学用途的推演，用于演示如何把前面 18 章的原则用到具体设计上。</div>
+
+<div class="item picked">
+<h3><span class="idx">示例 1</span>智能单据校验助手（Workflow 型）<span class="note">对应雪花 WMS 入库校验场景</span></h3>
+<div class="why"><b>业务问题：</b>入库单据字段多、规则杂，人工校验耗时且易漏；规则本身是明确的（库位、批次、含瓶标记、下线即走判定）。</div>
+<div class="why"><b>① 形态判断：</b>规则明确 → 不走 agent，用 <b>Prompt Chaining + Gate</b>。但更准确地说：绝大多数校验规则应该直接写成代码（强校验固化的思路），只在「语义匹配」类环节（如物料名称模糊匹配）用模型。<code>isShipUponPline</code> 的取值分流用代码路由，不交给模型决定。</div>
+<div class="why"><b>② 交互设计：</b>校验结果分三档展示——<span class="note">✓ 通过</span> / <span class="note">⚠ 需人工确认</span> / <span class="note">✗ 阻断</span>；每条结论附带命中的规则编号与原始字段值，可点击跳转；提供「一键修正建议」但必须人工确认后写入。</div>
+<div class="why"><b>③ 评测设计：</b>20–50 个来自真实历史差错的单据作为 task；grader 以 code-based 为主（字段比对、规则命中、DB 最终状态），LLM judge 只评「修正建议是否合理」；覆盖「该拦截」与「不该拦截」两类，避免误报率失控。</div>
+<div class="why"><b>④ 工程约束：</b>规则版本化落库（<code>config_version_id</code> 固化到单据），prompt 与规则分离；校验状态与业务单据同源存储，可在中断后重放；错误压缩成结构化摘要回灌，重试上限 3 次。</div>
+<div class="callout"><b>设计要点：</b>这个产品的价值不在「AI 多聪明」，而在「规则可追溯 + 失败可解释」。把模型用在唯一需要语义判断的窄环节，其余全部确定性——这正是 12-Factor 说的「好 agent 主要由软件构成」。</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">示例 2</span>企业知识库问答助手（RAG 型）<span class="note">最容易被做错的品类</span></h3>
+<div class="why"><b>业务问题：</b>制度文档、操作手册、历史工单散落各处，员工找不到答案，重复提问占用大量时间。</div>
+<div class="why"><b>① 形态判断：</b>典型 RAG 场景——知识动态更新、私有、需要引用来源。不需要 agent 的自主规划；<b>一次增强型 LLM 调用就够</b>（检索 + 生成），只有复杂多跳问题才升级为 workflow。</div>
+<div class="why"><b>② 交互设计：</b>每个回答必须带<b>可点击的引用来源</b>（文档名 + 段落）；检索不到时明确说「未找到相关规定」并给出人工咨询入口，而不是编造；提供「这条回答是否有用」的轻量反馈，直接回流成评测任务。</div>
+<div class="why"><b>③ 评测设计：</b>三类 grader 组合——groundedness（每个论断有检索来源支撑）、coverage（必须包含的关键事实）、source quality（来源是否权威，而非只取第一个检索结果）；rubric 必须定期用专家人工判断校准。特别注意：<b>别只测「能答对」，也要测「该说不知道时说不知道」</b>。</div>
+<div class="why"><b>④ 工程约束：</b>检索与生成分离，可独立评估召回质量；上下文由自己构造（Factor 03），不依赖框架的消息数组；记录完整 transcript 供定期抽查，失败要能定位是「没检索到」还是「检索到了但没用好」。</div>
+<div class="callout"><b>设计要点：</b>RAG 产品的质量上限主要由<b>检索质量</b>决定，不是生成质量。先把「找不找得到」做好，再优化措辞。用户信任来自「敢标来源、敢说不知道」。</div>
+</div>
+
+<div class="item">
+<h3><span class="idx">示例 3</span>数据分析 Agent（Agent 型）<span class="note">真正需要自主规划的品类</span></h3>
+<div class="why"><b>业务问题：</b>业务人员提出自然语言问题（如「对比华东和华南上季度的退货率变化并归因」），系统需要自行决定查哪些表、怎么聚合、生成什么图表——步骤数无法预知。</div>
+<div class="why"><b>① 形态判断：</b>这类任务符合 agent 的三个前提：<b>开放式、步骤数无法预测、无法硬编码路径</b>。但需要严格护栏：数据库只读连接、查询超时、行数上限、禁止写操作。</div>
+<div class="why"><b>② 交互设计：</b>展示 agent 的<b>执行计划</b>（透明原则）——「我将查询订单表 → 关联退货表 → 按区域聚合」，用户可在执行前修改；长任务支持暂停/恢复；结论附数据快照与分析口径，可一键导出；关键动作（如导出大批量数据）需二次确认。</div>
+<div class="why"><b>③ 评测设计：</b>以 outcome 为主——最终数据结果是否正确（可用固定 SQL 比对）；辅以 tool_calls 检查（有没有越权查表）、transcript 约束（轮数与 token 上限）；用 pass^k 而非 pass@1 衡量可靠性，因为用户期待每次都对。</div>
+<div class="why"><b>④ 工程约束：</b>控制流由代码掌握，agent 只决定节点内动作（Factor 08）；执行状态与查询任务同表存储，支持跨天恢复（Factor 06）；工具集精简为「查表/聚合/画图」三个结构化输出（Factor 04）；错误压缩回灌并设重试上限（Factor 09）。</div>
+<div class="callout"><b>设计要点：</b>这是三个示例里唯一真正需要 agent 的——因为路径确实无法预知。但越是 agent 型，越要把<b>权限边界、停止条件、可审计性</b>做扎实。自由度和约束力必须同步增长。</div>
+</div>
+
+<div class="table-wrap" style="margin-top:14px">
+<table>
+<thead><tr><th style="width:20%">对比维度</th><th style="width:26%">单据校验（Workflow）</th><th style="width:26%">知识问答（RAG）</th><th>数据分析（Agent）</th></tr></thead>
+<tbody>
+<tr><td><b>是否要 agent</b></td><td>不要，规则明确</td><td>不要，一次增强调用够</td><td>要，路径无法预知</td></tr>
+<tr><td><b>核心质量指标</b></td><td>误报率 / 漏报率</td><td>groundedness / coverage</td><td>结果正确性 / pass^k</td></tr>
+<tr><td><b>主要 grader</b></td><td>code-based 为主</td><td>LLM judge + 人工校准</td><td>outcome 验证 + 工具合规</td></tr>
+<tr><td><b>信任建立方式</b></td><td>规则编号可追溯</td><td>引用来源可点击</td><td>执行计划透明 + 二次确认</td></tr>
+<tr><td><b>护栏重点</b></td><td>写入需人工确认</td><td>不编造、敢说不知道</td><td>只读连接、超时、行数上限</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="foot">来源：<br>
+· Anthropic, <i><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building Effective Agents</a></i>（2024-12-19，原文含 2026 年更新提示）<br>
+· Anthropic, <i><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Demystifying evals for AI agents</a></i>（2026-01-09）<br>
+· humanlayer/<a href="https://github.com/humanlayer/12-factor-agents" target="_blank" rel="noopener">12-factor-agents</a>（README 索引页，18.8k stars；12 条含义按标题与项目定位归纳，非逐字摘录）<br>
+· isumitsoni/<a href="https://github.com/isumitsoni/awesome-ai-pm" target="_blank" rel="noopener">awesome-ai-pm</a>（最后更新 2026-03-17）<br>
+本页为中文整理与解读（19 章：核心资源详解 + 术语表 + 金句 + 落地清单 + 落地理念 + 三个产品设计示例），引用结论以原文为准。第 16、19 章的业务示例为本页基于 WMS 场景的迁移推演，非原文内容。本地单文件 HTML，零依赖。</div>
+
+</main>
+</div>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到顶部" title="回到顶部" onclick="goTop()">
+<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 10V2M6 2L2.5 5.5M6 2L9.5 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span>回到顶部</span>
+</button>
+
+<script>
+function goTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+  var links=document.querySelectorAll('.nav a');
+  links.forEach(function(a){a.classList.remove('on');});
+  if(links.length){links[0].classList.add('on');}
+}
+function initTop(){
+  var btn=document.getElementById('toTop');
+  function sync(){ if(window.scrollY>380){btn.classList.add('show');}else{btn.classList.remove('show');} }
+  window.addEventListener('scroll',sync,{passive:true});
+  sync();
+}
+function initNav(){
+  var links=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=[].slice.call(document.querySelectorAll('.sec[id]'));
+  if(!('IntersectionObserver' in window))return;
+  var ob=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id);}); }
+    });
+  },{rootMargin:'-8% 0px -78% 0px',threshold:0});
+  secs.forEach(function(s){ob.observe(s);});
+}
+initNav();
+initTop();
+</script>
+</body>
+</html>
